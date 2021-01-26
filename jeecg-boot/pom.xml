@@ -55,7 +55,8 @@
 		<module>jeecg-boot-module-system</module>
 		<module>jeecg-boot-starter</module>
 		<module>jeecg-cloud-module</module>
-	</modules>
+        <module>jeecg-boot-module-contract</module>
+    </modules>
 
 	<distributionManagement>
 	  	<repository>

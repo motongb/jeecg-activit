@@ -233,7 +233,9 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
         // 设置额外自定义参数
         List<ActZParams> otherParams = actZParamsService.list(new LambdaQueryWrapper<ActZParams>().eq(ActZParams::getPid, tableId));
         if (!CollectionUtils.isEmpty(otherParams)) {
-            otherParams.forEach(p -> busiData.put(p.getParamsKey(), p.getParamsVal()));
+            Map<String, Object> params = new HashMap<>();
+            otherParams.forEach(p -> params.put(p.getParamsKey(), p.getParamsVal()));
+            busiData.put("params", params);
         }
         return busiData;
     }
