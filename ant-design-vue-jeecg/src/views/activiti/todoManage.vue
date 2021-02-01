@@ -3,7 +3,6 @@
 </style>
 <template>
   <div class="search">
-
     <a-card>
       <div class="table-page-search-wrapper">
         <a-form layout="inline" @keyup.enter.native="handleSearch">
@@ -117,6 +116,7 @@
     </a-modal>
     <sign-modal :form="form" :modal-task-title="modalTaskTitle" :modal-task-visible="modalTaskVisible"
                 :assignee-list="assigneeList" :user-loading="userLoading" :back-list="backList"
+                @cancel="modalTaskVisible = false" @afterSub="afterSub"
                 :show-assign="showAssign" :back-loading="backLoading"></sign-modal>
   </div>
 </template>
@@ -194,6 +194,10 @@
       this.init()
     },
     methods: {
+      afterSub(formData) {
+        this.getDataList();
+        this.modalTaskVisible = false
+      },
       init() {
         this.getDataList()
       },

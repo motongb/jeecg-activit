@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.activiti.spring.boot.AbstractProcessEngineAutoConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -16,6 +17,8 @@ import javax.sql.DataSource;
 public class ActivitiDataSourceConfig extends AbstractProcessEngineAutoConfiguration {
     @Resource
     private ActivitiDataSourceProperties activitiDataSourceProperties;
+    @Autowired
+    private ICustomProcessDiagramGenerator customProcessDiagramGenerator;
 
     @Bean
     public DataSource activitiDataSource() {
@@ -42,6 +45,7 @@ public class ActivitiDataSourceConfig extends AbstractProcessEngineAutoConfigura
         configuration.setActivityFontName("宋体");
         configuration.setLabelFontName("宋体");
         configuration.setAnnotationFontName("宋体");
+        configuration.setProcessDiagramGenerator(customProcessDiagramGenerator);
         //id生成器
         //configuration.setIdGenerator(new MyUUIDgenerator());
         return configuration;

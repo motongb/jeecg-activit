@@ -20,19 +20,6 @@
               <a-switch checkedChildren="是" unCheckedChildren="否" defaultChecked v-model="queryParam.zx"/>
             </a-form-item>
           </a-col>
-          <!--<a-col :md="6" :sm="10">
-            <a-form-item label="创建时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-range-picker
-                style="width: 210px"
-                v-model="queryParam.createTimeRange"
-                format="YYYY-MM-DD"
-                :placeholder="['开始时间', '结束时间']"
-                @change="onDateChange"
-                @ok="onDateOk"
-              />
-            </a-form-item>
-          </a-col>-->
-
           <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
             <a-col :md="6" :sm="12" >
                 <a-button type="primary"  style="left: 10px" @click="searchQuery" icon="search">查询</a-button>

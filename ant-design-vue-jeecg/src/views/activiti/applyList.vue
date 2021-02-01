@@ -163,8 +163,7 @@
       placement="right"
       :closable="false"
       @close="processModalVisible = false"
-      :visible="processModalVisible"
-    >
+      :visible="processModalVisible">
       <a-empty description="无流程可供选择" v-if="activeKeyAll.length==0"/>
       <div v-else>
         <a-input-search style="margin-bottom: 10px;width: 200px"

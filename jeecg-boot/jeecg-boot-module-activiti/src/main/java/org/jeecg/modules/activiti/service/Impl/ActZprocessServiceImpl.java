@@ -455,11 +455,7 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
 //                    node.setType(ActivitiConstant.NODE_TYPE_EG);
                     ActivityImpl pvmActivity1 = (ActivityImpl) pvmActivity;
                     /*定义变量*/
-                    LambdaQueryWrapper<ActBusiness> wrapper = new LambdaQueryWrapper<>();
-                    wrapper.eq(ActBusiness::getProcInstId, procInsId);
-                    ActBusiness one = actBusinessService.getOne(wrapper);
-                    Map<String, Object> vals = actBusinessService.getApplyForm(one.getTableId(), one.getTableName());
-                    TaskDefinition taskDefinition = actNodeService.nextTaskDefinition(pvmActivity1, pvmActivity1.getId(), vals, procInsId);
+                    TaskDefinition taskDefinition = actNodeService.nextTaskDefinition(pvmActivity1, pvmActivity1.getId(), getParams(procInsId), procInsId);
                     node.setType(ActivitiConstant.NODE_TYPE_TASK);
                     node.setTitle(taskDefinition.getNameExpression().getExpressionText());
                     List<LoginUser> users = getNodetUsers(taskDefinition.getKey(), actBusiness.getTableName(), actBusiness.getTableId());
@@ -474,11 +470,7 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
                 } else if ("inclusiveGateway".equals(type)) {
                     // 包含网关
                     /*定义变量*/
-                    LambdaQueryWrapper<ActBusiness> wrapper = new LambdaQueryWrapper<>();
-                    wrapper.eq(ActBusiness::getProcInstId, procInsId);
-                    ActBusiness one = actBusinessService.getOne(wrapper);
-                    Map<String, Object> vals = actBusinessService.getApplyForm(one.getTableId(), one.getTableName());
-                    List<ActivityImpl> activityList = actNodeService.getNextActivityImplByLineCondition(pvmActivity.getOutgoingTransitions(), vals);
+                    List<ActivityImpl> activityList = actNodeService.getNextActivityImplByLineCondition(pvmActivity.getOutgoingTransitions(), getParams(procInsId));
                     activityList.forEach(activity -> nodeVos.add(parseNodeVo(activity, actBusiness)));
                 } else if ("endEvent".equals(type)) {
                     // 结束
@@ -508,5 +500,15 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
     @Override
     public List<ActZprocess> queryNewestProcess(String processKey) {
         return baseMapper.selectNewestProcess(processKey);
+    }
+
+    private Map<String, Object> getParams(String procInsId) {
+        LambdaQueryWrapper<ActBusiness> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ActBusiness::getProcInstId, procInsId);
+        ActBusiness one = actBusinessService.getOne(wrapper);
+        Map<String, Object> vals = actBusinessService.getApplyForm(one.getTableId(), one.getTableName());
+        vals.putAll((Map<String, Object>) vals.get("params"));
+        vals.remove("params");
+        return vals;
     }
 }

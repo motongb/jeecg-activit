@@ -1,23 +1,22 @@
 <template>
   <div>
     <a-card :body-style="{padding: '24px 32px'}" :bordered="false">
+      <a-button style="margin-left: 8px" type="primary" ghost @click="closed">返 回</a-button>
       <!--流程表单-->
       <component :disabled="lcModa.disabled" :is="lcModa.formComponent"
                  :processData="lcModa.processData" :isNew="lcModa.isNew"
                  :task="lcModa.isTask"
-                 @afterSubmit="afterSub" @close="closed"></component>
+                 @afterSubmit="afterSub"></component>
 
-      <a-form-item v-if="lcModa.isTask"
-                   :wrapperCol="{ span: 24 }"
-                   style="text-align: center">
+      <a-form-item v-if="lcModa.isTask" :wrapperCol="{ span: 24 }" style="text-align: center">
         <a-button type="primary" @click="passTask">通 过</a-button>
         <a-button style="margin-left: 8px" @click="backTask">驳 回</a-button>
-        <a-button style="margin-left: 8px" type="danger" @click="closed">取 消</a-button>
       </a-form-item>
     </a-card>
 
     <sign-modal :form="form" :modal-task-title="modalTaskTitle" :modal-task-visible="modalTaskVisible"
-                :assignee-list="assigneeList" :user-loading="userLoading" @cancel="modalTaskVisible = false" @afterSub="afterSub"
+                :assignee-list="assigneeList" :user-loading="userLoading" @cancel="modalTaskVisible = false"
+                @afterSub="afterSub"
                 :show-assign="showAssign" :back-loading="backLoading" :back-list="backList"></sign-modal>
   </div>
 </template>
@@ -68,7 +67,7 @@
       let params = getStore('lcModa')
       this.lcModa = params
       this.lcModa.formComponent = this.getFormComponent(params.processData.routeName).component
-      console.log(this.lcModa)
+      console.log('lcModa',this.lcModa)
     },
     methods: {
       /*通过审批*/

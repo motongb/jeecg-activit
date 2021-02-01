@@ -52,7 +52,7 @@ public class TestSignController extends JeecgController<TestSign, ITestSignServi
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         QueryWrapper<TestSign> queryWrapper = QueryGenerator.initQueryWrapper(testSign, req.getParameterMap());
-        Page<TestSign> page = new Page<TestSign>(pageNo, pageSize);
+        Page<TestSign> page = new Page<>(pageNo, pageSize);
         IPage<TestSign> pageList = testSignService.page(page, queryWrapper);
         return Result.OK(pageList);
     }
