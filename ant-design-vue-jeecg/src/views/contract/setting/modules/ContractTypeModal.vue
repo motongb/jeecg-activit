@@ -43,8 +43,6 @@
             :tree-data="options"
             placeholder="Please select">
           </a-tree-select>
-          <!--          <a-cascader v-decorator="['processDef']" :options="options" :show-search="{ filter }"-->
-          <!--                      placeholder="Please select" @change="onChange"/>-->
         </a-form-item>
 
       </a-form>
