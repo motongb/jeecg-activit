@@ -1,25 +1,32 @@
 package org.jeecg.modules.contract.controller;
 
+import cn.hutool.core.util.BooleanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.contract.entity.ContractType;
 import org.jeecg.modules.contract.service.IContractTypeService;
 import org.jeecg.modules.contract.utils.TreeBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,6 +44,9 @@ public class ContractTypeController extends JeecgController<ContractType, IContr
     @Autowired
     private IContractTypeService contractTypeService;
 
+    @Autowired
+    private ISysBaseAPI iSysBaseAPI;
+
     /**
      * 树结构
      *
@@ -45,8 +55,28 @@ public class ContractTypeController extends JeecgController<ContractType, IContr
     @AutoLog(value = "合同类型-树结构")
     @ApiOperation(value = "合同类型-树结构", notes = "合同类型-树结构")
     @GetMapping(value = "/tree")
-    public Result<?> tree() {
-        return Result.OK(TreeBuilder.build(contractTypeService.list(), "0"));
+    public Result<?> tree(@ApiParam("过滤角色") @RequestParam(required = false, defaultValue = "false") Boolean roles) {
+        List<ContractType> contractTypeList = contractTypeService.list();
+        if (BooleanUtil.isTrue(roles)) {
+            LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+            List<String> userRoles = iSysBaseAPI.getRolesByUsername(sysUser.getUsername());
+            List<ContractType> newContractList = new ArrayList<>();
+            for (ContractType contractType : contractTypeList) {
+                if (StringUtils.hasText(contractType.getRoles())) {
+                    String[] roleStr = contractType.getRoles().split(",");
+                    for (String role : roleStr) {
+                        if (userRoles.contains(role)) {
+                            newContractList.add(contractType);
+                            break;
+                        }
+                    }
+                } else {
+                    newContractList.add(contractType);
+                }
+            }
+            contractTypeList = newContractList;
+        }
+        return Result.OK(TreeBuilder.build(contractTypeList, "0"));
     }
 
     /**

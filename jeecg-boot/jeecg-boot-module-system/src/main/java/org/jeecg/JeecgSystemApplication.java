@@ -18,14 +18,13 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
-* 单体启动类（采用此类启动项目为单体模式）
-*/
+ * 单体启动类（采用此类启动项目为单体模式）
+ */
 @Slf4j
-@SpringBootApplication
-//@EnableAutoConfiguration(exclude={org.activiti.spring.boot.SecurityAutoConfiguration.class})
-@EnableAutoConfiguration(exclude = {org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
+@SpringBootApplication(exclude = {org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
         org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class
-        ,org.activiti.spring.boot.SecurityAutoConfiguration.class})
+        , org.activiti.spring.boot.SecurityAutoConfiguration.class})
+//@EnableAutoConfiguration(exclude={org.activiti.spring.boot.SecurityAutoConfiguration.class})
 public class JeecgSystemApplication extends SpringBootServletInitializer {
 
     @Override

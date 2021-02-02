@@ -26,6 +26,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class ContractType extends TreeEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
+
 	/**名称*/
 	@Excel(name = "名称", width = 15)
 	@ApiModelProperty(value = "名称")
@@ -42,4 +43,12 @@ public class ContractType extends TreeEntity implements Serializable {
 	@Excel(name = "流程定义", width = 15)
 	@ApiModelProperty(value = "流程定义")
 	private String processDef;
+	/**描述*/
+	@Excel(name = "描述", width = 15)
+	@ApiModelProperty(value = "描述")
+	private String description;
+	/**角色*/
+	@Excel(name = "角色", width = 15)
+	@ApiModelProperty(value = "角色")
+	private String roles;
 }
