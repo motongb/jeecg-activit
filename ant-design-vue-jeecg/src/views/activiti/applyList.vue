@@ -278,7 +278,7 @@
           getProcessDataList: '/activiti_process/listData',
           delByIds: '/actBusiness/delByIds',
           getFirstNode: '/actProcessIns/getFirstNode',
-          applyBusiness: '/actBusiness/apply',
+          applyBusiness: '/actBusiness/draft',
           cancelApply: '/actBusiness/cancel'
         },
         // 查询条件

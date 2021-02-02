@@ -104,7 +104,7 @@ import { js_keyword, js_method } from './Resource'
     "toUpperCase toLowerCase split concat match replace search").split(" ");
   var arrayProps = ("length concat join splice push pop shift unshift slice reverse sort indexOf " +
     "lastIndexOf every some filter forEach map reduce reduceRight ").split(" ");
-  var funcProps = "prototype apply call bind".split(" ");
+  var funcProps = "prototype draft call bind".split(" ");
 
   var javascriptKeywords = ("break case catch class const continue debugger default delete do else export extends false finally for function " +
     "if in import instanceof new null return super switch this throw true try typeof var void while with yield that").split(" ");

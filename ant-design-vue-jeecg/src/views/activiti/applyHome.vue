@@ -61,7 +61,7 @@
         url: {
           getProcessDataList: "/activiti_process/listData",
           getFirstNode:'/actProcessIns/getFirstNode',
-          applyBusiness:'/actBusiness/apply',
+          applyBusiness:'/actBusiness/draft',
         },
         // 查询条件
         queryParam: {
