@@ -126,6 +126,7 @@
   import { activitiMixin } from '@/views/activiti/mixins/activitiMixin'
   import { setStore } from '@/utils/storage'
   import SignModal from './signModal'
+  import activitiSetting from './mixins/activitiSetting'
 
   export default {
     name: 'todo-manage',
@@ -195,7 +196,7 @@
     },
     methods: {
       afterSub(formData) {
-        this.getDataList();
+        this.getDataList()
         this.modalTaskVisible = false
       },
       init() {
@@ -245,13 +246,13 @@
           return
         }
         this.lcModa.disabled = true
-        this.lcModa.title = '查看流程业务信息：' + r.processName
+        this.lcModa.title =   r.title
         this.lcModa.processData = r
         this.lcModa.isNew = false
-        this.lcModa.from = 'todoManage'
-        this.lcModa.isTask = true;
+        this.lcModa.from = activitiSetting.todoManage
+        this.lcModa.isTask = true
         setStore('lcModa', this.lcModa)
-        this.$router.push('applyForm')
+        this.$router.push(activitiSetting.applyFormPath)
       },
       delegateTask(v) {
         this.modalTaskTitle = '委托他人代办'
