@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.contract.mapper.ContractTypeMapper">
 
-	<update id="updateTreeNodeStatus" parameterType="java.lang.String">
+    <update id="updateTreeNodeStatus" parameterType="java.lang.String">
 		update contract_type set has_child = #{status} where id = #{id}
 	</update>
 
