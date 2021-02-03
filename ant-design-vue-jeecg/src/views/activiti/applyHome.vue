@@ -46,6 +46,7 @@
   import JTreeSelect from '@/components/jeecg/JTreeSelect'
   import {initDictOptions, filterDictText} from '@/components/dict/JDictSelectUtil'
   import historicDetail from '@/views/activiti/historicDetail'
+  import activitiSetting from './mixins/activitiSetting'
   export default {
     name: "applyHome",
     mixins:[activitiMixin],
@@ -167,7 +168,7 @@
       },
       /*前往我的申请页面*/
       handleToApplyList() {
-        this.$router.push({path:'/activiti/applyList'})
+        this.$router.push(activitiSetting.applyListPath)
       }
     }
   }

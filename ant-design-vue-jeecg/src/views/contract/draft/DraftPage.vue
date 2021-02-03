@@ -24,6 +24,9 @@
 
 <script>
   import { setStore } from '@/utils/storage'
+  import activitiSetting from '../../activiti/mixins/activitiSetting'
+  import { formatDate } from '@/utils/util'
+
   export default {
     name: 'DraftPage',
     data() {
@@ -41,7 +44,7 @@
     },
     methods: {
       loadData() {
-        this.getAction(this.url.treeList,{roles:true}).then(res => {
+        this.getAction(this.url.treeList, { roles: true }).then(res => {
           if (res.success) {
             this.dataList = res.result
             this.dataList.forEach(item => this.activeKey.push(item.id))
@@ -52,11 +55,12 @@
         this.getAction(this.url.queryNewestProcess, { processKey: child.processDef }).then(res => {
           if (res.success && res.result.length > 0) {
             let lcModa = {}
-            lcModa.from = '/contract/draft'
+            lcModa.from = activitiSetting.draftPagePath
             lcModa.processData = res.result[0]
             lcModa.isNew = true
+            lcModa.title = formatDate(new Date().getTime(), 'yyyy-MM-dd').replaceAll('-', '') + child.name
             setStore('lcModa', lcModa)
-            this.$router.push('/activiti/applyForm')
+            this.$router.push(activitiSetting.applyFormPath)
           }
         })
       }

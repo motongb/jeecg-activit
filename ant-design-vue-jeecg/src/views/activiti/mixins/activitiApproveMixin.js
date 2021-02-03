@@ -2,6 +2,11 @@ import pick from 'lodash.pick'
 
 export const activitiApproveMixin = {
   props: {
+    /*标题*/
+    title: {
+      type: String,
+      default: ''
+    },
     /*全局禁用，可表示查看*/
     disabled: {
       type: Boolean,
@@ -36,8 +41,7 @@ export const activitiApproveMixin = {
         editForm: '/actBusiness/editForm'
       },
       /*表单回显数据*/
-      form: {},
-      btndisabled: false
+      form: {}
     }
   },
   created() {
@@ -49,7 +53,6 @@ export const activitiApproveMixin = {
   methods: {
     /*回显数据*/
     init() {
-      this.btndisabled = true
       var r = this.processData
       this.getAction(this.url.getForm, {
         tableId: r.tableId,
@@ -59,7 +62,6 @@ export const activitiApproveMixin = {
           this.form = res.result
           this.form.tableName = r.tableName
           console.log('表单回显数据', this.form)
-          this.btndisabled = false
         } else {
           this.$message.error(res.message)
         }
@@ -69,40 +71,42 @@ export const activitiApproveMixin = {
     pickValue() {
     },
     // handler
-    handleSubmit(e) {
-      e.preventDefault()
-      this.$refs.ruleForm.validate(valid => {
-        if (valid) {
-          this.form.procDefId = this.processData.id
-          this.form.procDeTitle = this.processData.name
-          if (!this.form.tableName) {
-            console.log(this.processData)
-            this.form.tableName = this.processData.businessTable
-          }
-          this.form.params = this.handleParams(this.form)
-          this.pickValue()
-          console.log('formData', this.form)
-          var url = this.url.addApply
-          if (!this.isNew) {
-            url = this.url.editForm
-          }
-          this.btndisabled = true
-          this.postDataAction(url, this.form).then((res) => {
-            if (res.success) {
-              this.$message.success('保存成功！')
-              //todo 将表单的数据传给父组件
-              this.$emit('afterSubmit', this.form)
-            } else {
-              this.$message.error(res.message)
+    handleSubmit() {
+      return new Promise((resolve, reject) => {
+        this.$refs.ruleForm.validate(valid => {
+          if (valid) {
+            this.form.title = this.title
+            this.form.procDefId = this.processData.id
+            this.form.procDeTitle = this.processData.name
+            if (!this.form.tableName) {
+              console.log(this.processData)
+              this.form.tableName = this.processData.businessTable
             }
-          }).finally(() => {
-            this.btndisabled = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
+            this.form.params = this.handleParams(this.form)
+            this.pickValue()
+            console.log('formData', this.form)
+            var url = this.url.addApply
+            if (!this.isNew) {
+              url = this.url.editForm
+            }
+            this.postDataAction(url, this.form).then((res) => {
+              if (res.success) {
+                this.$message.success('保存成功！')
+                //todo 将表单的数据传给父组件
+                resolve(this.form)
+              } else {
+                this.$message.error(res.message)
+              }
+            }).finally(() => {
+              reject()
+            })
+          } else {
+            console.log('error submit!!')
+            reject()
+          }
+        })
       })
+
     },
     /*处理参数*/
     handleParams(values) {

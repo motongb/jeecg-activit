@@ -12,9 +12,6 @@
         <a-checkbox :checked="form.params.condition2==='y'" @change="onChange" value="condition2">路线二</a-checkbox>
         <a-checkbox :checked="form.params.condition3==='y'" @change="onChange" value="condition3">路线三</a-checkbox>
       </a-form-model-item>
-      <a-form-model-item v-if="!disabled" :wrapperCol="{ span: 24 }" style="text-align: center">
-        <a-button type="primary" :disabled="disabled||btndisabled" @click="handleSubmit">保存</a-button>
-      </a-form-model-item>
     </a-form-model>
   </a-spin>
 </template>

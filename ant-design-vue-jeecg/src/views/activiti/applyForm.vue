@@ -1,22 +1,53 @@
 <template>
   <div>
-    <a-card :body-style="{padding: '24px 32px'}" :bordered="false">
-      <a-button style="margin-left: 8px" type="primary" ghost @click="closed">返 回</a-button>
-      <!--流程表单-->
-      <component :disabled="lcModa.disabled" :is="lcModa.formComponent"
-                 :processData="lcModa.processData" :isNew="lcModa.isNew"
-                 :task="lcModa.isTask"
-                 @afterSubmit="afterSub"></component>
-
-      <a-form-item v-if="lcModa.isTask" :wrapperCol="{ span: 24 }" style="text-align: center">
-        <a-button type="primary" @click="passTask">通 过</a-button>
-        <a-button style="margin-left: 8px" @click="backTask">驳 回</a-button>
-      </a-form-item>
+    <a-card class="apply-card" title="申请信息">
+      <div slot="extra">
+        <a-button v-show="!btndisabled" type="primary" :disabled="lcModa.disabled||btndisabled" @click="handleSubmit">保存</a-button>
+        <a-button style="margin-left: 8px" type="primary" ghost @click="closed">返 回</a-button>
+      </div>
+      <div class="apply-header">
+        <a-form-model :model="lcModa" :label-col="labelCol" :wrapper-col="wrapperCol">
+          <a-row>
+            <a-col :span="24">
+              <a-form-model-item :label-col="{ span: 2 }" label="标题">
+                <a-input v-model="lcModa.title" placeholder="请输入标题"/>
+              </a-form-model-item>
+            </a-col>
+          </a-row>
+          <a-row>
+            <a-col :span="8">
+              <a-form-model-item label="申请人">
+                <a-input disabled v-model="lcModa.userName" placeholder="请输入申请人"/>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-model-item label="申请部门">
+                <a-input disabled v-model="lcModa.dept" placeholder="请输入申请部门"/>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-model-item label="申请时间">
+                <a-input disabled v-model="lcModa.applyTime" placeholder="请输入申请时间"/>
+              </a-form-model-item>
+            </a-col>
+          </a-row>
+        </a-form-model>
+      </div>
     </a-card>
+
+    <!--流程表单-->
+    <component :disabled="lcModa.disabled" :is="lcModa.formComponent" ref="processForm"
+               :processData="lcModa.processData" :isNew="lcModa.isNew" :title="lcModa.title"
+               :task="lcModa.isTask"></component>
+
+    <a-form-item v-if="lcModa.isTask" :wrapperCol="{ span: 24 }" style="text-align: center">
+      <a-button type="primary" @click="passTask">通 过</a-button>
+      <a-button style="margin-left: 8px" @click="backTask">驳 回</a-button>
+    </a-form-item>
 
     <sign-modal :form="form" :modal-task-title="modalTaskTitle" :modal-task-visible="modalTaskVisible"
                 :assignee-list="assigneeList" :user-loading="userLoading" @cancel="modalTaskVisible = false"
-                @afterSub="afterSub"
+                @afterSub="closed"
                 :show-assign="showAssign" :back-loading="backLoading" :back-list="backList"></sign-modal>
   </div>
 </template>
@@ -25,6 +56,8 @@
   import { getStore, clearStore } from '@/utils/storage'
   import { activitiMixin } from '@/views/activiti/mixins/activitiMixin'
   import SignModal from './signModal'
+  import { formatDate } from '@/utils/util'
+  import activitiSetting from './mixins/activitiSetting'
 
   export default {
     name: 'applyForm',
@@ -32,9 +65,12 @@
     mixins: [activitiMixin],
     data() {
       return {
+        labelCol: { span: 4, offset: 2 },
+        wrapperCol: { span: 16 },
         url: {
           getNextNode: '/activiti_process/getNextNode',
-          getBackList: '/actTask/getBackList/'
+          getBackList: '/actTask/getBackList/',
+          userWithDepart: '/sys/user/userDepartList'
         },
         backList: [
           {
@@ -60,16 +96,52 @@
         userLoading: false,
         assigneeList: [],
         showAssign: true,
-        backLoading: false
+        backLoading: false,
+        btndisabled: false,
+        userInfo: {}
       }
     },
-    mounted() {
-      let params = getStore('lcModa')
-      this.lcModa = params
-      this.lcModa.formComponent = this.getFormComponent(params.processData.routeName).component
-      console.log('lcModa',this.lcModa)
+    watch: {
+      '$route': function(newRoute) {
+        // this.$forceUpdate()
+        this.initValue()
+      }
+    },
+    created() {
+      this.initValue()
     },
     methods: {
+      initValue() {
+        let params = getStore('lcModa')
+        this.lcModa = params || {}
+        if (params) {
+          this.lcModa.formComponent = this.getFormComponent(params.processData.routeName).component
+          this.userInfo = this.$store.getters.userInfo
+          this.lcModa.userName = this.userInfo.realname
+          this.lcModa.applyTime = formatDate(new Date().getTime(), 'yyyy-MM-dd hh:mm:ss')
+          this.getUserDepart()
+        }
+      },
+      getUserDepart() {
+        this.getAction(this.url.userWithDepart, { userId: this.userInfo.id }).then(res => {
+          if (res.success) {
+            this.lcModa.dept = res.result.map(m => m.title).join(',')
+            if (this.lcModa.isNew){
+              this.lcModa.title += '-' + this.lcModa.dept + '-' + this.lcModa.userName
+            }
+            console.log('lcModa', this.lcModa)
+          }
+        })
+      },
+      handleSubmit(e) {
+        this.btndisabled = true
+        this.$refs.processForm.handleSubmit(e).then(res => {
+          this.afterSub(res)
+          this.btndisabled = false
+        }).catch(_ => {
+          this.btndisabled = false
+        })
+      },
       /*通过审批*/
       passTask() {
         let v = this.lcModa.processData
@@ -127,17 +199,28 @@
       },
       afterSub(formData) {
         clearStore('lcModa')
-        this.$router.push('applyList')
-        this.modalTaskVisible = false
+        this.$router.push(activitiSetting.applyListPath)
+        this.closedCall()
       },
       closed() {
         clearStore('lcModa')
         this.$router.push(this.lcModa.from)
+        this.closedCall()
+        this.modalTaskVisible = false
+      },
+      closedCall() {
+        this.$bus.$emit('closed-current-tabs')
       }
     }
   }
 </script>
 
 <style scoped>
+  .apply-header {
+    margin-top: 20px;
+  }
 
+  .apply-card {
+    margin-bottom: 24px;
+  }
 </style>

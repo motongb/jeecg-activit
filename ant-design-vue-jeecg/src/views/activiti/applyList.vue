@@ -260,6 +260,7 @@
   import JTreeSelect from '@/components/jeecg/JTreeSelect'
   import { initDictOptions, filterDictText } from '@/components/dict/JDictSelectUtil'
   import historicDetail from '@/views/activiti/historicDetail'
+  import activitiSetting from './mixins/activitiSetting'
 
   export default {
     name: 'applyList',
@@ -278,7 +279,7 @@
           getProcessDataList: '/activiti_process/listData',
           delByIds: '/actBusiness/delByIds',
           getFirstNode: '/actProcessIns/getFirstNode',
-          applyBusiness: '/actBusiness/draft',
+          applyBusiness: '/actBusiness/apply',
           cancelApply: '/actBusiness/cancel'
         },
         // 查询条件
@@ -535,13 +536,13 @@
         }
         isView = isView || false
         this.lcModa.disabled = isView
-        this.lcModa.title = '修改流程业务信息：' + r.title
-        if (isView) this.lcModa.title = '查看流程业务信息：' + r.title
-        this.lcModa.from = 'applyList';
+        this.lcModa.title = r.title
+        // if (isView) this.lcModa.title = '查看流程业务信息：' + r.title
+        this.lcModa.from = activitiSetting.applyListPath
         this.lcModa.processData = r
         this.lcModa.isNew = false
-        setStore('lcModa', this.lcModa);
-        this.$router.push('applyForm');
+        setStore('lcModa', this.lcModa)
+        this.$router.push(activitiSetting.applyFormPath)
       },
       remove(r) {
         this.postFormAction(this.url.delByIds, { ids: r.id }).then((res) => {
@@ -608,9 +609,9 @@
         this.lcModa.title = '发起流程：' + v.name
         this.lcModa.isNew = true
         this.lcModa.processData = v
-        this.lcModa.from = 'applyList';
-        setStore('lcModa', this.lcModa);
-        this.$router.push('applyForm');
+        this.lcModa.from = activitiSetting.applyListPath
+        setStore('lcModa', this.lcModa)
+        this.$router.push(activitiSetting.applyFormPath)
         console.log('发起', v)
       }
     }
