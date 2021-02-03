@@ -126,7 +126,8 @@
         })
       },
       afterSub(formData) {
-        this.closed()
+        clearStore('lcModa')
+        this.$router.push('applyList')
         this.modalTaskVisible = false
       },
       closed() {

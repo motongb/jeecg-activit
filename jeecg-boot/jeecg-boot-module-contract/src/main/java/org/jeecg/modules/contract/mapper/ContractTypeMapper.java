@@ -1,8 +1,8 @@
 package org.jeecg.modules.contract.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.jeecg.modules.contract.entity.ContractType;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * @Description: 合同类型

@@ -154,6 +154,16 @@
             dataIndex: 'processDef'
           },
           {
+            title:'描述',
+            align:"left",
+            dataIndex: 'description'
+          },
+          {
+            title:'角色',
+            align:"left",
+            dataIndex: 'roles'
+          },
+          {
             title: '操作',
             dataIndex: 'action',
             align:"center",
@@ -377,6 +387,8 @@
         fieldList.push({type:'string',value:'code',text:'编码',dictCode:''})
         fieldList.push({type:'string',value:'sort',text:'排序',dictCode:''})
         fieldList.push({type:'string',value:'processDef',text:'流程定义',dictCode:''})
+        fieldList.push({type:'string',value:'description',text:'描述',dictCode:''})
+        fieldList.push({type:'string',value:'roles',text:'角色',dictCode:''})
         this.superFieldList = fieldList
       }
     }

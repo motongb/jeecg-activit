@@ -44,7 +44,12 @@
             placeholder="Please select">
           </a-tree-select>
         </a-form-item>
-
+        <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['description']" placeholder="请输入描述"></a-input>
+        </a-form-item>
+        <a-form-item label="角色" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['roles']" placeholder="请输入角色"></a-input>
+        </a-form-item>
       </a-form>
     </a-spin>
   </j-modal>
@@ -141,7 +146,7 @@
         this.model = Object.assign({}, record)
         this.visible = true
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model, 'pid', 'name', 'code', 'sort', 'processDef'))
+          this.form.setFieldsValue(pick(this.model, 'pid', 'name', 'code', 'sort', 'processDef', 'description', 'roles'))
         })
       },
       close() {
@@ -186,7 +191,7 @@
         this.close()
       },
       popupCallback(row) {
-        this.form.setFieldsValue(pick(row, 'pid', 'name', 'code', 'sort', 'processDef'))
+        this.form.setFieldsValue(pick(row, 'pid', 'name', 'code', 'sort', 'processDef', 'description', 'roles'))
       },
       submitSuccess(formData, flag) {
         if (!formData.id) {

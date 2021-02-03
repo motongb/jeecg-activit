@@ -1,10 +1,9 @@
 package org.jeecg.modules.contract.service;
 
+import org.jeecg.modules.contract.entity.ContractType;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.common.exception.JeecgBootException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.jeecg.modules.contract.entity.ContractType;
-
 import java.util.List;
 
 /**
