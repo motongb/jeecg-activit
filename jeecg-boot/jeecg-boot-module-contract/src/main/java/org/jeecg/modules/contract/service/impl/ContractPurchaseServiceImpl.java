@@ -32,7 +32,7 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
     public boolean saveWithProcess(ContractPurchaseVo contractPurchaseVo) {
         ContractPurchase contractPurchase = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchaseVo), ContractPurchase.class);
         // 新增
-        if (StringUtils.isEmpty(contractPurchase.getId())) {
+        if (StringUtils.isEmpty(contractPurchaseVo.getId())) {
             LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
             contractPurchase.setUserId(sysUser.getUsername());
             contractPurchase.setStatus(ContractConst.STATUS_START);
@@ -43,7 +43,9 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
             actBusinessService.saveBusiness(true, processData, contractPurchaseVo.getParams());
         } else {
             updateById(contractPurchase);
-            actBusinessService.saveBusiness(false, contractPurchaseVo.getProcessData(), contractPurchaseVo.getParams());
+            Map<String, Object> processData = contractPurchaseVo.getProcessData();
+            processData.put("tableId", contractPurchaseVo.getId());
+            actBusinessService.saveBusiness(false, processData, contractPurchaseVo.getParams());
         }
         return true;
     }

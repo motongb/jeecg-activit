@@ -88,13 +88,15 @@ public class ContractGeneralController extends JeecgController<ContractGeneral, 
     /**
      * 编辑
      *
-     * @param contractGeneral
+     * @param contractPurchaseVo
      * @return
      */
     @AutoLog(value = "一般采购合同-编辑")
     @ApiOperation(value = "一般采购合同-编辑", notes = "一般采购合同-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody ContractGeneral contractGeneral) {
+    public Result<?> edit(@RequestBody ContractPurchaseVo contractPurchaseVo) {
+        contractPurchaseService.saveWithProcess(contractPurchaseVo);
+        ContractGeneral contractGeneral = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchaseVo.getSubForm()), ContractGeneral.class);
         contractGeneralService.updateById(contractGeneral);
         return Result.OK("编辑成功!");
     }
@@ -143,7 +145,7 @@ public class ContractGeneralController extends JeecgController<ContractGeneral, 
             return Result.error("未找到对应数据");
         }
         ContractPurchaseVo contractPurchaseVo = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchase), ContractPurchaseVo.class);
-        contractPurchaseVo.setSubForm(contractGeneral);
+        contractPurchaseVo.setSubForm(JSONUtil.parseObj(contractGeneral));
         contractPurchaseVo.setParams(actZParamsService.getActParams(id));
         return Result.OK(contractPurchaseVo);
     }

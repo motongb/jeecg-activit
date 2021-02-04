@@ -15,6 +15,7 @@ import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
  * @Version: 1.0
  */
 @Slf4j
+@Transactional
 public class JeecgController<T, S extends IService<T>> {
     @Autowired
     S service;
@@ -75,9 +77,9 @@ public class JeecgController<T, S extends IService<T>> {
      *
      * @param request
      */
-    protected ModelAndView exportXls(HttpServletRequest request, T object, Class<T> clazz, String title,String exportFields) {
-        ModelAndView mv = this.exportXls(request,object,clazz,title);
-        mv.addObject(NormalExcelConstants.EXPORT_FIELDS,exportFields);
+    protected ModelAndView exportXls(HttpServletRequest request, T object, Class<T> clazz, String title, String exportFields) {
+        ModelAndView mv = this.exportXls(request, object, clazz, title);
+        mv.addObject(NormalExcelConstants.EXPORT_FIELDS, exportFields);
         return mv;
     }
 

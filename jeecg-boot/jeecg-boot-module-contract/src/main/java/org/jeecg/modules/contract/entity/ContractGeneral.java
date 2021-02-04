@@ -14,7 +14,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * @Description: 一般采购合同
@@ -27,7 +26,7 @@ import java.util.HashMap;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "contract_general对象", description = "一般采购合同")
-public class ContractGeneral extends HashMap<String, Object> implements Serializable {
+public class ContractGeneral implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**

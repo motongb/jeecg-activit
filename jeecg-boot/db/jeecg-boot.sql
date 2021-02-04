@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : localhost_3306
  Source Server Type    : MySQL
- Source Server Version : 50731
+ Source Server Version : 50726
  Source Host           : localhost:3306
  Source Schema         : jeecg-boot
 
  Target Server Type    : MySQL
- Target Server Version : 50731
+ Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 04/02/2021 18:03:44
+ Date: 04/02/2021 22:58:39
 */
 
 SET NAMES utf8mb4;
@@ -35,11 +35,7 @@ CREATE TABLE `act_evt_log`  (
   `LOCK_TIME_` timestamp(3) NULL DEFAULT NULL,
   `IS_PROCESSED_` tinyint(4) NULL DEFAULT 0,
   PRIMARY KEY (`LOG_NR_`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_evt_log
--- ----------------------------
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_ge_bytearray
@@ -55,7 +51,7 @@ CREATE TABLE `act_ge_bytearray`  (
   PRIMARY KEY (`ID_`) USING BTREE,
   INDEX `ACT_FK_BYTEARR_DEPL`(`DEPLOYMENT_ID_`) USING BTREE,
   CONSTRAINT `ACT_FK_BYTEARR_DEPL` FOREIGN KEY (`DEPLOYMENT_ID_`) REFERENCES `act_re_deployment` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_ge_bytearray
@@ -94,12 +90,12 @@ CREATE TABLE `act_ge_property`  (
   `VALUE_` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `REV_` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`NAME_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_ge_property
 -- ----------------------------
-INSERT INTO `act_ge_property` VALUES ('next.dbid', '60001', 25);
+INSERT INTO `act_ge_property` VALUES ('next.dbid', '62501', 26);
 INSERT INTO `act_ge_property` VALUES ('schema.history', 'create(5.22.0.0)', 1);
 INSERT INTO `act_ge_property` VALUES ('schema.version', '5.22.0.0', 1);
 
@@ -127,7 +123,7 @@ CREATE TABLE `act_hi_actinst`  (
   INDEX `ACT_IDX_HI_ACT_INST_END`(`END_TIME_`) USING BTREE,
   INDEX `ACT_IDX_HI_ACT_INST_PROCINST`(`PROC_INST_ID_`, `ACT_ID_`) USING BTREE,
   INDEX `ACT_IDX_HI_ACT_INST_EXEC`(`EXECUTION_ID_`, `ACT_ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_hi_actinst
@@ -376,6 +372,14 @@ INSERT INTO `act_hi_actinst` VALUES ('57540', '采购申请流程:3:7504', '5750
 INSERT INTO `act_hi_actinst` VALUES ('57541', '采购申请流程:3:7504', '57501', '57501', 'sid-E0FEAA12-A82D-4658-8823-252E3DDF17CB', '57542', NULL, '采购部', 'userTask', NULL, '2021-02-01 11:17:25.252', '2021-02-01 11:17:28.828', 3576, '');
 INSERT INTO `act_hi_actinst` VALUES ('57546', '采购申请流程:3:7504', '57501', '57501', 'sid-0A3B2739-6B75-487D-87E6-8AE776012A10', NULL, NULL, '结束', 'endEvent', NULL, '2021-02-01 11:17:28.828', '2021-02-01 11:17:28.828', 0, '');
 INSERT INTO `act_hi_actinst` VALUES ('58', '请假审批流程:1:17', '20', '48', 'sid-C076A079-36E8-47C9-8A52-35452421D39E', NULL, NULL, '结束', 'endEvent', NULL, '2020-12-23 10:16:18.931', '2020-12-23 10:16:18.931', 0, '');
+INSERT INTO `act_hi_actinst` VALUES ('60003', '采购申请流程:3:7504', '60001', '60001', 'sid-371F870C-5F2B-41B8-BDCA-94D82193DB13', NULL, NULL, NULL, 'startEvent', NULL, '2021-02-04 21:00:45.027', '2021-02-04 21:00:45.065', 38, '');
+INSERT INTO `act_hi_actinst` VALUES ('60022', '采购申请流程:3:7504', '60001', '60001', 'sid-98C9BEB7-8658-4DE1-8967-1CF2A8EB641B', '60023', NULL, '发起科', 'userTask', NULL, '2021-02-04 21:00:45.068', '2021-02-04 21:01:05.379', 20311, '');
+INSERT INTO `act_hi_actinst` VALUES ('60027', '采购申请流程:3:7504', '60001', '60001', 'sid-A48C8943-4003-4B48-A581-78CD7FA4E74E', NULL, NULL, NULL, 'exclusiveGateway', NULL, '2021-02-04 21:01:05.379', '2021-02-04 21:01:05.416', 37, '');
+INSERT INTO `act_hi_actinst` VALUES ('60028', '采购申请流程:3:7504', '60001', '60001', 'sid-052DEBAE-0B1D-47B4-AA4D-A4F8AED605D1', '60029', NULL, '主管1', 'userTask', NULL, '2021-02-04 21:01:05.416', '2021-02-04 21:01:31.867', 26451, '');
+INSERT INTO `act_hi_actinst` VALUES ('60033', '采购申请流程:3:7504', '60001', '60001', 'sid-E514442F-F18F-44A6-AB93-DF7D84826DF4', '60034', NULL, '经理', 'userTask', NULL, '2021-02-04 21:01:31.867', '2021-02-04 21:02:04.585', 32718, '');
+INSERT INTO `act_hi_actinst` VALUES ('60038', '采购申请流程:3:7504', '60001', '60001', 'sid-1BD8BACD-4B63-4FA8-818A-08A2E075B651', NULL, NULL, NULL, 'exclusiveGateway', NULL, '2021-02-04 21:02:04.585', '2021-02-04 21:02:04.586', 1, '');
+INSERT INTO `act_hi_actinst` VALUES ('60039', '采购申请流程:3:7504', '60001', '60001', 'sid-E0FEAA12-A82D-4658-8823-252E3DDF17CB', '60040', NULL, '采购部', 'userTask', NULL, '2021-02-04 21:02:04.586', '2021-02-04 21:02:20.203', 15617, '');
+INSERT INTO `act_hi_actinst` VALUES ('60044', '采购申请流程:3:7504', '60001', '60001', 'sid-0A3B2739-6B75-487D-87E6-8AE776012A10', NULL, NULL, '结束', 'endEvent', NULL, '2021-02-04 21:02:20.203', '2021-02-04 21:02:20.203', 0, '');
 INSERT INTO `act_hi_actinst` VALUES ('71', '采购申请流程:1:66', '69', '69', 'sid-371F870C-5F2B-41B8-BDCA-94D82193DB13', NULL, NULL, NULL, 'startEvent', NULL, '2020-12-23 11:11:48.060', '2020-12-23 11:11:48.061', 1, '');
 INSERT INTO `act_hi_actinst` VALUES ('7509', '采购申请流程:3:7504', '7507', '7507', 'sid-371F870C-5F2B-41B8-BDCA-94D82193DB13', NULL, NULL, NULL, 'startEvent', NULL, '2021-01-18 11:06:18.267', '2021-01-18 11:06:18.285', 18, '');
 INSERT INTO `act_hi_actinst` VALUES ('7529', '采购申请流程:3:7504', '7507', '7507', 'sid-98C9BEB7-8658-4DE1-8967-1CF2A8EB641B', '7530', NULL, '发起科', 'userTask', NULL, '2021-01-18 11:06:18.287', '2021-01-18 17:08:27.829', 21729542, '');
@@ -398,11 +402,7 @@ CREATE TABLE `act_hi_attachment`  (
   `CONTENT_ID_` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `TIME_` datetime(3) NULL DEFAULT NULL,
   PRIMARY KEY (`ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_hi_attachment
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_hi_comment
@@ -419,7 +419,7 @@ CREATE TABLE `act_hi_comment`  (
   `MESSAGE_` varchar(4000) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `FULL_MSG_` longblob NULL,
   PRIMARY KEY (`ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_hi_comment
@@ -664,6 +664,14 @@ INSERT INTO `act_hi_comment` VALUES ('57539', 'comment', '2021-02-01 11:17:25.20
 INSERT INTO `act_hi_comment` VALUES ('57544', 'event', '2021-02-01 11:17:25.261', NULL, '57542', NULL, 'AddUserLink', 'admin_|_candidate', NULL);
 INSERT INTO `act_hi_comment` VALUES ('57545', 'comment', '2021-02-01 11:17:28.781', NULL, '57542', '57501', 'AddComment', '', '');
 INSERT INTO `act_hi_comment` VALUES ('59', 'comment', '2020-12-23 10:18:01.180', NULL, '50', '20', 'AddComment', '撤销', 0xE692A4E99480);
+INSERT INTO `act_hi_comment` VALUES ('60025', 'event', '2021-02-04 21:00:45.245', 'admin', '60023', NULL, 'AddUserLink', 'admin_|_candidate', NULL);
+INSERT INTO `act_hi_comment` VALUES ('60026', 'comment', '2021-02-04 21:01:05.152', NULL, '60023', '60001', 'AddComment', '', '');
+INSERT INTO `act_hi_comment` VALUES ('60031', 'event', '2021-02-04 21:01:05.487', NULL, '60029', NULL, 'AddUserLink', 'admin_|_candidate', NULL);
+INSERT INTO `act_hi_comment` VALUES ('60032', 'comment', '2021-02-04 21:01:31.571', NULL, '60029', '60001', 'AddComment', '', '');
+INSERT INTO `act_hi_comment` VALUES ('60036', 'event', '2021-02-04 21:01:31.930', NULL, '60034', NULL, 'AddUserLink', 'admin_|_candidate', NULL);
+INSERT INTO `act_hi_comment` VALUES ('60037', 'comment', '2021-02-04 21:02:04.491', NULL, '60034', '60001', 'AddComment', '', '');
+INSERT INTO `act_hi_comment` VALUES ('60042', 'event', '2021-02-04 21:02:04.685', NULL, '60040', NULL, 'AddUserLink', 'admin_|_candidate', NULL);
+INSERT INTO `act_hi_comment` VALUES ('60043', 'comment', '2021-02-04 21:02:20.108', NULL, '60040', '60001', 'AddComment', '', '');
 INSERT INTO `act_hi_comment` VALUES ('7532', 'event', '2021-01-18 11:06:18.339', 'admin', '7530', NULL, 'AddUserLink', 'admin_|_candidate', NULL);
 INSERT INTO `act_hi_comment` VALUES ('94', 'event', '2020-12-23 11:11:48.093', 'admin', '92', NULL, 'AddUserLink', 'admin_|_candidate', NULL);
 INSERT INTO `act_hi_comment` VALUES ('97', 'comment', '2020-12-23 11:24:25.652', NULL, '92', '69', 'AddComment', 'kkkk', 0x6B6B6B6B);
@@ -694,11 +702,7 @@ CREATE TABLE `act_hi_detail`  (
   INDEX `ACT_IDX_HI_DETAIL_TIME`(`TIME_`) USING BTREE,
   INDEX `ACT_IDX_HI_DETAIL_NAME`(`NAME_`) USING BTREE,
   INDEX `ACT_IDX_HI_DETAIL_TASK_ID`(`TASK_ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_hi_detail
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_hi_identitylink
@@ -715,7 +719,7 @@ CREATE TABLE `act_hi_identitylink`  (
   INDEX `ACT_IDX_HI_IDENT_LNK_USER`(`USER_ID_`) USING BTREE,
   INDEX `ACT_IDX_HI_IDENT_LNK_TASK`(`TASK_ID_`) USING BTREE,
   INDEX `ACT_IDX_HI_IDENT_LNK_PROCINST`(`PROC_INST_ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_hi_identitylink
@@ -877,7 +881,9 @@ INSERT INTO `act_hi_identitylink` VALUES ('47572', NULL, 'candidate', 'admin', '
 INSERT INTO `act_hi_identitylink` VALUES ('47578', NULL, 'candidate', 'admin', '47577', NULL);
 INSERT INTO `act_hi_identitylink` VALUES ('47583', NULL, 'candidate', 'admin', '47582', NULL);
 INSERT INTO `act_hi_identitylink` VALUES ('47589', NULL, 'candidate', 'admin', '47588', NULL);
+INSERT INTO `act_hi_identitylink` VALUES ('47bb317ba70a4c3a9b49418e3be67fa4', NULL, 'actualExecutor_p', 'admin', '60040', '60001');
 INSERT INTO `act_hi_identitylink` VALUES ('4a17e5dc029f46678ed7148c52bc58a9', NULL, 'actualExecutor_p', 'motb', '20089', '20035');
+INSERT INTO `act_hi_identitylink` VALUES ('4a7b2d9dddbb4bdba6b975b978401deb', NULL, 'actualExecutor_p', 'admin', '60023', '60001');
 INSERT INTO `act_hi_identitylink` VALUES ('4a967dc965504c10a2f235c67693aef2', NULL, 'actualExecutor_p', 'admin', '47571', '47547');
 INSERT INTO `act_hi_identitylink` VALUES ('50002', NULL, 'starter', 'admin', NULL, '50001');
 INSERT INTO `act_hi_identitylink` VALUES ('50026', NULL, 'candidate', 'admin', '50025', NULL);
@@ -930,6 +936,11 @@ INSERT INTO `act_hi_identitylink` VALUES ('5aa150ab055847458afadb6393e7d652', NU
 INSERT INTO `act_hi_identitylink` VALUES ('5ad0bb495eea417aa4e49db45c432c06', NULL, 'actualExecutor_p', 'admin', '47525', '47501');
 INSERT INTO `act_hi_identitylink` VALUES ('5adb972f43b5406e85329a4d83e410cf', NULL, 'actualExecutor_p', 'motb', '25047', '20107');
 INSERT INTO `act_hi_identitylink` VALUES ('5fb2013ec71d4ea3a442c094065563f6', NULL, 'actualExecutor_b', 'admin', '50', '20');
+INSERT INTO `act_hi_identitylink` VALUES ('60002', NULL, 'starter', 'admin', NULL, '60001');
+INSERT INTO `act_hi_identitylink` VALUES ('60024', NULL, 'candidate', 'admin', '60023', NULL);
+INSERT INTO `act_hi_identitylink` VALUES ('60030', NULL, 'candidate', 'admin', '60029', NULL);
+INSERT INTO `act_hi_identitylink` VALUES ('60035', NULL, 'candidate', 'admin', '60034', NULL);
+INSERT INTO `act_hi_identitylink` VALUES ('60041', NULL, 'candidate', 'admin', '60040', NULL);
 INSERT INTO `act_hi_identitylink` VALUES ('645ffc39dc80444daf6b35a47a71b2c1', NULL, 'actualExecutor_p', 'admin', '52504', '50187');
 INSERT INTO `act_hi_identitylink` VALUES ('6490e0c264a149a69c65137f0a05716f', NULL, 'actualExecutor_p', 'motb', '30018', '27502');
 INSERT INTO `act_hi_identitylink` VALUES ('65573c27543e43de9ab32ea7bb115be9', NULL, 'actualExecutor_b', 'admin', '45058', '45001');
@@ -973,6 +984,7 @@ INSERT INTO `act_hi_identitylink` VALUES ('aa40310542914cb7ad2320204da89780', NU
 INSERT INTO `act_hi_identitylink` VALUES ('aa425fe40af1462dbcad2179a2a6a669', NULL, 'actualExecutor_p', 'admin', '55025', '55001');
 INSERT INTO `act_hi_identitylink` VALUES ('ab84522a13d04e8dbe45757d98b6250a', NULL, 'actualExecutor_p', 'motb', '25040', '20107');
 INSERT INTO `act_hi_identitylink` VALUES ('abeeef1a3b8943eaa01819ed0be918e2', NULL, 'actualExecutor_p', 'admin', '35118', '35094');
+INSERT INTO `act_hi_identitylink` VALUES ('ad2a1912ab074860b1098a1d99cc2ca9', NULL, 'actualExecutor_p', 'admin', '60029', '60001');
 INSERT INTO `act_hi_identitylink` VALUES ('afccd05bad5a40a1a7979bb128c6774e', NULL, 'actualExecutor_p', 'admin', '47582', '47547');
 INSERT INTO `act_hi_identitylink` VALUES ('b00d167e2acf4000a01703208ad8bcbe', NULL, 'actualExecutor_p', 'admin', '52568', '52520');
 INSERT INTO `act_hi_identitylink` VALUES ('b8213284893d4a76a0e23a03f1923ba0', NULL, 'actualExecutor_p', 'motb', '20082', '20035');
@@ -984,6 +996,7 @@ INSERT INTO `act_hi_identitylink` VALUES ('c71cd1b73de2470ca1918209dfe60bcf', NU
 INSERT INTO `act_hi_identitylink` VALUES ('c80ccf6546b046ac97b749f97e072aa6', NULL, 'actualExecutor_p', 'motb', '27525', '27502');
 INSERT INTO `act_hi_identitylink` VALUES ('c8b2f971711f4a539a6e283555a0508a', NULL, 'actualExecutor_p', 'motb', '20058', '20035');
 INSERT INTO `act_hi_identitylink` VALUES ('c8dff74886fb41a8b84a0050c379fc3c', NULL, 'actualExecutor_p', 'admin', '45063', '45001');
+INSERT INTO `act_hi_identitylink` VALUES ('cc86319ee2fb44d998c47c0e61974d30', NULL, 'actualExecutor_p', 'admin', '60034', '60001');
 INSERT INTO `act_hi_identitylink` VALUES ('ccbc357439004706bd19baa0582c178d', NULL, 'actualExecutor_p', 'motb', '30108', '30064');
 INSERT INTO `act_hi_identitylink` VALUES ('cd3ab21568a440c1970c8915b3cda047', NULL, 'actualExecutor_p', 'admin', '45069', '45001');
 INSERT INTO `act_hi_identitylink` VALUES ('cdf4d0a23a314c08a1d68d7091ff3367', NULL, 'actualExecutor_p', 'admin', '37509', '35094');
@@ -1030,7 +1043,7 @@ CREATE TABLE `act_hi_procinst`  (
   UNIQUE INDEX `PROC_INST_ID_`(`PROC_INST_ID_`) USING BTREE,
   INDEX `ACT_IDX_HI_PRO_INST_END`(`END_TIME_`) USING BTREE,
   INDEX `ACT_IDX_HI_PRO_I_BUSKEY`(`BUSINESS_KEY_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_hi_procinst
@@ -1073,6 +1086,7 @@ INSERT INTO `act_hi_procinst` VALUES ('50187', '50187', '4028fae477418de5017741d
 INSERT INTO `act_hi_procinst` VALUES ('52520', '52520', '4028fae47742f4d4017742f7e9b60001', '会签流程:2:20032', '2021-01-27 16:36:10.150', '2021-01-27 16:51:58.002', 947852, 'admin', 'sid-157F82D5-2F4B-4B26-9845-DFAAF09BD98D', 'sid-043747B6-7F55-4259-9535-050D293F34E9', NULL, NULL, '', '会签流程申请杀杀杀杀杀杀杀杀杀');
 INSERT INTO `act_hi_procinst` VALUES ('55001', '55001', '4028fae4775b482101775b4821080000', '采购申请流程:3:7504', '2021-02-01 09:50:34.719', '2021-02-01 09:51:02.759', 28040, 'admin', 'sid-371F870C-5F2B-41B8-BDCA-94D82193DB13', NULL, NULL, 'backed', '', '采购申请');
 INSERT INTO `act_hi_procinst` VALUES ('57501', '57501', '4028fae4775b482101775b4821080000', '采购申请流程:3:7504', '2021-02-01 11:12:54.936', '2021-02-01 11:17:28.828', 273892, 'admin', 'sid-371F870C-5F2B-41B8-BDCA-94D82193DB13', 'sid-0A3B2739-6B75-487D-87E6-8AE776012A10', NULL, NULL, '', '采购申请');
+INSERT INTO `act_hi_procinst` VALUES ('60001', '60001', '40284481776d1c4101776d20d3290002', '采购申请流程:3:7504', '2021-02-04 21:00:45.027', '2021-02-04 21:02:20.204', 95177, 'admin', 'sid-371F870C-5F2B-41B8-BDCA-94D82193DB13', 'sid-0A3B2739-6B75-487D-87E6-8AE776012A10', NULL, NULL, '', '20210204一般采购合同-北京国炬软件-管理员');
 INSERT INTO `act_hi_procinst` VALUES ('69', '69', '4028fae4768d5f7801768d9469980001', '采购申请流程:1:66', '2020-12-23 11:11:48.060', '2020-12-23 11:24:25.662', 757602, 'admin', 'sid-371F870C-5F2B-41B8-BDCA-94D82193DB13', NULL, NULL, 'backed', '', '采购申请');
 INSERT INTO `act_hi_procinst` VALUES ('7507', '7507', '4028fae4771374d401771374d4800000', '采购申请流程:3:7504', '2021-01-18 11:06:18.267', '2021-01-18 17:09:22.724', 21784457, 'admin', 'sid-371F870C-5F2B-41B8-BDCA-94D82193DB13', 'sid-0A3B2739-6B75-487D-87E6-8AE776012A10', NULL, NULL, '', '采购申请');
 INSERT INTO `act_hi_procinst` VALUES ('98', '98', '4028fae4768d5f7801768d9469980001', '采购申请流程:1:66', '2020-12-23 11:28:04.129', '2020-12-23 16:15:30.279', 17246150, 'admin', 'sid-371F870C-5F2B-41B8-BDCA-94D82193DB13', NULL, NULL, 'canceled-', '', '采购申请');
@@ -1104,7 +1118,7 @@ CREATE TABLE `act_hi_taskinst`  (
   `TENANT_ID_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '',
   PRIMARY KEY (`ID_`) USING BTREE,
   INDEX `ACT_IDX_HI_TASK_INST_PROCINST`(`PROC_INST_ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_hi_taskinst
@@ -1239,6 +1253,10 @@ INSERT INTO `act_hi_taskinst` VALUES ('57525', '采购申请流程:3:7504', 'sid
 INSERT INTO `act_hi_taskinst` VALUES ('57531', '采购申请流程:3:7504', 'sid-052DEBAE-0B1D-47B4-AA4D-A4F8AED605D1', '57501', '57501', '主管1', NULL, NULL, NULL, NULL, '2021-02-01 11:13:05.331', NULL, '2021-02-01 11:17:19.222', 253891, 'completed', 0, NULL, NULL, NULL, '');
 INSERT INTO `act_hi_taskinst` VALUES ('57536', '采购申请流程:3:7504', 'sid-E514442F-F18F-44A6-AB93-DF7D84826DF4', '57501', '57501', '经理', NULL, NULL, NULL, NULL, '2021-02-01 11:17:19.223', NULL, '2021-02-01 11:17:25.251', 6028, 'completed', 0, NULL, NULL, NULL, '');
 INSERT INTO `act_hi_taskinst` VALUES ('57542', '采购申请流程:3:7504', 'sid-E0FEAA12-A82D-4658-8823-252E3DDF17CB', '57501', '57501', '采购部', NULL, NULL, NULL, NULL, '2021-02-01 11:17:25.252', NULL, '2021-02-01 11:17:28.828', 3576, 'completed', 0, NULL, NULL, NULL, '');
+INSERT INTO `act_hi_taskinst` VALUES ('60023', '采购申请流程:3:7504', 'sid-98C9BEB7-8658-4DE1-8967-1CF2A8EB641B', '60001', '60001', '发起科', NULL, NULL, NULL, NULL, '2021-02-04 21:00:45.070', NULL, '2021-02-04 21:01:05.374', 20304, 'completed', 0, NULL, NULL, NULL, '');
+INSERT INTO `act_hi_taskinst` VALUES ('60029', '采购申请流程:3:7504', 'sid-052DEBAE-0B1D-47B4-AA4D-A4F8AED605D1', '60001', '60001', '主管1', NULL, NULL, NULL, NULL, '2021-02-04 21:01:05.416', NULL, '2021-02-04 21:01:31.865', 26449, 'completed', 0, NULL, NULL, NULL, '');
+INSERT INTO `act_hi_taskinst` VALUES ('60034', '采购申请流程:3:7504', 'sid-E514442F-F18F-44A6-AB93-DF7D84826DF4', '60001', '60001', '经理', NULL, NULL, NULL, NULL, '2021-02-04 21:01:31.867', NULL, '2021-02-04 21:02:04.583', 32716, 'completed', 0, NULL, NULL, NULL, '');
+INSERT INTO `act_hi_taskinst` VALUES ('60040', '采购申请流程:3:7504', 'sid-E0FEAA12-A82D-4658-8823-252E3DDF17CB', '60001', '60001', '采购部', NULL, NULL, NULL, NULL, '2021-02-04 21:02:04.586', NULL, '2021-02-04 21:02:20.200', 15614, 'completed', 0, NULL, NULL, NULL, '');
 INSERT INTO `act_hi_taskinst` VALUES ('7530', '采购申请流程:3:7504', 'sid-98C9BEB7-8658-4DE1-8967-1CF2A8EB641B', '7507', '7507', '发起科', NULL, NULL, NULL, NULL, '2021-01-18 11:06:18.288', NULL, '2021-01-18 17:08:27.816', 21729528, 'completed', 0, NULL, NULL, NULL, '');
 INSERT INTO `act_hi_taskinst` VALUES ('92', '采购申请流程:1:66', 'sid-98C9BEB7-8658-4DE1-8967-1CF2A8EB641B', '69', '69', '发起科', NULL, NULL, NULL, NULL, '2020-12-23 11:11:48.061', NULL, '2020-12-23 11:24:25.660', 757599, 'backed', 0, NULL, NULL, NULL, '');
 
@@ -1265,7 +1283,7 @@ CREATE TABLE `act_hi_varinst`  (
   INDEX `ACT_IDX_HI_PROCVAR_PROC_INST`(`PROC_INST_ID_`) USING BTREE,
   INDEX `ACT_IDX_HI_PROCVAR_NAME_TYPE`(`NAME_`, `VAR_TYPE_`) USING BTREE,
   INDEX `ACT_IDX_HI_PROCVAR_TASK_ID`(`TASK_ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_hi_varinst
@@ -2083,6 +2101,24 @@ INSERT INTO `act_hi_varinst` VALUES ('57520', '57501', '57501', NULL, 'chegnshi'
 INSERT INTO `act_hi_varinst` VALUES ('57521', '57501', '57501', NULL, 'tableId', 'string', 1, NULL, NULL, NULL, 'caa65e290c5f4905b644628e19073cd5', NULL, '2021-02-01 11:12:54.938', '2021-02-01 11:17:28.835');
 INSERT INTO `act_hi_varinst` VALUES ('57522', '57501', '57501', NULL, 'id', 'string', 5, NULL, NULL, NULL, 'caa65e290c5f4905b644628e19073cd5', NULL, '2021-02-01 11:12:54.938', '2021-02-01 11:17:28.835');
 INSERT INTO `act_hi_varinst` VALUES ('57523', '57501', '57501', NULL, 'age', 'null', 5, NULL, NULL, NULL, NULL, NULL, '2021-02-01 11:12:54.938', '2021-02-01 11:17:28.835');
+INSERT INTO `act_hi_varinst` VALUES ('60004', '60001', '60001', NULL, 'code', 'string', 5, NULL, NULL, NULL, '1', NULL, '2021-02-04 21:00:45.027', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60005', '60001', '60001', NULL, 'thirdMember', 'null', 5, NULL, NULL, NULL, NULL, NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60006', '60001', '60001', NULL, 'remark', 'null', 5, NULL, NULL, NULL, NULL, NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60007', '60001', '60001', NULL, 'updateTime', 'date', 5, NULL, NULL, 1612443627000, NULL, NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60008', '60001', '60001', NULL, 'userId', 'string', 5, NULL, NULL, NULL, 'admin', NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60009', '60001', '60001', NULL, 'memberUse', 'null', 5, NULL, NULL, NULL, NULL, NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60010', '60001', '60001', NULL, 'typeCode', 'string', 5, NULL, NULL, NULL, '1', NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60011', '60001', '60001', NULL, 'createBy', 'string', 5, NULL, NULL, NULL, 'admin', NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60012', '60001', '60001', NULL, 'condition', 'string', 1, NULL, NULL, NULL, '路线一', NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60013', '60001', '60001', NULL, 'firstMember', 'null', 5, NULL, NULL, NULL, NULL, NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60014', '60001', '60001', NULL, 'createTime', 'date', 5, NULL, NULL, 1612443604000, NULL, NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60015', '60001', '60001', NULL, 'updateBy', 'string', 5, NULL, NULL, NULL, 'admin', NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60016', '60001', '60001', NULL, 'name', 'string', 5, NULL, NULL, NULL, '1', NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60017', '60001', '60001', NULL, 'tableId', 'string', 1, NULL, NULL, NULL, '1357312967439339521', NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60018', '60001', '60001', NULL, 'sysOrgCode', 'string', 5, NULL, NULL, NULL, 'A01', NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60019', '60001', '60001', NULL, 'id', 'string', 5, NULL, NULL, NULL, '1357312967439339521', NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60020', '60001', '60001', NULL, 'secondMember', 'null', 5, NULL, NULL, NULL, NULL, NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
+INSERT INTO `act_hi_varinst` VALUES ('60021', '60001', '60001', NULL, 'status', 'string', 5, NULL, NULL, NULL, '0', NULL, '2021-02-04 21:00:45.029', '2021-02-04 21:02:20.220');
 INSERT INTO `act_hi_varinst` VALUES ('72', '69', '69', NULL, 'birthday', 'null', 1, NULL, NULL, NULL, NULL, NULL, '2020-12-23 11:11:48.060', '2020-12-23 11:24:25.671');
 INSERT INTO `act_hi_varinst` VALUES ('73', '69', '69', NULL, 'descc', 'null', 1, NULL, NULL, NULL, NULL, NULL, '2020-12-23 11:11:48.060', '2020-12-23 11:24:25.671');
 INSERT INTO `act_hi_varinst` VALUES ('74', '69', '69', NULL, 'ceck', 'null', 1, NULL, NULL, NULL, NULL, NULL, '2020-12-23 11:11:48.060', '2020-12-23 11:24:25.671');
@@ -2132,11 +2168,7 @@ CREATE TABLE `act_id_group`  (
   `NAME_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `TYPE_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   PRIMARY KEY (`ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_id_group
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_id_info
@@ -2152,11 +2184,7 @@ CREATE TABLE `act_id_info`  (
   `PASSWORD_` longblob NULL,
   `PARENT_ID_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   PRIMARY KEY (`ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_id_info
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_id_membership
@@ -2169,11 +2197,7 @@ CREATE TABLE `act_id_membership`  (
   INDEX `ACT_FK_MEMB_GROUP`(`GROUP_ID_`) USING BTREE,
   CONSTRAINT `ACT_FK_MEMB_GROUP` FOREIGN KEY (`GROUP_ID_`) REFERENCES `act_id_group` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_MEMB_USER` FOREIGN KEY (`USER_ID_`) REFERENCES `act_id_user` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_id_membership
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_id_user
@@ -2188,11 +2212,7 @@ CREATE TABLE `act_id_user`  (
   `PWD_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `PICTURE_ID_` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   PRIMARY KEY (`ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_id_user
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_procdef_info
@@ -2209,11 +2229,7 @@ CREATE TABLE `act_procdef_info`  (
   INDEX `ACT_FK_INFO_JSON_BA`(`INFO_JSON_ID_`) USING BTREE,
   CONSTRAINT `ACT_FK_INFO_JSON_BA` FOREIGN KEY (`INFO_JSON_ID_`) REFERENCES `act_ge_bytearray` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_INFO_PROCDEF` FOREIGN KEY (`PROC_DEF_ID_`) REFERENCES `act_re_procdef` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_procdef_info
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_re_deployment
@@ -2226,7 +2242,7 @@ CREATE TABLE `act_re_deployment`  (
   `TENANT_ID_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '',
   `DEPLOY_TIME_` timestamp(3) NULL DEFAULT NULL,
   PRIMARY KEY (`ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_re_deployment
@@ -2263,7 +2279,7 @@ CREATE TABLE `act_re_model`  (
   CONSTRAINT `ACT_FK_MODEL_DEPLOYMENT` FOREIGN KEY (`DEPLOYMENT_ID_`) REFERENCES `act_re_deployment` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_MODEL_SOURCE` FOREIGN KEY (`EDITOR_SOURCE_VALUE_ID_`) REFERENCES `act_ge_bytearray` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_MODEL_SOURCE_EXTRA` FOREIGN KEY (`EDITOR_SOURCE_EXTRA_VALUE_ID_`) REFERENCES `act_ge_bytearray` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_re_model
@@ -2293,7 +2309,7 @@ CREATE TABLE `act_re_procdef`  (
   `TENANT_ID_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '',
   PRIMARY KEY (`ID_`) USING BTREE,
   UNIQUE INDEX `ACT_UNIQ_PROCDEF`(`KEY_`, `VERSION_`, `TENANT_ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_re_procdef
@@ -2325,11 +2341,7 @@ CREATE TABLE `act_ru_event_subscr`  (
   INDEX `ACT_IDX_EVENT_SUBSCR_CONFIG_`(`CONFIGURATION_`) USING BTREE,
   INDEX `ACT_FK_EVENT_EXEC`(`EXECUTION_ID_`) USING BTREE,
   CONSTRAINT `ACT_FK_EVENT_EXEC` FOREIGN KEY (`EXECUTION_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_ru_event_subscr
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_ru_execution
@@ -2363,11 +2375,7 @@ CREATE TABLE `act_ru_execution`  (
   CONSTRAINT `ACT_FK_EXE_PROCDEF` FOREIGN KEY (`PROC_DEF_ID_`) REFERENCES `act_re_procdef` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_EXE_PROCINST` FOREIGN KEY (`PROC_INST_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ACT_FK_EXE_SUPER` FOREIGN KEY (`SUPER_EXEC_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_ru_execution
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_ru_identitylink
@@ -2391,11 +2399,7 @@ CREATE TABLE `act_ru_identitylink`  (
   CONSTRAINT `ACT_FK_ATHRZ_PROCEDEF` FOREIGN KEY (`PROC_DEF_ID_`) REFERENCES `act_re_procdef` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_IDL_PROCINST` FOREIGN KEY (`PROC_INST_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_TSKASS_TASK` FOREIGN KEY (`TASK_ID_`) REFERENCES `act_ru_task` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_ru_identitylink
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_ru_job
@@ -2422,7 +2426,7 @@ CREATE TABLE `act_ru_job`  (
   PRIMARY KEY (`ID_`) USING BTREE,
   INDEX `ACT_FK_JOB_EXCEPTION`(`EXCEPTION_STACK_ID_`) USING BTREE,
   CONSTRAINT `ACT_FK_JOB_EXCEPTION` FOREIGN KEY (`EXCEPTION_STACK_ID_`) REFERENCES `act_ge_bytearray` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_ru_job
@@ -2466,11 +2470,7 @@ CREATE TABLE `act_ru_task`  (
   CONSTRAINT `ACT_FK_TASK_EXE` FOREIGN KEY (`EXECUTION_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_TASK_PROCDEF` FOREIGN KEY (`PROC_DEF_ID_`) REFERENCES `act_re_procdef` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_TASK_PROCINST` FOREIGN KEY (`PROC_INST_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_ru_task
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_ru_variable
@@ -2497,11 +2497,7 @@ CREATE TABLE `act_ru_variable`  (
   CONSTRAINT `ACT_FK_VAR_BYTEARRAY` FOREIGN KEY (`BYTEARRAY_ID_`) REFERENCES `act_ge_bytearray` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_VAR_EXE` FOREIGN KEY (`EXECUTION_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_VAR_PROCINST` FOREIGN KEY (`PROC_INST_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of act_ru_variable
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for act_z_business
@@ -2526,11 +2522,12 @@ CREATE TABLE `act_z_business`  (
   `table_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据表名',
   `type_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程类型id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程业务扩展表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程业务扩展表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_z_business
 -- ----------------------------
+INSERT INTO `act_z_business` VALUES ('40284481776d1c4101776d20d3290002', 'admin', '2021-02-04 21:00:04', NULL, 'admin', '2021-02-04 21:02:20', '采购申请流程:3:7504', '60001', 2, 2, '1357312967439339521', '20210204一般采购合同-北京国炬软件-管理员', 'admin', '2021-02-04 21:00:45', NULL, 'contract_purchase', NULL);
 INSERT INTO `act_z_business` VALUES ('4028fae4768d5f7801768d5f78890000', 'admin', '2020-12-23 10:13:33', NULL, 'admin', '2020-12-23 16:22:50', '请假审批流程:1:17', '152', 2, 2, '247688124a4d45c88930610422242e93', '请假申请', 'admin', '2020-12-23 16:18:50', NULL, 'test_demo', NULL);
 INSERT INTO `act_z_business` VALUES ('4028fae4768d5f7801768d9469980001', 'admin', '2020-12-23 11:11:23', NULL, 'admin', '2021-01-14 10:14:54', '采购申请流程:1:66', '219', 0, 3, 'dc95dbb1761e4d8e8fcc7c52a148d917', '采购申请', 'admin', '2020-12-23 16:34:11', NULL, 'test_demo', NULL);
 INSERT INTO `act_z_business` VALUES ('4028fae4768d5f7801768eb201460002', 'admin', '2020-12-23 16:23:19', NULL, 'admin', '2021-01-19 17:22:37', '请假审批流程:1:17', '193', 2, 2, '827ee54d8a814a1ba8736577847c37b1', '请假申请', 'admin', '2020-12-23 16:25:00', NULL, 'test_demo', NULL);
@@ -2555,9 +2552,6 @@ INSERT INTO `act_z_business` VALUES ('4028fae477418de5017741a168d80001', 'admin'
 INSERT INTO `act_z_business` VALUES ('4028fae477418de5017741d828280004', 'admin', '2021-01-27 11:17:01', NULL, 'admin', '2021-01-27 15:55:18', '采购申请流程:3:7504', '50187', 2, 2, '2fa5f810925042d1bc88f281c5737cbd', '采购申请', 'admin', '2021-01-27 15:46:35', NULL, 'test_demo', NULL);
 INSERT INTO `act_z_business` VALUES ('4028fae47742f4d4017742f7e9b60001', 'admin', '2021-01-27 16:31:19', NULL, 'motb', '2021-01-27 16:51:58', '会签流程:2:20032', '52520', 2, 2, '63ea739d850a4922b1b8f94c729c9ad0', '会签流程申请杀杀杀杀杀杀杀杀杀', 'admin', '2021-01-27 16:36:10', NULL, 'test_sign', NULL);
 INSERT INTO `act_z_business` VALUES ('4028fae4775b482101775b4821080000', 'admin', '2021-02-01 09:49:50', NULL, 'admin', '2021-02-01 11:17:29', '采购申请流程:3:7504', '57501', 2, 2, 'caa65e290c5f4905b644628e19073cd5', '采购申请', 'admin', '2021-02-01 11:12:55', NULL, 'test_demo', NULL);
-INSERT INTO `act_z_business` VALUES ('4028fae4776c771901776c7991d50002', 'admin', '2021-02-04 17:57:23', NULL, NULL, NULL, '采购申请流程:3:7504', NULL, 0, 0, '1357266992683311105', '20210204一般采购合同-北京国炬软件-管理员', 'admin', NULL, NULL, 'contract_general', NULL);
-INSERT INTO `act_z_business` VALUES ('4028fae4776c7b5901776c7b59a00000', 'admin', '2021-02-04 17:59:19', NULL, NULL, NULL, '采购申请流程:3:7504', NULL, 0, 0, '1357267482057940994', '20210204一般采购合同-北京国炬软件-管理员', 'admin', NULL, NULL, 'contract_general', NULL);
-INSERT INTO `act_z_business` VALUES ('4028fae4776c7b5901776c7df33c0001', 'admin', '2021-02-04 18:02:10', NULL, NULL, NULL, '采购申请流程:3:7504', NULL, 0, 0, '1357268196775731202', '20210204一般采购合同-北京国炬软件-管理员', 'admin', NULL, NULL, 'contract_general', NULL);
 
 -- ----------------------------
 -- Table structure for act_z_node
@@ -2575,7 +2569,7 @@ CREATE TABLE `act_z_node`  (
   `relate_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '关联其他表id',
   `proc_def_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程定义id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程节点扩展表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程节点扩展表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_z_node
@@ -2814,7 +2808,7 @@ CREATE TABLE `act_z_params`  (
   `params_key` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数名',
   `params_val` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数值',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '自定义流程参数表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '自定义流程参数表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_z_params
@@ -2834,6 +2828,7 @@ INSERT INTO `act_z_params` VALUES ('1354347388063539202', 'admin', '2021-01-27 1
 INSERT INTO `act_z_params` VALUES ('1354347388067733506', 'admin', '2021-01-27 16:35:55', NULL, NULL, 'A01', '63ea739d850a4922b1b8f94c729c9ad0', 'condition2', 'n');
 INSERT INTO `act_z_params` VALUES ('1354347388067733507', 'admin', '2021-01-27 16:35:55', NULL, NULL, 'A01', '63ea739d850a4922b1b8f94c729c9ad0', 'condition3', 'y');
 INSERT INTO `act_z_params` VALUES ('1356057211658358786', 'admin', '2021-02-01 09:50:08', NULL, NULL, 'A01', 'caa65e290c5f4905b644628e19073cd5', 'condition', '路线一');
+INSERT INTO `act_z_params` VALUES ('1357313063996411905', 'admin', '2021-02-04 21:00:27', NULL, NULL, 'A01', '1357312967439339521', 'condition', '路线一');
 
 -- ----------------------------
 -- Table structure for act_z_process
@@ -2862,7 +2857,7 @@ CREATE TABLE `act_z_process`  (
   `sort` int(5) NULL DEFAULT NULL COMMENT '排序',
   `report_model_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程表单报表ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程定义扩展表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程定义扩展表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of act_z_process
@@ -2872,7 +2867,7 @@ INSERT INTO `act_z_process` VALUES ('会签流程:2:20032', NULL, '2021-01-19 11
 INSERT INTO `act_z_process` VALUES ('请假审批流程:1:17', NULL, '2020-12-23 10:00:54', NULL, 'admin', '2020-12-23 10:04:48', 'test', '14', 'description', '请假申请.请假审批流程.png', b'1', '请假申请', 'apply_leave', 1, 1, 'test_demo', '@/views/activiti/form/demoForm', 'admin', '1185039299051073537', NULL, NULL);
 INSERT INTO `act_z_process` VALUES ('采购申请流程:1:66', NULL, '2020-12-23 11:07:53', NULL, 'admin', '2021-01-18 11:04:54', 'test', '63', 'description', '采购申请.采购申请流程.png', b'0', '采购申请', 'purchase', 1, 1, 'test_demo', '@/views/activiti/form/demoForm', NULL, '1185039299051073537', NULL, NULL);
 INSERT INTO `act_z_process` VALUES ('采购申请流程:2:2504', NULL, '2021-01-14 10:15:13', NULL, 'admin', '2021-01-18 11:04:54', 'test', '2501', 'description', '采购申请.采购申请流程.png', b'0', '采购申请', 'purchase', 1, 2, 'test_demo', '@/views/activiti/form/demoForm', NULL, '1185039176799694850', NULL, NULL);
-INSERT INTO `act_z_process` VALUES ('采购申请流程:3:7504', NULL, '2021-01-18 11:04:54', NULL, 'admin', '2021-02-04 09:34:21', 'test', '7501', 'description', '采购申请.采购申请流程.png', b'1', '采购申请', 'purchase', 1, 3, 'contract_general', '@/views/contract/manage/modules/ContractGeneralForm', NULL, '1185039299051073537', NULL, NULL);
+INSERT INTO `act_z_process` VALUES ('采购申请流程:3:7504', NULL, '2021-01-18 11:04:54', NULL, 'admin', '2021-02-04 20:56:42', 'test', '7501', 'description', '采购申请.采购申请流程.png', b'1', '采购申请', 'purchase', 1, 3, 'contract_purchase', '@/views/contract/manage/modules/ContractGeneralForm', NULL, '1185039299051073537', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for ces_field_kongj
@@ -2900,7 +2895,7 @@ CREATE TABLE `ces_field_kongj`  (
   `dep_sel` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '选择部门',
   `ddd` double(10, 0) NULL DEFAULT NULL COMMENT 'DD类型',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ces_field_kongj
@@ -2927,7 +2922,7 @@ CREATE TABLE `ces_order_customer`  (
   `address` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '常用地址',
   `order_main_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '订单ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ces_order_customer
@@ -2957,7 +2952,7 @@ CREATE TABLE `ces_order_goods`  (
   `zong_price` double NULL DEFAULT NULL COMMENT '单品总价',
   `order_main_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '订单ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ces_order_goods
@@ -2989,7 +2984,7 @@ CREATE TABLE `ces_order_main`  (
   `money` double NULL DEFAULT NULL COMMENT '订单总额',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ces_order_main
@@ -3016,7 +3011,7 @@ CREATE TABLE `ces_shop_goods`  (
   `contents` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品简介',
   `good_type_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商品分类',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ces_shop_goods
@@ -3042,7 +3037,7 @@ CREATE TABLE `ces_shop_type`  (
   `pid` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '父级节点',
   `has_child` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '是否有子节点',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ces_shop_type
@@ -3072,11 +3067,7 @@ CREATE TABLE `contract_base`  (
   `status` int(11) NULL DEFAULT NULL COMMENT '合同状态',
   `remark` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '合同基础表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of contract_base
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '合同基础表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for contract_general
@@ -3109,12 +3100,15 @@ CREATE TABLE `contract_general`  (
   `file_attach` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附件',
   `file_contract` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '合同文件',
   `base_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '主信息id',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '一般采购合同' ROW_FORMAT = DYNAMIC;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `主表`(`base_id`) USING BTREE,
+  CONSTRAINT `主表` FOREIGN KEY (`base_id`) REFERENCES `contract_purchase` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '一般采购合同' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of contract_general
 -- ----------------------------
+INSERT INTO `contract_general` VALUES ('1357312967489671169', 'admin', '2021-02-04 21:00:04', 'admin', '2021-02-04 21:00:27', 'A01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '1', '1', '1', '1', '1', '1', '1357312967439339521');
 
 -- ----------------------------
 -- Table structure for contract_purchase
@@ -3138,14 +3132,12 @@ CREATE TABLE `contract_purchase`  (
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `member_use` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '签署方数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '采购合同基础表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '采购合同基础表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of contract_purchase
 -- ----------------------------
-INSERT INTO `contract_purchase` VALUES ('1357266992683311105', 'admin', '2021-02-04 17:57:23', NULL, NULL, 'A01', '1', '1', '1', NULL, NULL, NULL, 'admin', '0', NULL, '1');
-INSERT INTO `contract_purchase` VALUES ('1357267482057940994', 'admin', '2021-02-04 17:59:19', NULL, NULL, 'A01', '1', '1', '1', NULL, NULL, NULL, 'admin', '0', NULL, '1');
-INSERT INTO `contract_purchase` VALUES ('1357268196775731202', 'admin', '2021-02-04 18:02:10', NULL, NULL, 'A01', '1', '1', '1', NULL, NULL, NULL, 'admin', '0', NULL, '1');
+INSERT INTO `contract_purchase` VALUES ('1357312967439339521', 'admin', '2021-02-04 21:00:04', 'admin', '2021-02-04 21:00:27', 'A01', '1', '1', '1', NULL, NULL, NULL, 'admin', '0', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for contract_type
@@ -3167,7 +3159,7 @@ CREATE TABLE `contract_type`  (
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
   `roles` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '合同类型表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '合同类型表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of contract_type
@@ -3203,7 +3195,7 @@ CREATE TABLE `demo`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `sys_org_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门编码',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of demo
@@ -3244,7 +3236,7 @@ CREATE TABLE `demo_field_def_val_main`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   `sys_org_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '所属部门',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of demo_field_def_val_main
@@ -3267,7 +3259,7 @@ CREATE TABLE `demo_field_def_val_sub`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   `sys_org_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '所属部门',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of demo_field_def_val_sub
@@ -3286,7 +3278,7 @@ CREATE TABLE `jeecg_monthly_growth_analysis`  (
   `main_income` decimal(18, 2) NULL DEFAULT 0.00 COMMENT '佣金/主营收入',
   `other_income` decimal(18, 2) NULL DEFAULT 0.00 COMMENT '其他收入',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jeecg_monthly_growth_analysis
@@ -3333,7 +3325,7 @@ CREATE TABLE `jeecg_order_customer`  (
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jeecg_order_customer
@@ -3415,7 +3407,7 @@ CREATE TABLE `jeecg_order_main`  (
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jeecg_order_main
@@ -3449,7 +3441,7 @@ CREATE TABLE `jeecg_order_ticket`  (
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jeecg_order_ticket
@@ -3514,7 +3506,7 @@ CREATE TABLE `jeecg_project_nature_income`  (
   `bidding_consulting_fee` decimal(18, 2) NULL DEFAULT 0.00 COMMENT '投标咨询费',
   `interol_consulting_fee` decimal(18, 2) NULL DEFAULT 0.00 COMMENT '内控咨询费',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jeecg_project_nature_income
@@ -3544,11 +3536,7 @@ CREATE TABLE `joa_demo`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人id'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程测试' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of joa_demo
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程测试' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for onl_auth_data
@@ -3567,11 +3555,7 @@ CREATE TABLE `onl_auth_data`  (
   `update_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of onl_auth_data
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for onl_auth_page
@@ -3590,11 +3574,7 @@ CREATE TABLE `onl_auth_page`  (
   `update_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of onl_auth_page
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for onl_auth_relation
@@ -3607,11 +3587,7 @@ CREATE TABLE `onl_auth_relation`  (
   `type` int(1) NULL DEFAULT NULL COMMENT '1字段 2按钮 3数据权限',
   `cgform_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'online表单ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of onl_auth_relation
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for onl_cgform_button
@@ -3638,7 +3614,7 @@ CREATE TABLE `onl_cgform_button`  (
   INDEX `idx_ocb_BUTTON_CODE`(`BUTTON_CODE`) USING BTREE,
   INDEX `idx_ocb_BUTTON_STATUS`(`BUTTON_STATUS`) USING BTREE,
   INDEX `idx_ocb_ORDER_NUM`(`ORDER_NUM`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Online表单自定义按钮' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Online表单自定义按钮' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of onl_cgform_button
@@ -3669,11 +3645,7 @@ CREATE TABLE `onl_cgform_enhance_java`  (
   INDEX `idx_ejava_cgform_head_id`(`CGFORM_HEAD_ID`) USING BTREE,
   INDEX `idx_ocej_BUTTON_CODE`(`BUTTON_CODE`) USING BTREE,
   INDEX `idx_ocej_ACTIVE_STATUS`(`ACTIVE_STATUS`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of onl_cgform_enhance_java
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for onl_cgform_enhance_js
@@ -3690,7 +3662,7 @@ CREATE TABLE `onl_cgform_enhance_js`  (
   INDEX `index_jstype`(`CG_JS_TYPE`) USING BTREE,
   INDEX `idx_ejs_cgform_head_id`(`CGFORM_HEAD_ID`) USING BTREE,
   INDEX `idx_ejs_cg_js_type`(`CG_JS_TYPE`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of onl_cgform_enhance_js
@@ -3727,7 +3699,7 @@ CREATE TABLE `onl_cgform_enhance_sql`  (
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `index_formid`(`CGFORM_HEAD_ID`) USING BTREE,
   INDEX `idx_oces_CGFORM_HEAD_ID`(`CGFORM_HEAD_ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of onl_cgform_enhance_sql
@@ -3789,7 +3761,7 @@ CREATE TABLE `onl_cgform_field`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `inex_table_id`(`cgform_head_id`) USING BTREE,
   INDEX `idx_ocf_cgform_head_id`(`cgform_head_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of onl_cgform_field
@@ -4575,7 +4547,7 @@ CREATE TABLE `onl_cgform_head`  (
   INDEX `idx_och_table_name`(`form_template`) USING BTREE,
   INDEX `idx_och_form_template_mobile`(`form_template_mobile`) USING BTREE,
   INDEX `idx_och_table_version`(`table_version`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of onl_cgform_head
@@ -4624,11 +4596,7 @@ CREATE TABLE `onl_cgform_index`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_table_id`(`cgform_head_id`) USING BTREE,
   INDEX `idx_oci_cgform_head_id`(`cgform_head_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of onl_cgform_index
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for onl_cgreport_head
@@ -4651,7 +4619,7 @@ CREATE TABLE `onl_cgreport_head`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `index_onlinereport_code`(`code`) USING BTREE,
   INDEX `idx_och_code`(`code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of onl_cgreport_head
@@ -4693,7 +4661,7 @@ CREATE TABLE `onl_cgreport_item`  (
   INDEX `idx_oci_cgrhead_id`(`cgrhead_id`) USING BTREE,
   INDEX `idx_oci_is_show`(`is_show`) USING BTREE,
   INDEX `idx_oci_order_num`(`order_num`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of onl_cgreport_item
@@ -4739,11 +4707,7 @@ CREATE TABLE `onl_cgreport_param`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_cgrheadid`(`cgrhead_id`) USING BTREE,
   INDEX `idx_ocp_cgrhead_id`(`cgrhead_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of onl_cgreport_param
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for oss_file
@@ -4758,11 +4722,7 @@ CREATE TABLE `oss_file`  (
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人登录名称',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Oss File' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of oss_file
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Oss File' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
@@ -4775,11 +4735,7 @@ CREATE TABLE `qrtz_blob_triggers`  (
   `BLOB_DATA` blob NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of qrtz_blob_triggers
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for qrtz_calendars
@@ -4790,11 +4746,7 @@ CREATE TABLE `qrtz_calendars`  (
   `CALENDAR_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `CALENDAR` blob NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `CALENDAR_NAME`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of qrtz_calendars
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for qrtz_cron_triggers
@@ -4808,11 +4760,7 @@ CREATE TABLE `qrtz_cron_triggers`  (
   `TIME_ZONE_ID` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of qrtz_cron_triggers
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for qrtz_fired_triggers
@@ -4833,11 +4781,7 @@ CREATE TABLE `qrtz_fired_triggers`  (
   `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`, `ENTRY_ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of qrtz_fired_triggers
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for qrtz_job_details
@@ -4855,11 +4799,7 @@ CREATE TABLE `qrtz_job_details`  (
   `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `JOB_DATA` blob NULL,
   PRIMARY KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of qrtz_job_details
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for qrtz_locks
@@ -4869,7 +4809,7 @@ CREATE TABLE `qrtz_locks`  (
   `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `LOCK_NAME` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `LOCK_NAME`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qrtz_locks
@@ -4885,11 +4825,7 @@ CREATE TABLE `qrtz_paused_trigger_grps`  (
   `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of qrtz_paused_trigger_grps
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for qrtz_scheduler_state
@@ -4901,12 +4837,12 @@ CREATE TABLE `qrtz_scheduler_state`  (
   `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
   `CHECKIN_INTERVAL` bigint(13) NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `INSTANCE_NAME`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('MyScheduler', 'DESKTOP-762MST21612432738693', 1612432986807, 10000);
+INSERT INTO `qrtz_scheduler_state` VALUES ('MyScheduler', 'SC-2018102116301612442902135', 1612450720802, 10000);
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -4921,11 +4857,7 @@ CREATE TABLE `qrtz_simple_triggers`  (
   `TIMES_TRIGGERED` bigint(10) NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of qrtz_simple_triggers
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for qrtz_simprop_triggers
@@ -4948,11 +4880,7 @@ CREATE TABLE `qrtz_simprop_triggers`  (
   `BOOL_PROP_2` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of qrtz_simprop_triggers
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for qrtz_triggers
@@ -4978,11 +4906,7 @@ CREATE TABLE `qrtz_triggers`  (
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   INDEX `SCHED_NAME`(`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of qrtz_triggers
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_announcement
@@ -5013,7 +4937,7 @@ CREATE TABLE `sys_announcement`  (
   `user_ids` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '指定用户',
   `msg_abstract` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '摘要',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统通告表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统通告表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_announcement
@@ -5172,6 +5096,11 @@ INSERT INTO `sys_announcement` VALUES ('1356078087162363906', '您有一个新�
 INSERT INTO `sys_announcement` VALUES ('1356079152024846338', '您有一个新的审批任务：采购申请', '您有一个新的审批任务：采购申请', NULL, NULL, 'admin', 'M', '2', 'USER', '1', '2021-02-01 11:17:19', NULL, '0', 'bpm', '4028fae4775b482101775b4821080000', 'url', '/activiti/todoManage', 'admin', '2021-02-01 11:17:19', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_announcement` VALUES ('1356079177320693762', '您有一个新的审批任务：采购申请', '您有一个新的审批任务：采购申请', NULL, NULL, 'admin', 'M', '2', 'USER', '1', '2021-02-01 11:17:25', NULL, '0', 'bpm', '4028fae4775b482101775b4821080000', 'url', '/activiti/todoManage', 'admin', '2021-02-01 11:17:25', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_announcement` VALUES ('1356079192378245121', '申请流程已通过', '您的 【采购申请】 申请已通过！', NULL, NULL, 'admin', 'M', '2', 'USER', '1', '2021-02-01 11:17:29', NULL, '0', 'bpm', '4028fae4775b482101775b4821080000', 'url', '/activiti/todoManage', 'admin', '2021-02-01 11:17:29', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_announcement` VALUES ('1357313141561675777', '您有一个新的审批任务：20210204一般采购合同-北京国炬软件-管理员', '您有一个新的审批任务：20210204一般采购合同-北京国炬软件-管理员', NULL, NULL, 'admin', 'M', '2', 'USER', '1', '2021-02-04 21:00:45', NULL, '0', 'bpm', '40284481776d1c4101776d20d3290002', 'url', '/activiti/todoManage', 'admin', '2021-02-04 21:00:45', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_announcement` VALUES ('1357313226399862785', '您有一个新的审批任务：20210204一般采购合同-北京国炬软件-管理员', '您有一个新的审批任务：20210204一般采购合同-北京国炬软件-管理员', NULL, NULL, 'admin', 'M', '2', 'USER', '1', '2021-02-04 21:01:05', NULL, '0', 'bpm', '40284481776d1c4101776d20d3290002', 'url', '/activiti/todoManage', 'admin', '2021-02-04 21:01:05', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_announcement` VALUES ('1357313337314037761', '您有一个新的审批任务：20210204一般采购合同-北京国炬软件-管理员', '您有一个新的审批任务：20210204一般采购合同-北京国炬软件-管理员', NULL, NULL, 'admin', 'M', '2', 'USER', '1', '2021-02-04 21:01:32', NULL, '0', 'bpm', '40284481776d1c4101776d20d3290002', 'url', '/activiti/todoManage', 'admin', '2021-02-04 21:01:32', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_announcement` VALUES ('1357313474698465281', '您有一个新的审批任务：20210204一般采购合同-北京国炬软件-管理员', '您有一个新的审批任务：20210204一般采购合同-北京国炬软件-管理员', NULL, NULL, 'admin', 'M', '2', 'USER', '1', '2021-02-04 21:02:05', NULL, '0', 'bpm', '40284481776d1c4101776d20d3290002', 'url', '/activiti/todoManage', 'admin', '2021-02-04 21:02:05', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_announcement` VALUES ('1357313540213493761', '申请流程已通过', '您的 【20210204一般采购合同-北京国炬软件-管理员】 申请已通过！', NULL, NULL, 'admin', 'M', '2', 'USER', '1', '2021-02-04 21:02:20', NULL, '0', 'bpm', '40284481776d1c4101776d20d3290002', 'url', '/activiti/todoManage', 'admin', '2021-02-04 21:02:20', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_announcement` VALUES ('1b714f8ebc3cc33f8b4f906103b6a18d', '5467567', NULL, NULL, NULL, 'admin', NULL, '2', NULL, '1', '2019-03-30 12:40:38', NULL, '1', NULL, NULL, NULL, NULL, 'admin', '2019-02-26 17:23:26', 'admin', '2020-05-02 15:30:42', NULL, NULL);
 INSERT INTO `sys_announcement` VALUES ('3d11237ccdf62450d20bb8abdb331178', '111222', NULL, NULL, NULL, NULL, NULL, '2', NULL, '0', NULL, NULL, '1', NULL, NULL, NULL, NULL, 'admin', '2019-03-29 17:19:47', 'admin', '2019-03-29 17:19:50', NULL, NULL);
 INSERT INTO `sys_announcement` VALUES ('7ef04e95f8de030b1d5f7a9144090dc6', '111', NULL, '2019-02-06 17:28:10', '2019-03-08 17:28:11', NULL, NULL, '2', NULL, '0', NULL, NULL, '1', NULL, NULL, NULL, NULL, 'admin', '2019-02-26 17:28:17', 'admin', '2019-03-26 19:59:49', NULL, NULL);
@@ -5193,38 +5122,38 @@ CREATE TABLE `sys_announcement_send`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户通告阅读标记表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户通告阅读标记表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_announcement_send
 -- ----------------------------
-INSERT INTO `sys_announcement_send` VALUES ('646c0c405ec643d4dc4160db2446f8ff', '93a9060a1c20e4bf98b3f768a02c2ff9', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2019-05-17 11:50:56', 'admin', '2021-01-22 14:14:17');
+INSERT INTO `sys_announcement_send` VALUES ('646c0c405ec643d4dc4160db2446f8ff', '93a9060a1c20e4bf98b3f768a02c2ff9', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2019-05-17 11:50:56', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1197434450981543938', '93a9060a1c20e4bf98b3f768a02c2ff9', 'a75d45a015c44384a04449ee80dc3503', '0', NULL, 'jeecg', '2019-11-21 16:39:55', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1256486817319972866', '1256486817286418434', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-05-02 15:32:56', 'admin', '2021-01-22 14:14:17');
+INSERT INTO `sys_announcement_send` VALUES ('1256486817319972866', '1256486817286418434', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-05-02 15:32:56', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1256486817349332993', '1256486817286418434', 'a75d45a015c44384a04449ee80dc3503', '0', '2020-05-02 15:32:56', 'admin', '2020-05-02 15:32:56', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1256527099214278657', '1256486502931722242', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-05-02 18:12:59', 'admin', '2021-01-22 14:14:17');
+INSERT INTO `sys_announcement_send` VALUES ('1256527099214278657', '1256486502931722242', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-05-02 18:12:59', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1260927781673484290', '1256486502931722242', 'a75d45a015c44384a04449ee80dc3503', '0', NULL, 'jeecg', '2020-05-14 21:39:45', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1341567913106083841', '1341567913076723714', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 10:14:50', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341568222536667138', '1341568222511501313', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 10:16:04', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341568222855434242', '1341568222826074114', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 10:16:04', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341568714364948481', '1341568714323005442', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 10:18:01', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341582248515735553', '1341582248507346945', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 11:11:48', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341585426091085825', '1341585426074308609', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 11:24:26', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341586342437457921', '1341586342420680705', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 11:28:04', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341588376280633345', '1341588376263856130', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 11:36:09', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341659514985779202', '1341659514939641858', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 16:18:50', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341659824080818177', '1341659824051458050', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 16:20:04', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341659824236007426', '1341659824206647297', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 16:20:04', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341660523686531074', '1341660523665559553', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 16:22:50', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341661069520670722', '1341661069487116289', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 16:25:00', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1341663376605974530', '1341663376585003010', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2020-12-23 16:34:11', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1349540656367919106', '1349540656351141890', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-14 10:15:40', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1349544104454803458', '1349544104438026241', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-14 10:29:22', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351002949953904641', '1351002949945516033', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-18 11:06:18', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351094090485264385', '1351094090464292866', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-18 17:08:28', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351094262619500546', '1351094262598529026', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-18 17:09:09', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351094293007233025', '1351094292990455810', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-18 17:09:16', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351094320429592577', '1351094320421203970', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-18 17:09:23', 'admin', '2021-01-22 14:14:17');
+INSERT INTO `sys_announcement_send` VALUES ('1341567913106083841', '1341567913076723714', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 10:14:50', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341568222536667138', '1341568222511501313', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 10:16:04', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341568222855434242', '1341568222826074114', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 10:16:04', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341568714364948481', '1341568714323005442', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 10:18:01', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341582248515735553', '1341582248507346945', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 11:11:48', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341585426091085825', '1341585426074308609', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 11:24:26', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341586342437457921', '1341586342420680705', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 11:28:04', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341588376280633345', '1341588376263856130', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 11:36:09', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341659514985779202', '1341659514939641858', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 16:18:50', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341659824080818177', '1341659824051458050', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 16:20:04', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341659824236007426', '1341659824206647297', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 16:20:04', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341660523686531074', '1341660523665559553', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 16:22:50', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341661069520670722', '1341661069487116289', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 16:25:00', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1341663376605974530', '1341663376585003010', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2020-12-23 16:34:11', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1349540656367919106', '1349540656351141890', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-14 10:15:40', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1349544104454803458', '1349544104438026241', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-14 10:29:22', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351002949953904641', '1351002949945516033', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-18 11:06:18', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351094090485264385', '1351094090464292866', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-18 17:08:28', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351094262619500546', '1351094262598529026', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-18 17:09:09', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351094293007233025', '1351094292990455810', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-18 17:09:16', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351094320429592577', '1351094320421203970', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-18 17:09:23', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1351346381700214785', '1351346381679243265', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'admin', '2021-01-19 09:50:59', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351371600292745218', '1351371600259190785', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'admin', '2021-01-19 11:31:11', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351422515045470210', '1351422515037081602', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 14:53:30', NULL, NULL);
@@ -5232,9 +5161,9 @@ INSERT INTO `sys_announcement_send` VALUES ('1351422515192270849', '135142251518
 INSERT INTO `sys_announcement_send` VALUES ('1351422592216469505', '1351422592120000513', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 14:53:49', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351422676752666626', '1351422676744278017', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 14:54:09', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351422699754229762', '1351422699745841153', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 14:54:14', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1351422864909144065', '1351422864900755457', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'motb', '2021-01-19 14:54:54', 'admin', '2021-01-22 14:14:17');
+INSERT INTO `sys_announcement_send` VALUES ('1351422864909144065', '1351422864900755457', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'motb', '2021-01-19 14:54:54', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1351426173560688641', '1351426173552300034', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'admin', '2021-01-19 15:08:03', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1351432890273034241', '1351432890256257025', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-19 15:34:44', 'admin', '2021-01-22 14:14:17');
+INSERT INTO `sys_announcement_send` VALUES ('1351432890273034241', '1351432890256257025', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-19 15:34:44', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1351444733041381377', '1351444733024604161', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 16:21:48', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351444733217542146', '1351444733183987713', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 16:21:48', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351444733376925698', '1351444733368537089', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 16:21:48', NULL, NULL);
@@ -5242,119 +5171,124 @@ INSERT INTO `sys_announcement_send` VALUES ('1351446439389106177', '135144643938
 INSERT INTO `sys_announcement_send` VALUES ('1351446494867165186', '1351446494850387969', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 16:28:48', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351446547044306945', '1351446547027529729', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 16:29:00', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351446575007731713', '1351446574999343106', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 16:29:07', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1351446605353521153', '1351446605345132546', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'motb', '2021-01-19 16:29:14', 'admin', '2021-01-22 14:14:17');
+INSERT INTO `sys_announcement_send` VALUES ('1351446605353521153', '1351446605345132546', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'motb', '2021-01-19 16:29:14', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1351446813739126786', '1351446813730738177', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'admin', '2021-01-19 16:30:04', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351447156485066753', '1351447156476678146', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 16:31:25', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351447156585730049', '1351447156577341442', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 16:31:25', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351447156678004737', '1351447156669616129', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 16:31:25', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1351448429255012354', '1351448429238235138', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'motb', '2021-01-19 16:36:29', 'admin', '2021-01-22 14:14:17');
+INSERT INTO `sys_announcement_send` VALUES ('1351448429255012354', '1351448429238235138', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'motb', '2021-01-19 16:36:29', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1351448610457333761', '1351448610448945153', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'admin', '2021-01-19 16:37:12', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351456491940380674', '1351456491923603457', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 17:08:31', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351456575251841026', '1351456575235063810', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 17:08:51', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351456599188733953', '1351456599180345345', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 17:08:57', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1351459426044772353', '1351459426036383746', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'motb', '2021-01-19 17:20:11', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351459846263701506', '1351459846255312897', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-19 17:21:51', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351459874566864897', '1351459874558476289', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-19 17:21:58', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351459903889244161', '1351459903880855553', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-19 17:22:05', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351459920637100034', '1351459920624517122', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-19 17:22:09', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351459983572631553', '1351459983564242946', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-19 17:22:24', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351459983744598017', '1351459983736209410', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-19 17:22:24', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351460040954904577', '1351460040946515969', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-19 17:22:37', 'admin', '2021-01-22 14:14:17');
+INSERT INTO `sys_announcement_send` VALUES ('1351459426044772353', '1351459426036383746', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'motb', '2021-01-19 17:20:11', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351459846263701506', '1351459846255312897', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-19 17:21:51', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351459874566864897', '1351459874558476289', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-19 17:21:58', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351459903889244161', '1351459903880855553', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-19 17:22:05', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351459920637100034', '1351459920624517122', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-19 17:22:09', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351459983572631553', '1351459983564242946', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-19 17:22:24', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351459983744598017', '1351459983736209410', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-19 17:22:24', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351460040954904577', '1351460040946515969', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-19 17:22:37', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1351460625338892289', '1351460625322115074', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'admin', '2021-01-19 17:24:57', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1351460801319305218', '1351460801310916609', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'motb', '2021-01-19 17:25:39', 'admin', '2021-01-22 14:14:17');
+INSERT INTO `sys_announcement_send` VALUES ('1351460801319305218', '1351460801310916609', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'motb', '2021-01-19 17:25:39', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1351460953803227137', '1351460953794838530', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'admin', '2021-01-19 17:26:15', NULL, NULL);
 INSERT INTO `sys_announcement_send` VALUES ('1351461081142296578', '1351461081125519361', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-19 17:26:45', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1351461102189314050', '1351461102180925442', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'motb', '2021-01-19 17:26:50', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1351796830828003329', '1351796830794448897', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-20 15:40:54', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1352441630422065153', '1352441630388510721', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-22 10:23:06', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1352443197187547137', '1352443197179158530', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-22 10:29:20', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1352444191287926786', '1352444191279538178', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-22 10:33:17', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1352445184893378562', '1352445184884989953', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-22 10:37:14', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1352448615485882369', '1352448615469105153', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-22 10:50:52', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1352448678903758850', '1352448678886981634', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-22 10:51:07', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1352448724948828162', '1352448724940439553', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-22 10:51:18', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1352448746658545665', '1352448746650157057', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 14:14:17', 'admin', '2021-01-22 10:51:23', 'admin', '2021-01-22 14:14:17');
-INSERT INTO `sys_announcement_send` VALUES ('1352506487724916738', '1352506487708139521', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-22 14:40:50', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1352506756944707585', '1352506756936318978', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-22 14:41:54', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1352506822250020865', '1352506822241632257', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 16:06:26', 'admin', '2021-01-22 14:42:09', 'admin', '2021-01-22 16:06:26');
-INSERT INTO `sys_announcement_send` VALUES ('1352506859994562561', '1352506859986173953', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-22 14:42:18', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1352506889979641858', '1352506889971253250', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-01-22 16:06:22', 'admin', '2021-01-22 14:42:26', 'admin', '2021-01-22 16:06:22');
-INSERT INTO `sys_announcement_send` VALUES ('1353521401906085889', '1353521401889308673', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 09:53:44', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353602925393469441', '1353602925376692225', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 15:17:41', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353603317628002305', '1353603317623808001', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 15:19:14', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353603391372255233', '1353603391363866625', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 15:19:32', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353603874463801346', '1353603874463801345', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 15:21:27', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353603910404792322', '1353603910396403713', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 15:21:36', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353615359692890113', '1353615359676112897', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:07:05', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353615680875913217', '1353615680859136001', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:08:22', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353616003279478785', '1353616003271090178', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:09:39', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353617338452271105', '1353617338443882497', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:14:57', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353617383243243521', '1353617383226466305', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:15:08', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353618626292342786', '1353618626283954178', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:20:04', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353618648769617921', '1353618648761229314', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:20:10', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353618669955047426', '1353618669946658817', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:20:15', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353618712078442497', '1353618712070053890', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:20:25', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353618860955262978', '1353618860946874369', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:21:00', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353618888344068098', '1353618888344068097', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:21:07', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353618907847581697', '1353618907839193089', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:21:11', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353618927141380098', '1353618927132991489', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:21:16', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353618941674643459', '1353618941674643458', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:21:19', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353627096022376449', '1353627096009793537', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:53:44', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353627661712351233', '1353627661695574017', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:55:58', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353627685909291010', '1353627685892513794', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:56:04', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353627712824139777', '1353627712807362561', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:56:11', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353627735859257346', '1353627735842480129', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-25 16:56:16', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353988106012942338', '1353988105996165121', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-26 16:48:15', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353988148526407682', '1353988148518019073', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-26 16:48:25', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353988174111662081', '1353988174103273474', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-26 16:48:31', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353988217136832513', '1353988217128443905', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-26 16:48:42', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353996215032832001', '1353996215024443393', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-26 17:20:28', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353996235580727298', '1353996235572338690', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-26 17:20:33', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353996254610284545', '1353996254601895937', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-26 17:20:38', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353996292849754113', '1353996292841365505', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-26 17:20:47', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353996333723246593', '1353996333706469378', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-26 17:20:57', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1353996348860489729', '1353996348843712514', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-26 17:21:00', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354246748373102594', '1354246748356325377', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 09:56:00', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354248622224551938', '1354248622211969026', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 10:03:27', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354248642537566209', '1354248642520788993', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 10:03:32', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354248670329024514', '1354248670320635905', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 10:03:38', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354248686661644290', '1354248686653255681', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 10:03:42', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354252115077345282', '1354252115068956674', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 10:17:20', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354252588199030786', '1354252588190642177', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 10:19:12', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354252610084909057', '1354252610076520450', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 10:19:18', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354252627583545346', '1354252627575156737', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 10:19:22', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354252641386999810', '1354252641378611202', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 10:19:25', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354325044414660610', '1354325044397883393', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 15:07:07', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354325251764273153', '1354325251747495938', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 15:07:57', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354325492408270850', '1354325492399882241', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 15:08:54', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354331112968568833', '1354331112809185282', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 15:31:14', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354331627454480386', '1354331627446091778', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 15:33:17', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354333351225344001', '1354333351216955394', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 15:40:08', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354334974630707201', '1354334974622318593', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 15:46:35', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354337088006348801', '1354337087989571586', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 15:54:59', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354337123070730242', '1354337123053953025', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 15:55:07', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354337148756647937', '1354337148748259329', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 15:55:13', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354337170021769217', '1354337170013380610', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 15:55:18', NULL, NULL);
+INSERT INTO `sys_announcement_send` VALUES ('1351461102189314050', '1351461102180925442', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'motb', '2021-01-19 17:26:50', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1351796830828003329', '1351796830794448897', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-20 15:40:54', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352441630422065153', '1352441630388510721', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 10:23:06', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352443197187547137', '1352443197179158530', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 10:29:20', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352444191287926786', '1352444191279538178', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 10:33:17', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352445184893378562', '1352445184884989953', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 10:37:14', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352448615485882369', '1352448615469105153', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 10:50:52', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352448678903758850', '1352448678886981634', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 10:51:07', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352448724948828162', '1352448724940439553', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 10:51:18', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352448746658545665', '1352448746650157057', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 10:51:23', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352506487724916738', '1352506487708139521', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 14:40:50', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352506756944707585', '1352506756936318978', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 14:41:54', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352506822250020865', '1352506822241632257', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 14:42:09', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352506859994562561', '1352506859986173953', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 14:42:18', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1352506889979641858', '1352506889971253250', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-22 14:42:26', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353521401906085889', '1353521401889308673', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 09:53:44', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353602925393469441', '1353602925376692225', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 15:17:41', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353603317628002305', '1353603317623808001', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 15:19:14', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353603391372255233', '1353603391363866625', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 15:19:32', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353603874463801346', '1353603874463801345', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 15:21:27', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353603910404792322', '1353603910396403713', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 15:21:36', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353615359692890113', '1353615359676112897', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:07:05', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353615680875913217', '1353615680859136001', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:08:22', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353616003279478785', '1353616003271090178', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:09:39', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353617338452271105', '1353617338443882497', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:14:57', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353617383243243521', '1353617383226466305', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:15:08', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353618626292342786', '1353618626283954178', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:20:04', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353618648769617921', '1353618648761229314', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:20:10', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353618669955047426', '1353618669946658817', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:20:15', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353618712078442497', '1353618712070053890', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:20:25', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353618860955262978', '1353618860946874369', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:21:00', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353618888344068098', '1353618888344068097', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:21:07', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353618907847581697', '1353618907839193089', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:21:11', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353618927141380098', '1353618927132991489', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:21:16', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353618941674643459', '1353618941674643458', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:21:19', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353627096022376449', '1353627096009793537', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:53:44', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353627661712351233', '1353627661695574017', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:55:58', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353627685909291010', '1353627685892513794', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:56:04', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353627712824139777', '1353627712807362561', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:56:11', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353627735859257346', '1353627735842480129', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-25 16:56:16', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353988106012942338', '1353988105996165121', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-26 16:48:15', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353988148526407682', '1353988148518019073', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-26 16:48:25', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353988174111662081', '1353988174103273474', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-26 16:48:31', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353988217136832513', '1353988217128443905', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-26 16:48:42', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353996215032832001', '1353996215024443393', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-26 17:20:28', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353996235580727298', '1353996235572338690', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-26 17:20:33', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353996254610284545', '1353996254601895937', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-26 17:20:38', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353996292849754113', '1353996292841365505', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-26 17:20:47', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353996333723246593', '1353996333706469378', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-26 17:20:57', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1353996348860489729', '1353996348843712514', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-26 17:21:00', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354246748373102594', '1354246748356325377', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 09:56:00', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354248622224551938', '1354248622211969026', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 10:03:27', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354248642537566209', '1354248642520788993', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 10:03:32', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354248670329024514', '1354248670320635905', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 10:03:38', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354248686661644290', '1354248686653255681', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 10:03:42', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354252115077345282', '1354252115068956674', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 10:17:20', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354252588199030786', '1354252588190642177', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 10:19:12', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354252610084909057', '1354252610076520450', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 10:19:18', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354252627583545346', '1354252627575156737', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 10:19:22', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354252641386999810', '1354252641378611202', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 10:19:25', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354325044414660610', '1354325044397883393', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 15:07:07', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354325251764273153', '1354325251747495938', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 15:07:57', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354325492408270850', '1354325492399882241', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 15:08:54', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354331112968568833', '1354331112809185282', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 15:31:14', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354331627454480386', '1354331627446091778', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 15:33:17', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354333351225344001', '1354333351216955394', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 15:40:08', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354334974630707201', '1354334974622318593', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 15:46:35', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354337088006348801', '1354337087989571586', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 15:54:59', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354337123070730242', '1354337123053953025', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 15:55:07', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354337148756647937', '1354337148748259329', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 15:55:13', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354337170021769217', '1354337170013380610', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 15:55:18', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1354347453788282882', '1354347453779894274', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'admin', '2021-01-27 16:36:10', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354347733829378049', '1354347733820989442', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'motb', '2021-01-27 16:37:17', NULL, NULL);
+INSERT INTO `sys_announcement_send` VALUES ('1354347733829378049', '1354347733820989442', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'motb', '2021-01-27 16:37:17', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1354347733896486914', '1354347733888098306', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'motb', '2021-01-27 16:37:17', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354348465093697538', '1354348465085308930', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'motb', '2021-01-27 16:40:11', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354350493027098626', '1354350493014515714', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 16:48:15', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354350573134110722', '1354350573125722113', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 16:48:34', NULL, NULL);
+INSERT INTO `sys_announcement_send` VALUES ('1354348465093697538', '1354348465085308930', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'motb', '2021-01-27 16:40:11', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354350493027098626', '1354350493014515714', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 16:48:15', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1354350573134110722', '1354350573125722113', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 16:48:34', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1354350573180248065', '1354350573163470849', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'admin', '2021-01-27 16:48:34', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354350989104209921', '1354350989095821313', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-01-27 16:50:13', NULL, NULL);
+INSERT INTO `sys_announcement_send` VALUES ('1354350989104209921', '1354350989095821313', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-01-27 16:50:13', 'admin', '2021-02-04 21:08:39');
 INSERT INTO `sys_announcement_send` VALUES ('1354351169832574978', '1354351169824186369', 'bb6660a2f7314573a0cfaa24fb9bbe7a', '0', NULL, 'admin', '2021-01-27 16:50:56', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1354351429262860290', '1354351429250277378', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'motb', '2021-01-27 16:51:58', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1356057323029712897', '1356057323012935681', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-02-01 09:50:35', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1356057355313270786', '1356057355304882178', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-02-01 09:50:42', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1356057378889453570', '1356057378872676354', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-02-01 09:50:48', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1356057399672229890', '1356057399655452674', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-02-01 09:50:53', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1356057440449253378', '1356057440440864769', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-02-01 09:51:03', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1356078043818426370', '1356078043801649153', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-02-01 11:12:55', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1356078087179141122', '1356078087162363906', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-02-01 11:13:05', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1356079152033234946', '1356079152024846338', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-02-01 11:17:19', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1356079177329082370', '1356079177320693762', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-02-01 11:17:25', NULL, NULL);
-INSERT INTO `sys_announcement_send` VALUES ('1356079192386633729', '1356079192378245121', 'e9ca23d68d884d4ebb19d07889727dae', '0', NULL, 'admin', '2021-02-01 11:17:29', NULL, NULL);
+INSERT INTO `sys_announcement_send` VALUES ('1354351429262860290', '1354351429250277378', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'motb', '2021-01-27 16:51:58', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1356057323029712897', '1356057323012935681', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-01 09:50:35', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1356057355313270786', '1356057355304882178', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-01 09:50:42', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1356057378889453570', '1356057378872676354', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-01 09:50:48', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1356057399672229890', '1356057399655452674', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-01 09:50:53', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1356057440449253378', '1356057440440864769', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-01 09:51:03', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1356078043818426370', '1356078043801649153', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-01 11:12:55', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1356078087179141122', '1356078087162363906', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-01 11:13:05', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1356079152033234946', '1356079152024846338', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-01 11:17:19', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1356079177329082370', '1356079177320693762', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-01 11:17:25', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1356079192386633729', '1356079192378245121', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-01 11:17:29', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1357313141595230209', '1357313141561675777', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-04 21:00:45', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1357313226420834306', '1357313226399862785', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-04 21:01:05', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1357313337335009282', '1357313337314037761', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-04 21:01:32', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1357313474715242497', '1357313474698465281', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-04 21:02:05', 'admin', '2021-02-04 21:08:39');
+INSERT INTO `sys_announcement_send` VALUES ('1357313540230270977', '1357313540213493761', 'e9ca23d68d884d4ebb19d07889727dae', '1', '2021-02-04 21:08:39', 'admin', '2021-02-04 21:02:20', 'admin', '2021-02-04 21:08:39');
 
 -- ----------------------------
 -- Table structure for sys_category
@@ -5374,7 +5308,7 @@ CREATE TABLE `sys_category`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `index_code`(`code`) USING BTREE,
   INDEX `idx_sc_code`(`code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_category
@@ -5422,7 +5356,7 @@ CREATE TABLE `sys_check_rule`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uni_sys_check_rule_code`(`rule_code`) USING BTREE,
   UNIQUE INDEX `uk_scr_rule_code`(`rule_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_check_rule
@@ -5447,7 +5381,7 @@ CREATE TABLE `sys_data_log`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `sindex`(`data_table`, `data_id`) USING BTREE,
   INDEX `idx_sdl_data_table_id`(`data_table`, `data_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_data_log
@@ -5493,7 +5427,7 @@ CREATE TABLE `sys_data_source`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `sys_data_source_code_uni`(`code`) USING BTREE,
   UNIQUE INDEX `uk_sdc_rule_code`(`code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_data_source
@@ -5533,7 +5467,7 @@ CREATE TABLE `sys_depart`  (
   INDEX `idx_sd_parent_id`(`parent_id`) USING BTREE,
   INDEX `idx_sd_depart_order`(`depart_order`) USING BTREE,
   INDEX `idx_sd_org_code`(`org_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '组织机构表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '组织机构表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_depart
@@ -5558,7 +5492,7 @@ CREATE TABLE `sys_depart_permission`  (
   `permission_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限id',
   `data_rule_ids` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据规则id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_depart_permission
@@ -5583,7 +5517,7 @@ CREATE TABLE `sys_depart_role`  (
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门角色表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_depart_role
@@ -5609,7 +5543,7 @@ CREATE TABLE `sys_depart_role_permission`  (
   INDEX `idx_sdrp_role_per_id`(`role_id`, `permission_id`) USING BTREE,
   INDEX `idx_sdrp_role_id`(`role_id`) USING BTREE,
   INDEX `idx_sdrp_per_id`(`permission_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门角色权限表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门角色权限表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_depart_role_permission
@@ -5626,11 +5560,7 @@ CREATE TABLE `sys_depart_role_user`  (
   `user_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户id',
   `drole_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门角色用户表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of sys_depart_role_user
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门角色用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_dict
@@ -5650,7 +5580,7 @@ CREATE TABLE `sys_dict`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `indextable_dict_code`(`dict_code`) USING BTREE,
   UNIQUE INDEX `uk_sd_dict_code`(`dict_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict
@@ -5720,7 +5650,7 @@ CREATE TABLE `sys_dict_item`  (
   INDEX `idx_sdi_role_sort_order`(`sort_order`) USING BTREE,
   INDEX `idx_sdi_status`(`status`) USING BTREE,
   INDEX `idx_sdi_dict_val`(`dict_id`, `item_value`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict_item
@@ -5863,7 +5793,7 @@ CREATE TABLE `sys_fill_rule`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uni_sys_fill_rule_code`(`rule_code`) USING BTREE,
   UNIQUE INDEX `uk_sfr_rule_code`(`rule_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_fill_rule
@@ -5894,7 +5824,7 @@ CREATE TABLE `sys_gateway_route`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   `sys_org_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_gateway_route
@@ -5934,7 +5864,7 @@ CREATE TABLE `sys_log`  (
   INDEX `idx_sl_log_type`(`log_type`) USING BTREE,
   INDEX `idx_sl_operate_type`(`operate_type`) USING BTREE,
   INDEX `idx_sl_create_time`(`create_time`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_log
@@ -10085,6 +10015,228 @@ INSERT INTO `sys_log` VALUES ('1357266900295376897', 2, '流程-流程列表', 1
 INSERT INTO `sys_log` VALUES ('1357266906523918338', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"4028fae4776c6ef801776c6ef8f60000\"]', NULL, 9, NULL, '2021-02-04 17:57:02', NULL, NULL);
 INSERT INTO `sys_log` VALUES ('1357266906872045569', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@238811ce', NULL, 17, NULL, '2021-02-04 17:57:02', NULL, NULL);
 INSERT INTO `sys_log` VALUES ('1357266925704470529', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 18, NULL, '2021-02-04 17:57:07', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357297013942771714', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 16, NULL, '2021-02-04 19:56:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300316873179137', 2, '一般采购合同-添加', 2, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.add()', NULL, '[{\"code\":\"1\",\"id\":\"1357300316403417089\",\"name\":\"1\",\"processData\":{\"procDefId\":\"采购申请流程:3:7504\",\"procDeTitle\":\"20210204一般采购合同-北京国炬软件-管理员\",\"tableName\":\"contract_general\",\"tableId\":\"1357300316403417089\"},\"subForm\":{\"fileContract\":\"1\",\"amountLarge\":\"1\",\"filePdf\":\"1\",\"fileAttach\":\"1\",\"amount\":\"1\",\"modelId\":\"1\"},\"typeCode\":\"1\"}]', NULL, 190, NULL, '2021-02-04 20:09:48', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300364843433986', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@c6be89a', NULL, 46, NULL, '2021-02-04 20:09:59', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300385282277378', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"4028fae4776c771901776c7991d50002\"]', NULL, 153, NULL, '2021-02-04 20:10:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300386020474882', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@92878a9', NULL, 22, NULL, '2021-02-04 20:10:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300393758965761', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"4028fae4776c7b5901776c7b59a00000\"]', NULL, 8, NULL, '2021-02-04 20:10:06', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300394555883522', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@712ab51b', NULL, 25, NULL, '2021-02-04 20:10:06', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300405217804289', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"4028fae4776c7b5901776c7df33c0001\"]', NULL, 10, NULL, '2021-02-04 20:10:09', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300405926641665', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@695c63d7', NULL, 20, NULL, '2021-02-04 20:10:09', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300412503310337', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"40284481776ce71e01776ce71e420000\"]', NULL, 9, NULL, '2021-02-04 20:10:10', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300413333782529', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@52b524f0', NULL, 21, NULL, '2021-02-04 20:10:11', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300424008286209', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"40284481776cf2cd01776cf2cd010000\"]', NULL, 9, NULL, '2021-02-04 20:10:13', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300424784232449', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@58542c37', NULL, 18, NULL, '2021-02-04 20:10:13', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300462834958337', 2, '一般采购合同-添加', 2, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.add()', NULL, '[{\"id\":\"1357300462805598209\",\"processData\":{\"procDefId\":\"采购申请流程:3:7504\",\"procDeTitle\":\"20210204一般采购合同-北京国炬软件-管理员\",\"tableName\":\"contract_general\",\"tableId\":\"1357300462805598209\"},\"subForm\":{}}]', NULL, 8, NULL, '2021-02-04 20:10:22', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300464881778689', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@35b140ed', NULL, 19, NULL, '2021-02-04 20:10:23', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300597077852162', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300462805598209', NULL, 9, NULL, '2021-02-04 20:10:54', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300628992311297', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@1217e3e', NULL, 21, NULL, '2021-02-04 20:11:02', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300639415156737', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"40284481776cf2cd01776cf3554f0001\"]', NULL, 12, NULL, '2021-02-04 20:11:05', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300640174325762', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7e0d8930', NULL, 19, NULL, '2021-02-04 20:11:05', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300724249149442', 2, '一般采购合同-添加', 2, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.add()', NULL, '[{\"code\":\"1\",\"id\":\"1357300724207206402\",\"name\":\"1\",\"processData\":{\"procDefId\":\"采购申请流程:3:7504\",\"procDeTitle\":\"20210204一般采购合同-北京国炬软件-管理员\",\"tableName\":\"contract_general\",\"tableId\":\"1357300724207206402\"},\"remark\":\"1\",\"status\":\"1\",\"subForm\":{\"fileContract\":\"1\",\"filePdf\":\"1\",\"amountLarge\":\"1\",\"purchaseId\":\"1\",\"amount\":\"1\",\"modelId\":\"1\",\"fileAttach\":\"1\"},\"typeCode\":\"1\"}]', NULL, 11, NULL, '2021-02-04 20:11:25', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300726384050178', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5f75e668', NULL, 17, NULL, '2021-02-04 20:11:25', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300753059823617', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 16, NULL, '2021-02-04 20:11:32', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300788191313922', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4511627b', NULL, 16, NULL, '2021-02-04 20:11:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300827751989249', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@32b041de', NULL, 18, NULL, '2021-02-04 20:11:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357300841681272833', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 7, NULL, '2021-02-04 20:11:53', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357301426367250434', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4b96ea51', NULL, 17, NULL, '2021-02-04 20:14:12', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357301450237034497', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 7, NULL, '2021-02-04 20:14:18', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357301495543906306', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@53f3cfcf', NULL, 17, NULL, '2021-02-04 20:14:29', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357301502506450946', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 9, NULL, '2021-02-04 20:14:30', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302301886267394', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@1cf24c47', NULL, 16, NULL, '2021-02-04 20:17:41', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302314674700290', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 8, NULL, '2021-02-04 20:17:44', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302682414497794', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 28, NULL, '2021-02-04 20:19:12', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302705567055874', 2, '流程-添加申请草稿状态', 2, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.add()', NULL, '[{\"params\":{\"condition1\":\"y\",\"condition2\":\"n\",\"condition3\":\"n\"},\"title\":\"20210204生产主辅料采购合同-北京国炬软件-管理员\",\"name\":\"sdf\",\"procDefId\":\"会签流程:2:20032\",\"procDeTitle\":\"会签流程\",\"tableName\":\"test_sign\",\"filedNames\":\"title,name\"}]', NULL, 69, NULL, '2021-02-04 20:19:17', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302707462881281', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2db5a476', NULL, 15, NULL, '2021-02-04 20:19:18', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302731794038786', 2, '流程-获取业务表单信息', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.getForm()', NULL, '  tableId: ea2254a6c6c74dfcabeeeb2fbee7b25e  tableName: test_sign', NULL, 14, NULL, '2021-02-04 20:19:23', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302754661384194', 2, '流程-修改业务表单信息', 3, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.editForm()', NULL, '[{\"createByDept\":\"北京国炬软件\",\"createBy\":\"admin\",\"createByName\":\"管理员\",\"createTime\":\"2021-02-04 00:00:00\",\"createByAvatar\":\"https://static.jeecg.com/temp/国炬软件logo_1606575029126.png\",\"name\":\"sdf\",\"id\":\"ea2254a6c6c74dfcabeeeb2fbee7b25e\",\"title\":\"20210204生产主辅料采购合同-北京国炬软件-管理员\",\"params\":{\"condition1\":\"y\",\"condition2\":\"n\",\"condition3\":\"n\"},\"tableName\":\"test_sign\",\"procDefId\":\"40284481776cf2cd01776cfb7e070003\",\"filedNames\":\"title,name\"}]', NULL, 17, NULL, '2021-02-04 20:19:29', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302756594958337', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@68c40a0', NULL, 13, NULL, '2021-02-04 20:19:29', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302797904658433', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"40284481776cf2cd01776cfb7e070003\"]', NULL, 8, NULL, '2021-02-04 20:19:39', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302798512832513', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5cc13c8b', NULL, 13, NULL, '2021-02-04 20:19:39', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302804628127745', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 8, NULL, '2021-02-04 20:19:41', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302906688126978', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@11c0ef81', NULL, 13, NULL, '2021-02-04 20:20:05', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302941970612225', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@1fc2500', NULL, 18, NULL, '2021-02-04 20:20:13', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357302964737294338', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 11, NULL, '2021-02-04 20:20:19', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303121713315841', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@30601160', NULL, 13, NULL, '2021-02-04 20:20:56', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303207268728833', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5b21c73f', NULL, 19, NULL, '2021-02-04 20:21:17', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303215418261505', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 12, NULL, '2021-02-04 20:21:19', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303321609650178', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 7, NULL, '2021-02-04 20:21:44', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303365914083330', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@467a366b', NULL, 14, NULL, '2021-02-04 20:21:55', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303436009291778', 1, '用户名: 管理员,退出成功！', NULL, 'admin', '管理员', '0:0:0:0:0:0:0:1', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-04 20:22:11', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303643891580929', 1, '用户名: admin,登录成功！', NULL, 'admin', '管理员', '0:0:0:0:0:0:0:1', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-04 20:23:01', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303696999858178', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@cc54284', NULL, 15, NULL, '2021-02-04 20:23:14', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303707737276418', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 11, NULL, '2021-02-04 20:23:16', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303879913455618', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 7, NULL, '2021-02-04 20:23:57', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303891250659330', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@3cd5abf4', NULL, 14, NULL, '2021-02-04 20:24:00', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303924930920450', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@3e3d5c22', NULL, 16, NULL, '2021-02-04 20:24:08', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357303935102107649', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 7, NULL, '2021-02-04 20:24:10', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357304189360816130', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 7, NULL, '2021-02-04 20:25:11', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357304215524884481', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@3f6505aa', NULL, 13, NULL, '2021-02-04 20:25:17', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357304225276641281', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 9, NULL, '2021-02-04 20:25:19', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357304642354036737', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 11, NULL, '2021-02-04 20:26:59', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357304654488158209', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 14, NULL, '2021-02-04 20:27:02', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357304665972162562', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@1c07d6d', NULL, 14, NULL, '2021-02-04 20:27:05', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357304705612529666', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@23b39c31', NULL, 15, NULL, '2021-02-04 20:27:14', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357304743797473281', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 6, NULL, '2021-02-04 20:27:23', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357304878782758914', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5be66f2c', NULL, 13, NULL, '2021-02-04 20:27:55', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357304885942435842', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 8, NULL, '2021-02-04 20:27:57', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357305157947244545', 2, '一般采购合同-添加', 2, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.add()', NULL, '[{\"id\":\"1357305157922078721\",\"processData\":{\"procDeTitle\":\"20210204一般采购合同-北京国炬软件-管理员\",\"tableName\":\"contract_general\",\"tableId\":\"1357305157922078721\"},\"subForm\":{}}]', NULL, 6, NULL, '2021-02-04 20:29:02', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357305160103116801', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@338d88e9', NULL, 13, NULL, '2021-02-04 20:29:02', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357305192990654465', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"40284481776cf2cd01776d0469fb0004\"]', NULL, 7, NULL, '2021-02-04 20:29:10', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357305193766600705', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@793b04e3', NULL, 13, NULL, '2021-02-04 20:29:10', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357305630783717377', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 7, NULL, '2021-02-04 20:30:55', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357305815731552257', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 6, NULL, '2021-02-04 20:31:39', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357305824808026114', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@6ebc4ad6', NULL, 14, NULL, '2021-02-04 20:31:41', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357305859658498050', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2ad5a8db', NULL, 14, NULL, '2021-02-04 20:31:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357305869125042177', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 7, NULL, '2021-02-04 20:31:51', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357306426841645057', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 7, NULL, '2021-02-04 20:34:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357306479345942529', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 6, NULL, '2021-02-04 20:34:17', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357306605351223298', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4f74c20f', NULL, 12, NULL, '2021-02-04 20:34:47', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357306617577619457', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 8, NULL, '2021-02-04 20:34:50', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357306698120839169', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@602c9557', NULL, 13, NULL, '2021-02-04 20:35:09', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357306710296903682', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 8, NULL, '2021-02-04 20:35:12', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357306872910069761', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 6, NULL, '2021-02-04 20:35:51', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357306885316820994', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4a646897', NULL, 14, NULL, '2021-02-04 20:35:54', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357306905055215618', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 6, NULL, '2021-02-04 20:35:58', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357306928505569281', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@28f2d5de', NULL, 13, NULL, '2021-02-04 20:36:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357307195842117634', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5b6d91a5', NULL, 19, NULL, '2021-02-04 20:37:08', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357307213701464065', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 7, NULL, '2021-02-04 20:37:12', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357307567268708353', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 6, NULL, '2021-02-04 20:38:36', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357307580925362177', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4a6b6705', NULL, 13, NULL, '2021-02-04 20:38:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357307591662780418', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 7, NULL, '2021-02-04 20:38:42', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357307853345406978', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 9, NULL, '2021-02-04 20:39:44', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357307863592091649', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2b044dce', NULL, 14, NULL, '2021-02-04 20:39:47', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357307873255768065', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 8, NULL, '2021-02-04 20:39:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357307909976899585', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@34d8d77f', NULL, 13, NULL, '2021-02-04 20:39:58', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357307926720561154', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 6, NULL, '2021-02-04 20:40:02', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357308238839693314', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 6, NULL, '2021-02-04 20:41:16', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357308266081697794', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@232e066c', NULL, 14, NULL, '2021-02-04 20:41:23', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357308276764590082', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 6, NULL, '2021-02-04 20:41:25', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357308593837195265', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 6, NULL, '2021-02-04 20:42:41', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357308650904895489', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 6, NULL, '2021-02-04 20:42:55', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357309191043174402', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@58e0e547', NULL, 66, NULL, '2021-02-04 20:45:03', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357309199540834306', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 122, NULL, '2021-02-04 20:45:05', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357309217190465537', 2, '一般采购合同-编辑', 3, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.edit()', NULL, '[{\"id\":\"1357300724207206402\",\"updateBy\":\"admin\",\"updateTime\":1612442709582}]', NULL, 26, NULL, '2021-02-04 20:45:10', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357309219107262466', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@672a2137', NULL, 26, NULL, '2021-02-04 20:45:10', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357309336400973825', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@609c5eba', NULL, 28, NULL, '2021-02-04 20:45:38', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357309347482324994', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 11, NULL, '2021-02-04 20:45:41', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357309360220426241', 2, '一般采购合同-编辑', 3, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.edit()', NULL, '[{\"id\":\"1357300724207206402\",\"updateBy\":\"admin\",\"updateTime\":1612442743720}]', NULL, 3, NULL, '2021-02-04 20:45:44', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357309362145611778', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@597934ad', NULL, 19, NULL, '2021-02-04 20:45:44', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357309376058118146', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 11, NULL, '2021-02-04 20:45:47', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357309393594503170', 2, '一般采购合同-编辑', 3, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.edit()', NULL, '[{\"id\":\"1357300724207206402\",\"updateBy\":\"admin\",\"updateTime\":1612442751677}]', NULL, 3, NULL, '2021-02-04 20:45:52', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357309395406442498', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@432b3009', NULL, 19, NULL, '2021-02-04 20:45:52', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357309439010426881', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@1c3bf772', NULL, 22, NULL, '2021-02-04 20:46:03', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357310098845782017', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7bc953b0', NULL, 69, NULL, '2021-02-04 20:48:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357310115836907522', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357300724207206402', NULL, 128, NULL, '2021-02-04 20:48:44', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357310149101932546', 2, '一般采购合同-编辑', 3, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.edit()', NULL, '[{\"code\":\"1\",\"id\":\"1357300724207206402\",\"name\":\"1\",\"processData\":{\"procDefId\":\"40284481776cf2cd01776cf448c30002\",\"procDeTitle\":\"20210204一般采购合同-北\",\"tableId\":\"1357300724207206402\"},\"remark\":\"1\",\"status\":\"0\",\"subForm\":{\"createBy\":\"admin\",\"amount\":\"1\",\"createTime\":\"2021-02-04 20:11:25\",\"modelId\":\"1\",\"purchaseId\":\"1\",\"sysOrgCode\":\"A01\",\"id\":\"1357300724236566529\",\"baseId\":\"1357300724207206402\",\"amountLarge\":\"1\",\"fileAttach\":\"1\",\"fileContract\":\"1\",\"filePdf\":\"1\"},\"typeCode\":\"1\",\"userId\":\"admin\"}]', NULL, 163, NULL, '2021-02-04 20:48:52', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357310151182307330', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7dc310ad', NULL, 23, NULL, '2021-02-04 20:48:52', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357310901543292929', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@62493dca', NULL, 26, NULL, '2021-02-04 20:51:51', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357310946552369153', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"40284481776cf2cd01776cf448c30002\"]', NULL, 15, NULL, '2021-02-04 20:52:02', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357310947324121090', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@515e94b9', NULL, 20, NULL, '2021-02-04 20:52:02', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357311302443257857', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 33, NULL, '2021-02-04 20:53:27', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357311711786356737', 2, '一般采购合同-添加', 2, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.add()', NULL, '[{\"code\":\"1\",\"id\":\"1357311711400480770\",\"name\":\"1\",\"params\":{},\"processData\":{\"procDefId\":\"采购申请流程:3:7504\",\"procDeTitle\":\"20210204一般采购合同-北京国炬软件-管理员\",\"tableName\":\"contract_general\",\"tableId\":\"1357311711400480770\"},\"remark\":\"1\",\"subForm\":{\"filePdf\":\"1\",\"amountLarge\":\"1\",\"purchaseId\":\"1\",\"amount\":\"1\",\"modelId\":\"1\",\"fileAttach\":\"1\"},\"typeCode\":\"1\"}]', NULL, 97, NULL, '2021-02-04 20:55:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357311713971589121', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@8b0ec4e', NULL, 21, NULL, '2021-02-04 20:55:05', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357311819512860673', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"40284481776d1c4101776d1c41630000\"]', NULL, 18078, NULL, '2021-02-04 20:55:30', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357311973666115586', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@3497226d', NULL, 18, NULL, '2021-02-04 20:56:07', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357312041190215682', 2, '流程-获取可用流程', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActivitiProcessController.listData()', NULL, '  lcmc: null  lckey: null  zx: true  status: null  roles: null  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2b01cc31', NULL, 9, NULL, '2021-02-04 20:56:23', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357312120575807490', 2, '流程-获取可用流程', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActivitiProcessController.listData()', NULL, '  lcmc: null  lckey: null  zx: true  status: null  roles: null  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@53499570', NULL, 3, NULL, '2021-02-04 20:56:42', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357312207351762946', 2, '一般采购合同-添加', 2, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.add()', NULL, '[{\"code\":\"1\",\"id\":\"1357312206894583810\",\"name\":\"1\",\"params\":{},\"processData\":{\"procDefId\":\"采购申请流程:3:7504\",\"procDeTitle\":\"20210204一般采购合同-北京国炬软件-管理员\",\"tableName\":\"contract_purchase\",\"tableId\":\"1357312206894583810\"},\"remark\":\"1\",\"status\":\"1\",\"subForm\":{\"amountLarge\":\"1\",\"modelId\":\"1\",\"fileAttach\":\"1\",\"amount\":\"1\",\"fileContract\":\"1\",\"filePdf\":\"1\"},\"typeCode\":\"1\",\"userId\":\"1\"}]', NULL, 110, NULL, '2021-02-04 20:57:03', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357312209553772546', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@98b3e0d', NULL, 15, NULL, '2021-02-04 20:57:03', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357312226574258178', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"40284481776d1c4101776d1e0ed80001\"]', NULL, 8, NULL, '2021-02-04 20:57:07', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357312227346010113', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@580c7099', NULL, 16, NULL, '2021-02-04 20:57:07', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357312967854575617', 2, '一般采购合同-添加', 2, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.add()', NULL, '[{\"code\":\"1\",\"id\":\"1357312967439339521\",\"name\":\"1\",\"params\":{\"condition\":\"路线二\"},\"processData\":{\"procDefId\":\"采购申请流程:3:7504\",\"procDeTitle\":\"20210204一般采购合同-北京国炬软件-管理员\",\"tableName\":\"contract_purchase\",\"tableId\":\"1357312967439339521\"},\"subForm\":{\"fileContract\":\"1\",\"filePdf\":\"1\",\"amountLarge\":\"1\",\"purchaseId\":\"1\",\"fileAttach\":\"1\",\"modelId\":\"1\",\"amount\":\"1\"},\"typeCode\":\"1\"}]', NULL, 99, NULL, '2021-02-04 21:00:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357312969364525058', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4c0d39b0', NULL, 18, NULL, '2021-02-04 21:00:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313033906475009', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357312967439339521', NULL, 9, NULL, '2021-02-04 21:00:20', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313064017383425', 2, '一般采购合同-编辑', 3, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.edit()', NULL, '[{\"code\":\"1\",\"id\":\"1357312967439339521\",\"name\":\"1\",\"params\":{\"condition\":\"路线一\"},\"processData\":{\"procDefId\":\"40284481776d1c4101776d20d3290002\",\"procDeTitle\":\"20210204一般采购合同-北京国炬软件-管理员\",\"tableId\":\"1357312967439339521\"},\"status\":\"0\",\"subForm\":{\"createBy\":\"admin\",\"amount\":\"1\",\"createTime\":\"2021-02-04 21:00:04\",\"modelId\":\"1\",\"purchaseId\":\"1\",\"sysOrgCode\":\"A01\",\"id\":\"1357312967489671169\",\"baseId\":\"1357312967439339521\",\"amountLarge\":\"1\",\"fileAttach\":\"1\",\"fileContract\":\"1\",\"filePdf\":\"1\"},\"typeCode\":\"1\",\"userId\":\"admin\"}]', NULL, 13, NULL, '2021-02-04 21:00:27', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313065443446785', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@44487bcd', NULL, 17, NULL, '2021-02-04 21:00:27', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313119218618370', 2, '流程-通过流程定义id获取第一个任务节点', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActProcessInsController.getFirstNode()', NULL, '  procDefId: 采购申请流程:3:7504  tableName: contract_purchase  tableId: 1357312967439339521', NULL, 270, NULL, '2021-02-04 21:00:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313142241153025', 2, '流程-提交申请 启动流程', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.apply()', NULL, '[{\"assignees\":\"admin\",\"firstGateway\":false,\"id\":\"40284481776d1c4101776d20d3290002\",\"params\":{\"code\":\"1\",\"updateTime\":1612443627000,\"userId\":\"admin\",\"typeCode\":\"1\",\"createBy\":\"admin\",\"condition\":\"路线一\",\"createTime\":1612443604000,\"updateBy\":\"admin\",\"name\":\"1\",\"tableId\":\"1357312967439339521\",\"sysOrgCode\":\"A01\",\"id\":\"1357312967439339521\",\"status\":\"0\"},\"priority\":0,\"procDefId\":\"采购申请流程:3:7504\",\"sendMessage\":true,\"tableId\":\"1357312967439339521\",\"title\":\"20210204一般采购合同-北京国炬软件-管理员\"}]', NULL, 493, NULL, '2021-02-04 21:00:45', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313143235203073', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@e6aa8e4', NULL, 31, NULL, '2021-02-04 21:00:46', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313154626932737', 2, '流程-代办列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActTaskController.todoList()', NULL, '  name:   categoryId: null  priority: null  createTime_begin: null  createTime_end: null  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7d27b034', NULL, 55, NULL, '2021-02-04 21:00:48', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313169206333441', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357312967439339521', NULL, 11, NULL, '2021-02-04 21:00:52', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313226752184322', 2, '流程-任务节点审批通过', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActTaskController.pass()', NULL, '[{\"assignees\":[{\"id\":\"sid-052DEBAE-0B1D-47B4-AA4D-A4F8AED605D1\",\"assignees\":\"admin\"}],\"comment\":\"\",\"id\":\"60023\",\"priority\":0,\"procInstId\":\"60001\",\"sendEmail\":false,\"sendMessage\":true,\"sendSms\":false}]', NULL, 421, NULL, '2021-02-04 21:01:06', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313228723507201', 2, '流程-代办列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActTaskController.todoList()', NULL, '  name:   categoryId: null  priority: null  createTime_begin: null  createTime_end: null  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@84e11d5', NULL, 10, NULL, '2021-02-04 21:01:06', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313236780765185', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357312967439339521', NULL, 8, NULL, '2021-02-04 21:01:08', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313337506975745', 2, '流程-任务节点审批通过', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActTaskController.pass()', NULL, '[{\"assignees\":[{\"id\":\"sid-E514442F-F18F-44A6-AB93-DF7D84826DF4\",\"assignees\":\"admin\"}],\"comment\":\"\",\"id\":\"60029\",\"priority\":0,\"procInstId\":\"60001\",\"sendEmail\":false,\"sendMessage\":true,\"sendSms\":false}]', NULL, 412, NULL, '2021-02-04 21:01:32', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313339524435970', 2, '流程-代办列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActTaskController.todoList()', NULL, '  name:   categoryId: null  priority: null  createTime_begin: null  createTime_end: null  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@77ec2c7f', NULL, 10, NULL, '2021-02-04 21:01:32', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313424706555905', 2, '流程-代办列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActTaskController.todoList()', NULL, '  name:   categoryId: null  priority: null  createTime_begin: null  createTime_end: null  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@28228e2b', NULL, 13, NULL, '2021-02-04 21:01:53', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313444017131522', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357312967439339521', NULL, 10, NULL, '2021-02-04 21:01:57', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313474945929218', 2, '流程-任务节点审批通过', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActTaskController.pass()', NULL, '[{\"assignees\":[{\"id\":\"sid-E0FEAA12-A82D-4658-8823-252E3DDF17CB\",\"assignees\":\"admin\"}],\"comment\":\"\",\"id\":\"60034\",\"priority\":0,\"procInstId\":\"60001\",\"sendEmail\":false,\"sendMessage\":true,\"sendSms\":false}]', NULL, 260, NULL, '2021-02-04 21:02:05', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313476871114754', 2, '流程-代办列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActTaskController.todoList()', NULL, '  name:   categoryId: null  priority: null  createTime_begin: null  createTime_end: null  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@78f183a5', NULL, 10, NULL, '2021-02-04 21:02:05', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313520240218113', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357312967439339521', NULL, 8, NULL, '2021-02-04 21:02:16', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313540435791873', 2, '流程-任务节点审批通过', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActTaskController.pass()', NULL, '[{\"assignees\":[],\"comment\":\"\",\"id\":\"60040\",\"priority\":0,\"procInstId\":\"60001\",\"sendEmail\":false,\"sendMessage\":true,\"sendSms\":false}]', NULL, 258, NULL, '2021-02-04 21:02:20', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313542298062849', 2, '流程-代办列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActTaskController.todoList()', NULL, '  name:   categoryId: null  priority: null  createTime_begin: null  createTime_end: null  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5dc5872b', NULL, 8, NULL, '2021-02-04 21:02:21', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313558802649089', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4d40b911', NULL, 16, NULL, '2021-02-04 21:02:25', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313574963302401', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357312967439339521', NULL, 7, NULL, '2021-02-04 21:02:29', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313621834649602', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 8, NULL, '2021-02-04 21:02:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313622556069889', 2, '采购合同基础表-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPurchaseController.queryPageList()', NULL, '  contractPurchase: ContractPurchase(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, name=null, code=null, typeCode=null, firstMember=null, secondMember=null, thirdMember=null, userId=null, status=null, remark=null, memberUse=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@41175c87', NULL, 10, NULL, '2021-02-04 21:02:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313719993946113', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4c9e8fe1', NULL, 12, NULL, '2021-02-04 21:03:03', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313726243459074', 2, '流程-流程流转历史', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActTaskController.historicFlow()', NULL, '  id: 60001', NULL, 42, NULL, '2021-02-04 21:03:05', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357313805612273666', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357312967439339521', NULL, 8, NULL, '2021-02-04 21:03:24', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357314516483887105', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357312967439339521', NULL, 7, NULL, '2021-02-04 21:06:13', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357314741072089090', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@1c2fad92', NULL, 12, NULL, '2021-02-04 21:07:07', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357314747648757761', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357312967439339521', NULL, 7, NULL, '2021-02-04 21:07:08', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357314753134907394', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2d5637e1', NULL, 13, NULL, '2021-02-04 21:07:09', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357314759002738690', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357312967439339521', NULL, 9, NULL, '2021-02-04 21:07:11', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357314764753129474', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4f467270', NULL, 14, NULL, '2021-02-04 21:07:12', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357314821531422721', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 21:07:26', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357315207302533121', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@51c6515e', NULL, 12, NULL, '2021-02-04 21:08:58', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357315303993823233', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-04 21:09:21', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357315304392282113', 2, '采购合同基础表-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPurchaseController.queryPageList()', NULL, '  contractPurchase: ContractPurchase(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, name=null, code=null, typeCode=null, firstMember=null, secondMember=null, thirdMember=null, userId=null, status=null, remark=null, memberUse=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@1ab8d2b9', NULL, 9, NULL, '2021-02-04 21:09:21', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357315364865757185', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@f62839d', NULL, 14, NULL, '2021-02-04 21:09:35', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357315667459624962', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 21:10:47', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357315667807752193', 2, '采购合同基础表-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPurchaseController.queryPageList()', NULL, '  contractPurchase: ContractPurchase(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, name=null, code=null, typeCode=null, firstMember=null, secondMember=null, thirdMember=null, userId=null, status=null, remark=null, memberUse=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@70005247', NULL, 5, NULL, '2021-02-04 21:10:48', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357318761442496513', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 21:23:05', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357319638840561665', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-04 21:26:34', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357327296649809921', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 5, NULL, '2021-02-04 21:57:00', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357332516951871489', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 5, NULL, '2021-02-04 22:17:45', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357332797634695170', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 5, NULL, '2021-02-04 22:18:52', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357332929063211010', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 22:19:23', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357333728308809730', 2, '一般采购合同-添加', 2, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.add()', NULL, '[{\"code\":\"1\",\"id\":\"1357333728241700865\",\"name\":\"1\",\"params\":{},\"processData\":{\"procDefId\":\"采购申请流程:3:7504\",\"procDeTitle\":\"20210204一般采购合同\",\"tableName\":\"contract_purchase\",\"tableId\":\"1357333728241700865\"},\"remark\":\"1\",\"subForm\":{\"costCenter\":\"1\",\"relateProject\":1,\"fileAttach\":\"1\",\"modelId\":\"1\",\"filePdf\":\"1\",\"fileContract\":\"1\"},\"typeCode\":\"T0S000\"}]', NULL, 19, NULL, '2021-02-04 22:22:34', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357333879177924610', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@13b1dac4', NULL, 21, NULL, '2021-02-04 22:23:09', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357333909599211522', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357333728241700865', NULL, 9, NULL, '2021-02-04 22:23:17', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357333921007718402', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@781250eb', NULL, 17, NULL, '2021-02-04 22:23:19', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357333951806492674', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357333728241700865', NULL, 11, NULL, '2021-02-04 22:23:27', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357333981187592193', 2, '一般采购合同-编辑', 3, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.edit()', NULL, '[{\"code\":\"1\",\"id\":\"1357333728241700865\",\"name\":\"1\",\"processData\":{\"tableId\":\"1357333728241700865\"},\"remark\":\"1\",\"status\":\"0\",\"subForm\":{\"relateProject\":1,\"createBy\":\"admin\",\"createTime\":\"2021-02-04 22:22:34\",\"modelId\":\"1\",\"costCenter\":\"1\",\"sysOrgCode\":\"A01\",\"id\":\"1357333728292032514\",\"baseId\":\"1357333728241700865\",\"fileAttach\":\"1\",\"fileContract\":\"1\",\"filePdf\":\"1\"},\"typeCode\":\"T0S000\",\"userId\":\"admin\"}]', NULL, 11, NULL, '2021-02-04 22:23:34', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357333983163109377', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7c893980', NULL, 16, NULL, '2021-02-04 22:23:34', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357333994085076993', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357333728241700865', NULL, 10, NULL, '2021-02-04 22:23:37', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334021851369474', 2, '一般采购合同-编辑', 3, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.edit()', NULL, '[{\"code\":\"1\",\"id\":\"1357333728241700865\",\"name\":\"1\",\"processData\":{\"tableId\":\"1357333728241700865\"},\"remark\":\"1\",\"status\":\"0\",\"subForm\":{\"relateProject\":1,\"modelId\":\"1\",\"costCenter\":\"1\",\"updateTime\":\"2021-02-04 22:23:34\",\"baseId\":\"1357333728241700865\",\"fileAttach\":\"1\",\"fileContract\":\"1\",\"createBy\":\"admin\",\"createTime\":\"2021-02-04 22:22:34\",\"updateBy\":\"admin\",\"sysOrgCode\":\"A01\",\"id\":\"1357333728292032514\",\"filePdf\":\"1\"},\"typeCode\":\"T0S000\",\"userId\":\"admin\"}]', NULL, 9, NULL, '2021-02-04 22:23:44', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334023986270209', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@704875b2', NULL, 17, NULL, '2021-02-04 22:23:44', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334223802912769', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357333728241700865', NULL, 11, NULL, '2021-02-04 22:24:32', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334240898895873', 2, '一般采购合同-编辑', 3, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.edit()', NULL, '[{\"code\":\"1\",\"id\":\"1357333728241700865\",\"name\":\"1\",\"processData\":{\"procDeTitle\":\"20210204一般采购合同-管理员\",\"tableId\":\"1357333728241700865\"},\"remark\":\"1\",\"status\":\"0\",\"subForm\":{\"relateProject\":1,\"modelId\":\"1\",\"costCenter\":\"1\",\"updateTime\":\"2021-02-04 22:23:44\",\"baseId\":\"1357333728241700865\",\"fileAttach\":\"1\",\"fileContract\":\"1\",\"createBy\":\"admin\",\"createTime\":\"2021-02-04 22:22:34\",\"updateBy\":\"admin\",\"sysOrgCode\":\"A01\",\"id\":\"1357333728292032514\",\"filePdf\":\"1\"},\"typeCode\":\"T0S000\",\"userId\":\"admin\"}]', NULL, 9, NULL, '2021-02-04 22:24:36', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334243113488386', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@75b5999', NULL, 16, NULL, '2021-02-04 22:24:36', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334259026677762', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"40284481776d1c4101776d6c5a2a0003\"]', NULL, 10, NULL, '2021-02-04 22:24:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334259748098049', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@143de674', NULL, 16, NULL, '2021-02-04 22:24:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334348268883970', 2, '一般采购合同-添加', 2, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.add()', NULL, '[{\"code\":\"1\",\"id\":\"1357334348067557378\",\"memberUse\":\"1\",\"name\":\"1\",\"params\":{},\"processData\":{\"procDefId\":\"采购申请流程:3:7504\",\"tableName\":\"contract_purchase\",\"procDeTitle\":\"20210204一般采购合同-北京国炬软件-管理员\",\"tableId\":\"1357334348067557378\"},\"remark\":\"1\",\"secondMember\":\"1\",\"subForm\":{\"costCenter\":\"1\",\"relateProject\":1,\"isSub\":1,\"purchaseType\":1,\"protocol\":\"1\",\"biddingId\":\"1\",\"purchaseId\":\"1\",\"modelId\":\"1\",\"fileAttach\":\"1\",\"filePdf\":\"1\",\"fileContract\":\"1\"},\"typeCode\":\"T0S000\"}]', NULL, 49, NULL, '2021-02-04 22:25:01', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334350357647362', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@54c391', NULL, 18, NULL, '2021-02-04 22:25:02', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334360335896578', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357334348067557378', NULL, 10, NULL, '2021-02-04 22:25:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334371425636354', 2, '一般采购合同-编辑', 3, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.edit()', NULL, '[{\"code\":\"1\",\"id\":\"1357334348067557378\",\"memberUse\":\"1\",\"name\":\"1\",\"processData\":{\"procDeTitle\":\"20210204一般采购合同-北京国炬软\",\"tableId\":\"1357334348067557378\"},\"remark\":\"1\",\"secondMember\":\"1\",\"status\":\"0\",\"subForm\":{\"relateProject\":1,\"modelId\":\"1\",\"costCenter\":\"1\",\"purchaseId\":\"1\",\"biddingId\":\"1\",\"isSub\":1,\"baseId\":\"1357334348067557378\",\"fileAttach\":\"1\",\"fileContract\":\"1\",\"purchaseType\":1,\"createBy\":\"admin\",\"protocol\":\"1\",\"createTime\":\"2021-02-04 22:25:01\",\"sysOrgCode\":\"A01\",\"id\":\"1357334348105306113\",\"filePdf\":\"1\"},\"typeCode\":\"T0S000\",\"userId\":\"admin\"}]', NULL, 8, NULL, '2021-02-04 22:25:07', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334372776202241', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@39e24245', NULL, 21, NULL, '2021-02-04 22:25:07', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334381328388097', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1357334348067557378', NULL, 12, NULL, '2021-02-04 22:25:09', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334399485530113', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4225406b', NULL, 22, NULL, '2021-02-04 22:25:14', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334414958317570', 2, '流程-通过id删除草稿状态申请', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.delByIds()', NULL, '[\"40284481776d1c4101776d6e9b6b0004\"]', NULL, 10, NULL, '2021-02-04 22:25:17', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334415755235329', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2a2ac331', NULL, 19, NULL, '2021-02-04 22:25:17', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357334634819538946', 2, '职务表-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.system.controller.SysPositionController.queryPageList()', NULL, '  sysPosition: SysPosition(id=null, code=null, name=null, postRank=null, companyId=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null)  pageNo: 1  pageSize: 5  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@63289668', NULL, 30, NULL, '2021-02-04 22:26:10', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357337201406431234', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 6, NULL, '2021-02-04 22:36:22', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357337331358552065', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 22:36:53', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357337576725336065', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 22:37:51', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357337768799293441', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 22:38:37', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357338089063763969', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 22:39:53', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357338466135887874', 2, '流程-获取可用流程', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActivitiProcessController.listData()', NULL, '  lcmc: null  lckey: null  zx: true  status: 1  roles: true  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@68023c7e', NULL, 14, NULL, '2021-02-04 22:41:23', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357338466295271425', 2, '合同类型-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.queryPageList()', NULL, '  contractType: ContractType(name=null, code=null, sort=null, processDef=null, description=null, roles=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7f5f82a4', NULL, 27, NULL, '2021-02-04 22:41:23', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357339025601515522', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 22:43:37', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357339259895336962', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 22:44:32', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357339483158138881', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 5, NULL, '2021-02-04 22:45:26', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357339493283188738', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 5, NULL, '2021-02-04 22:45:28', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357340312762109954', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 22:48:43', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357341394875764738', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 5, NULL, '2021-02-04 22:53:01', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357341696806932481', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 5, NULL, '2021-02-04 22:54:13', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357341756550598657', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 5, NULL, '2021-02-04 22:54:28', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357342250555723778', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 22:56:25', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357342297607426050', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 22:56:37', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357342599916081154', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-04 22:57:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1357342712688332802', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-04 22:58:16', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_permission
@@ -10134,7 +10286,7 @@ CREATE TABLE `sys_permission`  (
   INDEX `idx_sp_menu_type`(`menu_type`) USING BTREE,
   INDEX `idx_sp_hidden`(`hidden`) USING BTREE,
   INDEX `idx_sp_status`(`status`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_permission
@@ -10301,7 +10453,7 @@ CREATE TABLE `sys_permission_data_rule`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_fucntionid`(`permission_id`) USING BTREE,
   INDEX `idx_spdr_permission_id`(`permission_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_permission_data_rule
@@ -10349,7 +10501,7 @@ CREATE TABLE `sys_position`  (
   `sys_org_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组织机构编码',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uniq_code`(`code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_position
@@ -10375,7 +10527,7 @@ CREATE TABLE `sys_quartz_job`  (
   `status` int(1) NULL DEFAULT NULL COMMENT '状态 0正常 -1停止',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uniq_job_class_name`(`job_class_name`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_quartz_job
@@ -10400,7 +10552,7 @@ CREATE TABLE `sys_role`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uniq_sys_role_role_code`(`role_code`) USING BTREE,
   INDEX `idx_sr_role_code`(`role_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
@@ -10429,7 +10581,7 @@ CREATE TABLE `sys_role_permission`  (
   INDEX `idx_srp_role_per_id`(`role_id`, `permission_id`) USING BTREE,
   INDEX `idx_srp_role_id`(`role_id`) USING BTREE,
   INDEX `idx_srp_permission_id`(`permission_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role_permission
@@ -10866,7 +11018,7 @@ CREATE TABLE `sys_sms`  (
   INDEX `idx_ss_es_receiver`(`es_receiver`) USING BTREE,
   INDEX `idx_ss_es_send_time`(`es_send_time`) USING BTREE,
   INDEX `idx_ss_es_send_status`(`es_send_status`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_sms
@@ -10897,7 +11049,7 @@ CREATE TABLE `sys_sms_template`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uniq_templatecode`(`template_code`) USING BTREE,
   UNIQUE INDEX `uk_sst_template_code`(`template_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_sms_template
@@ -10920,7 +11072,7 @@ CREATE TABLE `sys_tenant`  (
   `end_date` datetime(0) NULL DEFAULT NULL COMMENT '结束时间',
   `status` int(1) NULL DEFAULT NULL COMMENT '状态 1正常 0冻结',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '多租户信息表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '多租户信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_tenant
@@ -10941,11 +11093,7 @@ CREATE TABLE `sys_third_account`  (
   `realname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '真实姓名',
   `third_user_uuid` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '第三方账号',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of sys_third_account
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -10990,7 +11138,7 @@ CREATE TABLE `sys_user`  (
   INDEX `idx_su_username`(`username`) USING BTREE,
   INDEX `idx_su_status`(`status`) USING BTREE,
   INDEX `idx_su_del_flag`(`del_flag`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
@@ -11029,11 +11177,7 @@ CREATE TABLE `sys_user_agent`  (
   INDEX `idx_sug_status`(`status`) USING BTREE,
   INDEX `idx_sug_start_time`(`start_time`) USING BTREE,
   INDEX `idx_sug_end_time`(`end_time`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户代理人设置' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of sys_user_agent
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户代理人设置' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_user_depart
@@ -11050,7 +11194,7 @@ CREATE TABLE `sys_user_depart`  (
   INDEX `idx_sud_user_id`(`user_id`) USING BTREE,
   INDEX `idx_sud_dep_id`(`dep_id`) USING BTREE,
   INDEX `idx_sud_user_dep_id`(`user_id`, `dep_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user_depart
@@ -11078,7 +11222,7 @@ CREATE TABLE `sys_user_role`  (
   INDEX `idx_sur_user_id`(`user_id`) USING BTREE,
   INDEX `idx_sur_role_id`(`role_id`) USING BTREE,
   INDEX `idx_sur_user_role_id`(`user_id`, `role_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户角色表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user_role
@@ -11124,7 +11268,7 @@ CREATE TABLE `test_demo`  (
   `search_sel` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '搜索下拉',
   `pop` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '弹窗',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of test_demo
@@ -11173,7 +11317,7 @@ CREATE TABLE `test_enhance_select`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
   `create_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of test_enhance_select
@@ -11200,7 +11344,7 @@ CREATE TABLE `test_note`  (
   `birthday` datetime(0) NULL DEFAULT NULL COMMENT '生日',
   `contents` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请假原因',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of test_note
@@ -11223,7 +11367,7 @@ CREATE TABLE `test_order_main`  (
   `order_date` datetime(0) NULL DEFAULT NULL COMMENT '下单时间',
   `descc` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of test_order_main
@@ -11251,7 +11395,7 @@ CREATE TABLE `test_order_product`  (
   `order_fk_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单外键ID',
   `pro_type` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品类型',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of test_order_product
@@ -11293,7 +11437,7 @@ CREATE TABLE `test_person`  (
   `be_date` datetime(0) NULL DEFAULT NULL COMMENT '请假时间',
   `qj_days` int(11) NULL DEFAULT NULL COMMENT '请假天数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of test_person
@@ -11316,7 +11460,7 @@ CREATE TABLE `test_shoptype_tree`  (
   `pid` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '父级节点',
   `has_child` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '是否有子节点',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of test_shoptype_tree
@@ -11342,7 +11486,7 @@ CREATE TABLE `test_sign`  (
   `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标题',
   `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of test_sign
