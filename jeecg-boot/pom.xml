@@ -1,164 +1,172 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jeecgframework.boot</groupId>
-  <artifactId>jeecg-boot-parent</artifactId>
-  <version>2.4.0</version>
-  <packaging>pom</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jeecgframework.boot</groupId>
+    <artifactId>jeecg-boot-parent</artifactId>
+    <version>2.4.0</version>
+    <packaging>pom</packaging>
 
-  	<parent>
-	    <groupId>org.springframework.boot</groupId>
-	    <artifactId>spring-boot-starter-parent</artifactId>
-	    <version>2.3.5.RELEASE</version>
-	    <relativePath/>
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.5.RELEASE</version>
+        <relativePath/>
+    </parent>
 
-	<properties>
-		<jeecgboot.version>2.4.0</jeecgboot.version>
-		<java.version>1.8</java.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <properties>
+        <jeecgboot.version>2.4.0</jeecgboot.version>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
-		<xxl-job-core.version>2.2.0</xxl-job-core.version>
+        <xxl-job-core.version>2.2.0</xxl-job-core.version>
         <fastjson.version>1.2.75</fastjson.version>
-		<knife4j-spring-boot-starter.version>2.0.4</knife4j-spring-boot-starter.version>
-		<knife4j-spring-ui.version>2.0.4</knife4j-spring-ui.version>
-		<postgresql.version>42.2.6</postgresql.version>
-		<ojdbc6.version>11.2.0.3</ojdbc6.version>
-		<sqljdbc4.version>4.0</sqljdbc4.version>
-		<mysql-connector-java.version>8.0.21</mysql-connector-java.version>
-		<dynamic-datasource-spring-boot-starter.version>3.2.0</dynamic-datasource-spring-boot-starter.version>
-		<hutool-all.version>5.3.8</hutool-all.version>
-		<redisson.version>3.13.6</redisson.version>
-		<commons-beanutils.version>1.9.4</commons-beanutils.version>
-		<guava.version>29.0-jre</guava.version>
-		<mybatis-plus.version>3.4.1</mybatis-plus.version>
-		<druid.version>1.1.22</druid.version>
-		<commons.version>2.6</commons.version>
-		<aliyun-java-sdk-dysmsapi.version>1.0.0</aliyun-java-sdk-dysmsapi.version>
-		<aliyun.oss.version>3.6.0</aliyun.oss.version>
-		<shiro.version>1.6.0</shiro.version>
-		<java-jwt.version>3.11.0</java-jwt.version>
-		<shiro-redis.version>3.1.0</shiro-redis.version>
-		<codegenerate.version>1.2.5</codegenerate.version>
-		<autopoi-web.version>1.2.2</autopoi-web.version>
-		<minio.version>4.0.0</minio.version>
-		<justauth-spring-boot-starter.version>1.3.2</justauth-spring-boot-starter.version>
-		<dom4j.version>1.6.1</dom4j.version>
-		<qiniu-java-sdk.version>7.2.23</qiniu-java-sdk.version>
-		<pinyin4j.version>2.5.1</pinyin4j.version>
-	</properties>
+        <knife4j-spring-boot-starter.version>2.0.4</knife4j-spring-boot-starter.version>
+        <knife4j-spring-ui.version>2.0.4</knife4j-spring-ui.version>
+        <postgresql.version>42.2.6</postgresql.version>
+        <ojdbc6.version>11.2.0.3</ojdbc6.version>
+        <sqljdbc4.version>4.0</sqljdbc4.version>
+        <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
+        <dynamic-datasource-spring-boot-starter.version>3.2.0</dynamic-datasource-spring-boot-starter.version>
+        <hutool-all.version>5.3.8</hutool-all.version>
+        <redisson.version>3.13.6</redisson.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <guava.version>29.0-jre</guava.version>
+        <mybatis-plus.version>3.4.1</mybatis-plus.version>
+        <druid.version>1.1.22</druid.version>
+        <commons.version>2.6</commons.version>
+        <aliyun-java-sdk-dysmsapi.version>1.0.0</aliyun-java-sdk-dysmsapi.version>
+        <aliyun.oss.version>3.6.0</aliyun.oss.version>
+        <shiro.version>1.6.0</shiro.version>
+        <java-jwt.version>3.11.0</java-jwt.version>
+        <shiro-redis.version>3.1.0</shiro-redis.version>
+        <codegenerate.version>1.2.5</codegenerate.version>
+        <autopoi-web.version>1.2.2</autopoi-web.version>
+        <minio.version>4.0.0</minio.version>
+        <justauth-spring-boot-starter.version>1.3.2</justauth-spring-boot-starter.version>
+        <dom4j.version>1.6.1</dom4j.version>
+        <qiniu-java-sdk.version>7.2.23</qiniu-java-sdk.version>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
+    </properties>
 
-	<modules>
-		<module>jeecg-boot-base</module>
-		<module>jeecg-boot-module-demo</module>
-		<module>jeecg-boot-module-activiti</module>
-		<module>jeecg-boot-module-system</module>
-		<module>jeecg-boot-starter</module>
-		<module>jeecg-cloud-module</module>
+    <modules>
+        <module>jeecg-boot-base</module>
+        <module>jeecg-boot-module-demo</module>
+        <module>jeecg-boot-module-activiti</module>
+        <module>jeecg-boot-module-system</module>
+        <module>jeecg-boot-starter</module>
+        <module>jeecg-cloud-module</module>
         <module>jeecg-boot-module-contract</module>
     </modules>
 
-	<distributionManagement>
-	  	<repository>
+    <distributionManagement>
+        <repository>
             <id>jeecg</id>
             <name>jeecg Repository</name>
             <url>http://maven.jeecg.com:8090/nexus/content/repositories/jeecg</url>
         </repository>
         <snapshotRepository>
-	        <id>jeecg-snapshots</id>
+            <id>jeecg-snapshots</id>
             <name>jeecg Snapshot Repository</name>
             <url>http://maven.jeecg.com:8090/nexus/content/repositories/snapshots/</url>
-	    </snapshotRepository>
-	</distributionManagement>
+        </snapshotRepository>
+    </distributionManagement>
 
-	<repositories>
-		<repository>
+    <repositories>
+        <repository>
             <id>aliyun</id>
             <name>aliyun Repository</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public</url>
             <snapshots>
-				<enabled>false</enabled>
-			</snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
-		<repository>
+        <repository>
             <id>jeecg</id>
             <name>jeecg Repository</name>
             <url>http://maven.jeecg.org/nexus/content/repositories/jeecg</url>
             <snapshots>
-				<enabled>false</enabled>
-			</snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
-	</repositories>
+    </repositories>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<!-- Lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
-		<!-- json -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>${fastjson.version}</version>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- json -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+    </dependencies>
 
-	<dependencyManagement>
-		<dependencies>
-			<!-- spring-cloud-->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
+    <dependencyManagement>
+        <dependencies>
+            <!-- spring-cloud-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<!-- spring-cloud-alibaba -->
-			<dependency>
-				<groupId>com.alibaba.cloud</groupId>
-				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring-cloud-alibaba -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
-			<!-- system 模块-->
-			<dependency>
-				<groupId>org.jeecgframework.boot</groupId>
-				<artifactId>jeecg-boot-module-system</artifactId>
-				<version>${jeecgboot.version}</version>
-			</dependency>
+            <!-- system 模块-->
+            <dependency>
+                <groupId>org.jeecgframework.boot</groupId>
+                <artifactId>jeecg-boot-module-system</artifactId>
+                <version>${jeecgboot.version}</version>
+            </dependency>
 
-			<!-- jeecg tools -->
-			<dependency>
-				<groupId>org.jeecgframework.boot</groupId>
-				<artifactId>jeecg-boot-base-tools</artifactId>
-				<version>${jeecgboot.version}</version>
-			</dependency>
-			<!-- jeecg core -->
-			<dependency>
-				<groupId>org.jeecgframework.boot</groupId>
-				<artifactId>jeecg-boot-base-core</artifactId>
-				<version>${jeecgboot.version}</version>
-			</dependency>
-			<!-- system 单体 api -->
-			<dependency>
-				<groupId>org.jeecgframework.boot</groupId>
-				<artifactId>jeecg-system-local-api</artifactId>
-				<version>${jeecgboot.version}</version>
-			</dependency>
-			<!-- system 微服务 api -->
-			<dependency>
-				<groupId>org.jeecgframework.boot</groupId>
-				<artifactId>jeecg-system-cloud-api</artifactId>
-				<version>${jeecgboot.version}</version>
-			</dependency>
+            <!-- jeecg tools -->
+            <dependency>
+                <groupId>org.jeecgframework.boot</groupId>
+                <artifactId>jeecg-boot-base-tools</artifactId>
+                <version>${jeecgboot.version}</version>
+            </dependency>
+            <!-- jeecg core -->
+            <dependency>
+                <groupId>org.jeecgframework.boot</groupId>
+                <artifactId>jeecg-boot-base-core</artifactId>
+                <version>${jeecgboot.version}</version>
+            </dependency>
+            <!-- system 单体 api -->
+            <dependency>
+                <groupId>org.jeecgframework.boot</groupId>
+                <artifactId>jeecg-system-local-api</artifactId>
+                <version>${jeecgboot.version}</version>
+            </dependency>
+            <!-- system 微服务 api -->
+            <dependency>
+                <groupId>org.jeecgframework.boot</groupId>
+                <artifactId>jeecg-system-cloud-api</artifactId>
+                <version>${jeecgboot.version}</version>
+            </dependency>
+
+            <!-- activiti流程模块-->
+            <dependency>
+                <groupId>org.jeecgframework.boot</groupId>
+                <artifactId>jeecg-boot-module-activiti</artifactId>
+                <version>${jeecgboot.version}</version>
+            </dependency>
 
             <!--微服务模块-->
             <dependency>
@@ -167,84 +175,84 @@
                 <version>${jeecgboot.version}</version>
             </dependency>
 
-			<!--xxl-job定时任务-->
-			<dependency>
-				<groupId>org.jeecgframework.boot</groupId>
-				<artifactId>jeecg-boot-starter-job</artifactId>
-				<version>${jeecgboot.version}</version>
-			</dependency>
+            <!--xxl-job定时任务-->
+            <dependency>
+                <groupId>org.jeecgframework.boot</groupId>
+                <artifactId>jeecg-boot-starter-job</artifactId>
+                <version>${jeecgboot.version}</version>
+            </dependency>
 
-			<!--redis分布式锁-->
-			<dependency>
-				<groupId>org.jeecgframework.boot</groupId>
-				<artifactId>jeecg-boot-starter-lock</artifactId>
-				<version>${jeecgboot.version}</version>
-			</dependency>
+            <!--redis分布式锁-->
+            <dependency>
+                <groupId>org.jeecgframework.boot</groupId>
+                <artifactId>jeecg-boot-starter-lock</artifactId>
+                <version>${jeecgboot.version}</version>
+            </dependency>
 
-			<!--rabbitmq消息队列-->
-			<dependency>
-				<groupId>org.jeecgframework.boot</groupId>
-				<artifactId>jeecg-boot-starter-rabbitmq</artifactId>
-				<version>${jeecgboot.version}</version>
-			</dependency>
+            <!--rabbitmq消息队列-->
+            <dependency>
+                <groupId>org.jeecgframework.boot</groupId>
+                <artifactId>jeecg-boot-starter-rabbitmq</artifactId>
+                <version>${jeecgboot.version}</version>
+            </dependency>
 
-			<!--redis-->
-			<dependency>
-				<groupId>org.jeecgframework.boot</groupId>
-				<artifactId>jeecg-boot-starter-redis</artifactId>
-				<version>${jeecgboot.version}</version>
-			</dependency>
+            <!--redis-->
+            <dependency>
+                <groupId>org.jeecgframework.boot</groupId>
+                <artifactId>jeecg-boot-starter-redis</artifactId>
+                <version>${jeecgboot.version}</version>
+            </dependency>
 
-			<!-- 七牛云SDK -->
-			<dependency>
-				<groupId>com.qiniu</groupId>
-				<artifactId>qiniu-java-sdk</artifactId>
-				<version>${qiniu-java-sdk.version}</version>
-			</dependency>
-			<!-- dom4j -->
-			<dependency>
-				<groupId>dom4j</groupId>
-				<artifactId>dom4j</artifactId>
-				<version>${dom4j.version}</version>
-			</dependency>
-			<!-- redisson -->
-			<dependency>
-				<groupId>org.redisson</groupId>
-				<artifactId>redisson</artifactId>
-				<version>${redisson.version}</version>
-			</dependency>
+            <!-- 七牛云SDK -->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu-java-sdk.version}</version>
+            </dependency>
+            <!-- dom4j -->
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>${dom4j.version}</version>
+            </dependency>
+            <!-- redisson -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
 
-			<!-- guava工具类 -->
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>${guava.version}</version>
-			</dependency>
+            <!-- guava工具类 -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
 
-			<!-- hutool工具类-->
-			<dependency>
-				<groupId>cn.hutool</groupId>
-				<artifactId>hutool-all</artifactId>
-				<version>${hutool-all.version}</version>
-			</dependency>
+            <!-- hutool工具类-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
+            </dependency>
 
-			<!-- commons-beanutils -->
-			<dependency>
-				<groupId>commons-beanutils</groupId>
-				<artifactId>commons-beanutils</artifactId>
-				<version>${commons-beanutils.version}</version>
-			</dependency>
+            <!-- commons-beanutils -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
+            </dependency>
 
-		</dependencies>
-	</dependencyManagement>
+        </dependencies>
+    </dependencyManagement>
 
-	<build>
-		<plugins>
-			<!--<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			 指定JDK编译版本 -->
+    <build>
+        <plugins>
+            <!--<plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+             指定JDK编译版本 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -256,14 +264,14 @@
             </plugin>
             <!-- 打包跳过测试 -->
             <plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-surefire-plugin</artifactId>
-		        <configuration>
-		          <skipTests>true</skipTests>
-		        </configuration>
-	        </plugin>
-	         <!-- 避免font文件的二进制文件格式压缩破坏 -->
-	         <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <!-- 避免font文件的二进制文件格式压缩破坏 -->
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <configuration>
@@ -276,22 +284,22 @@
                     </nonFilteredFileExtensions>
                 </configuration>
             </plugin>
-		</plugins>
-		<resources>
-			<resource>
+        </plugins>
+        <resources>
+            <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.xml</include>
-					<include>**/*.json</include>
-					<include>**/*.ftl</include>
-				</includes>
-			</resource>
-		</resources>
-	</build>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.json</include>
+                    <include>**/*.ftl</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
     <!-- 环境 -->
     <profiles>
         <!-- 开发 -->

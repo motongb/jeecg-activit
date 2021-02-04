@@ -14,11 +14,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * @Description: 一般采购合同
  * @Author: jeecg-boot
- * @Date: 2021-02-03
+ * @Date: 2021-02-04
  * @Version: V1.0
  */
 @Data
@@ -26,7 +27,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "contract_general对象", description = "一般采购合同")
-public class ContractGeneral implements Serializable {
+public class ContractGeneral extends HashMap<String, Object> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -182,4 +183,10 @@ public class ContractGeneral implements Serializable {
     @Excel(name = "合同文件", width = 15)
     @ApiModelProperty(value = "合同文件")
     private String fileContract;
+    /**
+     * 主信息id
+     */
+    @Excel(name = "主信息id", width = 15)
+    @ApiModelProperty(value = "主信息id")
+    private String baseId;
 }

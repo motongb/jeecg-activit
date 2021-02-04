@@ -1,109 +1,162 @@
 <template>
   <a-spin :spinning="confirmLoading">
-    <j-form-container :disabled="formDisabled">
-      <a-form :form="form" slot="detail">
-        <a-row>
-          <a-col :span="12">
-            <a-form-item label="项目相关合同" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['relateProject']" placeholder="请输入项目相关合同" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="相关项目" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['project']" placeholder="请输入相关项目"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="是否子合同" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['isSub']" placeholder="请输入是否子合同" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="主合同id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['parentId']" placeholder="请输入主合同id"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="预算相关合同" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['budget']" placeholder="请输入预算相关合同" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="成本中心" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['costCenter']" placeholder="请输入成本中心"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="密级" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['isSecret']" placeholder="请输入密级" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-date placeholder="请选择开始时间" v-decorator="['startTime']" :trigger-change="true" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-date placeholder="请选择结束时间" v-decorator="['endTime']" :trigger-change="true" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="采购方式" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['purchaseType']" placeholder="请输入采购方式" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="招标编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['biddingId']" placeholder="请输入招标编号"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="相关框架协议" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['protocol']" placeholder="请输入相关框架协议"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="采购订单号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['purchaseId']" placeholder="请输入采购订单号"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="合同金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['amount']" placeholder="请输入合同金额"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="合同金额大写" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['amountLarge']" placeholder="请输入合同金额大写"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="模板id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['modelId']" placeholder="请输入模板id"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="合同影像文件" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['filePdf']" placeholder="请输入合同影像文件"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="附件" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['fileAttach']" placeholder="请输入附件"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="合同文件" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['fileContract']" placeholder="请输入合同文件"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
-            <a-button @click="submitForm">提 交</a-button>
-          </a-col>
-        </a-row>
-      </a-form>
-    </j-form-container>
+    <a-card class="apply-card" title="合同信息">
+      <j-form-container :disabled="disabled">
+        <a-form-model slot="detail" ref="ruleForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
+          <a-row>
+            <a-col :span="12">
+              <a-form-model-item label="合同名称">
+                <a-input v-model="form.name" placeholder="请输入合同名称"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="合同编号">
+                <a-input v-model="form.code" placeholder="请输入合同编号"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="类型编码">
+                <a-input v-model="form.typeCode" placeholder="请输入类型编码"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="备注">
+                <a-input v-model="form.remark" placeholder="请输入备注"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="状态">
+                <a-input v-model="form.status" placeholder="请输入状态"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="用户id">
+                <a-input v-model="form.userId" placeholder="请输入用户id"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="签署方数">
+                <a-input v-model="form.memberUse" placeholder="请输入签署方数"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="我方">
+                <a-input v-model="form.firstMember" placeholder="请输入我方"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="乙方">
+                <a-input v-model="form.secondMember" placeholder="请输入乙方"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="丙方">
+                <a-input v-model="form.thirdMember" placeholder="请输入丙方"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="项目相关合同">
+                <a-input-number v-model="form.subForm.relateProject" placeholder="请输入项目相关合同" style="width: 100%"/>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="相关项目">
+                <a-input v-model="form.subForm.project" placeholder="请输入相关项目"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="是否子合同">
+                <a-input-number v-model="form.subForm.isSub" placeholder="请输入是否子合同" style="width: 100%"/>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="主合同id">
+                <a-input v-model="form.subForm.parentId" placeholder="请输入主合同id"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="预算相关合同">
+                <a-input-number v-model="form.subForm.budget" placeholder="请输入预算相关合同" style="width: 100%"/>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="成本中心">
+                <a-input v-model="form.subForm.costCenter" placeholder="请输入成本中心"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="密级">
+                <a-input-number v-model="form.subForm.isSecret" placeholder="请输入密级" style="width: 100%"/>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="开始时间">
+                <j-date placeholder="请选择开始时间" v-model="form.subForm.startTime" :trigger-change="true"
+                        style="width: 100%"/>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="结束时间">
+                <j-date placeholder="请选择结束时间" v-model="form.subForm.endTime" :trigger-change="true"
+                        style="width: 100%"/>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="采购方式">
+                <a-input-number v-model="form.subForm.purchaseType" placeholder="请输入采购方式" style="width: 100%"/>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="招标编号">
+                <a-input v-model="form.subForm.biddingId" placeholder="请输入招标编号"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="相关框架协议">
+                <a-input v-model="form.subForm.protocol" placeholder="请输入相关框架协议"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="采购订单号">
+                <a-input v-model="form.subForm.purchaseId" placeholder="请输入采购订单号"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="合同金额">
+                <a-input v-model="form.subForm.amount" placeholder="请输入合同金额"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="合同金额大写">
+                <a-input v-model="form.subForm.amountLarge" placeholder="请输入合同金额大写"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="模板id">
+                <a-input v-model="form.subForm.modelId" placeholder="请输入模板id"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="合同影像文件">
+                <a-input v-model="form.subForm.filePdf" placeholder="请输入合同影像文件"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="附件">
+                <a-input v-model="form.subForm.fileAttach" placeholder="请输入附件"></a-input>
+              </a-form-model-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-model-item label="合同文件">
+                <a-input v-model="form.subForm.fileContract" placeholder="请输入合同文件"></a-input>
+              </a-form-model-item>
+            </a-col>
+          </a-row>
+        </a-form-model>
+      </j-form-container>
+
+    </a-card>
+
   </a-spin>
 </template>
 
@@ -113,27 +166,17 @@
   import pick from 'lodash.pick'
   import { validateDuplicateValue } from '@/utils/util'
   import JFormContainer from '@/components/jeecg/JFormContainer'
-  import JDate from '@/components/jeecg/JDate'  
+  import JDate from '@/components/jeecg/JDate'
+  import { activitiApproveMixin } from '@views/activiti/mixins/activitiApproveMixin'
 
   export default {
     name: 'ContractGeneralForm',
     components: {
       JFormContainer,
-      JDate,
+      JDate
     },
+    mixins: [activitiApproveMixin],
     props: {
-      //流程表单data
-      formData: {
-        type: Object,
-        default: ()=>{},
-        required: false
-      },
-      //表单模式：true流程表单 false普通表单
-      formBpm: {
-        type: Boolean,
-        default: false,
-        required: false
-      },
       //表单禁用
       disabled: {
         type: Boolean,
@@ -141,108 +184,86 @@
         required: false
       }
     },
-    data () {
+    data() {
       return {
-        form: this.$form.createForm(this),
+        form: { subForm: {}, processData: {} },
         model: {},
         labelCol: {
           xs: { span: 24 },
-          sm: { span: 5 },
+          sm: { span: 5 }
         },
         wrapperCol: {
           xs: { span: 24 },
-          sm: { span: 16 },
+          sm: { span: 16 }
         },
         confirmLoading: false,
-        validatorRules: {
-        },
+        validatorRules: {},
         url: {
-          add: "/contract/contractGeneral/add",
-          edit: "/contract/contractGeneral/edit",
-          queryById: "/contract/contractGeneral/queryById"
+          add: '/contract/contractGeneral/add',
+          edit: '/contract/contractGeneral/edit',
+          queryById: '/contract/contractGeneral/queryById'
         }
       }
     },
-    computed: {
-      formDisabled(){
-        if(this.formBpm===true){
-          if(this.formData.disabled===false){
-            return false
-          }
-          return true
-        }
-        return this.disabled
-      },
-      showFlowSubmitButton(){
-        if(this.formBpm===true){
-          if(this.formData.disabled===false){
-            return true
-          }
-        }
-        return false
-      }
-    },
-    created () {
-      //如果是流程中表单，则需要加载流程表单data
-      this.showFlowData();
+    computed: {},
+    created() {
+
     },
     methods: {
-      add () {
-        this.edit({});
-      },
-      edit (record) {
-        this.form.resetFields();
-        this.model = Object.assign({}, record);
-        this.visible = true;
-        this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'relateProject','project','isSub','parentId','budget','costCenter','isSecret','startTime','endTime','purchaseType','biddingId','protocol','purchaseId','amount','amountLarge','modelId','filePdf','fileAttach','fileContract'))
-        })
-      },
-      //渲染流程表单数据
-      showFlowData(){
-        if(this.formBpm === true){
-          let params = {id:this.formData.dataId};
-          getAction(this.url.queryById,params).then((res)=>{
-            if(res.success){
-              this.edit (res.result);
-            }
-          });
-        }
-      },
-      submitForm () {
-        const that = this;
-        // 触发表单验证
-        this.form.validateFields((err, values) => {
-          if (!err) {
-            that.confirmLoading = true;
-            let httpurl = '';
-            let method = '';
-            if(!this.model.id){
-              httpurl+=this.url.add;
-              method = 'post';
-            }else{
-              httpurl+=this.url.edit;
-               method = 'put';
-            }
-            let formData = Object.assign(this.model, values);
-            console.log("表单提交数据",formData)
-            httpAction(httpurl,formData,method).then((res)=>{
-              if(res.success){
-                that.$message.success(res.message);
-                that.$emit('ok');
-              }else{
-                that.$message.warning(res.message);
-              }
-            }).finally(() => {
-              that.confirmLoading = false;
-            })
+      init() {
+        this.getAction(this.url.queryById, { id: this.processData.tableId }).then((res) => {
+          if (res.success) {
+            this.form = res.result
+            this.form.tableName = this.processData.tableName
+            console.log('表单回显数据', this.form)
+          } else {
+            this.$message.error(res.message)
           }
-         
         })
       },
-      popupCallback(row){
-        this.form.setFieldsValue(pick(row,'relateProject','project','isSub','parentId','budget','costCenter','isSecret','startTime','endTime','purchaseType','biddingId','protocol','purchaseId','amount','amountLarge','modelId','filePdf','fileAttach','fileContract'))
+      /*重写提交*/
+      handleSubmit() {
+        return new Promise(((resolve, reject) => {
+          this.$refs.ruleForm.validate(valid => {
+            if (valid) {
+              this.form.processData.procDefId = this.processData.id
+              this.form.processData.procDeTitle = this.title
+              if (!this.form.processData.tableName) {
+                this.form.processData.tableName = this.processData.businessTable
+              }
+              this.confirmLoading = true
+              let httpurl = ''
+              let method = ''
+              if (!this.model.id) {
+                httpurl += this.url.add
+                method = 'post'
+              } else {
+                httpurl += this.url.edit
+                method = 'put'
+              }
+              console.log('表单提交数据', this.form)
+              httpAction(httpurl, this.form, method).then((res) => {
+                if (res.success) {
+                  this.$message.success(res.message)
+                  resolve(this.form)
+                } else {
+                  this.$message.warning(res.message)
+                }
+              }).finally(() => {
+                reject()
+                this.confirmLoading = false
+              })
+              console.log('formData', this.form)
+            } else {
+              console.log('error submit!!')
+              reject()
+            }
+          })
+        }))
       },
+      popupCallback(row) {
+        this.form.setFieldsValue(pick(row, 'relateProject', 'project', 'isSub', 'parentId', 'budget', 'costCenter', 'isSecret', 'startTime', 'endTime', 'purchaseType', 'biddingId', 'protocol', 'purchaseId', 'amount', 'amountLarge', 'modelId', 'filePdf', 'fileAttach', 'fileContract'))
+      }
     }
   }
 </script>

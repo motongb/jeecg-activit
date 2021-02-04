@@ -3,6 +3,8 @@ package org.jeecg.modules.activiti.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.activiti.entity.ActZParams;
 
+import java.util.Map;
+
 /**
  * @Description: 流程参数表
  * @Author: jeecg-boot
@@ -11,4 +13,5 @@ import org.jeecg.modules.activiti.entity.ActZParams;
  */
 public interface IActZParamsService extends IService<ActZParams> {
 
+    Map<String,Object> getActParams(String tableId);
 }

@@ -82,7 +82,6 @@ export const activitiApproveMixin = {
               console.log(this.processData)
               this.form.tableName = this.processData.businessTable
             }
-            this.form.params = this.handleParams(this.form)
             this.pickValue()
             console.log('formData', this.form)
             var url = this.url.addApply
@@ -106,14 +105,6 @@ export const activitiApproveMixin = {
           }
         })
       })
-
     },
-    /*处理参数*/
-    handleParams(values) {
-      return _.keys(values.params).map(key => ({
-        paramsKey: key,
-        paramsVal: values.params[key]
-      }))
-    }
   }
 }

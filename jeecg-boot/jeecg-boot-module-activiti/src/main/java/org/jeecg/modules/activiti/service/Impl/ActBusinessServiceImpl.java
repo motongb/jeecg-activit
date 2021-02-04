@@ -20,6 +20,7 @@ import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.vo.ComboModel;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.DateUtils;
+import org.jeecg.common.util.UUIDGenerator;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.activiti.entity.*;
 import org.jeecg.modules.activiti.mapper.ActBusinessMapper;
@@ -27,7 +28,6 @@ import org.jeecg.modules.activiti.service.IActBusinessService;
 import org.jeecg.modules.activiti.service.IActZParamsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -206,17 +206,8 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
             this.baseMapper.updateBusiData(String.format("update %s set %s where id = '%s'", tableName, substring, tableId));
         }
         // 设置参数
-        List<Map<String, String>> actZParams = (List<Map<String, String>>) paramsData.get("params");
-        if (!CollectionUtils.isEmpty(actZParams)) {
-            actZParamsService.remove(new LambdaQueryWrapper<ActZParams>().eq(ActZParams::getPid, tableId));
-            actZParams.forEach(item -> {
-                ActZParams zParams = new ActZParams();
-                zParams.setPid(tableId);
-                zParams.setParamsKey(item.get("paramsKey"));
-                zParams.setParamsVal(item.get("paramsVal"));
-                actZParamsService.save(zParams);
-            });
-        }
+        Map<String, Object> actZParams = (Map<String, Object>) paramsData.get("params");
+        handleParams(actZParams, tableId);
         return MapUtil.isEmpty(busiData);
     }
 
@@ -231,12 +222,7 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
             busiData.put("createByAvatar", userByName.getAvatar());
         }
         // 设置额外自定义参数
-        List<ActZParams> otherParams = actZParamsService.list(new LambdaQueryWrapper<ActZParams>().eq(ActZParams::getPid, tableId));
-        if (!CollectionUtils.isEmpty(otherParams)) {
-            Map<String, Object> params = new HashMap<>();
-            otherParams.forEach(p -> params.put(p.getParamsKey(), p.getParamsVal()));
-            busiData.put("params", params);
-        }
+        busiData.put("params", actZParamsService.getActParams(tableId));
         return busiData;
     }
 
@@ -412,5 +398,43 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
             list.add(htv);
         });
         return list;
+    }
+
+
+    @Override
+    public ActBusiness saveBusiness(boolean isNew, Map<String, Object> processData, Map<String, Object> params) {
+        ActBusiness actBusiness = new ActBusiness();
+        String procDefId = (String) processData.get("procDefId");
+        String procDeTitle = (String) processData.get("procDeTitle");
+        String tableName = (String) processData.get("tableName");
+        String tableId = (String) processData.get("tableId");
+        if (isNew) {
+            LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+            actBusiness.setId(UUIDGenerator.generate());
+            actBusiness.setUserId(sysUser.getUsername());
+            actBusiness.setTableId(tableId);
+            actBusiness.setTableName(tableName);
+            actBusiness.setProcDefId(procDefId);
+            actBusiness.setTitle(procDeTitle);
+            save(actBusiness);
+        } else {
+            actBusiness.setTitle(procDeTitle);
+            update(actBusiness, new LambdaQueryWrapper<ActBusiness>().eq(ActBusiness::getTableId, tableId));
+        }
+        handleParams(params, tableId);
+        return actBusiness;
+    }
+
+    private void handleParams(Map<String, Object> params, String tableId) {
+        if (Objects.nonNull(params)) {
+            actZParamsService.remove(new LambdaQueryWrapper<ActZParams>().eq(ActZParams::getPid, tableId));
+            params.forEach((k, v) -> {
+                ActZParams zParams = new ActZParams();
+                zParams.setPid(tableId);
+                zParams.setParamsKey(k);
+                zParams.setParamsVal((String) v);
+                actZParamsService.save(zParams);
+            });
+        }
     }
 }

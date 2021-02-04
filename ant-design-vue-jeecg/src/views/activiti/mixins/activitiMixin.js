@@ -3,6 +3,7 @@ import { deleteAction, downFile, getAction } from '@/api/manage'
 import Vue from 'vue'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import JEllipsis from '@/components/jeecg/JEllipsis'
+import processFormComponent from './processFormComponent'
 
 export const activitiMixin = {
   components: {
@@ -17,20 +18,7 @@ export const activitiMixin = {
   computed: {
     /*todo 所有的流程表单，组件化注册，在此维护*/
     allFormComponent: function() {
-      return [
-        {
-          text: '示例表单',
-          routeName: '@/views/activiti/form/demoForm',
-          component: () => import(`@/views/activiti/form/demoForm`),
-          businessTable: 'test_demo'
-        },
-        {
-          text: '会签表单',
-          routeName: '@/views/contract/modules/TestSignForm',
-          component: () => import(`@/views/contract/modules/TestSignForm`),
-          businessTable: 'test_sign'
-        }
-      ]
+      return processFormComponent
     },
     historicDetail: function() {
       return () => import(`@/views/activiti/historicDetail`)

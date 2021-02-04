@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>org.jeecgframework.boot</groupId>
-            <artifactId>jeecg-system-local-api</artifactId>
+            <artifactId>jeecg-boot-module-activiti</artifactId>
         </dependency>
     </dependencies>
 

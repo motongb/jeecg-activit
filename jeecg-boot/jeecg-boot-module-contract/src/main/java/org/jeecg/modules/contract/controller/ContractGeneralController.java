@@ -1,5 +1,7 @@
 package org.jeecg.modules.contract.controller;
 
+import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,8 +12,12 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.modules.activiti.service.IActZParamsService;
 import org.jeecg.modules.contract.entity.ContractGeneral;
+import org.jeecg.modules.contract.entity.ContractPurchase;
+import org.jeecg.modules.contract.entity.vo.ContractPurchaseVo;
 import org.jeecg.modules.contract.service.IContractGeneralService;
+import org.jeecg.modules.contract.service.IContractPurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,6 +39,12 @@ import java.util.Arrays;
 public class ContractGeneralController extends JeecgController<ContractGeneral, IContractGeneralService> {
     @Autowired
     private IContractGeneralService contractGeneralService;
+
+    @Autowired
+    private IContractPurchaseService contractPurchaseService;
+
+    @Autowired
+    private IActZParamsService actZParamsService;
 
     /**
      * 分页列表查询
@@ -59,13 +71,16 @@ public class ContractGeneralController extends JeecgController<ContractGeneral, 
     /**
      * 添加
      *
-     * @param contractGeneral
+     * @param contractPurchaseVo
      * @return
      */
     @AutoLog(value = "一般采购合同-添加")
     @ApiOperation(value = "一般采购合同-添加", notes = "一般采购合同-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody ContractGeneral contractGeneral) {
+    public Result<?> add(@RequestBody ContractPurchaseVo contractPurchaseVo) {
+        contractPurchaseService.saveWithProcess(contractPurchaseVo);
+        ContractGeneral contractGeneral = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchaseVo.getSubForm()), ContractGeneral.class);
+        contractGeneral.setBaseId(contractPurchaseVo.getId());
         contractGeneralService.save(contractGeneral);
         return Result.OK("添加成功！");
     }
@@ -122,11 +137,15 @@ public class ContractGeneralController extends JeecgController<ContractGeneral, 
     @ApiOperation(value = "一般采购合同-通过id查询", notes = "一般采购合同-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id", required = true) String id) {
-        ContractGeneral contractGeneral = contractGeneralService.getById(id);
-        if (contractGeneral == null) {
+        ContractPurchase contractPurchase = contractPurchaseService.getById(id);
+        ContractGeneral contractGeneral = contractGeneralService.getOne(new LambdaQueryWrapper<ContractGeneral>().eq(ContractGeneral::getBaseId, id));
+        if (contractPurchase == null) {
             return Result.error("未找到对应数据");
         }
-        return Result.OK(contractGeneral);
+        ContractPurchaseVo contractPurchaseVo = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchase), ContractPurchaseVo.class);
+        contractPurchaseVo.setSubForm(contractGeneral);
+        contractPurchaseVo.setParams(actZParamsService.getActParams(id));
+        return Result.OK(contractPurchaseVo);
     }
 
     /**
