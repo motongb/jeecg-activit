@@ -69,7 +69,6 @@ export const JeecgListMixin = {
       if ($antTable[0]){
         width = $antTable[0].clientWidth;
       }
-      console.log("$antTable",$antTable)
       return {
         // x:'max-content',
         x:width,

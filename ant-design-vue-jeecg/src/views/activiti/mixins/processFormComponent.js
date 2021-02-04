@@ -3,7 +3,7 @@ export default [
     text: '一般合同表单',
     routeName: '@/views/contract/manage/modules/ContractGeneralForm',
     component: () => import(`@/views/contract/manage/modules/ContractGeneralForm`),
-    businessTable: 'contract_general'
+    businessTable: 'contract_purchase'
   },
   {
     text: '示例表单',

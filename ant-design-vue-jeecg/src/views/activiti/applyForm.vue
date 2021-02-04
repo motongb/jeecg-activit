@@ -2,36 +2,40 @@
   <div>
     <a-card class="apply-card" title="申请信息">
       <div slot="extra">
-        <a-button v-show="!btndisabled" type="primary" :disabled="lcModa.disabled||btndisabled" @click="handleSubmit">保存</a-button>
+        <a-button v-show="!btndisabled" type="primary" :disabled="lcModa.disabled||btndisabled" @click="handleSubmit">
+          保存
+        </a-button>
         <a-button style="margin-left: 8px" type="primary" ghost @click="closed">返 回</a-button>
       </div>
       <div class="apply-header">
-        <a-form-model :model="lcModa" :label-col="labelCol" :wrapper-col="wrapperCol">
-          <a-row>
-            <a-col :span="24">
-              <a-form-model-item :label-col="{ span: 2 }" label="标题">
-                <a-input v-model="lcModa.title" placeholder="请输入标题"/>
-              </a-form-model-item>
-            </a-col>
-          </a-row>
-          <a-row>
-            <a-col :span="8">
-              <a-form-model-item label="申请人">
-                <a-input disabled v-model="lcModa.userName" placeholder="请输入申请人"/>
-              </a-form-model-item>
-            </a-col>
-            <a-col :span="8">
-              <a-form-model-item label="申请部门">
-                <a-input disabled v-model="lcModa.dept" placeholder="请输入申请部门"/>
-              </a-form-model-item>
-            </a-col>
-            <a-col :span="8">
-              <a-form-model-item label="申请时间">
-                <a-input disabled v-model="lcModa.applyTime" placeholder="请输入申请时间"/>
-              </a-form-model-item>
-            </a-col>
-          </a-row>
-        </a-form-model>
+        <j-form-container :disabled="lcModa.disabled">
+          <a-form-model slot="detail" :model="lcModa" :label-col="labelCol" :wrapper-col="wrapperCol">
+            <a-row>
+              <a-col :span="24">
+                <a-form-model-item :label-col="{ span: 2 }" :wrapper-col="{span:20}" label="标题">
+                  <a-input v-model="lcModa.title" placeholder="请输入标题"/>
+                </a-form-model-item>
+              </a-col>
+            </a-row>
+            <a-row>
+              <a-col :span="8">
+                <a-form-model-item label="申请人">
+                  <a-input disabled v-model="lcModa.userName" placeholder="请输入申请人"/>
+                </a-form-model-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-model-item label="申请部门">
+                  <a-input disabled v-model="lcModa.dept" placeholder="请输入申请部门"/>
+                </a-form-model-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-model-item label="申请时间">
+                  <a-input disabled v-model="lcModa.applyTime" placeholder="请输入申请时间"/>
+                </a-form-model-item>
+              </a-col>
+            </a-row>
+          </a-form-model>
+        </j-form-container>
       </div>
     </a-card>
 
@@ -58,15 +62,16 @@
   import SignModal from './signModal'
   import { formatDate } from '@/utils/util'
   import activitiSetting from './mixins/activitiSetting'
+  import JFormContainer from '@/components/jeecg/JFormContainer'
 
   export default {
     name: 'applyForm',
-    components: { SignModal },
+    components: { SignModal, JFormContainer },
     mixins: [activitiMixin],
     data() {
       return {
         labelCol: { span: 4, offset: 2 },
-        wrapperCol: { span: 16 },
+        wrapperCol: { span: 12 },
         url: {
           getNextNode: '/activiti_process/getNextNode',
           getBackList: '/actTask/getBackList/',
@@ -126,7 +131,7 @@
         this.getAction(this.url.userWithDepart, { userId: this.userInfo.id }).then(res => {
           if (res.success) {
             this.lcModa.dept = res.result.map(m => m.title).join(',')
-            if (this.lcModa.isNew){
+            if (this.lcModa.isNew) {
               this.lcModa.title += '-' + this.lcModa.dept + '-' + this.lcModa.userName
             }
             console.log('lcModa', this.lcModa)
@@ -221,6 +226,6 @@
   }
 
   .apply-card {
-    margin-bottom: 24px;
+    /*margin-bottom: 24px;*/
   }
 </style>

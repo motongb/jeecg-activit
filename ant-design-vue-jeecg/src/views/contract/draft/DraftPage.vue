@@ -59,6 +59,7 @@
             lcModa.processData = res.result[0]
             lcModa.isNew = true
             lcModa.title = formatDate(new Date().getTime(), 'yyyy-MM-dd').replaceAll('-', '') + child.name
+            lcModa.typeCode = child.code
             setStore('lcModa', lcModa)
             this.$router.push(activitiSetting.applyFormPath)
           }
