@@ -18,9 +18,12 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="合同类型">
-                    <a-tree-select v-model="form.typeCode" show-search
+                    <a-tree-select v-model="form.typeCode"
+                                   :show-search="true"
+                                   allow-clear
                                    treeNodeFilterProp="title"
                                    :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }" placeholder="请选择合同类型"
+                                   :replaceFields="{title:'name', key:'id', value: 'code' }"
                                    :tree-data="contractTypeData">
                     </a-tree-select>
                   </a-form-model-item>
@@ -37,32 +40,46 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="项目相关合同">
-                    <a-input-number v-model="form.subForm.relateProject" placeholder="请输入项目相关合同" style="width: 100%"/>
+                    <a-select v-model="form.subForm.relateProject">
+                      <a-select-option value="0">项目无关合同</a-select-option>
+                      <a-select-option value="1">项目相关合同</a-select-option>
+                    </a-select>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="相关项目">
-                    <a-input v-model="form.subForm.project" placeholder="请输入相关项目"></a-input>
+                    <a-input-search v-model="form.subForm.project" :disabled="form.subForm.relateProject=='0'"
+                                    placeholder="请选择相关项目"/>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="是否子合同">
-                    <a-input-number v-model="form.subForm.isSub" placeholder="请输入是否子合同" style="width: 100%"/>
+                    <a-radio-group v-model="form.subForm.isSub">
+                      <a-radio value="0">否</a-radio>
+                      <a-radio value="1">是</a-radio>
+                    </a-radio-group>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="主合同">
-                    <a-input v-model="form.subForm.parentId" placeholder="请输入主合同id"></a-input>
+                    <a-input-search v-model="form.subForm.parentId" :disabled="form.subForm.isSub=='0'"
+                                    placeholder="请选择主合同"/>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="预算相关合同">
-                    <a-input-number v-model="form.subForm.budget" placeholder="请输入预算相关合同" style="width: 100%"/>
+                    <a-select v-model="form.subForm.budget">
+                      <a-select-option value="0">预算内合同</a-select-option>
+                      <a-select-option value="1">预售外合同</a-select-option>
+                    </a-select>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="密级">
-                    <a-input-number v-model="form.subForm.isSecret" placeholder="请输入密级" style="width: 100%"/>
+                    <a-select v-model="form.subForm.isSecret">
+                      <a-select-option value="0">非密</a-select-option>
+                      <a-select-option value="1">保密</a-select-option>
+                    </a-select>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -79,12 +96,16 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="合同金额">
-                    <a-input v-model="form.subForm.amount" placeholder="请输入合同金额"></a-input>
+                    <!--                    <a-input v-model="form.subForm.amount" placeholder="请输入合同金额"></a-input>-->
+                    <a-input-number v-model="form.subForm.amount" style="width: 100%"
+                                    :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                                    :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                                    @change="amountChange"/>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="合同金额大写">
-                    <a-input v-model="form.subForm.amountLarge" placeholder="请输入合同金额大写"></a-input>
+                    <a-input v-model="form.subForm.amountLarge" disabled></a-input>
                   </a-form-model-item>
                 </a-col>
               </a-row>
@@ -93,31 +114,37 @@
               <a-row>
                 <a-col :span="12">
                   <a-form-model-item label="采购方式">
-                    <a-input-number v-model="form.subForm.purchaseType" placeholder="请输入采购方式" style="width: 100%"/>
+                    <j-dict-select-tag v-model="form.subForm.purchaseType" dictCode="purchase_way"/>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="招标编号">
-                    <a-input v-model="form.subForm.biddingId" placeholder="请输入招标编号"></a-input>
+                    <a-input-search v-model="form.subForm.biddingId" placeholder="请选择招标编号"/>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="相关框架协议">
-                    <a-input v-model="form.subForm.protocol" placeholder="请输入相关框架协议"></a-input>
+                    <a-input-search v-model="form.subForm.protocol" placeholder="请选择相关框架协议"/>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="采购订单号">
-                    <a-input v-model="form.subForm.purchaseId" placeholder="请输入采购订单号"></a-input>
+                    <a-input-search v-model="form.subForm.purchaseId" placeholder="请选择采购订单"/>
                   </a-form-model-item>
                 </a-col>
               </a-row>
+            </a-card>
+            <a-card class="apply-card" title="合同明细项">
+              <contract-item ref="contractItem"></contract-item>
             </a-card>
             <a-card class="apply-card" title="签署对象">
               <a-row>
                 <a-col :span="12">
                   <a-form-model-item label="签署方数">
-                    <a-input v-model="form.memberUse" placeholder="请输入签署方数"></a-input>
+                    <a-select v-model="form.memberUse">
+                      <a-select-option value="0">双方签署</a-select-option>
+                      <a-select-option value="1">三方签署</a-select-option>
+                    </a-select>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -189,16 +216,19 @@
 
   import { httpAction, getAction } from '@/api/manage'
   import pick from 'lodash.pick'
-  import { validateDuplicateValue } from '@/utils/util'
+  import { validateDuplicateValue, digitUppercase } from '@/utils/util'
   import { getStore } from '@/utils/storage'
   import JFormContainer from '@/components/jeecg/JFormContainer'
   import JDate from '@/components/jeecg/JDate'
   import { activitiApproveMixin } from '@views/activiti/mixins/activitiApproveMixin'
   import ARow from 'ant-design-vue/es/grid/Row'
+  import moment from 'moment'
+  import ContractItem from '../../components/ContractItem'
 
   export default {
     name: 'ContractGeneralForm',
     components: {
+      ContractItem,
       ARow,
       JFormContainer,
       JDate
@@ -217,7 +247,23 @@
         // 合同类型树
         contractTypeData: [],
         // 表单
-        form: { subForm: {}, processData: {}, params: {} },
+        form: {
+          typeCode: undefined,
+          memberUse: '0',
+          subForm: {
+            amount: 0,
+            amountLarge: '零元整',
+            relateProject: '0',
+            isSub: '0',
+            budget: '0',
+            isSecret: '0',
+            purchaseType: '0',
+            startTime: moment().format('YYYY-MM-DD'),
+            endTime: moment().subtract(-1, 'years').format('YYYY-MM-DD')
+          },
+          processData: {},
+          params: {}
+        },
         // 流程数据
         lcModa: {},
         labelCol: {
@@ -249,16 +295,19 @@
       this.getContractType()
     },
     methods: {
+      /*金额变动*/
+      amountChange(value) {
+        this.form.subForm.amountLarge = digitUppercase(value)
+      },
+      /*获取合同类型树*/
       getContractType() {
         this.getAction(this.url.treeList, { roles: true }).then(res => {
           if (res.success) {
-            let jsonStr = JSON.stringify(res.result)
-            jsonStr = jsonStr.replace(/name/g, 'title').replace(/code/g, 'value')
-            this.contractTypeData = JSON.parse(jsonStr)
-            console.log(this.contractTypeData)
+            this.contractTypeData = res.result
           }
         })
       },
+      /*初始化数据*/
       init() {
         this.getAction(this.url.queryById, { id: this.processData.tableId }).then((res) => {
           if (res.success) {
@@ -282,6 +331,7 @@
               if (this.isNew) {
                 httpurl += this.url.add
                 method = 'post'
+                this.form.contractItem = this.$refs.contractItem.getData()
               } else {
                 httpurl += this.url.edit
                 method = 'put'
@@ -304,9 +354,6 @@
             }
           })
         })
-      },
-      popupCallback(row) {
-        this.form.setFieldsValue(pick(row, 'relateProject', 'project', 'isSub', 'parentId', 'budget', 'costCenter', 'isSecret', 'startTime', 'endTime', 'purchaseType', 'biddingId', 'protocol', 'purchaseId', 'amount', 'amountLarge', 'modelId', 'filePdf', 'fileAttach', 'fileContract'))
       }
     }
   }

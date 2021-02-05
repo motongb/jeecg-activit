@@ -12,5 +12,5 @@ import org.jeecg.modules.contract.entity.vo.ContractPurchaseVo;
  */
 public interface IContractPurchaseService extends IService<ContractPurchase> {
 
-    boolean saveWithProcess(ContractPurchaseVo contractPurchaseVo);
+    ContractPurchase saveWithProcess(ContractPurchaseVo contractPurchaseVo);
 }

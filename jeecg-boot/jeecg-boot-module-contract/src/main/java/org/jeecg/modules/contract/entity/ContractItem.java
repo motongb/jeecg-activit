@@ -16,17 +16,17 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Description: 采购合同基础表
+ * @Description: 合同明细项
  * @Author: jeecg-boot
- * @Date: 2021-02-03
+ * @Date: 2021-02-05
  * @Version: V1.0
  */
 @Data
-@TableName("contract_purchase")
+@TableName("contract_item")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "contract_purchase对象", description = "采购合同基础表")
-public class ContractPurchase implements Serializable {
+@ApiModel(value = "contract_item对象", description = "合同明细项")
+public class ContractItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -65,63 +65,63 @@ public class ContractPurchase implements Serializable {
     @ApiModelProperty(value = "所属部门")
     private String sysOrgCode;
     /**
-     * 合同名称
+     * 合同id
      */
-    @Excel(name = "合同名称", width = 15)
-    @ApiModelProperty(value = "合同名称")
+    @Excel(name = "合同id", width = 15)
+    @ApiModelProperty(value = "合同id")
+    private String contractId;
+    /**
+     * 产品服务名称
+     */
+    @Excel(name = "产品服务名称", width = 15)
+    @ApiModelProperty(value = "产品服务名称")
     private String name;
     /**
-     * 合同编号
+     * 行项目号
      */
-    @Excel(name = "合同编号", width = 15)
-    @ApiModelProperty(value = "合同编号")
-    private String code;
+    @Excel(name = "行项目号", width = 15)
+    @ApiModelProperty(value = "行项目号")
+    private String rowNo;
     /**
-     * 类型编码
+     * 型号规格
      */
-    @Excel(name = "类型编码", width = 15)
-    @ApiModelProperty(value = "类型编码")
-    private String typeCode;
+    @Excel(name = "型号规格", width = 15)
+    @ApiModelProperty(value = "型号规格")
+    private String model;
     /**
-     * 我方
+     * 单位
      */
-    @Excel(name = "我方", width = 15)
-    @ApiModelProperty(value = "我方")
-    private String firstMember;
+    @Excel(name = "单位", width = 15)
+    @ApiModelProperty(value = "单位")
+    private String unit;
     /**
-     * 乙方
+     * 含税单价
      */
-    @Excel(name = "乙方", width = 15)
-    @ApiModelProperty(value = "乙方")
-    private String secondMember;
+    @Excel(name = "含税单价", width = 15)
+    @ApiModelProperty(value = "含税单价")
+    private String price;
     /**
-     * 丙方
+     * 税率
      */
-    @Excel(name = "丙方", width = 15)
-    @ApiModelProperty(value = "丙方")
-    private String thirdMember;
+    @Excel(name = "税率", width = 15)
+    @ApiModelProperty(value = "税率")
+    private String rate;
     /**
-     * 用户id
+     * 数量
      */
-    @Excel(name = "用户id", width = 15)
-    @ApiModelProperty(value = "用户id")
-    private String userId;
+    @Excel(name = "数量", width = 15)
+    @ApiModelProperty(value = "数量")
+    private Integer number;
     /**
-     * 状态
+     * 小计
      */
-    @Excel(name = "状态", width = 15)
-    @ApiModelProperty(value = "状态")
-    private String status;
+    @Excel(name = "小计", width = 15)
+    @ApiModelProperty(value = "小计")
+    private String total;
     /**
-     * 备注
+     * 采购方式
      */
-    @Excel(name = "备注", width = 15)
-    @ApiModelProperty(value = "备注")
-    private String remark;
-    /**
-     * 签署方数
-     */
-    @Excel(name = "签署方数", width = 15)
-    @ApiModelProperty(value = "签署方数")
-    private String memberUse;
+    @Excel(name = "采购方式", width = 15)
+    @ApiModelProperty(value = "采购方式")
+    private String purchaseWay;
 }

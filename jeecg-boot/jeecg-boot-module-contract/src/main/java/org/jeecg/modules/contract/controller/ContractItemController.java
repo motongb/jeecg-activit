@@ -10,8 +10,8 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.contract.entity.ContractPurchase;
-import org.jeecg.modules.contract.service.IContractPurchaseService;
+import org.jeecg.modules.contract.entity.ContractItem;
+import org.jeecg.modules.contract.service.IContractItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,66 +21,66 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 /**
- * @Description: 采购合同基础表
+ * @Description: 合同明细项
  * @Author: jeecg-boot
- * @Date: 2021-02-03
+ * @Date: 2021-02-05
  * @Version: V1.0
  */
-@Api(tags = "采购合同基础表")
+@Api(tags = "合同明细项")
 @RestController
-@RequestMapping("/contract/contractPurchase")
+@RequestMapping("/contract/contractItem")
 @Slf4j
-public class ContractPurchaseController extends JeecgController<ContractPurchase, IContractPurchaseService> {
+public class ContractItemController extends JeecgController<ContractItem, IContractItemService> {
     @Autowired
-    private IContractPurchaseService contractPurchaseService;
+    private IContractItemService contractItemService;
 
     /**
      * 分页列表查询
      *
-     * @param contractPurchase
+     * @param contractItem
      * @param pageNo
      * @param pageSize
      * @param req
      * @return
      */
-    @AutoLog(value = "采购合同基础表-分页列表查询")
-    @ApiOperation(value = "采购合同基础表-分页列表查询", notes = "采购合同基础表-分页列表查询")
+    @AutoLog(value = "合同明细项-分页列表查询")
+    @ApiOperation(value = "合同明细项-分页列表查询", notes = "合同明细项-分页列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(ContractPurchase contractPurchase,
+    public Result<?> queryPageList(ContractItem contractItem,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<ContractPurchase> queryWrapper = QueryGenerator.initQueryWrapper(contractPurchase, req.getParameterMap());
-        Page<ContractPurchase> page = new Page<ContractPurchase>(pageNo, pageSize);
-        IPage<ContractPurchase> pageList = contractPurchaseService.page(page, queryWrapper);
+        QueryWrapper<ContractItem> queryWrapper = QueryGenerator.initQueryWrapper(contractItem, req.getParameterMap());
+        Page<ContractItem> page = new Page<ContractItem>(pageNo, pageSize);
+        IPage<ContractItem> pageList = contractItemService.page(page, queryWrapper);
         return Result.OK(pageList);
     }
 
     /**
      * 添加
      *
-     * @param contractPurchase
+     * @param contractItem
      * @return
      */
-    @AutoLog(value = "采购合同基础表-添加")
-    @ApiOperation(value = "采购合同基础表-添加", notes = "采购合同基础表-添加")
+    @AutoLog(value = "合同明细项-添加")
+    @ApiOperation(value = "合同明细项-添加", notes = "合同明细项-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody ContractPurchase contractPurchase) {
-        contractPurchaseService.save(contractPurchase);
+    public Result<?> add(@RequestBody ContractItem contractItem) {
+        contractItemService.save(contractItem);
         return Result.OK("添加成功！");
     }
 
     /**
      * 编辑
      *
-     * @param contractPurchase
+     * @param contractItem
      * @return
      */
-    @AutoLog(value = "采购合同基础表-编辑")
-    @ApiOperation(value = "采购合同基础表-编辑", notes = "采购合同基础表-编辑")
+    @AutoLog(value = "合同明细项-编辑")
+    @ApiOperation(value = "合同明细项-编辑", notes = "合同明细项-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody ContractPurchase contractPurchase) {
-        contractPurchaseService.updateById(contractPurchase);
+    public Result<?> edit(@RequestBody ContractItem contractItem) {
+        contractItemService.updateById(contractItem);
         return Result.OK("编辑成功!");
     }
 
@@ -90,11 +90,11 @@ public class ContractPurchaseController extends JeecgController<ContractPurchase
      * @param id
      * @return
      */
-    @AutoLog(value = "采购合同基础表-通过id删除")
-    @ApiOperation(value = "采购合同基础表-通过id删除", notes = "采购合同基础表-通过id删除")
+    @AutoLog(value = "合同明细项-通过id删除")
+    @ApiOperation(value = "合同明细项-通过id删除", notes = "合同明细项-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id", required = true) String id) {
-        contractPurchaseService.removeById(id);
+        contractItemService.removeById(id);
         return Result.OK("删除成功!");
     }
 
@@ -104,11 +104,11 @@ public class ContractPurchaseController extends JeecgController<ContractPurchase
      * @param ids
      * @return
      */
-    @AutoLog(value = "采购合同基础表-批量删除")
-    @ApiOperation(value = "采购合同基础表-批量删除", notes = "采购合同基础表-批量删除")
+    @AutoLog(value = "合同明细项-批量删除")
+    @ApiOperation(value = "合同明细项-批量删除", notes = "合同明细项-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
-        this.contractPurchaseService.removeByIds(Arrays.asList(ids.split(",")));
+        this.contractItemService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.OK("批量删除成功!");
     }
 
@@ -118,26 +118,26 @@ public class ContractPurchaseController extends JeecgController<ContractPurchase
      * @param id
      * @return
      */
-    @AutoLog(value = "采购合同基础表-通过id查询")
-    @ApiOperation(value = "采购合同基础表-通过id查询", notes = "采购合同基础表-通过id查询")
+    @AutoLog(value = "合同明细项-通过id查询")
+    @ApiOperation(value = "合同明细项-通过id查询", notes = "合同明细项-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id", required = true) String id) {
-        ContractPurchase contractPurchase = contractPurchaseService.getById(id);
-        if (contractPurchase == null) {
+        ContractItem contractItem = contractItemService.getById(id);
+        if (contractItem == null) {
             return Result.error("未找到对应数据");
         }
-        return Result.OK(contractPurchase);
+        return Result.OK(contractItem);
     }
 
     /**
      * 导出excel
      *
      * @param request
-     * @param contractPurchase
+     * @param contractItem
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, ContractPurchase contractPurchase) {
-        return super.exportXls(request, contractPurchase, ContractPurchase.class, "采购合同基础表");
+    public ModelAndView exportXls(HttpServletRequest request, ContractItem contractItem) {
+        return super.exportXls(request, contractItem, ContractItem.class, "合同明细项");
     }
 
     /**
@@ -149,7 +149,7 @@ public class ContractPurchaseController extends JeecgController<ContractPurchase
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, ContractPurchase.class);
+        return super.importExcel(request, response, ContractItem.class);
     }
 
 }
