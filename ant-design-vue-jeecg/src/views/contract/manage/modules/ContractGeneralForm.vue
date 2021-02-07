@@ -96,7 +96,6 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item label="合同金额">
-                    <!--                    <a-input v-model="form.subForm.amount" placeholder="请输入合同金额"></a-input>-->
                     <a-input-number v-model="form.subForm.amount" style="width: 100%"
                                     :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                                     :parser="value => value.replace(/\$\s?|(,*)/g, '')"
@@ -135,32 +134,51 @@
               </a-row>
             </a-card>
             <a-card class="apply-card" title="合同明细项">
-              <contract-item ref="contractItem"></contract-item>
+              <contract-item ref="contractItem" :contract-id="processData.tableId" :is-new="isNew"></contract-item>
+            </a-card>
+            <a-card class="apply-card" title="付款约定">
+              <contract-payment ref="contractPayment" :contract-id="processData.tableId"
+                                :is-new="isNew"></contract-payment>
             </a-card>
             <a-card class="apply-card" title="签署对象">
               <a-row>
-                <a-col :span="12">
-                  <a-form-model-item label="签署方数">
-                    <a-select v-model="form.memberUse">
-                      <a-select-option value="0">双方签署</a-select-option>
-                      <a-select-option value="1">三方签署</a-select-option>
-                    </a-select>
-                  </a-form-model-item>
+                <a-col :span="10">
+                  <a-row>
+                    <a-form-model-item label="签署方数">
+                      <a-select v-model="form.memberUse">
+                        <a-select-option value="0">双方签署</a-select-option>
+                        <a-select-option value="1">三方签署</a-select-option>
+                      </a-select>
+                    </a-form-model-item>
+                  </a-row>
+                  <a-row>
+                    <a-form-model-item label="我 方">
+                      <a-input v-model="form.firstMember" placeholder="请输入我方"></a-input>
+                    </a-form-model-item>
+                  </a-row>
+                  <a-row>
+                    <a-form-model-item label="乙 方">
+                      <a-input v-model="form.secondMember" placeholder="请输入乙方"></a-input>
+                    </a-form-model-item>
+                  </a-row>
+                  <a-row>
+                    <a-form-model-item label="丙 方">
+                      <a-input v-model="form.thirdMember" placeholder="请输入丙方"></a-input>
+                    </a-form-model-item>
+                  </a-row>
                 </a-col>
-                <a-col :span="12">
-                  <a-form-model-item label="我方">
-                    <a-input v-model="form.firstMember" placeholder="请输入我方"></a-input>
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <a-form-model-item label="乙方">
-                    <a-input v-model="form.secondMember" placeholder="请输入乙方"></a-input>
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <a-form-model-item label="丙方">
-                    <a-input v-model="form.thirdMember" placeholder="请输入丙方"></a-input>
-                  </a-form-model-item>
+                <a-col :span="14">
+                  <a-tabs style="margin-left: -95px" tab-position="left">
+                    <a-tab-pane key="0" tab="我 方">
+                      <contract-member-form v-model="form.firstMemberObj" member-type="0"></contract-member-form>
+                    </a-tab-pane>
+                    <a-tab-pane key="1" tab="乙 方">
+                      <contract-member-form v-model="form.secondMemberObj" member-type="1"></contract-member-form>
+                    </a-tab-pane>
+                    <a-tab-pane key="2" tab="丙 方">
+                      <contract-member-form v-model="form.thirdMemberObj" member-type="2"></contract-member-form>
+                    </a-tab-pane>
+                  </a-tabs>
                 </a-col>
               </a-row>
             </a-card>
@@ -214,8 +232,7 @@
 
 <script>
 
-  import { httpAction, getAction } from '@/api/manage'
-  import pick from 'lodash.pick'
+  import { httpAction } from '@/api/manage'
   import { validateDuplicateValue, digitUppercase } from '@/utils/util'
   import { getStore } from '@/utils/storage'
   import JFormContainer from '@/components/jeecg/JFormContainer'
@@ -224,10 +241,14 @@
   import ARow from 'ant-design-vue/es/grid/Row'
   import moment from 'moment'
   import ContractItem from '../../components/ContractItem'
+  import ContractPayment from '../../components/ContractPayment'
+  import ContractMemberForm from './ContractMemberForm'
 
   export default {
     name: 'ContractGeneralForm',
     components: {
+      ContractMemberForm,
+      ContractPayment,
       ContractItem,
       ARow,
       JFormContainer,
@@ -261,6 +282,9 @@
             startTime: moment().format('YYYY-MM-DD'),
             endTime: moment().subtract(-1, 'years').format('YYYY-MM-DD')
           },
+          firstMemberObj: { type: '0' },
+          secondMemberObj: { type: '1' },
+          thirdMemberObj: { type: '2' },
           processData: {},
           params: {}
         },
@@ -331,11 +355,12 @@
               if (this.isNew) {
                 httpurl += this.url.add
                 method = 'post'
-                this.form.contractItem = this.$refs.contractItem.getData()
               } else {
                 httpurl += this.url.edit
                 method = 'put'
               }
+              this.form.contractItems = this.$refs.contractItem.getData()
+              this.form.contractPayments = this.$refs.contractPayment.getData()
               console.log('表单提交数据', this.form)
               httpAction(httpurl, this.form, method).then(res => {
                 if (res.success) {

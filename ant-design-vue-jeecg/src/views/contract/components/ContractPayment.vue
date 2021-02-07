@@ -6,8 +6,9 @@
         :dataSource="data"
         :pagination="false">
         <template v-for="(col, i) in columnField" :slot="col" slot-scope="text, record, index">
-          <template v-if="col==='unit'">
-            <j-dict-select-tag :disabled="!record.editable" v-model="record[col]" dictCode="contract_item_unit"/>
+          <template v-if="col==='payDate'">
+            <a-date-picker v-if="record.editable" v-model="record[col]"/>
+            <template v-else>{{ text }}</template>
           </template>
           <template v-else>
             <a-input
@@ -50,8 +51,10 @@
 </template>
 
 <script>
+  import moment from 'moment'
+
   export default {
-    name: 'ContractItem',
+    name: 'ContractPayment',
     props: {
       contractId: {
         type: String,
@@ -60,75 +63,60 @@
     },
     data() {
       return {
-        columnField: ['rowNo', 'name', 'purchaseWay', 'model', 'unit', 'price', 'rate', 'number', 'total'],
+        columnField: ['rowIndex', 'context', 'payDate', 'payDept', 'payReceive', 'payCondition', 'payAmount', 'duty'],
         // table
         columns: [
           {
             title: '序号',
-            align: 'center',
-            dataIndex: 'rowNo',
-            key: 'rowNo',
+            dataIndex: '',
+            key: 'rowIndex',
             width: 60,
-            customRender: (t, r, index) => {
+            align: 'center',
+            customRender: function(t, r, index) {
               return parseInt(index) + 1
             }
           },
           {
-            title: '产品服务名称',
+            title: '款项内容',
             align: 'center',
-            dataIndex: 'name',
-            key: 'name',
-            scopedSlots: { customRender: 'name' }
+            dataIndex: 'context',
+            scopedSlots: { customRender: 'context' }
           },
           {
-            title: '采购方式',
+            title: '付款日期',
             align: 'center',
-            dataIndex: 'purchaseWay',
-            key: 'purchaseWay',
-            scopedSlots: { customRender: 'purchaseWay' }
+            dataIndex: 'payDate',
+            scopedSlots: { customRender: 'payDate' }
           },
           {
-            title: '型号规格',
+            title: '付款单位',
             align: 'center',
-            dataIndex: 'model',
-            key: 'model',
-            scopedSlots: { customRender: 'model' }
+            dataIndex: 'payDept',
+            scopedSlots: { customRender: 'payDept' }
           },
           {
-            title: '单位',
+            title: '收款方',
             align: 'center',
-            dataIndex: 'unit',
-            key: 'unit',
-            width: 100,
-            scopedSlots: { customRender: 'unit' }
+            dataIndex: 'payReceive',
+            scopedSlots: { customRender: 'payReceive' }
           },
           {
-            title: '含税单价',
+            title: '付款条件',
             align: 'center',
-            dataIndex: 'price',
-            key: 'price',
-            scopedSlots: { customRender: 'price' }
+            dataIndex: 'payCondition',
+            scopedSlots: { customRender: 'payCondition' }
           },
           {
-            title: '税率',
+            title: '付款金额',
             align: 'center',
-            dataIndex: 'rate',
-            key: 'rate',
-            scopedSlots: { customRender: 'rate' }
+            dataIndex: 'payAmount',
+            scopedSlots: { customRender: 'payAmount' }
           },
           {
-            title: '数量',
+            title: '违约责任',
             align: 'center',
-            dataIndex: 'number',
-            key: 'number',
-            scopedSlots: { customRender: 'number' }
-          },
-          {
-            title: '小计',
-            align: 'center',
-            dataIndex: 'total',
-            key: 'total',
-            scopedSlots: { customRender: 'total' }
+            dataIndex: 'duty',
+            scopedSlots: { customRender: 'duty' }
           },
           {
             title: '操作',
@@ -139,8 +127,9 @@
         ],
         data: [],
         rowNum: 0,
+        payDate: moment().subtract(-1, 'years').format('YYYY-MM-DD'),
         url: {
-          list: '/contract/contractItem/list'
+          list: '/contract/contractPayment/list'
         }
       }
     },
@@ -166,7 +155,12 @@
         return this.data
       },
       newMember() {
-        this.data.push({ key: ++this.rowNum, unit: '0', editable: true, isNew: true })
+        this.data.push({
+          key: ++this.rowNum,
+          payDate: this.payDate,
+          editable: true,
+          isNew: true
+        })
       },
       remove(index) {
         this.data.splice(index, 1)

@@ -11,4 +11,5 @@ import org.jeecg.modules.contract.entity.ContractItem;
  */
 public interface IContractItemService extends IService<ContractItem> {
 
+
 }

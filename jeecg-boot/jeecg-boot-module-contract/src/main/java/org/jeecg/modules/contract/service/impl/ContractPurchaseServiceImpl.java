@@ -5,19 +5,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.activiti.service.IActBusinessService;
-import org.jeecg.modules.contract.entity.ContractItem;
 import org.jeecg.modules.contract.entity.ContractPurchase;
 import org.jeecg.modules.contract.entity.vo.ContractPurchaseVo;
 import org.jeecg.modules.contract.mapper.ContractPurchaseMapper;
-import org.jeecg.modules.contract.service.IContractItemService;
 import org.jeecg.modules.contract.service.IContractPurchaseService;
 import org.jeecg.modules.contract.utils.ContractConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,11 +28,8 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
     @Autowired
     private IActBusinessService actBusinessService;
 
-    @Autowired
-    private IContractItemService contractItemService;
-
     @Override
-    public ContractPurchase saveWithProcess(ContractPurchaseVo contractPurchaseVo) {
+    public void saveWithProcess(ContractPurchaseVo contractPurchaseVo) {
         ContractPurchase contractPurchase = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchaseVo), ContractPurchase.class);
         // 新增
         if (StringUtils.isEmpty(contractPurchaseVo.getId())) {
@@ -48,17 +41,11 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
             Map<String, Object> processData = contractPurchaseVo.getProcessData();
             processData.put("tableId", contractPurchaseVo.getId());
             actBusinessService.saveBusiness(true, processData, contractPurchaseVo.getParams());
-            List<ContractItem> contractItems = contractPurchaseVo.getContractItems();
-            if (!CollectionUtils.isEmpty(contractItems)) {
-                contractItems.forEach(item -> item.setContractId(contractPurchaseVo.getId()));
-                contractItemService.saveBatch(contractItems);
-            }
         } else {
             updateById(contractPurchase);
             Map<String, Object> processData = contractPurchaseVo.getProcessData();
             processData.put("tableId", contractPurchaseVo.getId());
             actBusinessService.saveBusiness(false, processData, contractPurchaseVo.getParams());
         }
-        return contractPurchase;
     }
 }

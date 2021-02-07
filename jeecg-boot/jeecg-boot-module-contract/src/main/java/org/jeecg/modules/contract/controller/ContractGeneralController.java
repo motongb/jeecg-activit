@@ -15,7 +15,7 @@ import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.activiti.service.IActZParamsService;
 import org.jeecg.modules.contract.entity.ContractGeneral;
 import org.jeecg.modules.contract.entity.ContractPurchase;
-import org.jeecg.modules.contract.entity.vo.ContractPurchaseVo;
+import org.jeecg.modules.contract.entity.vo.ContractGeneralVo;
 import org.jeecg.modules.contract.service.IContractGeneralService;
 import org.jeecg.modules.contract.service.IContractPurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,33 +71,35 @@ public class ContractGeneralController extends JeecgController<ContractGeneral, 
     /**
      * 添加
      *
-     * @param contractPurchaseVo
+     * @param contractGeneralVo
      * @return
      */
     @AutoLog(value = "一般采购合同-添加")
     @ApiOperation(value = "一般采购合同-添加", notes = "一般采购合同-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody ContractPurchaseVo contractPurchaseVo) {
-        contractPurchaseService.saveWithProcess(contractPurchaseVo);
-        ContractGeneral contractGeneral = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchaseVo.getSubForm()), ContractGeneral.class);
-        contractGeneral.setBaseId(contractPurchaseVo.getId());
+    public Result<?> add(@RequestBody ContractGeneralVo contractGeneralVo) {
+        contractPurchaseService.saveWithProcess(contractGeneralVo);
+        ContractGeneral contractGeneral = contractGeneralVo.getSubForm();
+        contractGeneral.setBaseId(contractGeneralVo.getId());
         contractGeneralService.save(contractGeneral);
+        contractGeneralService.saveMoreItem(contractGeneralVo);
         return Result.OK("添加成功！");
     }
 
     /**
      * 编辑
      *
-     * @param contractPurchaseVo
+     * @param contractGeneralVo
      * @return
      */
     @AutoLog(value = "一般采购合同-编辑")
     @ApiOperation(value = "一般采购合同-编辑", notes = "一般采购合同-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody ContractPurchaseVo contractPurchaseVo) {
-        contractPurchaseService.saveWithProcess(contractPurchaseVo);
-        ContractGeneral contractGeneral = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchaseVo.getSubForm()), ContractGeneral.class);
+    public Result<?> edit(@RequestBody ContractGeneralVo contractGeneralVo) {
+        contractPurchaseService.saveWithProcess(contractGeneralVo);
+        ContractGeneral contractGeneral = contractGeneralVo.getSubForm();
         contractGeneralService.updateById(contractGeneral);
+        contractGeneralService.saveMoreItem(contractGeneralVo);
         return Result.OK("编辑成功!");
     }
 
@@ -112,6 +114,7 @@ public class ContractGeneralController extends JeecgController<ContractGeneral, 
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id", required = true) String id) {
         contractGeneralService.removeById(id);
+        contractGeneralService.removeMoreItem(id);
         return Result.OK("删除成功!");
     }
 
@@ -144,10 +147,11 @@ public class ContractGeneralController extends JeecgController<ContractGeneral, 
         if (contractPurchase == null) {
             return Result.error("未找到对应数据");
         }
-        ContractPurchaseVo contractPurchaseVo = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchase), ContractPurchaseVo.class);
-        contractPurchaseVo.setSubForm(JSONUtil.parseObj(contractGeneral));
-        contractPurchaseVo.setParams(actZParamsService.getActParams(id));
-        return Result.OK(contractPurchaseVo);
+        ContractGeneralVo contractGeneralVo = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchase), ContractGeneralVo.class);
+        contractGeneralVo.setSubForm(contractGeneral);
+        contractGeneralVo.setParams(actZParamsService.getActParams(id));
+//        contractGeneralService.setMoreItem(contractGeneralVo);
+        return Result.OK(contractGeneralVo);
     }
 
     /**

@@ -69,7 +69,7 @@ public class ContractGeneral implements Serializable {
      */
     @Excel(name = "项目相关合同", width = 15)
     @ApiModelProperty(value = "项目相关合同")
-    private Integer relateProject;
+    private String relateProject;
     /**
      * 相关项目
      */
@@ -81,7 +81,7 @@ public class ContractGeneral implements Serializable {
      */
     @Excel(name = "是否子合同", width = 15)
     @ApiModelProperty(value = "是否子合同")
-    private Integer isSub;
+    private String isSub;
     /**
      * 主合同id
      */
@@ -93,7 +93,7 @@ public class ContractGeneral implements Serializable {
      */
     @Excel(name = "预算相关合同", width = 15)
     @ApiModelProperty(value = "预算相关合同")
-    private Integer budget;
+    private String budget;
     /**
      * 成本中心
      */
@@ -105,7 +105,7 @@ public class ContractGeneral implements Serializable {
      */
     @Excel(name = "密级", width = 15)
     @ApiModelProperty(value = "密级")
-    private Integer isSecret;
+    private String isSecret;
     /**
      * 开始时间
      */
@@ -127,7 +127,7 @@ public class ContractGeneral implements Serializable {
      */
     @Excel(name = "采购方式", width = 15)
     @ApiModelProperty(value = "采购方式")
-    private Integer purchaseType;
+    private String purchaseType;
     /**
      * 招标编号
      */

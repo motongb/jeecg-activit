@@ -2,9 +2,7 @@ package org.jeecg.modules.contract.entity.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.jeecg.modules.contract.entity.ContractItem;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,12 +69,6 @@ public class ContractPurchaseVo {
     private String memberUse;
 
     /**
-     * 附表
-     */
-    @ApiModelProperty(value = "附表")
-    private Map<String, Object> subForm;
-
-    /**
      * 流程数据
      */
     @ApiModelProperty(value = "流程数据")
@@ -88,9 +80,4 @@ public class ContractPurchaseVo {
     @ApiModelProperty(value = "流程参数")
     private Map<String, Object> params;
 
-    /**
-     * 合同明细项
-     */
-    @ApiModelProperty(value = "合同明细项")
-    private List<ContractItem> contractItems;
 }
