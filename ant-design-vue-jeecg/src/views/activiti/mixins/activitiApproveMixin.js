@@ -31,8 +31,6 @@ export const activitiApproveMixin = {
     /*是否处理流程*/
     task: { type: Boolean, default: false, required: false }
   },
-  component() {
-  },
   data() {
     return {
       url: {
@@ -105,6 +103,6 @@ export const activitiApproveMixin = {
           }
         })
       })
-    },
+    }
   }
 }

@@ -107,9 +107,10 @@
       }
     },
     watch: {
-      '$route': function(newRoute) {
+      '$route'(newRoute) {
         // this.$forceUpdate()
-        this.initValue()
+        // this.initValue()
+        this.$destroy(this.lcModa.processData.routeName)
       }
     },
     created() {

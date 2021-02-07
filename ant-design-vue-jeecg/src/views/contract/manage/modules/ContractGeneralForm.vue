@@ -153,17 +153,17 @@
                   </a-row>
                   <a-row>
                     <a-form-model-item label="我 方">
-                      <a-input v-model="form.firstMember" placeholder="请输入我方"></a-input>
+                      <a-input-search v-model="form.firstMember" placeholder="请选择我方"/>
                     </a-form-model-item>
                   </a-row>
                   <a-row>
                     <a-form-model-item label="乙 方">
-                      <a-input v-model="form.secondMember" placeholder="请输入乙方"></a-input>
+                      <a-input-search v-model="form.secondMember" placeholder="请选择乙方"/>
                     </a-form-model-item>
                   </a-row>
-                  <a-row>
+                  <a-row v-if="form.memberUse=='1'">
                     <a-form-model-item label="丙 方">
-                      <a-input v-model="form.thirdMember" placeholder="请输入丙方"></a-input>
+                      <a-input-search v-model="form.thirdMember" placeholder="请选择丙方"/>
                     </a-form-model-item>
                   </a-row>
                 </a-col>
@@ -175,7 +175,7 @@
                     <a-tab-pane key="1" tab="乙 方">
                       <contract-member-form v-model="form.secondMemberObj" member-type="1"></contract-member-form>
                     </a-tab-pane>
-                    <a-tab-pane key="2" tab="丙 方">
+                    <a-tab-pane key="2" tab="丙 方" v-if="form.memberUse=='1'">
                       <contract-member-form v-model="form.thirdMemberObj" member-type="2"></contract-member-form>
                     </a-tab-pane>
                   </a-tabs>
@@ -282,9 +282,9 @@
             startTime: moment().format('YYYY-MM-DD'),
             endTime: moment().subtract(-1, 'years').format('YYYY-MM-DD')
           },
-          firstMemberObj: { type: '0' },
-          secondMemberObj: { type: '1' },
-          thirdMemberObj: { type: '2' },
+          firstMemberObj: { type: '0', coin: 'CNY' },
+          secondMemberObj: { type: '1', coin: 'CNY' },
+          thirdMemberObj: { type: '2', coin: 'CNY' },
           processData: {},
           params: {}
         },
