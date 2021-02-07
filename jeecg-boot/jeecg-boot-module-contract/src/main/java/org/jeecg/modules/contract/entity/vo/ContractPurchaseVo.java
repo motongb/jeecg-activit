@@ -2,6 +2,7 @@ package org.jeecg.modules.contract.entity.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.jeecg.modules.contract.entity.ContractMember;
 
 import java.util.Map;
 
@@ -38,15 +39,30 @@ public class ContractPurchaseVo {
     @ApiModelProperty(value = "我方")
     private String firstMember;
     /**
+     * 我方信息
+     */
+    @ApiModelProperty(value = "我方信息")
+    private ContractMember firstMemberObj = new ContractMember();
+    /**
      * 乙方
      */
     @ApiModelProperty(value = "乙方")
     private String secondMember;
     /**
+     * 乙方信息
+     */
+    @ApiModelProperty(value = "乙方信息")
+    private ContractMember secondMemberObj = new ContractMember();
+    /**
      * 丙方
      */
     @ApiModelProperty(value = "丙方")
     private String thirdMember;
+    /**
+     * 丙方信息
+     */
+    @ApiModelProperty(value = "丙方信息")
+    private ContractMember thirdMemberObj = new ContractMember();
     /**
      * 用户id
      */

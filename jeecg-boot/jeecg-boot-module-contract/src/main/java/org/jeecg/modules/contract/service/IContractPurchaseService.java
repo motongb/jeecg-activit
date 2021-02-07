@@ -13,4 +13,11 @@ import org.jeecg.modules.contract.entity.vo.ContractPurchaseVo;
 public interface IContractPurchaseService extends IService<ContractPurchase> {
 
     void saveWithProcess(ContractPurchaseVo contractPurchaseVo);
+
+    /**
+     * 设置合同签订对象
+     *
+     * @param contractPurchaseVo
+     */
+    void setMember(ContractPurchaseVo contractPurchaseVo);
 }

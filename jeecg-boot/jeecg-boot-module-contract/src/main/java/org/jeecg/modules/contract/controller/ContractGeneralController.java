@@ -150,7 +150,7 @@ public class ContractGeneralController extends JeecgController<ContractGeneral, 
         ContractGeneralVo contractGeneralVo = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchase), ContractGeneralVo.class);
         contractGeneralVo.setSubForm(contractGeneral);
         contractGeneralVo.setParams(actZParamsService.getActParams(id));
-//        contractGeneralService.setMoreItem(contractGeneralVo);
+        contractPurchaseService.setMember(contractGeneralVo);
         return Result.OK(contractGeneralVo);
     }
 

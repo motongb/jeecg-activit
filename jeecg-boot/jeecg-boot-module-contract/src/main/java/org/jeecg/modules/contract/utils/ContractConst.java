@@ -11,4 +11,19 @@ public interface ContractConst {
      * 起草
      */
     String STATUS_START = "0";
+
+    /**
+     * 我方
+     */
+    String FIRST_MEMBER = "0";
+
+    /**
+     * 乙方
+     */
+    String SECOND_MEMBER = "1";
+
+    /**
+     * 丙方
+     */
+    String THIRD_MEMBER = "2";
 }
