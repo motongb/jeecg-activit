@@ -37,7 +37,7 @@
     props: {
       value: {
         type: String,
-        required:false
+        required: false
       },
       // 组件的类型，可选值：
       // select 下拉样式
@@ -60,7 +60,7 @@
           type: ['cascader', 'select']
         },
         reloading: false,
-        areaData:''
+        areaData: ''
       }
     },
     computed: {
@@ -79,7 +79,7 @@
           console.error(`JAreaLinkage的type属性只能接收指定的值（${this.enums.type.join('|')}）`)
           return this.enums.type[0]
         }
-      },
+      }
     },
     watch: {
       value: {
@@ -87,10 +87,10 @@
         handler() {
           this.loadDataByValue(this.value)
         }
-      },
+      }
     },
     created() {
-      this.initAreaData();
+      this.initAreaData()
     },
     methods: {
 
@@ -118,7 +118,7 @@
         if (data) {
           for (let key in data) {
             if (data.hasOwnProperty(key)) {
-              options.push({ value: key, label: data[key], })
+              options.push({ value: key, label: data[key] })
             }
           }
           return options
@@ -137,20 +137,22 @@
         let value = values[values.length - 1]
         this.$emit('change', value)
       },
-      initAreaData(){
-        if(!this.areaData){
-          this.areaData = new Area();
+      initAreaData() {
+        if (!this.areaData) {
+          this.areaData = new Area()
         }
-      },
+      }
 
     },
-    model: { prop: 'value', event: 'change' },
+    model: { prop: 'value', event: 'change' }
   }
 </script>
 
 <style lang="less" scoped>
   .j-area-linkage {
-    height:40px;
+    height: 40px;
+    margin-left: -10px;
+
     /deep/ .area-cascader-wrap .area-select {
       width: 100%;
     }

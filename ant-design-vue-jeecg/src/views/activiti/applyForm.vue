@@ -107,10 +107,9 @@
       }
     },
     watch: {
-      '$route'(newRoute) {
-        // this.$forceUpdate()
-        // this.initValue()
-        this.$destroy(this.lcModa.processData.routeName)
+      // 解决tabs切换页面不刷新问题
+      '$route': function(newRoute) {
+        this.$bus.$emit('reload-route')
       }
     },
     created() {
@@ -206,12 +205,12 @@
       afterSub(formData) {
         clearStore('lcModa')
         this.$router.push(activitiSetting.applyListPath)
-        this.closedCall()
+        // this.closedCall()
       },
       closed() {
         clearStore('lcModa')
         this.$router.push(this.lcModa.from)
-        this.closedCall()
+        // this.closedCall()
         this.modalTaskVisible = false
       },
       closedCall() {

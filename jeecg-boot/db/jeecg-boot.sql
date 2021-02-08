@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50726
+ Source Server Version : 50731
  Source Host           : localhost:3306
  Source Schema         : jeecg-boot
 
  Target Server Type    : MySQL
- Target Server Version : 50726
+ Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 07/02/2021 23:29:12
+ Date: 08/02/2021 17:25:08
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +35,11 @@ CREATE TABLE `act_evt_log`  (
   `LOCK_TIME_` timestamp(3) NULL DEFAULT NULL,
   `IS_PROCESSED_` tinyint(4) NULL DEFAULT 0,
   PRIMARY KEY (`LOG_NR_`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_evt_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_ge_bytearray
@@ -51,7 +55,7 @@ CREATE TABLE `act_ge_bytearray`  (
   PRIMARY KEY (`ID_`) USING BTREE,
   INDEX `ACT_FK_BYTEARR_DEPL`(`DEPLOYMENT_ID_`) USING BTREE,
   CONSTRAINT `ACT_FK_BYTEARR_DEPL` FOREIGN KEY (`DEPLOYMENT_ID_`) REFERENCES `act_re_deployment` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_ge_bytearray
@@ -90,7 +94,7 @@ CREATE TABLE `act_ge_property`  (
   `VALUE_` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `REV_` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`NAME_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_ge_property
@@ -123,7 +127,7 @@ CREATE TABLE `act_hi_actinst`  (
   INDEX `ACT_IDX_HI_ACT_INST_END`(`END_TIME_`) USING BTREE,
   INDEX `ACT_IDX_HI_ACT_INST_PROCINST`(`PROC_INST_ID_`, `ACT_ID_`) USING BTREE,
   INDEX `ACT_IDX_HI_ACT_INST_EXEC`(`EXECUTION_ID_`, `ACT_ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_hi_actinst
@@ -402,7 +406,11 @@ CREATE TABLE `act_hi_attachment`  (
   `CONTENT_ID_` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `TIME_` datetime(3) NULL DEFAULT NULL,
   PRIMARY KEY (`ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_hi_attachment
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_hi_comment
@@ -419,7 +427,7 @@ CREATE TABLE `act_hi_comment`  (
   `MESSAGE_` varchar(4000) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `FULL_MSG_` longblob NULL,
   PRIMARY KEY (`ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_hi_comment
@@ -702,7 +710,11 @@ CREATE TABLE `act_hi_detail`  (
   INDEX `ACT_IDX_HI_DETAIL_TIME`(`TIME_`) USING BTREE,
   INDEX `ACT_IDX_HI_DETAIL_NAME`(`NAME_`) USING BTREE,
   INDEX `ACT_IDX_HI_DETAIL_TASK_ID`(`TASK_ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_hi_detail
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_hi_identitylink
@@ -719,7 +731,7 @@ CREATE TABLE `act_hi_identitylink`  (
   INDEX `ACT_IDX_HI_IDENT_LNK_USER`(`USER_ID_`) USING BTREE,
   INDEX `ACT_IDX_HI_IDENT_LNK_TASK`(`TASK_ID_`) USING BTREE,
   INDEX `ACT_IDX_HI_IDENT_LNK_PROCINST`(`PROC_INST_ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_hi_identitylink
@@ -1043,7 +1055,7 @@ CREATE TABLE `act_hi_procinst`  (
   UNIQUE INDEX `PROC_INST_ID_`(`PROC_INST_ID_`) USING BTREE,
   INDEX `ACT_IDX_HI_PRO_INST_END`(`END_TIME_`) USING BTREE,
   INDEX `ACT_IDX_HI_PRO_I_BUSKEY`(`BUSINESS_KEY_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_hi_procinst
@@ -1118,7 +1130,7 @@ CREATE TABLE `act_hi_taskinst`  (
   `TENANT_ID_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '',
   PRIMARY KEY (`ID_`) USING BTREE,
   INDEX `ACT_IDX_HI_TASK_INST_PROCINST`(`PROC_INST_ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_hi_taskinst
@@ -1283,7 +1295,7 @@ CREATE TABLE `act_hi_varinst`  (
   INDEX `ACT_IDX_HI_PROCVAR_PROC_INST`(`PROC_INST_ID_`) USING BTREE,
   INDEX `ACT_IDX_HI_PROCVAR_NAME_TYPE`(`NAME_`, `VAR_TYPE_`) USING BTREE,
   INDEX `ACT_IDX_HI_PROCVAR_TASK_ID`(`TASK_ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_hi_varinst
@@ -2168,7 +2180,11 @@ CREATE TABLE `act_id_group`  (
   `NAME_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `TYPE_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   PRIMARY KEY (`ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_id_group
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_id_info
@@ -2184,7 +2200,11 @@ CREATE TABLE `act_id_info`  (
   `PASSWORD_` longblob NULL,
   `PARENT_ID_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   PRIMARY KEY (`ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_id_info
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_id_membership
@@ -2197,7 +2217,11 @@ CREATE TABLE `act_id_membership`  (
   INDEX `ACT_FK_MEMB_GROUP`(`GROUP_ID_`) USING BTREE,
   CONSTRAINT `ACT_FK_MEMB_GROUP` FOREIGN KEY (`GROUP_ID_`) REFERENCES `act_id_group` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_MEMB_USER` FOREIGN KEY (`USER_ID_`) REFERENCES `act_id_user` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_id_membership
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_id_user
@@ -2212,7 +2236,11 @@ CREATE TABLE `act_id_user`  (
   `PWD_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   `PICTURE_ID_` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
   PRIMARY KEY (`ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_id_user
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_procdef_info
@@ -2229,7 +2257,11 @@ CREATE TABLE `act_procdef_info`  (
   INDEX `ACT_FK_INFO_JSON_BA`(`INFO_JSON_ID_`) USING BTREE,
   CONSTRAINT `ACT_FK_INFO_JSON_BA` FOREIGN KEY (`INFO_JSON_ID_`) REFERENCES `act_ge_bytearray` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_INFO_PROCDEF` FOREIGN KEY (`PROC_DEF_ID_`) REFERENCES `act_re_procdef` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_procdef_info
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_re_deployment
@@ -2242,7 +2274,7 @@ CREATE TABLE `act_re_deployment`  (
   `TENANT_ID_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '',
   `DEPLOY_TIME_` timestamp(3) NULL DEFAULT NULL,
   PRIMARY KEY (`ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_re_deployment
@@ -2279,7 +2311,7 @@ CREATE TABLE `act_re_model`  (
   CONSTRAINT `ACT_FK_MODEL_DEPLOYMENT` FOREIGN KEY (`DEPLOYMENT_ID_`) REFERENCES `act_re_deployment` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_MODEL_SOURCE` FOREIGN KEY (`EDITOR_SOURCE_VALUE_ID_`) REFERENCES `act_ge_bytearray` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_MODEL_SOURCE_EXTRA` FOREIGN KEY (`EDITOR_SOURCE_EXTRA_VALUE_ID_`) REFERENCES `act_ge_bytearray` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_re_model
@@ -2309,7 +2341,7 @@ CREATE TABLE `act_re_procdef`  (
   `TENANT_ID_` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '',
   PRIMARY KEY (`ID_`) USING BTREE,
   UNIQUE INDEX `ACT_UNIQ_PROCDEF`(`KEY_`, `VERSION_`, `TENANT_ID_`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_re_procdef
@@ -2341,7 +2373,11 @@ CREATE TABLE `act_ru_event_subscr`  (
   INDEX `ACT_IDX_EVENT_SUBSCR_CONFIG_`(`CONFIGURATION_`) USING BTREE,
   INDEX `ACT_FK_EVENT_EXEC`(`EXECUTION_ID_`) USING BTREE,
   CONSTRAINT `ACT_FK_EVENT_EXEC` FOREIGN KEY (`EXECUTION_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_ru_event_subscr
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_ru_execution
@@ -2375,7 +2411,11 @@ CREATE TABLE `act_ru_execution`  (
   CONSTRAINT `ACT_FK_EXE_PROCDEF` FOREIGN KEY (`PROC_DEF_ID_`) REFERENCES `act_re_procdef` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_EXE_PROCINST` FOREIGN KEY (`PROC_INST_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ACT_FK_EXE_SUPER` FOREIGN KEY (`SUPER_EXEC_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_ru_execution
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_ru_identitylink
@@ -2399,7 +2439,11 @@ CREATE TABLE `act_ru_identitylink`  (
   CONSTRAINT `ACT_FK_ATHRZ_PROCEDEF` FOREIGN KEY (`PROC_DEF_ID_`) REFERENCES `act_re_procdef` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_IDL_PROCINST` FOREIGN KEY (`PROC_INST_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_TSKASS_TASK` FOREIGN KEY (`TASK_ID_`) REFERENCES `act_ru_task` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_ru_identitylink
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_ru_job
@@ -2426,7 +2470,7 @@ CREATE TABLE `act_ru_job`  (
   PRIMARY KEY (`ID_`) USING BTREE,
   INDEX `ACT_FK_JOB_EXCEPTION`(`EXCEPTION_STACK_ID_`) USING BTREE,
   CONSTRAINT `ACT_FK_JOB_EXCEPTION` FOREIGN KEY (`EXCEPTION_STACK_ID_`) REFERENCES `act_ge_bytearray` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_ru_job
@@ -2470,7 +2514,11 @@ CREATE TABLE `act_ru_task`  (
   CONSTRAINT `ACT_FK_TASK_EXE` FOREIGN KEY (`EXECUTION_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_TASK_PROCDEF` FOREIGN KEY (`PROC_DEF_ID_`) REFERENCES `act_re_procdef` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_TASK_PROCINST` FOREIGN KEY (`PROC_INST_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_ru_task
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_ru_variable
@@ -2497,7 +2545,11 @@ CREATE TABLE `act_ru_variable`  (
   CONSTRAINT `ACT_FK_VAR_BYTEARRAY` FOREIGN KEY (`BYTEARRAY_ID_`) REFERENCES `act_ge_bytearray` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_VAR_EXE` FOREIGN KEY (`EXECUTION_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ACT_FK_VAR_PROCINST` FOREIGN KEY (`PROC_INST_ID_`) REFERENCES `act_ru_execution` (`ID_`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of act_ru_variable
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for act_z_business
@@ -2522,7 +2574,7 @@ CREATE TABLE `act_z_business`  (
   `table_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据表名',
   `type_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程类型id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程业务扩展表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程业务扩展表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_z_business
@@ -2553,6 +2605,7 @@ INSERT INTO `act_z_business` VALUES ('4028fae477418de5017741d828280004', 'admin'
 INSERT INTO `act_z_business` VALUES ('4028fae47742f4d4017742f7e9b60001', 'admin', '2021-01-27 16:31:19', NULL, 'motb', '2021-01-27 16:51:58', '会签流程:2:20032', '52520', 2, 2, '63ea739d850a4922b1b8f94c729c9ad0', '会签流程申请杀杀杀杀杀杀杀杀杀', 'admin', '2021-01-27 16:36:10', NULL, 'test_sign', NULL);
 INSERT INTO `act_z_business` VALUES ('4028fae4775b482101775b4821080000', 'admin', '2021-02-01 09:49:50', NULL, 'admin', '2021-02-01 11:17:29', '采购申请流程:3:7504', '57501', 2, 2, 'caa65e290c5f4905b644628e19073cd5', '采购申请', 'admin', '2021-02-01 11:12:55', NULL, 'test_demo', NULL);
 INSERT INTO `act_z_business` VALUES ('4028fae4777a161601777a16165e0000', 'admin', '2021-02-07 09:23:24', NULL, 'admin', '2021-02-07 22:41:26', '采购申请流程:3:7504', NULL, 0, 0, '1358224809619656706', '20210207一般采购合同-北京国炬软件-管理员', 'admin', NULL, NULL, 'contract_purchase', NULL);
+INSERT INTO `act_z_business` VALUES ('4028fae4777f3a1b01777f3a1bc00000', 'admin', '2021-02-08 09:20:51', NULL, NULL, NULL, '采购申请流程:3:7504', NULL, 0, 0, '1358586554699751426', '20210208一般采购合同-北京国炬软件-管理员', 'admin', NULL, NULL, 'contract_purchase', NULL);
 
 -- ----------------------------
 -- Table structure for act_z_node
@@ -2570,7 +2623,7 @@ CREATE TABLE `act_z_node`  (
   `relate_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '关联其他表id',
   `proc_def_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程定义id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程节点扩展表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程节点扩展表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_z_node
@@ -2809,7 +2862,7 @@ CREATE TABLE `act_z_params`  (
   `params_key` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数名',
   `params_val` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数值',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '自定义流程参数表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '自定义流程参数表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_z_params
@@ -2858,7 +2911,7 @@ CREATE TABLE `act_z_process`  (
   `sort` int(5) NULL DEFAULT NULL COMMENT '排序',
   `report_model_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程表单报表ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程定义扩展表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程定义扩展表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of act_z_process
@@ -2896,7 +2949,7 @@ CREATE TABLE `ces_field_kongj`  (
   `dep_sel` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '选择部门',
   `ddd` double(10, 0) NULL DEFAULT NULL COMMENT 'DD类型',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ces_field_kongj
@@ -2923,7 +2976,7 @@ CREATE TABLE `ces_order_customer`  (
   `address` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '常用地址',
   `order_main_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '订单ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ces_order_customer
@@ -2953,7 +3006,7 @@ CREATE TABLE `ces_order_goods`  (
   `zong_price` double NULL DEFAULT NULL COMMENT '单品总价',
   `order_main_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '订单ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ces_order_goods
@@ -2985,7 +3038,7 @@ CREATE TABLE `ces_order_main`  (
   `money` double NULL DEFAULT NULL COMMENT '订单总额',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ces_order_main
@@ -3012,7 +3065,7 @@ CREATE TABLE `ces_shop_goods`  (
   `contents` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品简介',
   `good_type_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商品分类',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ces_shop_goods
@@ -3038,7 +3091,7 @@ CREATE TABLE `ces_shop_type`  (
   `pid` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '父级节点',
   `has_child` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '是否有子节点',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ces_shop_type
@@ -3047,6 +3100,77 @@ INSERT INTO `ces_shop_type` VALUES ('1258408003595464706', 'admin', '2020-05-07 
 INSERT INTO `ces_shop_type` VALUES ('1258408044439597058', 'admin', '2020-05-07 22:47:12', NULL, NULL, 'A01', '鞋子', NULL, 'jeewxshop测试号_1588862831749.jpg', '0', '1');
 INSERT INTO `ces_shop_type` VALUES ('1258408076693794818', 'admin', '2020-05-07 22:47:20', 'admin', '2020-07-10 16:51:10', 'A01', '耐克', NULL, 'd52a2834349b033b6d20d5cc16ce36d3d539bd7f_1594371069797.jpg', '1258408044439597058', '0');
 INSERT INTO `ces_shop_type` VALUES ('1258408105487691777', 'admin', '2020-05-07 22:47:27', 'admin', '2020-11-26 15:21:57', 'A01', '阿迪', '', 'temp/20180607175028Fn1Lq7zw_1589293474710.png', '1258408044439597058', '0');
+
+-- ----------------------------
+-- Table structure for company
+-- ----------------------------
+DROP TABLE IF EXISTS `company`;
+CREATE TABLE `company`  (
+  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `create_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
+  `update_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
+  `sys_org_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '所属部门',
+  `name_cn` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '中文名称',
+  `name_en` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '英文名称',
+  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '编码',
+  `level` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '级别',
+  `type` int(2) NULL DEFAULT NULL COMMENT '类型',
+  `status` int(2) NULL DEFAULT NULL COMMENT '状态',
+  `black` int(2) NULL DEFAULT NULL COMMENT '黑名单',
+  `service_range` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务范围',
+  `business` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '行业',
+  `country` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '国家',
+  `region` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '区域',
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '地址',
+  `context` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '简介',
+  `legal` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '法人',
+  `register` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '经营范围',
+  `credit_code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '信用代码',
+  `capital` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '注册资本',
+  `register_time` datetime(0) NULL DEFAULT NULL COMMENT '注册时间',
+  `live_status` int(2) NULL DEFAULT NULL COMMENT '存续状态',
+  `link` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '单位电话',
+  `email` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `fax` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '传真',
+  `province` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '省',
+  `city` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '市',
+  `area` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '区(县)',
+  `contact_person` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系人',
+  `contact_phone` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系电话',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业合作方信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of company
+-- ----------------------------
+INSERT INTO `company` VALUES ('1358691105985638402', 'admin', '2021-02-08 16:16:18', NULL, NULL, 'A01', '221', '1', '1', 'A', 1, 3, 0, '2,3', '7,4', '1', '1', '1', '1', '1', '1', '1', '1', '2021-02-08 00:00:00', 1, '1', '1', '1', '110101', NULL, NULL, '1', '1');
+
+-- ----------------------------
+-- Table structure for company_bank
+-- ----------------------------
+DROP TABLE IF EXISTS `company_bank`;
+CREATE TABLE `company_bank`  (
+  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `create_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
+  `update_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
+  `sys_org_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '所属部门',
+  `company_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '企业id',
+  `bank_code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '银行代码',
+  `bank` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '开户行',
+  `bank_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '账户名称',
+  `bank_no` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '账号',
+  `type` int(11) NULL DEFAULT NULL COMMENT '类型',
+  `settle_way` int(11) NULL DEFAULT NULL COMMENT '结算方式',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业合作方银行信息' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of company_bank
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for contract_general
@@ -3082,13 +3206,14 @@ CREATE TABLE `contract_general`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `主表`(`base_id`) USING BTREE,
   CONSTRAINT `主表` FOREIGN KEY (`base_id`) REFERENCES `contract_purchase` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '一般采购合同' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '一般采购合同' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of contract_general
 -- ----------------------------
 INSERT INTO `contract_general` VALUES ('1357312967489671169', 'admin', '2021-02-04 21:00:04', 'admin', '2021-02-04 21:00:27', 'A01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '1', '1', '1', '1', '1', '1', '1357312967439339521');
 INSERT INTO `contract_general` VALUES ('1358224809695154178', 'admin', '2021-02-07 09:23:24', 'admin', '2021-02-07 22:41:26', 'A01', 0, NULL, 0, NULL, 0, '1', 0, '2021-02-07 00:00:00', '2022-02-07 00:00:00', 0, NULL, NULL, NULL, '4.01', '肆元整', '1', '1', '1', '1', '1358224809619656706');
+INSERT INTO `contract_general` VALUES ('1358586554842357761', 'admin', '2021-02-08 09:20:51', NULL, NULL, 'A01', 0, NULL, 0, NULL, 0, '1', 0, '2021-02-08 00:00:00', '2022-02-08 00:00:00', 1, '2', '2', '2', '0', '零元整', '2', '2', '2', '2', '1358586554699751426');
 
 -- ----------------------------
 -- Table structure for contract_item
@@ -3112,7 +3237,7 @@ CREATE TABLE `contract_item`  (
   `total` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '小计',
   `purchase_way` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '采购方式',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '合同明细项' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '合同明细项' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of contract_item
@@ -3122,6 +3247,8 @@ INSERT INTO `contract_item` VALUES ('1358224809737097217', 'admin', '2021-02-07 
 INSERT INTO `contract_item` VALUES ('1358243919040630785', 'admin', '2021-02-07 10:39:20', 'admin', '2021-02-07 10:40:22', 'A01', '1358224809619656706', '33', NULL, '33', '0', '33', '33', 33, '33', '33');
 INSERT INTO `contract_item` VALUES ('1358254547079860226', 'admin', '2021-02-07 11:21:34', NULL, NULL, 'A01', '1358224809619656706', '5', NULL, '5', '0', '5', '5', 5, '5', '5');
 INSERT INTO `contract_item` VALUES ('1358254547088248834', 'admin', '2021-02-07 11:21:34', NULL, NULL, 'A01', '1358224809619656706', '55', NULL, '5', '0', '5', '4', 555, '55', '5');
+INSERT INTO `contract_item` VALUES ('1358586554884300801', 'admin', '2021-02-08 09:20:51', NULL, NULL, 'A01', '1358586554699751426', '1', NULL, '1', '0', '1', '1', 1, '1', '1');
+INSERT INTO `contract_item` VALUES ('1358586554892689409', 'admin', '2021-02-08 09:20:51', NULL, NULL, 'A01', '1358586554699751426', '2', NULL, '2', '0', '2', '2', 2, '2', '2');
 
 -- ----------------------------
 -- Table structure for contract_member
@@ -3152,13 +3279,15 @@ CREATE TABLE `contract_member`  (
   `lock_amount` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '锁定金额',
   `rest_amount` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '剩余金额',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '签订对象' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '签订对象' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of contract_member
 -- ----------------------------
 INSERT INTO `contract_member` VALUES ('1358425641875177474', 'admin', '2021-02-07 22:41:26', NULL, NULL, 'A01', '1358224809619656706', 0, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'CNY', '1', '1', '1');
 INSERT INTO `contract_member` VALUES ('1358425641887760385', 'admin', '2021-02-07 22:41:26', NULL, NULL, 'A01', '1358224809619656706', 1, '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', 'USD', '2', '2', '2');
+INSERT INTO `contract_member` VALUES ('1358586554792026113', 'admin', '2021-02-08 09:20:51', NULL, NULL, 'A01', '1358586554699751426', 0, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'CNY', '1', '1', '1');
+INSERT INTO `contract_member` VALUES ('1358586554800414721', 'admin', '2021-02-08 09:20:51', NULL, NULL, 'A01', '1358586554699751426', 1, '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', 'CNY', '2', '2', '2');
 
 -- ----------------------------
 -- Table structure for contract_payment
@@ -3180,7 +3309,7 @@ CREATE TABLE `contract_payment`  (
   `pay_amount` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '付款金额',
   `duty` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '违约责任',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '合同付款约定' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '合同付款约定' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of contract_payment
@@ -3188,6 +3317,8 @@ CREATE TABLE `contract_payment`  (
 INSERT INTO `contract_payment` VALUES ('1358308314974326786', 'admin', '2021-02-07 14:55:13', NULL, NULL, 'A01', '1358224809619656706', '22', '2022-02-07 00:00:00', '22', '22', '2', '2', '2');
 INSERT INTO `contract_payment` VALUES ('1358308314982715393', 'admin', '2021-02-07 14:55:13', NULL, NULL, 'A01', '1358224809619656706', '32', '2022-02-07 00:00:00', '31', '31', '3', '3', '3');
 INSERT INTO `contract_payment` VALUES ('1358308669405597698', 'admin', '2021-02-07 14:56:38', NULL, NULL, 'A01', '1358224809619656706', '4', '2022-02-07 00:00:00', '4', '4', '4', '4', '4');
+INSERT INTO `contract_payment` VALUES ('1358586554926243842', 'admin', '2021-02-08 09:20:51', NULL, NULL, 'A01', '1358586554699751426', '1', '2022-02-08 00:00:00', '2', '21', '1', '1', '1');
+INSERT INTO `contract_payment` VALUES ('1358586554934632449', 'admin', '2021-02-08 09:20:51', NULL, NULL, 'A01', '1358586554699751426', '1', '2022-02-08 00:00:00', '2', '2', '2', '2', '2');
 
 -- ----------------------------
 -- Table structure for contract_purchase
@@ -3211,13 +3342,14 @@ CREATE TABLE `contract_purchase`  (
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `member_use` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '签署方数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '采购合同基础表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '采购合同基础表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of contract_purchase
 -- ----------------------------
 INSERT INTO `contract_purchase` VALUES ('1357312967439339521', 'admin', '2021-02-04 21:00:04', 'admin', '2021-02-04 21:00:27', 'A01', '1', '1', '1', NULL, NULL, NULL, 'admin', '0', NULL, NULL);
 INSERT INTO `contract_purchase` VALUES ('1358224809619656706', 'admin', '2021-02-07 09:23:24', 'admin', '2021-02-07 22:41:26', 'A01', '1', '1', 'T0S000', '1', '1', '1', 'admin', '0', '1', '0');
+INSERT INTO `contract_purchase` VALUES ('1358586554699751426', 'admin', '2021-02-08 09:20:51', NULL, NULL, 'A01', '222222222', '222', 'T0S000', '1', '1', NULL, 'admin', '0', '1', '0');
 
 -- ----------------------------
 -- Table structure for contract_type
@@ -3239,7 +3371,7 @@ CREATE TABLE `contract_type`  (
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
   `roles` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '合同类型表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '合同类型表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of contract_type
@@ -3275,7 +3407,7 @@ CREATE TABLE `demo`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `sys_org_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门编码',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of demo
@@ -3316,7 +3448,7 @@ CREATE TABLE `demo_field_def_val_main`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   `sys_org_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '所属部门',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of demo_field_def_val_main
@@ -3339,7 +3471,7 @@ CREATE TABLE `demo_field_def_val_sub`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   `sys_org_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '所属部门',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of demo_field_def_val_sub
@@ -3358,7 +3490,7 @@ CREATE TABLE `jeecg_monthly_growth_analysis`  (
   `main_income` decimal(18, 2) NULL DEFAULT 0.00 COMMENT '佣金/主营收入',
   `other_income` decimal(18, 2) NULL DEFAULT 0.00 COMMENT '其他收入',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jeecg_monthly_growth_analysis
@@ -3405,7 +3537,7 @@ CREATE TABLE `jeecg_order_customer`  (
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jeecg_order_customer
@@ -3487,7 +3619,7 @@ CREATE TABLE `jeecg_order_main`  (
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jeecg_order_main
@@ -3521,7 +3653,7 @@ CREATE TABLE `jeecg_order_ticket`  (
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jeecg_order_ticket
@@ -3586,7 +3718,7 @@ CREATE TABLE `jeecg_project_nature_income`  (
   `bidding_consulting_fee` decimal(18, 2) NULL DEFAULT 0.00 COMMENT '投标咨询费',
   `interol_consulting_fee` decimal(18, 2) NULL DEFAULT 0.00 COMMENT '内控咨询费',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jeecg_project_nature_income
@@ -3616,7 +3748,11 @@ CREATE TABLE `joa_demo`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人id'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程测试' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '流程测试' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of joa_demo
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for onl_auth_data
@@ -3635,7 +3771,11 @@ CREATE TABLE `onl_auth_data`  (
   `update_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of onl_auth_data
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for onl_auth_page
@@ -3654,7 +3794,11 @@ CREATE TABLE `onl_auth_page`  (
   `update_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of onl_auth_page
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for onl_auth_relation
@@ -3667,7 +3811,11 @@ CREATE TABLE `onl_auth_relation`  (
   `type` int(1) NULL DEFAULT NULL COMMENT '1字段 2按钮 3数据权限',
   `cgform_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'online表单ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of onl_auth_relation
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for onl_cgform_button
@@ -3694,7 +3842,7 @@ CREATE TABLE `onl_cgform_button`  (
   INDEX `idx_ocb_BUTTON_CODE`(`BUTTON_CODE`) USING BTREE,
   INDEX `idx_ocb_BUTTON_STATUS`(`BUTTON_STATUS`) USING BTREE,
   INDEX `idx_ocb_ORDER_NUM`(`ORDER_NUM`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Online表单自定义按钮' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Online表单自定义按钮' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of onl_cgform_button
@@ -3725,7 +3873,11 @@ CREATE TABLE `onl_cgform_enhance_java`  (
   INDEX `idx_ejava_cgform_head_id`(`CGFORM_HEAD_ID`) USING BTREE,
   INDEX `idx_ocej_BUTTON_CODE`(`BUTTON_CODE`) USING BTREE,
   INDEX `idx_ocej_ACTIVE_STATUS`(`ACTIVE_STATUS`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of onl_cgform_enhance_java
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for onl_cgform_enhance_js
@@ -3742,7 +3894,7 @@ CREATE TABLE `onl_cgform_enhance_js`  (
   INDEX `index_jstype`(`CG_JS_TYPE`) USING BTREE,
   INDEX `idx_ejs_cgform_head_id`(`CGFORM_HEAD_ID`) USING BTREE,
   INDEX `idx_ejs_cg_js_type`(`CG_JS_TYPE`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of onl_cgform_enhance_js
@@ -3779,7 +3931,7 @@ CREATE TABLE `onl_cgform_enhance_sql`  (
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `index_formid`(`CGFORM_HEAD_ID`) USING BTREE,
   INDEX `idx_oces_CGFORM_HEAD_ID`(`CGFORM_HEAD_ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of onl_cgform_enhance_sql
@@ -3841,7 +3993,7 @@ CREATE TABLE `onl_cgform_field`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `inex_table_id`(`cgform_head_id`) USING BTREE,
   INDEX `idx_ocf_cgform_head_id`(`cgform_head_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of onl_cgform_field
@@ -3859,6 +4011,7 @@ INSERT INTO `onl_cgform_field` VALUES ('03e47bb146f6735b5e5b6b05e612a103', '2b76
 INSERT INTO `onl_cgform_field` VALUES ('03fd5ab69f331ff760c3f7d86b4a93f8', '4028318169e81b970169e81b97650000', 'log_content', '日志内容', 'log_content', 0, 1, 'string', 1000, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'group', NULL, NULL, 3, NULL, NULL, '2019-04-04 19:28:36', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('045eb432c418b2b103b1e1b8e8a8a75d', 'fb7125a344a649b990c12949945cb6c1', 'age', '年龄', NULL, 0, 1, 'int', 32, 0, '', '', '', '', 'text', '', 120, '', '0', '', '', 0, 1, 1, 0, 'single', '', '', NULL, NULL, NULL, '2019-03-26 19:24:11', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('048eb10ecc36515e21ed24b673222ee6', 'b2422743205045d89fef733e7c698244', 'name', '合同名称', NULL, 0, 1, 'string', 255, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 7, 'admin', '2021-02-03 22:02:33', '2021-02-02 22:07:42', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('04a62fa4bc8250d884c5cf64f8af73d4', '9252037f8fe14d13a6d66c6500f139e2', 'city', '市', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 30, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('04e4185a503e6aaaa31c243829ff4ac7', 'd35109c3632c4952a19ecc094943dd71', 'birthday', '生日', NULL, 0, 1, 'Date', 32, 0, '', '', '', '', 'date', '', 120, '', '0', '', '', 1, 1, 1, 0, 'single', '', '', 10, 'admin', '2020-11-28 00:03:03', '2019-03-15 14:24:35', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('04ff134cb4aae845059e10b3b85f1451', '7ea60a25fa27470e9080d6a921aabbd1', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, NULL, NULL, '2019-04-17 00:22:21', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('051dd70c504c97a028daab2af261ea35', '1acb6f81a1d9439da6cc4e868617b565', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, 'admin', '2019-06-10 14:47:14', '2019-04-23 22:58:19', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -3878,6 +4031,7 @@ INSERT INTO `onl_cgform_field` VALUES ('07b19bc11ae39320ca83fdea4e4a7513', 'a59d
 INSERT INTO `onl_cgform_field` VALUES ('07f4776fd641389a8c98a85713990dce', '402860816bff91c0016bff91c0cb0000', 'update_by', '更新人', 'update_by', 0, 1, 'string', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 14, 'admin', '2019-07-19 18:09:01', '2019-07-17 18:54:32', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('08a3353c11efd5f062c3076d0554b5c5', '402881e6760269a20176026d25650002', 'salary_money', '工资', 'salary_money', 0, 1, 'BigDecimal', 10, 3, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'single', NULL, NULL, 5, NULL, NULL, '2020-11-26 10:41:17', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('08f002095da7c1886c86648fcec38ca9', '56efb74326e74064b60933f6f8af30ea', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, 'admin', '2020-07-10 16:53:27', '2020-05-08 23:45:32', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('093a0c55cfaa27db3bc077b3d9d6b926', '9252037f8fe14d13a6d66c6500f139e2', 'contact_phone', '联系电话', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 33, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('09450359eb90b40d224ec43588a62f9e', '402860816bff91c0016bff91c0cb0000', 'user_id', '用户ID', 'user_id', 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 3, 'admin', '2019-07-19 18:09:01', '2019-07-17 18:54:32', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('09482f89cad273ab3f726f2e8741841f', '5c531ffd4fb14c12bc1bf437b1d17d73', 'credit_code', '信用代码', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 15, NULL, NULL, '2021-02-07 15:42:03', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('0a453a63e33654aa1b9ee2affa854a6d', '4fb8e12a697f4d5bbe9b9fb1e9009486', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, 'admin', '2020-11-26 17:28:14', '2020-04-10 19:47:01', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
@@ -3887,6 +4041,7 @@ INSERT INTO `onl_cgform_field` VALUES ('0adc06d9b497684bcbb5a781e044517c', '1acb
 INSERT INTO `onl_cgform_field` VALUES ('0ae4bc5d4921aa240d814e018ddb7779', '56efb74326e74064b60933f6f8af30ea', 'money', '订单总额', NULL, 0, 1, 'double', 10, 3, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 9, 'admin', '2020-07-10 16:53:27', '2020-05-08 23:45:32', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('0b3e833ac4aae3a13ec2f8ae460708f8', '4028839a6de2ebd3016de2ebd3870000', 'no', '预算表序号', 'no', 0, 1, 'string', 50, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'group', NULL, NULL, 8, NULL, NULL, '2019-10-19 15:29:30', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('0b63bd30b8646901310d8d0374df5587', '18f064d1ef424c93ba7a16148851664f', 'fuwenb', '富文本', NULL, 0, 1, 'Text', 0, 0, '', '', '', '', 'umeditor', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 17, 'admin', '2020-09-11 14:35:44', '2020-05-12 20:26:01', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('0b9b59e038c0fada7e263e22aad1303d', '01e96ffb10ff42e38116d2c62abeb6ad', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('0ba1bf74e2a6a94a7a63010ec7230706', '402860816bff91c0016bffa220a9000b', 'update_time', '更新时间', 'update_time', 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 42, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('0bd10d416252bdc6b169056d2a1a4a68', '402880e5721355dd01721355dd390000', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', NULL, NULL, 3, NULL, NULL, '2020-05-14 21:18:14', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('0bf9c178173bd86eec4144b819cfac0b', '18f064d1ef424c93ba7a16148851664f', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 2, 'admin', '2020-09-11 14:35:44', '2020-05-12 20:26:01', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
@@ -3896,6 +4051,7 @@ INSERT INTO `onl_cgform_field` VALUES ('0cba94f0497d4d3d829fc573f58eff9f', '4028
 INSERT INTO `onl_cgform_field` VALUES ('0cbc49f419e3545613d0b2eb9c025eae', '402881e6760269a20176026a22e70001', 'fuwenb', '富文本', NULL, 0, 1, 'Text', 0, 0, '', '', '', '', 'umeditor', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 17, NULL, NULL, '2020-11-26 10:37:59', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('0cc7a9c79b60177d89f22c2865c4de23', 'cd15eddcc6fd4b18847094cf189611b1', 'purchase_way', '采购方式', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 16, NULL, NULL, '2021-02-05 10:28:19', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('0d00c51a4ddad2598a587fadc968a8b2', '402860816bff91c0016bff91cfea0004', 'sys_org_code', '组织机构编码', 'sys_org_code', 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 13, 'admin', '2019-07-19 18:05:13', '2019-07-17 18:54:35', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('0d57af3549aa05e4f5926073952fd9c2', '9252037f8fe14d13a6d66c6500f139e2', 'email', '邮箱', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 27, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('0ddd0c0afc967a9ab6050401ca62a4be', 'e67d26b610dd414c884c4dbb24e71ce3', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2019-04-24 11:03:32', '2019-04-24 11:02:57', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('0e157503e648653836a602f5bbad4e83', '402881e6760269a201760269a2af0000', 'files', '文件', NULL, 0, 1, 'string', 1000, 0, '', '', '', '', 'file', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 15, NULL, NULL, '2020-11-26 10:37:26', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('0e5fb96c3f5a37c758eb7f5d1322694f', '402880e5721355dd01721355dd390000', 'good_name', '商品名字', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 7, NULL, NULL, '2020-05-14 21:18:14', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
@@ -3913,6 +4069,7 @@ INSERT INTO `onl_cgform_field` VALUES ('1130f1e252533529bb1167b896dffe32', 'deea
 INSERT INTO `onl_cgform_field` VALUES ('117fc4ba649d6690a3ac482ad5e4ad38', '56870166aba54ebfacb20ba6c770bd73', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2020-11-28 00:02:01', '2019-04-20 11:38:39', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('1234048c68ef38c62707f88d8232de2d', '5c531ffd4fb14c12bc1bf437b1d17d73', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, NULL, NULL, '2021-02-07 15:42:03', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('12aa08f8e948e2b60b40a7b6429c866b', '56efb74326e74064b60933f6f8af30ea', 'order_code', '订单编码', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '${shop_order_num}', 0, 1, 1, 1, 'single', '', '', 7, 'admin', '2020-07-10 16:53:27', '2020-05-08 23:45:32', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('12e082dd319bac9f18c0f1e63abdee79', '01e96ffb10ff42e38116d2c62abeb6ad', 'bank_name', '账户名称', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 10, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('12e568d92f94bc9af1a4b4017cb74c72', 'de873e9cf0294c0fa3204baed9e54a11', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, NULL, NULL, '2021-01-26 10:05:05', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('13246645b7650491b70205d99703ca06', '402860816aa5921f016aa5dedcb90009', 'bpm_status', '流程状态', 'bpm_status', 0, 1, 'string', 32, 0, '1', 'bpm_status', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 1, 0, 'group', '', '', 8, 'admin', '2019-05-11 15:56:47', '2019-05-11 15:50:08', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('135dd0ee50712722db65b8762bd487ea', '8994f2817b5a45d9890aa04497a317c5', 'update_time', '更新日期', NULL, 0, 1, 'date', 20, 0, '', '', '', '', 'text', '', 120, '', '0', '', '', 0, 1, 1, 0, 'single', '', '', 4, NULL, NULL, '2019-03-23 11:39:16', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -3938,12 +4095,14 @@ INSERT INTO `onl_cgform_field` VALUES ('19a9bf071cf3aa3b2ef94344d2300616', '4028
 INSERT INTO `onl_cgform_field` VALUES ('1ab5be1f937f393b3e5cc214ef1b855c', '7ea60a25fa27470e9080d6a921aabbd1', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, NULL, NULL, '2019-04-17 00:22:21', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('1b071c02de2830f9fe82a542b31cce7f', '3b5e18da618247539481816995b6bf9f', 'age', '年龄', NULL, 0, 1, 'int', 10, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 8, 'admin', '2020-07-11 11:27:29', '2020-07-11 11:27:17', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('1b6c7b95028bed9ff656d65557dd2bdf', '402860816bff91c0016bffa220a9000b', 'user_id', '用户id', 'user_id', 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 3, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('1c242af52eb362fe4c945054963ffc52', '9252037f8fe14d13a6d66c6500f139e2', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('1c2f307e315bac77a6d3f02e88387a43', 'deea5a8ec619460c9245ba85dbc59e80', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 1, 'admin', '2020-05-03 01:01:18', '2019-04-20 11:41:19', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('1c3b2ad0a52ecb47fa7fd53f25875beb', 'deea5a8ec619460c9245ba85dbc59e80', 'price', '价格', NULL, 0, 1, 'double', 32, 0, '', '', '', '', 'text', '', 120, 'n', '0', '', '', 0, 1, 1, 0, 'single', '', '', 7, 'admin', '2020-05-03 01:01:18', '2019-04-20 11:41:19', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('1c4d25a12388c80d397bb4f4664fe4e6', '4b556f0168f64976a3d20bfb932bc798', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, NULL, NULL, '2019-04-12 23:38:28', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('1cfe967bb457cbaa6e041e45d019b583', '402860816bff91c0016bff91c7010001', 'update_time', '更新时间', 'update_time', 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 10, 'admin', '2019-07-19 18:07:47', '2019-07-17 18:54:32', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('1d0037eba10efd76be45150479399a7e', '8d66ea41c7cc4ef9ab3aab9055657fc9', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, NULL, NULL, '2020-05-07 22:46:32', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('1d10795a66be404782980b1326776968', 'a59d217041714e3aa7edb46b23e5054f', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, 'admin', '2021-02-04 10:07:43', '2021-02-03 21:27:48', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('1d5dae9d871bcdf44a78d641b05e9f93', '9252037f8fe14d13a6d66c6500f139e2', 'region', '区域', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 17, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('1d712db19506ee40b2c1ef5a611baf88', '53a3e82b54b946c2b904f605875a275c', 'name', '商品名字', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 7, 'admin', '2020-05-08 23:42:51', '2020-05-07 22:49:47', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('1d95bdf1120c5a1776df022d0a571f21', '4fb8e12a697f4d5bbe9b9fb1e9009486', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 7, 'admin', '2020-11-26 17:28:14', '2020-04-10 19:47:01', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('1e37ae77c0d406d4ff3c5442ec63cd1f', '8d66ea41c7cc4ef9ab3aab9055657fc9', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, NULL, NULL, '2020-05-07 22:46:32', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
@@ -3976,6 +4135,7 @@ INSERT INTO `onl_cgform_field` VALUES ('284864d99fddfdcb00e188e3a512cb28', '1acb
 INSERT INTO `onl_cgform_field` VALUES ('2889d3cef706f91e092d76a56b8055be', '402860816bff91c0016bff91cda80003', 'order_no', '序号', 'order_no', 0, 1, 'int', 10, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 8, 'admin', '2019-07-19 18:06:36', '2019-07-17 18:54:34', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('28900c8e76dd0e77193cbd85b5bc6af8', '402881e6760269a201760269a2af0000', 'remakr', 'markdown', NULL, 0, 1, 'Text', 0, 0, '', '', '', '', 'markdown', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 16, NULL, NULL, '2020-11-26 10:37:26', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('29e4abea55d9fa7dbbd0c8dbbb2b3756', '402860816bff91c0016bff91cda80003', 'update_time', '更新时间', 'update_time', 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 12, 'admin', '2019-07-19 18:06:36', '2019-07-17 18:54:34', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('2ae378fdab77a6171c0cf4f70d214497', '9252037f8fe14d13a6d66c6500f139e2', 'country', '国家', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 1, 1, 1, 0, 'single', '', '', 16, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '1', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('2aef31179964d0a5a945df7bddff00ae', '53a3e82b54b946c2b904f605875a275c', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, 'admin', '2020-05-08 23:42:51', '2020-05-07 22:49:47', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('2b54585814ebc086e288b4c6677fba5b', '2b760bea25c7427f8b3b867d2d3d4cd7', 'second_member', '乙方', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 11, NULL, NULL, '2021-02-03 22:40:44', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('2b87708a66a52e672bb816333834be9e', '524f578962a5485aa128c2f247ef80e8', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 2, 'admin', '2021-02-02 20:44:33', '2021-02-01 15:13:43', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
@@ -4004,10 +4164,13 @@ INSERT INTO `onl_cgform_field` VALUES ('317ef905f18066259d56106f6f2d8439', '524f
 INSERT INTO `onl_cgform_field` VALUES ('31fd90306c3942f09cb79deabbf2f541', '402860816bff91c0016bff91d2810005', 'employee_id', '员工ID', 'employee_id', 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', 'oa_employee_info', 'id', 2, 'admin', '2019-07-19 18:05:55', '2019-07-17 18:54:35', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('336495117e3a31351fed6963b950dddb', '402860816bff91c0016bffa220a9000b', 'inside_transfer', '内部工作调动情况', 'inside_transfer', 0, 1, 'string', 255, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 37, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('34138092d743d4232341a920efd2699e', '402880eb71d52dc30171d52dc3a10000', 'name', '名称', NULL, 0, 1, 'String', 200, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '#{sysUserName}', 0, 1, 1, 0, 'single', NULL, NULL, 3, NULL, NULL, '2020-05-02 19:37:58', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('3434beef47394386c0b4f59bc1a68c59', '9252037f8fe14d13a6d66c6500f139e2', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 1, 'single', '', '', 1, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('3445ee4f7b99b6b6c3f8c36b5fe208e0', '9252037f8fe14d13a6d66c6500f139e2', 'name_cn', '中文名称', NULL, 0, 1, 'string', 255, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 1, 1, 1, 0, 'single', '', '', 7, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '1', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('345c8b48e1e128e77c4c6e2b36512804', '402860816aa5921f016aa5dedcb90009', 'create_by', '创建人', 'create_by', 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'group', '', '', 2, 'admin', '2019-05-11 15:56:47', '2019-05-11 15:50:08', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('34625a911b39e0596690c1a15f784448', '402880e570a5d7000170a5d700f50000', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', NULL, NULL, 5, NULL, NULL, '2020-03-04 21:58:16', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('3489a6451bbbcabc0f39ca04b0dd62f2', '8d66ea41c7cc4ef9ab3aab9055657fc9', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, NULL, NULL, '2020-05-07 22:46:32', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('34a14ddabe3abdb777bca01c093ced36', 'de873e9cf0294c0fa3204baed9e54a11', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, NULL, NULL, '2021-01-26 10:05:05', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('3504e1b593c01f931c5223440ad3fdc0', '9252037f8fe14d13a6d66c6500f139e2', 'area', '区(县)', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 31, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('351faaeb2dd8105e9c66f678211c9d4f', 'dbf4675875e14676a3f9a8b2b8941140', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, NULL, NULL, '2019-05-27 18:02:07', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('35417ba3993afe3405e1e0b9abbd7e1b', '402880e5721355dd01721355dd390000', 'num', '数量', NULL, 0, 1, 'int', 10, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 9, NULL, NULL, '2020-05-14 21:18:14', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('354b2ce39c5e8ec3f0bbb01bf8ff0fb7', '32f75e4043ef4070919dbd4337186a3d', 'content', '描述', NULL, 0, 1, 'String', 300, 0, '', '', '', '', 'textarea', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 9, 'admin', '2019-04-11 10:15:31', '2019-03-28 15:24:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -4050,12 +4213,14 @@ INSERT INTO `onl_cgform_field` VALUES ('41d4215c01b0d26871f2cb83d3e532ae', '4028
 INSERT INTO `onl_cgform_field` VALUES ('422a44a15fa39fd57c3c23eb601f7c03', '56870166aba54ebfacb20ba6c770bd73', 'descc', '描述', NULL, 0, 1, 'String', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 8, 'admin', '2020-11-28 00:02:01', '2019-04-20 11:38:39', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('42776a2c7c686a74d4d20e57672e26f9', '6e2805da82ab44628b63a1bceab2e348', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, 'admin', '2021-01-21 16:07:23', '2021-01-21 15:55:58', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('42b4cefa66bfc00066809296cd4571fe', 'a59d217041714e3aa7edb46b23e5054f', 'is_sub', '是否子合同', NULL, 0, 1, 'int', 2, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 9, 'admin', '2021-02-04 10:07:43', '2021-02-03 21:27:48', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('42c42afee986a5c54db1cdd37fdadb30', '01e96ffb10ff42e38116d2c62abeb6ad', 'bank', '开户行', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 9, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('42cccfa014c9e131a0a1b23f563d3688', '402860816bff91c0016bffa220a9000b', 'sex', '性别', 'sex', 0, 1, 'string', 20, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 6, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('430982c7bf0e01e14593483f96cae6bb', '6e2805da82ab44628b63a1bceab2e348', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 2, 'admin', '2021-01-21 16:07:23', '2021-01-21 15:55:58', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('4312f618c83e07db82e468b81a1eaa45', '402860816bff91c0016bffa220a9000b', 'photo', '照片', 'photo', 0, 1, 'string', 255, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 20, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('435b57180fc995e3c4ec42516963bca3', '4028839a6de2ebd3016de2ebd3870000', 'wl_code', '物料编码', 'wl_code', 0, 1, 'string', 60, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'group', NULL, NULL, 6, NULL, NULL, '2019-10-19 15:29:30', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('44bdc595f1e565fc053e01134b92bb47', 'd3ae1c692b9640e0a091f8c46e17bb01', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, NULL, NULL, '2019-07-24 14:47:30', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('44e81e24d2384b0f187e8f69eda55390', '402860816bff91c0016bff91cda80003', 'create_time', '创建时间', 'create_time', 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 10, 'admin', '2019-07-19 18:06:36', '2019-07-17 18:54:34', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('45b9047c76338957f23bd9a8470357bd', '9252037f8fe14d13a6d66c6500f139e2', 'status', '状态', NULL, 0, 1, 'int', 2, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 1, 1, 1, 0, 'single', '', '', 12, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'list_multi', '1', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('45c0a1a89a1e2a72533b9af894be1011', '27fc5f91274344afa7673a732b279939', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2019-07-01 16:28:20', '2019-07-01 16:26:42', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('45d59eb647257fcbcb9d143ff1ba2080', 'deea5a8ec619460c9245ba85dbc59e80', 'pro_type', '产品类型', NULL, 0, 1, 'String', 32, 0, '', 'sex', '', '', 'radio', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 9, 'admin', '2020-05-03 01:01:18', '2019-04-23 20:54:08', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('469b250595f15dfebe69991d72e4bfb2', 'e9faf717024b4aae95cff224ae9b6d97', 'name', '员工姓名', NULL, 0, 1, 'String', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 6, 'admin', '2019-07-03 18:23:49', '2019-07-03 18:22:35', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -4107,6 +4272,7 @@ INSERT INTO `onl_cgform_field` VALUES ('581d8e8ce270b762458121b1dea0be9a', '8d66
 INSERT INTO `onl_cgform_field` VALUES ('588400f6ebcdd0bc9bb560dd36636af9', 'e2faf977fdaf4b25a524f58c2441a51c', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, 'admin', '2019-06-10 17:27:00', '2019-04-24 17:12:11', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('58a96f945912d33b64ebf5dee98156dc', '402860816bff91c0016bffa220a9000b', 'mobile', '手机号', 'mobile', 0, 1, 'string', 20, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 19, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('58eea85add4788b83c893092434bc413', 'fb19fb067cd841f9ae93d4eb3b883dc0', 'update_time', '更新日期', NULL, 0, 1, 'date', 20, 0, '', '', '', '', 'text', '', 120, '', '0', '', '', 0, 1, 1, 0, 'single', '', '', 4, NULL, NULL, '2019-03-23 11:39:48', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('5908a7541cd578612f0364ad3c0f3868', '01e96ffb10ff42e38116d2c62abeb6ad', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('593b87962da3b4ceee8cd859d7e90131', 'b2422743205045d89fef733e7c698244', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 1, 'single', '', '', 1, 'admin', '2021-02-03 22:02:33', '2021-02-02 22:07:42', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('59ae1e853668c676e85329aa029c68a6', '402860816bff91c0016bff91c0cb0000', 'status', '状态（1：申请中 2：通过）', 'status', 0, 1, 'string', 2, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 11, 'admin', '2019-07-19 18:09:01', '2019-07-17 18:54:32', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('59f65ff211bbdb52a4e58f09f65d970b', '6ced598172694ac7983b180393f85289', 'duty', '违约责任', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 14, NULL, NULL, '2021-02-07 10:51:53', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
@@ -4122,6 +4288,7 @@ INSERT INTO `onl_cgform_field` VALUES ('5b17ba693745c258f6b66380ac851e5f', 'd351
 INSERT INTO `onl_cgform_field` VALUES ('5c3f63d7b0194b6c3f5477bef0851e9f', 'cd15eddcc6fd4b18847094cf189611b1', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 1, 'single', '', '', 1, NULL, NULL, '2021-02-05 10:28:19', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('5c76f5ecc774d7339eb0c2199c0052bc', '402860816bff91c0016bff91c0cb0000', 'biz_no', '编号', 'biz_no', 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 2, 'admin', '2019-07-19 18:09:01', '2019-07-17 18:54:32', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('5c8c8d573e01e4f40b5a7c451515e1d2', '32feeb502544416c9bf41329c10a88f4', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2019-08-23 20:03:40', '2019-07-02 18:23:23', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('5cb12fab522678195832a46cf9ae72d1', '9252037f8fe14d13a6d66c6500f139e2', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('5dfbea516ee2390d712eace5405c5219', '402860816bff91c0016bff91ca7e0002', 'create_by', '创建人', 'create_by', 0, 1, 'string', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 9, 'admin', '2019-07-19 18:07:13', '2019-07-17 18:54:33', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('5e4484b7348dc3e59a0c58bdc3828cc0', '27fc5f91274344afa7673a732b279939', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, 'admin', '2019-07-01 16:28:20', '2019-07-01 16:26:42', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('5e4ac29ac2007ceabf93368330290a42', '402860816bff91c0016bff91d8830007', 'order_no', '序号', 'order_no', 0, 1, 'int', 10, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 9, 'admin', '2019-07-19 18:04:41', '2019-07-17 18:54:37', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -4131,13 +4298,16 @@ INSERT INTO `onl_cgform_field` VALUES ('5e991844962b2f3c42237445fdf2cd19', '4028
 INSERT INTO `onl_cgform_field` VALUES ('5f13f7087caa0bbf47e5eba01d0d0443', '05a3a30dada7411c9109306aa4117068', 'contents', '请假原因', NULL, 0, 1, 'string', 500, 0, '', '', '', '', 'markdown', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 11, 'admin', '2020-05-12 22:39:41', '2020-05-06 11:34:31', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('5f5ac4d37fd1a3a09e2b19f0d4d99c0f', '4adec929a6594108bef5b35ee9966e9f', 'code', '编码', NULL, 0, 1, 'String', 200, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '${order_num_rule_param}', 0, 1, 1, 0, 'single', '', '', 2, 'admin', '2020-04-10 19:43:38', '2020-04-10 19:35:58', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('5f718d8968d908cd2e4de6ee4c74d644', '402880eb71d61d3d0171d61d3de30000', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 7, 'admin', '2020-05-03 00:54:16', '2020-05-02 23:59:33', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('606538bc4d31f63e3e879f43b8dd61fb', '9252037f8fe14d13a6d66c6500f139e2', 'legal', '法人', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 20, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('60b3b452232904f5a1130348bc1eab53', '402881e6760269a20176026d25650002', 'sys_org_code', '所属部门编码', 'sys_org_code', 0, 1, 'string', 64, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'single', NULL, NULL, 16, NULL, NULL, '2020-11-26 10:41:17', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('6130dbb6d36bab8ee9154e7ab58af34c', '402880e570a5d7000170a5d700f50000', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', NULL, NULL, 1, NULL, NULL, '2020-03-04 21:58:16', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('617349b18dab429009ccd304fd7d459c', '4028839a6de2ebd3016de2ebd3870000', 'update_by', '更新人', 'update_by', 0, 1, 'string', 50, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'group', NULL, NULL, 4, NULL, NULL, '2019-10-19 15:29:30', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('61c7a0058c264dd746eb35e6f50fc15b', '402860816aa5921f016aa5dedcb90009', 'update_time', '更新日期', 'update_time', 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'group', '', '', 5, 'admin', '2019-05-11 15:56:47', '2019-05-11 15:50:08', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('6232ade7e2a0c1e97e2c0945b32e61b6', '402860816bff91c0016bffa220a9000b', 'paying_social_insurance', '是否上社保', 'paying_social_insurance', 0, 1, 'string', 20, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 32, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('631838cdebeb1dba8e2929ae55f11fe5', '9252037f8fe14d13a6d66c6500f139e2', 'service_range', '服务范围', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 1, 1, 1, 0, 'single', '', '', 14, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'list_multi', '1', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('6352d477b6b2751780c5852e92d0daa6', '402880eb71d61d3d0171d61d3de30000', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, 'admin', '2020-05-03 00:54:16', '2020-05-02 23:59:33', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('635e09afc01aad757faacf1321465c23', 'b81de38db24047b497d476516f8a0865', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, NULL, NULL, '2020-02-24 14:56:08', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('639cbf376fadc5b24709f2a4d05417fa', '01e96ffb10ff42e38116d2c62abeb6ad', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('6490a98dccb6df218feaeb4ce11bc03b', '402860816aa5921f016aa5921f480000', 'update_time', '修改时间', 'update_time', 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'group', '', '', 10, 'admin', '2019-05-11 15:31:54', '2019-05-11 14:26:19', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('654362725195829005036b3db47ec826', '402860816bff91c0016bffa220a9000b', 'post', '职务', 'post', 0, 1, 'string', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 4, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('6603058186832c4ff9e8c6e43baa5c3d', '86bf17839a904636b7ed96201b2fa6ea', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, 'admin', '2020-05-14 21:18:49', '2020-05-08 23:48:31', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
@@ -4145,6 +4315,7 @@ INSERT INTO `onl_cgform_field` VALUES ('66a7ef842bc34e105a90186e48167ef2', 'dbf4
 INSERT INTO `onl_cgform_field` VALUES ('671e62c685bc86bde3cef0e023418fb4', '05a3a30dada7411c9109306aa4117068', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, 'admin', '2020-05-12 22:39:41', '2020-05-06 11:34:31', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('675a3c47cc5b0120cc1ece984d3b196e', '5c531ffd4fb14c12bc1bf437b1d17d73', 'bank_name', '开户行名称', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 18, NULL, NULL, '2021-02-07 15:42:03', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('681954b20d410be60b4a8f673bf70a68', 'b2422743205045d89fef733e7c698244', 'remark', '备注', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 15, 'admin', '2021-02-03 22:02:33', '2021-02-02 22:07:42', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('6859a69087e441dc2e4c38eaa965bf86', '9252037f8fe14d13a6d66c6500f139e2', 'credit_code', '信用代码', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 22, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('686dea2621feadcd9b4c611df046adb4', '86bf17839a904636b7ed96201b2fa6ea', 'price', '价格', NULL, 0, 1, 'double', 10, 3, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 8, 'admin', '2020-05-14 21:18:49', '2020-05-08 23:48:31', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('68769fa7e4696e3a28f4cecf63076b7b', '402860816bff91c0016bff91ca7e0002', 'order_no', '序号', 'order_no', 0, 1, 'int', 10, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 8, 'admin', '2019-07-19 18:07:13', '2019-07-17 18:54:33', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('68861523516849eff46a0df045f1031b', '402881e6760269a201760269a2af0000', 'birthday', '时间', NULL, 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 13, NULL, NULL, '2020-11-26 10:37:26', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
@@ -4217,6 +4388,7 @@ INSERT INTO `onl_cgform_field` VALUES ('7bce10d3f0d826fcde342daf6e945e6d', '6ced
 INSERT INTO `onl_cgform_field` VALUES ('7beb639aa9ffda07edb5ce1e49c2287f', '402860816bff91c0016bff91d2810005', 'update_time', '更新时间', 'update_time', 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 13, 'admin', '2019-07-19 18:05:55', '2019-07-17 18:54:35', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('7bf091da401b74d55b107fe9f930ea54', '4028839a6de2ebd3016de2ebd3870000', 'create_by', '创建人', 'create_by', 0, 1, 'string', 50, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'group', NULL, NULL, 2, NULL, NULL, '2019-10-19 15:29:30', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('7c6aecc377816c69147f1193b17dfcc5', 'e9faf717024b4aae95cff224ae9b6d97', 'sex', '员工性别', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 8, 'admin', '2019-07-03 18:23:49', '2019-07-03 18:22:35', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('7c8e2d8c67b4ca02de6aa6d8a40de362', '9252037f8fe14d13a6d66c6500f139e2', 'link', '单位电话', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 26, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('7cadf4e0be0b173bb5b8d39613e25190', '402860816bff91c0016bffa220a9000b', 'residence_postcode', '户籍邮编', 'residence_postcode', 0, 1, 'string', 10, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 29, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('7cc13710a3ff2046364204b7e5158467', '402881e6760269a20176026a22e70001', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', NULL, NULL, 6, NULL, NULL, '2020-11-26 10:37:59', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('7cce797000cec08416fb027d1a4013cb', '402881e6760269a20176026d25650002', 'sex', '性别 {男:1,女:2}', 'sex', 0, 1, 'string', 2, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'single', NULL, NULL, 7, NULL, NULL, '2020-11-26 10:41:17', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -4224,10 +4396,12 @@ INSERT INTO `onl_cgform_field` VALUES ('7cdbe0d563e15f3fb1fb32d996fe4ba7', '3d44
 INSERT INTO `onl_cgform_field` VALUES ('7d107728408c21ece332406a21f2d692', '402860816bff91c0016bff91cfea0004', 'update_by', '更新人', 'update_by', 0, 1, 'string', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 11, 'admin', '2019-07-19 18:05:13', '2019-07-17 18:54:35', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('7d15cb3c641541fa5b253873b51ca586', 'b2422743205045d89fef733e7c698244', 'member_use', '签署方数', NULL, 0, 1, 'int', 2, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 16, NULL, NULL, '2021-02-03 22:02:33', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('7dae411fe429a601884777d7f50273ba', 'cd15eddcc6fd4b18847094cf189611b1', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, NULL, NULL, '2021-02-05 10:28:19', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('7e04e7893793742b278348b3a7128f9c', '01e96ffb10ff42e38116d2c62abeb6ad', 'settle_way', '结算方式', NULL, 0, 1, 'int', 2, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 13, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('7e066f60680158d47b328ef519d80e49', 'beee191324fd40c1afec4fda18bd9d47', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2019-04-13 13:41:13', '2019-04-13 13:40:56', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('7e2e9735205836598cf06fefa5d8c852', 'b2422743205045d89fef733e7c698244', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 2, 'admin', '2021-02-03 22:02:33', '2021-02-02 22:07:42', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('7e331396f6e544ae801690cf475e7615', '402881e6760269a201760269a2af0000', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', NULL, NULL, 3, NULL, NULL, '2020-11-26 10:37:26', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('7f10901c6ade3aa9d9ff46ed7039c70f', '1acb6f81a1d9439da6cc4e868617b565', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2019-06-10 14:47:14', '2019-04-23 22:58:19', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('7f641a204267bfea2cb858f6a25bdeea', '9252037f8fe14d13a6d66c6500f139e2', 'fax', '传真', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 28, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('7ff9dbe4ac71bb64d057a3a2063fca2c', '402881e6760269a20176026a22e70001', 'radio', 'radio', NULL, 0, 1, 'string', 32, 0, '', 'sex', '', '', 'radio', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 9, NULL, NULL, '2020-11-26 10:37:59', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('809a9fafe0b79c9997de32cb6e831c6f', '05a3a30dada7411c9109306aa4117068', 'birthday', '生日', NULL, 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 10, 'admin', '2020-05-12 22:39:41', '2020-05-06 11:34:31', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('8119d3de514092232935b038531828c5', '05a3a30dada7411c9109306aa4117068', 'sex', '性别', NULL, 0, 1, 'string', 32, 0, '', 'sex', '', '', 'list', '', 120, NULL, '0', '', '', 1, 1, 1, 0, 'single', '', '', 9, 'admin', '2020-05-12 22:39:41', '2020-05-06 11:34:31', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
@@ -4237,6 +4411,7 @@ INSERT INTO `onl_cgform_field` VALUES ('81ed9556c9fda1bbb46d94a53a6c90c7', '4028
 INSERT INTO `onl_cgform_field` VALUES ('82782789f6f1446ce376dcc8381c8c04', '6e2805da82ab44628b63a1bceab2e348', 'params_val', '参数值', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 9, NULL, NULL, '2021-01-21 16:07:23', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('828997a75c94e95da0534b2c5bb1b912', '6ced598172694ac7983b180393f85289', 'pay_dept', '付款单位', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 10, NULL, NULL, '2021-02-07 10:51:53', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('829381970a8b49b8f48541ee35fa47c1', 'de873e9cf0294c0fa3204baed9e54a11', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 1, 'single', '', '', 1, NULL, NULL, '2021-01-26 10:05:05', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('82dc2566326632942bbf7b27ae4fd068', '01e96ffb10ff42e38116d2c62abeb6ad', 'type', '类型', NULL, 0, 1, 'int', 2, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 12, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('840343a59a8e705821d393506c2bc1fe', '402880e570a5d7000170a5d700f50000', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', NULL, NULL, 3, NULL, NULL, '2020-03-04 21:58:16', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('8419278effeb3a6531247fbfdb3b10e3', '402881e6760269a201760269a2af0000', 'user_sel', '选择用户', NULL, 0, 1, 'string', 200, 0, '', '', '', '', 'sel_user', '', 120, NULL, '0', '', '#{sysUserCode}', 0, 1, 1, 0, 'single', NULL, NULL, 18, NULL, NULL, '2020-11-26 10:37:26', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('8422485e1cbf4455f9ded7d0af59379c', '402860816bff91c0016bff91cfea0004', 'to_time', '截止时间', 'to_time', 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 4, 'admin', '2019-07-19 18:05:13', '2019-07-17 18:54:35', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -4249,6 +4424,7 @@ INSERT INTO `onl_cgform_field` VALUES ('8652ca69a947fd4c961a3ac7c0fa252a', 'fb19
 INSERT INTO `onl_cgform_field` VALUES ('86bbafef5683674a736cf7241c458d44', '27fc5f91274344afa7673a732b279939', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 2, 'admin', '2019-07-01 16:28:20', '2019-07-01 16:26:42', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('86e0f3a8f31c60698157f139ed993954', '402860816bff91c0016bffa220a9000b', 'having_reserve_funds', '是否有公积金', 'having_reserve_funds', 0, 1, 'string', 20, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 33, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('86f29e9919766e0d1128263608c016a0', '997ee931515a4620bc30a9c1246429a9', 'type_name', '商品分类', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 7, 'admin', '2020-05-03 00:57:44', '2020-05-03 00:56:56', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('8729648c7c0a648894b633488da31ca0', '9252037f8fe14d13a6d66c6500f139e2', 'context', '简介', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 19, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('873e2bb041b17bff77d3aca72900ea1b', '56870166aba54ebfacb20ba6c770bd73', 'order_code', '订单编码', NULL, 0, 1, 'String', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 6, 'admin', '2020-11-28 00:02:01', '2019-04-20 11:38:39', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('8756fbb5c23a0258e029e0cb3c0a045c', '402880e5721355dd01721355dd390000', 'price', '价格', NULL, 0, 1, 'double', 10, 3, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 8, NULL, NULL, '2020-05-14 21:18:14', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('877391ae770a4ce2c95181ef410982ce', '4028318169e81b970169e81b97650000', 'request_param', '请求参数', 'request_param', 0, 1, 'string', 255, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'group', NULL, NULL, 10, NULL, NULL, '2019-04-04 19:28:36', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -4260,6 +4436,7 @@ INSERT INTO `onl_cgform_field` VALUES ('87fafe1a4a8a626e3875697574c19f15', '4028
 INSERT INTO `onl_cgform_field` VALUES ('883265736ad6db0c98a7517d1f4a2488', '402880eb71d52dc30171d52dc3a10000', 'main_id', '主表ID', NULL, 0, 1, 'String', 200, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', NULL, NULL, 5, NULL, NULL, '2020-05-02 19:37:59', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('886672f72617c7c6f66b98eb74358201', '5c531ffd4fb14c12bc1bf437b1d17d73', 'legal', '法人', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 14, NULL, NULL, '2021-02-07 15:42:03', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('88a12570e14c9f6f442e731ae5ad0eb1', 'beee191324fd40c1afec4fda18bd9d47', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, 'admin', '2019-04-13 13:41:13', '2019-04-13 13:40:56', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('88caa0c02b3fc365d56bac3247765989', '9252037f8fe14d13a6d66c6500f139e2', 'province', '省', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 29, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('88de72456c03410c364c80095aaa96eb', 'd35109c3632c4952a19ecc094943dd71', 'pop', '弹窗', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 15, 'admin', '2020-11-28 00:03:03', '2020-11-26 18:02:20', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('89370ae67e241fa5d1e47d22adeaca7b', '402880eb71d52dc30171d52dc3a10000', 'date', '日期', NULL, 0, 1, 'string', 200, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '#{date}', 0, 1, 1, 0, 'single', NULL, NULL, 4, NULL, NULL, '2020-05-02 19:37:58', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('8948db31619db3f4ac4e7204cf571164', 'de873e9cf0294c0fa3204baed9e54a11', 'name', '名称', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 8, NULL, NULL, '2021-01-26 10:05:05', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
@@ -4272,8 +4449,10 @@ INSERT INTO `onl_cgform_field` VALUES ('8a6440c447ca97b1ceac40fa8576044e', '3b5e
 INSERT INTO `onl_cgform_field` VALUES ('8a9d6bbbe45fd3539a8cb3ba2cee470a', '402881e6760269a201760269a2af0000', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', NULL, NULL, 5, NULL, NULL, '2020-11-26 10:37:26', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('8ac8a0c0087469a4e7579229ff17f273', 'e5464aa8fa7b47c580e91593cf9b46dc', 'jifen', '合计积分', NULL, 0, 1, 'int', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 10, 'admin', '2019-04-24 17:09:49', '2019-04-24 11:05:10', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('8b5faa1925e5420d1f361cf2614f37a2', 'cd15eddcc6fd4b18847094cf189611b1', 'unit', '单位', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 11, NULL, NULL, '2021-02-05 10:28:19', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('8b6c582e710365637dcd5641b7f9e2df', '9252037f8fe14d13a6d66c6500f139e2', 'capital', '注册资本', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 23, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('8bd4deadc9e96c1a6d7abd77033105f6', 'e67d26b610dd414c884c4dbb24e71ce3', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, 'admin', '2019-04-24 11:03:32', '2019-04-24 11:02:57', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('8c1b6fff73650b8650947c2a29c63492', '402881e6760269a201760269a2af0000', 'sex', '下拉框', NULL, 0, 1, 'string', 32, 0, '', 'sex', '', '', 'list', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 8, NULL, NULL, '2020-11-26 10:37:26', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '1');
+INSERT INTO `onl_cgform_field` VALUES ('8c55ffa49e3516e57b1a6efaf3c85685', '9252037f8fe14d13a6d66c6500f139e2', 'contact_person', '联系人', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 32, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('8c6518fec11fc4769ba4eb770c9e00f7', '4028839a6de2ebd3016de2ebd3870000', 'integral_val', '积分值', 'integral_val', 0, 1, 'int', 10, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'group', NULL, NULL, 11, NULL, NULL, '2019-10-19 15:29:30', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('8c960ed82ba23e19580307c0e9434de0', '18f064d1ef424c93ba7a16148851664f', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, 'admin', '2020-09-11 14:35:44', '2020-05-12 20:26:01', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('8ca56210938fbe649f840e505eb9fd41', '56870166aba54ebfacb20ba6c770bd73', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 2, 'admin', '2020-11-28 00:02:01', '2019-04-20 11:38:39', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
@@ -4287,9 +4466,11 @@ INSERT INTO `onl_cgform_field` VALUES ('8f3e6fb68179c690f748f3c541fb50f1', '7ea6
 INSERT INTO `onl_cgform_field` VALUES ('8fc0be84bed1216635c69af918e097ff', '402860816aa5921f016aa5dedcb90009', 'name', '并行会签标题', 'name', 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 6, 'admin', '2019-05-11 15:56:47', '2019-05-11 15:50:08', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('8fd6c360b8e24012e307f13a0625d538', '524f578962a5485aa128c2f247ef80e8', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, 'admin', '2021-02-02 20:44:33', '2021-02-01 15:13:43', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('903c33f7d18175a269b783cd4288216f', '402881e6760269a20176026d25650002', 'update_time', '修改时间', 'update_time', 0, 1, 'Date', 0, 0, NULL, NULL, NULL, NULL, 'date', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'single', NULL, NULL, 15, NULL, NULL, '2020-11-26 10:41:17', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('903fa08f2f185c4c9901917d8ef4e8e9', '9252037f8fe14d13a6d66c6500f139e2', 'name_en', '英文名称', NULL, 0, 1, 'string', 255, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 8, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('909b3de0c8a48a21ef8cf98eb4831689', '56efb74326e74064b60933f6f8af30ea', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 2, 'admin', '2020-07-10 16:53:27', '2020-05-08 23:45:32', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('90a822b8a63bbbc1e9575c9f4e21e021', 'd35109c3632c4952a19ecc094943dd71', 'descc', '描述', NULL, 0, 1, 'string', 500, 0, '', '', '', '', 'umeditor', '', 120, '', '0', '', '', 0, 1, 1, 0, 'single', '', '', 9, 'admin', '2020-11-28 00:03:03', '2019-03-15 14:24:35', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('90f39a6e29dae2e1fbb59d7d605f7c09', '1acb6f81a1d9439da6cc4e868617b565', 'iz_valid', '启用状态', NULL, 0, 1, 'String', 2, 0, '', 'air_china_valid', '', '', 'list', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 11, 'admin', '2019-06-10 14:47:14', '2019-04-23 22:58:19', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('9125d37b6b1c748b98e5d550b54c0e03', '9252037f8fe14d13a6d66c6500f139e2', 'level', '级别', NULL, 0, 1, 'string', 2, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 1, 1, 1, 0, 'single', '', '', 10, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'list', '1', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('916dd939d7de876f2a8a89a538585023', 'b2422743205045d89fef733e7c698244', 'first_member', '我方', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 10, 'admin', '2021-02-03 22:02:33', '2021-02-02 22:07:42', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('918b8d661e480624713ddcff1bdda4f4', '402881e6760269a20176026d25650002', 'birthday', '生日', 'birthday', 0, 1, 'Date', 0, 0, NULL, NULL, NULL, NULL, 'date', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'single', NULL, NULL, 9, NULL, NULL, '2020-11-26 10:41:17', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('91be98b96dea1528abc943f9f131fd16', '402880e570a5d7000170a5d700f50000', 'price', '价格', NULL, 0, 1, 'double', 32, 0, '', '', '', '', 'text', '', 120, 'n', '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 7, NULL, NULL, '2020-03-04 21:58:16', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -4302,10 +4483,12 @@ INSERT INTO `onl_cgform_field` VALUES ('93b1fd02e14a4ed9a5412ac86efc180c', '2b76
 INSERT INTO `onl_cgform_field` VALUES ('947174892512ea97fafde899d427ea7e', '402860816bff91c0016bff91c0cb0000', 'real_name', '姓名', 'real_name', 0, 1, 'string', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 4, 'admin', '2019-07-19 18:09:01', '2019-07-17 18:54:32', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('94b8bf435175cc545366e11992280757', '32f75e4043ef4070919dbd4337186a3d', 'age', '年龄', NULL, 0, 1, 'int', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 1, 1, 1, 0, 'group', '', '', 7, 'admin', '2019-04-11 10:15:32', '2019-03-27 15:54:49', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('94e682cb802777fe4205536888f69353', '402860816bff91c0016bff91d2810005', 'create_by', '创建人', 'create_by', 0, 1, 'string', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 10, 'admin', '2019-07-19 18:05:55', '2019-07-17 18:54:35', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('950a97eb937942f34562d5d91e49ec55', '9252037f8fe14d13a6d66c6500f139e2', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 2, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('951c51699d728072d88196d30f7aad10', '4adec929a6594108bef5b35ee9966e9f', 'address', '地址', NULL, 0, 1, 'String', 200, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '{{ demoFieldDefVal_getAddress() }}', 0, 1, 1, 0, 'single', '', '', 5, 'admin', '2020-04-10 19:43:38', '2020-04-10 19:35:58', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('957386b500be42a200d6a56d54345392', 'deea5a8ec619460c9245ba85dbc59e80', 'num', '数量', NULL, 0, 1, 'int', 32, 0, '', '', '', '', 'text', '', 120, 'n', '0', '', '', 0, 1, 1, 0, 'single', '', '', 8, 'admin', '2020-05-03 01:01:18', '2019-04-20 11:41:19', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('95fbb1d279402b9d1c0e17665340febb', '402881e6760269a20176026a22e70001', 'pic', '图片', NULL, 0, 1, 'string', 1000, 0, '', '', '', '', 'image', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 14, NULL, NULL, '2020-11-26 10:37:59', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('960d2847922b61dadeb3518ef55fb0c1', '1acb6f81a1d9439da6cc4e868617b565', 'wl_name', '物料名称', NULL, 0, 1, 'String', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 7, 'admin', '2019-06-10 14:47:14', '2019-04-23 22:58:19', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('962e27a251fae13ac83a1abcf2bf9b9d', '9252037f8fe14d13a6d66c6500f139e2', 'register_time', '注册时间', NULL, 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 24, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('9665f02764774fdd77c19923d3ff3c3e', '4028318169e81b970169e81b97650000', 'cost_time', '耗时', 'cost_time', 0, 1, 'string', 19, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'group', NULL, NULL, 12, NULL, NULL, '2019-04-04 19:28:36', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('966a4988298d5cb0be47848735ce8cb7', '4028839a6de2ebd3016de2ebd3870000', 'xg_shangxian', '选购上限', 'xg_shangxian', 0, 1, 'int', 10, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'group', NULL, NULL, 12, NULL, NULL, '2019-10-19 15:29:30', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('9698964a9e06edf12fc88df976080984', '09fd28e4b7184c1a9668496a5c496450', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, 'admin', '2020-05-14 21:19:21', '2020-05-08 23:51:49', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
@@ -4315,6 +4498,7 @@ INSERT INTO `onl_cgform_field` VALUES ('989f75b32c60faa69ec062b655785493', '6ced
 INSERT INTO `onl_cgform_field` VALUES ('98e82cb1595609a3b42fa75c60ac1229', '402860816bff91c0016bff91d2810005', 'update_by', '更新人', 'update_by', 0, 1, 'string', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 12, 'admin', '2019-07-19 18:05:55', '2019-07-17 18:54:35', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('9914a0c84805e72c4b6075e36edb13f9', '402860816aa5921f016aa5921f480000', 'create_time', '创建时间', 'create_time', 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'group', '', '', 9, 'admin', '2019-05-11 15:31:54', '2019-05-11 14:26:19', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('9920ecec9c9109fc6b93e86f8fdfa03b', '402860816bff91c0016bffa220a9000b', 'depart_name', '所在部门', 'depart_name', 0, 1, 'string', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 1, 1, 1, 0, 'group', '', '', 2, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('999753578783385eed5d93b5c03f6852', '9252037f8fe14d13a6d66c6500f139e2', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('99b43bbb23237815ebb74b12b4d7ea2f', '62e29cdb81ac44d1a2d8ff89851b853d', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 1, NULL, NULL, '2019-05-11 14:01:14', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('99d9108e8dc2bdd70e28c0ce43d8d3a6', 'b2422743205045d89fef733e7c698244', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2021-02-03 22:02:33', '2021-02-02 22:07:42', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('9a462d83210cad30f0e12b98e8a172a7', '3b5e18da618247539481816995b6bf9f', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, 'admin', '2020-07-11 11:27:29', '2020-07-11 11:27:17', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
@@ -4340,6 +4524,7 @@ INSERT INTO `onl_cgform_field` VALUES ('a01a7fe5660206e6f407ed98b6c732d6', '4028
 INSERT INTO `onl_cgform_field` VALUES ('a06ce8900bae54e6837356372eb5f9fd', 'a59d217041714e3aa7edb46b23e5054f', 'purchase_id', '采购订单号', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 19, 'admin', '2021-02-04 10:07:43', '2021-02-03 21:27:48', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('a14c04ec432a5ecd6b77939ebef298ee', '6e2805da82ab44628b63a1bceab2e348', 'pid', '业务id', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 7, 'admin', '2021-01-21 16:07:23', '2021-01-21 15:55:58', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('a1a2d49b35c185df9f9e149b290aa277', '56efb74326e74064b60933f6f8af30ea', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, 'admin', '2020-07-10 16:53:27', '2020-05-08 23:45:32', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('a1b6d4bfa8abb5a1273d350b6eff62c2', '9252037f8fe14d13a6d66c6500f139e2', 'code', '编码', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 1, 1, 1, 0, 'single', '', '', 9, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '1', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('a1f5daba36f536e7acf6a939826183b0', 'fb19fb067cd841f9ae93d4eb3b883dc0', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, '', '0', '', '', 0, 1, 1, 0, 'single', '', '', 0, NULL, NULL, '2019-03-23 11:39:48', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('a219ddd1417d2d6c9e516a00a383a3b9', '5c531ffd4fb14c12bc1bf437b1d17d73', 'address', '注册地址', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 11, NULL, NULL, '2021-02-07 15:42:03', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('a232d608434d15fcecd8a3f31a9044b2', '86bf17839a904636b7ed96201b2fa6ea', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2020-05-14 21:18:49', '2020-05-08 23:48:31', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
@@ -4432,10 +4617,12 @@ INSERT INTO `onl_cgform_field` VALUES ('bed95ca6dd6bb4b4f7cfd787313a0a4b', '4028
 INSERT INTO `onl_cgform_field` VALUES ('bef85fd2846dd7ffc42d747095557d14', '4fb8e12a697f4d5bbe9b9fb1e9009486', 'date', '日期', NULL, 0, 1, 'string', 200, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '#{date}', 0, 1, 1, 0, 'single', '', '', 4, 'admin', '2020-11-26 17:28:14', '2020-04-10 19:47:01', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('bf61aa04c5ca77ad54c764f8f8b2bdec', '402860816bff91c0016bff91d8830007', 'update_by', '更新人', 'update_by', 0, 1, 'string', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 12, 'admin', '2019-07-19 18:04:41', '2019-07-17 18:54:37', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('bfc2f19fae367f885adb8bd82a344391', '4028318169e81b970169e81b97650000', 'userid', '操作用户账号', 'userid', 0, 1, 'string', 32, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'group', NULL, NULL, 5, NULL, NULL, '2019-04-04 19:28:36', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('c02116f825ec336d6b050da3755f8653', '9252037f8fe14d13a6d66c6500f139e2', 'black', '黑名单', NULL, 0, 1, 'int', 2, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 13, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('c03639885c30c3b324605f8491cea28b', 'a59d217041714e3aa7edb46b23e5054f', 'amount', '合同金额', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 20, 'admin', '2021-02-04 10:07:43', '2021-02-03 22:08:09', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('c047ed2cead5bab0307967435f370936', '53a3e82b54b946c2b904f605875a275c', 'chuc_date', '出厂时间', NULL, 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 9, 'admin', '2020-05-08 23:42:51', '2020-05-07 22:49:47', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('c0c80f370e1d400fe670d8702c3b84da', '4adec929a6594108bef5b35ee9966e9f', 'address_param', '地址（传参）', NULL, 0, 1, 'String', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '{{ demoFieldDefVal_getAddress(\"昌平区\") }}', 0, 1, 1, 0, 'single', '', '', 6, 'admin', '2020-04-10 19:43:38', '2020-04-10 19:40:53', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('c0d66c95773774e7ac1f2a88df307e7a', '402860816aa5921f016aa5921f480000', 'reason', '请假原因', 'reason', 0, 1, 'string', 500, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 6, 'admin', '2019-05-11 15:31:54', '2019-05-11 14:26:19', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('c222ebc5d7682c4159dc32a8eec5558b', '01e96ffb10ff42e38116d2c62abeb6ad', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 1, 'single', '', '', 1, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('c29216d975fee50af175bca8c664a475', 'e67d26b610dd414c884c4dbb24e71ce3', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 1, 'admin', '2019-04-24 11:03:32', '2019-04-24 11:02:56', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('c2b9eae184afe56d59ea7940d77cfced', '4adec929a6594108bef5b35ee9966e9f', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 1, 'single', '', '', 1, 'admin', '2020-04-10 19:43:38', '2020-04-10 19:35:57', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('c2dbb6846ab0945a430d095a29e0f53d', '18f064d1ef424c93ba7a16148851664f', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, 'admin', '2020-09-11 14:35:44', '2020-05-12 20:26:01', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
@@ -4457,6 +4644,7 @@ INSERT INTO `onl_cgform_field` VALUES ('c6730e00df5efd77fedf181df29102de', '4028
 INSERT INTO `onl_cgform_field` VALUES ('c75a7cb0a21958aa7ca5442f66019669', 'e9faf717024b4aae95cff224ae9b6d97', 'depart', '所属部门', NULL, 0, 1, 'String', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 9, 'admin', '2019-07-03 18:23:49', '2019-07-03 18:22:35', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('c772ed9cbe2d1dc69e9ffa73d3487021', '4b556f0168f64976a3d20bfb932bc798', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 1, NULL, NULL, '2019-04-12 23:38:28', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('c8027cf4f2483042445c89ba86c4e51f', '402880e5721355dd01721355dd390000', 'zong_price', '单品总价', NULL, 0, 1, 'double', 10, 3, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 10, NULL, NULL, '2020-05-14 21:18:14', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('c883adaa56f7d85871190d304557f3b4', '9252037f8fe14d13a6d66c6500f139e2', 'type', '类型', NULL, 0, 1, 'int', 2, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 1, 1, 1, 0, 'single', '', '', 11, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'list_multi', '1', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('c8cd15f3e0f4edd7eaad006b33a340e6', 'a59d217041714e3aa7edb46b23e5054f', 'protocol', '相关框架协议', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 18, 'admin', '2021-02-04 10:07:43', '2021-02-03 21:27:48', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('c91b697b1bcd2be943fc746e2660bc9e', '402860816bff91c0016bff91d2810005', 'real_name', '姓名', 'real_name', 0, 1, 'string', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 3, 'admin', '2019-07-19 18:05:55', '2019-07-17 18:54:35', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('c96ce63b05c045e657f56b6352f44868', '5c531ffd4fb14c12bc1bf437b1d17d73', 'contract_id', '合同id', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 7, NULL, NULL, '2021-02-07 15:42:03', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
@@ -4485,6 +4673,7 @@ INSERT INTO `onl_cgform_field` VALUES ('cfeb6491427aec2b4db9694af867da23', 'e9fa
 INSERT INTO `onl_cgform_field` VALUES ('d0559db07f05c870860f98313eb0f857', 'cb2d8534a2f544bc9c618dd49da66336', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2020-02-24 17:22:42', '2020-02-24 15:15:14', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('d0d1be336726df9c41f2173f8886ba35', '997ee931515a4620bc30a9c1246429a9', 'has_child', '是否有子节点', NULL, 0, 1, 'string', 3, 0, '', 'yn', '', '', 'list', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 10, 'admin', '2020-05-03 00:57:44', '2020-05-03 00:56:56', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('d14e47befe47925b1440d584f4ca56fc', '09fd28e4b7184c1a9668496a5c496450', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2020-05-14 21:19:21', '2020-05-08 23:51:49', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('d212fa0421f5171f50750207b1748037', '01e96ffb10ff42e38116d2c62abeb6ad', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 2, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('d2551b70dc96a45a73b304bf755a996f', '402860816bff91c0016bff91d8830007', 'workplace', '工作单位', 'workplace', 0, 1, 'string', 255, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 6, 'admin', '2019-07-19 18:04:41', '2019-07-17 18:54:37', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('d29dcdba14ea61808391fff2d927efea', '402860816bff91c0016bff91c0cb0000', 'work_summary', '工作总结', 'work_summary', 0, 1, 'Text', 65535, 0, '', '', '', '', 'textarea', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 10, 'admin', '2019-07-19 18:09:01', '2019-07-17 18:54:32', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('d3a701472d27ca8435d6a781a597038d', 'deea5a8ec619460c9245ba85dbc59e80', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2020-05-03 01:01:18', '2019-04-20 11:41:19', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
@@ -4532,6 +4721,7 @@ INSERT INTO `onl_cgform_field` VALUES ('e07c6a383fd42c9aa56e5007e58305c8', '524f
 INSERT INTO `onl_cgform_field` VALUES ('e08af664ffdbc37cfafb779f0692f86e', '402881e6760269a20176026a22e70001', 'name', '用户名', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '#{sysUserCode}', 0, 1, 1, 0, 'single', NULL, NULL, 7, NULL, NULL, '2020-11-26 10:37:59', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '1');
 INSERT INTO `onl_cgform_field` VALUES ('e09b191e3c37f9c89ae2192c75220b89', 'b81de38db24047b497d476516f8a0865', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, NULL, NULL, '2020-02-24 14:56:08', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('e0c5d6e483897d5c4e7894dc66dd1aff', '32feeb502544416c9bf41329c10a88f4', 'bpm_status', '流程状态', NULL, 0, 1, 'String', 2, 0, '', 'bpm_status', '', '', 'list', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 9, 'admin', '2019-08-23 20:03:40', '2019-07-02 18:23:58', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('e201a941e72b8bd8a349f619e0b2ae5b', '9252037f8fe14d13a6d66c6500f139e2', 'business', '行业', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 1, 1, 1, 0, 'single', '', '', 15, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'list_multi', '1', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('e24de426223dc0271a55eccc1d5457d0', '73162c3b8161413e8ecdca7eb288d0c9', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 2, 'admin', '2019-07-01 14:23:32', '2019-06-10 15:18:34', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('e2d73ccda7f10f5a1ccce3c48b1e699e', '402860816bff91c0016bffa220a9000b', 'residence_street', '户口所在街道', 'residence_street', 0, 1, 'string', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 27, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('e328175af309bbd1f6e843f10e99c208', 'a59d217041714e3aa7edb46b23e5054f', 'relate_project', '项目相关合同', NULL, 0, 1, 'int', 2, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 7, 'admin', '2021-02-04 10:07:43', '2021-02-03 21:27:48', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
@@ -4541,6 +4731,7 @@ INSERT INTO `onl_cgform_field` VALUES ('e4914fdff68ac72486ada105e6e9fa36', 'e9fa
 INSERT INTO `onl_cgform_field` VALUES ('e4a4c1d50b7b46678bc14fd5b90ee082', '73162c3b8161413e8ecdca7eb288d0c9', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2019-07-01 14:23:32', '2019-06-10 15:18:34', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('e4ab504c69e3dc5e0b628a885d33bf5d', '5c531ffd4fb14c12bc1bf437b1d17d73', 'amount', '合同金额', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 19, NULL, NULL, '2021-02-07 15:42:03', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('e4d7f95340e73a54e8ff3f66b0613513', '56efb74326e74064b60933f6f8af30ea', 'create_time', '创建日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2020-07-10 16:53:27', '2020-05-08 23:45:32', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('e4dd6935641fee17a109f15904a17250', '01e96ffb10ff42e38116d2c62abeb6ad', 'company_id', '企业id', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', 'company', 'id', 7, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('e50b4398731e06572c247993a0dcc38d', 'd35109c3632c4952a19ecc094943dd71', 'name', '用户名', NULL, 0, 1, 'string', 200, 0, '', '', '', '', 'text', '', 120, '*', '0', '', '', 1, 1, 1, 0, 'single', '', '', 6, 'admin', '2020-11-28 00:03:03', '2019-03-15 14:24:35', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '1');
 INSERT INTO `onl_cgform_field` VALUES ('e53f53766d1f7718b3ee5eabe105b969', '402860816bff91c0016bffa220a9000b', 'social_insurance_time', '五险一金日期', 'social_insurance_time', 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 38, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('e60a8e496b0f7081dbfe4253b3218546', '402880eb71d61d3d0171d61d3de30000', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 10, 'admin', '2020-05-03 00:54:16', '2020-05-02 23:59:33', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
@@ -4571,10 +4762,14 @@ INSERT INTO `onl_cgform_field` VALUES ('ebc41362681919cc680fcc58bf87fdcb', '1acb
 INSERT INTO `onl_cgform_field` VALUES ('ec20e66d5eb9b8b7f58de9edc0f7630b', '1acb6f81a1d9439da6cc4e868617b565', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 2, 'admin', '2019-06-10 14:47:14', '2019-04-23 22:58:19', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('ec373af09ee6c8f91b19317dc514620b', '5c531ffd4fb14c12bc1bf437b1d17d73', 'pay_amount', '已付金额', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 21, NULL, NULL, '2021-02-07 15:42:03', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('ec5e9cb5809b2f8ce1446df4a27693f0', '27fc5f91274344afa7673a732b279939', 'name', '用户名', NULL, 0, 1, 'String', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 7, 'admin', '2019-07-01 16:28:20', '2019-07-01 16:26:42', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('eca6372108e117acde43d96092e105da', '9252037f8fe14d13a6d66c6500f139e2', 'address', '地址', NULL, 0, 1, 'string', 255, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 18, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('ed16f23d08e7bcda11a1383fda68057e', '402860816bff91c0016bff91c7010001', 'employee_id', '员工ID', 'employee_id', 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', 'oa_employee_info', 'id', 2, 'admin', '2019-07-19 18:07:47', '2019-07-17 18:54:32', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('ed5a225b9d4ffe4e43f0e3eeff140634', '01e96ffb10ff42e38116d2c62abeb6ad', 'bank_code', '银行代码', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 8, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('ed5a87eb99ec8da26d0e7875e0d64078', '9252037f8fe14d13a6d66c6500f139e2', 'register', '经营范围', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 21, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('edaa8951735cedf29d6114354faaae67', '402881e6760269a201760269a2af0000', 'radio', 'radio', NULL, 0, 1, 'string', 32, 0, '', 'sex', '', '', 'radio', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 9, NULL, NULL, '2020-11-26 10:37:26', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('edda30c64e1dccee510d40b77a8ca094', 'fb7125a344a649b990c12949945cb6c1', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, '', '0', '', '', 0, 0, 0, 0, 'single', '', '', 3, 'admin', '2019-03-26 19:24:11', '2019-03-26 19:01:52', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('ee09e0e21fa350b9346b70292dcfca00', '79091e8277c744158530321513119c68', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 1, 'admin', '2019-05-11 15:29:47', '2019-05-11 15:27:17', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('ee1db7cc90fa71ec5bdf062d9bd57ca0', '9252037f8fe14d13a6d66c6500f139e2', 'live_status', '存续状态', NULL, 0, 1, 'int', 2, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 1, 1, 1, 0, 'single', '', '', 25, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', 'list', '1', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('ee4ffe04a25fcf556e78183f1f521546', '402860816aa5921f016aa5921f480000', 'create_by', '创建人id', 'create_by', 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'group', '', '', 8, 'admin', '2019-05-11 15:31:54', '2019-05-11 14:26:19', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('ee5803611f63643059b6375166d71567', '402860816bff91c0016bff91c7010001', 'create_time', '创建时间', 'create_time', 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 8, 'admin', '2019-07-19 18:07:47', '2019-07-17 18:54:32', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('eec5bc01720642ccc635c7fc2e9b1eb8', '86bf17839a904636b7ed96201b2fa6ea', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, 'admin', '2020-05-14 21:18:49', '2020-05-08 23:48:31', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
@@ -4585,9 +4780,11 @@ INSERT INTO `onl_cgform_field` VALUES ('efd1b955a75b5046e9857e00fe94ae2c', 'fbc3
 INSERT INTO `onl_cgform_field` VALUES ('f015cc2ffdcc2c4be1e9b3622eb69b52', 'fbc35f067da94a70adb622ddba259352', 'sys_org_code', '所属部门', NULL, 0, 1, 'string', 64, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 6, NULL, NULL, '2019-07-03 19:44:23', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('f06b2bb01ea1fae487b7e3c3eb521d5b', 'd3ae1c692b9640e0a091f8c46e17bb01', 'create_by', '创建人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 2, NULL, NULL, '2019-07-24 14:47:30', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('f0967fd139b440f79f21248bf4e4a209', 'd3ae1c692b9640e0a091f8c46e17bb01', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, NULL, NULL, '2019-07-24 14:47:30', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('f09bb9bb2ef3034231b09513b098a533', '01e96ffb10ff42e38116d2c62abeb6ad', 'bank_no', '账号', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 11, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('f0a453930aa16ca32f2e3be860bfe542', '402860816bff91c0016bffa220a9000b', 'education', '学历', 'education', 0, 1, 'string', 100, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 14, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('f12753b4a3815697a72017a7436fe733', 'e2faf977fdaf4b25a524f58c2441a51c', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, 'admin', '2019-06-10 17:27:00', '2019-04-24 17:12:11', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('f18bb17ae2b9274e4ce77d66445284ac', '402881e6760269a20176026a22e70001', 'ddd', 'DD类型', NULL, 0, 1, 'double', 10, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 20, NULL, NULL, '2020-11-26 10:37:59', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
+INSERT INTO `onl_cgform_field` VALUES ('f19de1e541b1d48b2f25902a1f8f0d3b', '9252037f8fe14d13a6d66c6500f139e2', 'update_time', '更新日期', NULL, 0, 1, 'Date', 20, 0, '', '', '', '', 'datetime', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 5, 'admin', '2021-02-08 16:13:30', '2021-02-08 10:26:00', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('f1ab7d3b55ade57eeac6c55b32ce813a', '1acb6f81a1d9439da6cc4e868617b565', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, 'admin', '2019-06-10 14:47:14', '2019-04-23 22:58:19', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('f1c7fde21f26c7ed64a0ef1095900c52', '4028318169e81b970169e81b97650000', 'request_type', '请求类型', 'request_type', 0, 1, 'string', 10, 0, NULL, NULL, NULL, NULL, 'text', NULL, 120, NULL, '0', NULL, NULL, 0, 1, 1, 0, 'group', NULL, NULL, 11, NULL, NULL, '2019-04-04 19:28:36', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('f3284a1ce6da9b887dce89091eaa0f6b', '402880e570a5d7000170a5d700f50000', 'pro_type', '产品类型', NULL, 0, 1, 'String', 32, 0, '', 'sex', '', '', 'radio', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', NULL, NULL, 9, NULL, NULL, '2020-03-04 21:58:16', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -4613,6 +4810,7 @@ INSERT INTO `onl_cgform_field` VALUES ('f90bcb38fb89988bd40d1618aa75cea0', '7583
 INSERT INTO `onl_cgform_field` VALUES ('f93dcb2aa091b8e1038019d8f07cbd3f', '402881e6760269a201760269a2af0000', 'id', '主键', NULL, 1, 0, 'string', 36, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 1, 'single', NULL, NULL, 1, NULL, NULL, '2020-11-26 10:37:26', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('f94db83e41c69f407d3c9a81c5892269', '402860816bff91c0016bffa220a9000b', 'first_job_time', '首次工作时间', 'first_job_time', 0, 1, 'Date', 0, 0, '', '', '', '', 'date', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 22, 'admin', '2019-07-22 16:15:32', '2019-07-17 19:12:24', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('f95d2cbefd25444909c83aaf8c4f72fb', '402860816bff91c0016bff91ca7e0002', 'memo', '备注', 'memo', 0, 1, 'string', 255, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 7, 'admin', '2019-07-19 18:07:13', '2019-07-17 18:54:33', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `onl_cgform_field` VALUES ('f9c7a835f464c52f98cc32f57c82269f', '01e96ffb10ff42e38116d2c62abeb6ad', 'update_by', '更新人', NULL, 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 0, 0, 0, 'single', '', '', 4, NULL, NULL, '2021-02-08 10:39:15', 'admin', '', '', '', '', '', NULL, '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('fa0eee886db29c557e793c9fc7ffb765', 'b2422743205045d89fef733e7c698244', 'second_member', '乙方', NULL, 0, 1, 'string', 32, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 11, 'admin', '2021-02-03 22:02:33', '2021-02-02 22:07:42', 'admin', '', '', '', '', '', 'text', '0', NULL, NULL, '0');
 INSERT INTO `onl_cgform_field` VALUES ('fa3a12d7abf72b23afe425f8dbd57f86', '1acb6f81a1d9439da6cc4e868617b565', 'size_type', '尺码类型', NULL, 0, 1, 'String', 2, 0, '', 'air_china_size', '', '', 'list', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'single', '', '', 9, 'admin', '2019-06-10 14:47:14', '2019-04-23 22:58:19', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `onl_cgform_field` VALUES ('fa8f5a0ba673e0208934567462844eab', '402860816bff91c0016bff91ca7e0002', 'sys_org_code', '组织机构编码', 'sys_org_code', 0, 1, 'string', 50, 0, '', '', '', '', 'text', '', 120, NULL, '0', '', '', 0, 1, 1, 0, 'group', '', '', 13, 'admin', '2019-07-19 18:07:13', '2019-07-17 18:54:33', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -4680,11 +4878,12 @@ CREATE TABLE `onl_cgform_head`  (
   INDEX `idx_och_table_name`(`form_template`) USING BTREE,
   INDEX `idx_och_form_template_mobile`(`form_template_mobile`) USING BTREE,
   INDEX `idx_och_table_version`(`table_version`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of onl_cgform_head
 -- ----------------------------
+INSERT INTO `onl_cgform_head` VALUES ('01e96ffb10ff42e38116d2c62abeb6ad', 'company_bank', 1, 1, '企业信息/合作方信息银行信息', 'Y', 'Y', 'Y', 'N', NULL, 'UUID', 'single', NULL, NULL, NULL, NULL, NULL, NULL, 'demo', '1', NULL, 1, NULL, 0, NULL, 'admin', '2021-02-08 10:39:21', 'admin', '2021-02-08 10:39:15', 'normal', 'N', NULL);
 INSERT INTO `onl_cgform_head` VALUES ('05a3a30dada7411c9109306aa4117068', 'test_note', 1, 10, '测试请假单', 'Y', 'Y', 'Y', 'N', NULL, 'UUID', 'single', NULL, NULL, NULL, NULL, NULL, NULL, 'temp', '1', NULL, 1, NULL, 0, NULL, 'admin', '2020-05-12 22:39:41', 'admin', '2020-05-06 11:34:31', 'normal', NULL, NULL);
 INSERT INTO `onl_cgform_head` VALUES ('09fd28e4b7184c1a9668496a5c496450', 'ces_order_customer', 3, 5, '订单客户', 'Y', 'Y', 'Y', 'N', NULL, 'UUID', 'single', 1, 'ces_order_customer', 3, NULL, NULL, NULL, 'temp', '1', NULL, 1, NULL, 0, NULL, 'admin', '2020-05-14 21:19:21', 'admin', '2020-05-08 23:51:49', 'normal', NULL, NULL);
 INSERT INTO `onl_cgform_head` VALUES ('18f064d1ef424c93ba7a16148851664f', 'ces_field_kongj', 1, 14, 'online表单控件', 'Y', 'Y', 'Y', 'N', NULL, 'UUID', 'single', NULL, NULL, NULL, NULL, NULL, NULL, 'temp', '2', NULL, 1, NULL, 0, NULL, 'admin', '2020-09-11 14:35:44', 'admin', '2020-05-12 20:26:01', 'normal', NULL, NULL);
@@ -4706,6 +4905,7 @@ INSERT INTO `onl_cgform_head` VALUES ('6ced598172694ac7983b180393f85289', 'contr
 INSERT INTO `onl_cgform_head` VALUES ('6e2805da82ab44628b63a1bceab2e348', 'act_z_params', 1, 6, '流程参数表', 'Y', 'Y', 'Y', 'N', NULL, 'UUID', 'single', 0, NULL, 1, NULL, NULL, NULL, 'temp', '2', NULL, 1, NULL, 0, NULL, 'admin', '2021-01-21 16:07:28', 'admin', '2021-01-21 15:55:58', 'normal', 'N', NULL);
 INSERT INTO `onl_cgform_head` VALUES ('86bf17839a904636b7ed96201b2fa6ea', 'ces_order_goods', 3, 2, '订单商品', 'Y', 'Y', 'Y', 'N', NULL, 'UUID', 'single', 0, NULL, 2, NULL, NULL, NULL, 'temp', '1', NULL, 1, NULL, 0, NULL, 'admin', '2020-05-14 21:18:49', 'admin', '2020-05-08 23:48:31', 'normal', NULL, NULL);
 INSERT INTO `onl_cgform_head` VALUES ('8d66ea41c7cc4ef9ab3aab9055657fc9', 'ces_shop_type', 1, 1, '商品分类', 'Y', 'Y', 'Y', 'Y', NULL, 'UUID', 'single', NULL, NULL, NULL, 'pid', 'has_child', 'name', 'temp', '1', NULL, 1, NULL, 0, NULL, 'admin', '2020-05-07 22:46:40', 'admin', '2020-05-07 22:46:31', 'normal', NULL, NULL);
+INSERT INTO `onl_cgform_head` VALUES ('9252037f8fe14d13a6d66c6500f139e2', 'company', 1, 4, '企业信息/合作方信息', 'Y', 'Y', 'Y', 'N', NULL, 'UUID', 'single', NULL, NULL, NULL, NULL, NULL, NULL, 'demo', '3', NULL, 1, NULL, 0, NULL, 'admin', '2021-02-08 16:13:35', 'admin', '2021-02-08 10:26:00', 'normal', 'N', NULL);
 INSERT INTO `onl_cgform_head` VALUES ('997ee931515a4620bc30a9c1246429a9', 'test_shoptype_tree', 1, 2, '商品分类', 'Y', 'Y', 'Y', 'Y', NULL, 'UUID', 'single', NULL, NULL, NULL, 'pid', 'has_child', 'type_name', 'temp', '1', NULL, 1, NULL, 0, NULL, 'admin', '2020-05-03 00:57:47', 'admin', '2020-05-03 00:56:56', 'normal', NULL, NULL);
 INSERT INTO `onl_cgform_head` VALUES ('a59d217041714e3aa7edb46b23e5054f', 'contract_general', 1, 4, '一般采购合同', 'Y', 'Y', 'Y', 'N', NULL, 'UUID', 'single', NULL, NULL, NULL, NULL, NULL, NULL, 'demo', '2', NULL, 1, NULL, 0, NULL, 'admin', '2021-02-04 10:07:47', 'admin', '2021-02-03 21:27:48', 'normal', 'N', NULL);
 INSERT INTO `onl_cgform_head` VALUES ('cd15eddcc6fd4b18847094cf189611b1', 'contract_item', 1, 1, '合同明细项', 'Y', 'Y', 'Y', 'N', NULL, 'UUID', 'single', NULL, NULL, NULL, NULL, NULL, NULL, 'demo', '1', NULL, 1, NULL, 0, NULL, 'admin', '2021-02-05 10:28:27', 'admin', '2021-02-05 10:28:19', 'normal', 'N', NULL);
@@ -4732,7 +4932,11 @@ CREATE TABLE `onl_cgform_index`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_table_id`(`cgform_head_id`) USING BTREE,
   INDEX `idx_oci_cgform_head_id`(`cgform_head_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of onl_cgform_index
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for onl_cgreport_head
@@ -4755,7 +4959,7 @@ CREATE TABLE `onl_cgreport_head`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `index_onlinereport_code`(`code`) USING BTREE,
   INDEX `idx_och_code`(`code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of onl_cgreport_head
@@ -4797,7 +5001,7 @@ CREATE TABLE `onl_cgreport_item`  (
   INDEX `idx_oci_cgrhead_id`(`cgrhead_id`) USING BTREE,
   INDEX `idx_oci_is_show`(`is_show`) USING BTREE,
   INDEX `idx_oci_order_num`(`order_num`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of onl_cgreport_item
@@ -4843,7 +5047,11 @@ CREATE TABLE `onl_cgreport_param`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_cgrheadid`(`cgrhead_id`) USING BTREE,
   INDEX `idx_ocp_cgrhead_id`(`cgrhead_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of onl_cgreport_param
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for oss_file
@@ -4858,7 +5066,11 @@ CREATE TABLE `oss_file`  (
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人登录名称',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Oss File' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Oss File' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of oss_file
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
@@ -4871,7 +5083,11 @@ CREATE TABLE `qrtz_blob_triggers`  (
   `BLOB_DATA` blob NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_blob_triggers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_calendars
@@ -4882,7 +5098,11 @@ CREATE TABLE `qrtz_calendars`  (
   `CALENDAR_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `CALENDAR` blob NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `CALENDAR_NAME`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_calendars
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_cron_triggers
@@ -4896,7 +5116,11 @@ CREATE TABLE `qrtz_cron_triggers`  (
   `TIME_ZONE_ID` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_cron_triggers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_fired_triggers
@@ -4917,7 +5141,11 @@ CREATE TABLE `qrtz_fired_triggers`  (
   `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`, `ENTRY_ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_fired_triggers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_job_details
@@ -4935,7 +5163,11 @@ CREATE TABLE `qrtz_job_details`  (
   `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `JOB_DATA` blob NULL,
   PRIMARY KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_job_details
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_locks
@@ -4945,7 +5177,7 @@ CREATE TABLE `qrtz_locks`  (
   `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `LOCK_NAME` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `LOCK_NAME`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_locks
@@ -4961,7 +5193,11 @@ CREATE TABLE `qrtz_paused_trigger_grps`  (
   `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_paused_trigger_grps
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_scheduler_state
@@ -4973,12 +5209,12 @@ CREATE TABLE `qrtz_scheduler_state`  (
   `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
   `CHECKIN_INTERVAL` bigint(13) NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `INSTANCE_NAME`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('MyScheduler', 'SC-2018102116301612708809260', 1612711744163, 10000);
+INSERT INTO `qrtz_scheduler_state` VALUES ('MyScheduler', 'DESKTOP-762MST21612772106442', 1612776301895, 10000);
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -4993,7 +5229,11 @@ CREATE TABLE `qrtz_simple_triggers`  (
   `TIMES_TRIGGERED` bigint(10) NOT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_simple_triggers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_simprop_triggers
@@ -5016,7 +5256,11 @@ CREATE TABLE `qrtz_simprop_triggers`  (
   `BOOL_PROP_2` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_simprop_triggers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_triggers
@@ -5042,7 +5286,11 @@ CREATE TABLE `qrtz_triggers`  (
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   INDEX `SCHED_NAME`(`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
   CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of qrtz_triggers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_announcement
@@ -5073,7 +5321,7 @@ CREATE TABLE `sys_announcement`  (
   `user_ids` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '指定用户',
   `msg_abstract` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '摘要',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统通告表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统通告表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_announcement
@@ -5258,7 +5506,7 @@ CREATE TABLE `sys_announcement_send`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户通告阅读标记表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户通告阅读标记表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_announcement_send
@@ -5444,7 +5692,7 @@ CREATE TABLE `sys_category`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `index_code`(`code`) USING BTREE,
   INDEX `idx_sc_code`(`code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_category
@@ -5492,7 +5740,7 @@ CREATE TABLE `sys_check_rule`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uni_sys_check_rule_code`(`rule_code`) USING BTREE,
   UNIQUE INDEX `uk_scr_rule_code`(`rule_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_check_rule
@@ -5517,7 +5765,7 @@ CREATE TABLE `sys_data_log`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `sindex`(`data_table`, `data_id`) USING BTREE,
   INDEX `idx_sdl_data_table_id`(`data_table`, `data_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_data_log
@@ -5563,7 +5811,7 @@ CREATE TABLE `sys_data_source`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `sys_data_source_code_uni`(`code`) USING BTREE,
   UNIQUE INDEX `uk_sdc_rule_code`(`code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_data_source
@@ -5603,7 +5851,7 @@ CREATE TABLE `sys_depart`  (
   INDEX `idx_sd_parent_id`(`parent_id`) USING BTREE,
   INDEX `idx_sd_depart_order`(`depart_order`) USING BTREE,
   INDEX `idx_sd_org_code`(`org_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '组织机构表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '组织机构表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_depart
@@ -5628,7 +5876,7 @@ CREATE TABLE `sys_depart_permission`  (
   `permission_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限id',
   `data_rule_ids` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据规则id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_depart_permission
@@ -5653,7 +5901,7 @@ CREATE TABLE `sys_depart_role`  (
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_depart_role
@@ -5679,7 +5927,7 @@ CREATE TABLE `sys_depart_role_permission`  (
   INDEX `idx_sdrp_role_per_id`(`role_id`, `permission_id`) USING BTREE,
   INDEX `idx_sdrp_role_id`(`role_id`) USING BTREE,
   INDEX `idx_sdrp_per_id`(`permission_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门角色权限表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门角色权限表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of sys_depart_role_permission
@@ -5696,7 +5944,11 @@ CREATE TABLE `sys_depart_role_user`  (
   `user_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户id',
   `drole_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门角色用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门角色用户表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_depart_role_user
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_dict
@@ -5716,7 +5968,7 @@ CREATE TABLE `sys_dict`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `indextable_dict_code`(`dict_code`) USING BTREE,
   UNIQUE INDEX `uk_sd_dict_code`(`dict_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict
@@ -5736,6 +5988,14 @@ INSERT INTO `sys_dict` VALUES ('1280401766745718786', '租户状态', 'tenant_st
 INSERT INTO `sys_dict` VALUES ('1357501085681479682', '采购方式', 'purchase_way', '合同采购方式', 0, 'admin', '2021-02-05 09:27:35', NULL, NULL, 0);
 INSERT INTO `sys_dict` VALUES ('1357533802389336066', '合同明细单位', 'contract_item_unit', '合同明细单位', 0, 'admin', '2021-02-05 11:37:35', NULL, NULL, 0);
 INSERT INTO `sys_dict` VALUES ('1358397526201421826', '币种', 'coin_type', '币种', 0, 'admin', '2021-02-07 20:49:43', NULL, NULL, 0);
+INSERT INTO `sys_dict` VALUES ('1358663259254710273', '企业级别', 'company_level', '企业级别', 0, 'admin', '2021-02-08 14:25:38', 'admin', '2021-02-08 14:27:27', 0);
+INSERT INTO `sys_dict` VALUES ('1358664946547712002', '企业类型', 'company_type', '企业类型', 0, 'admin', '2021-02-08 14:32:21', NULL, NULL, 0);
+INSERT INTO `sys_dict` VALUES ('1358666900074160129', '企业状态', 'company_status', '企业状态', 0, 'admin', '2021-02-08 14:40:06', NULL, NULL, 0);
+INSERT INTO `sys_dict` VALUES ('1358669224616157185', '企业存续状态', 'company_live_status', '企业存续状态', 0, 'admin', '2021-02-08 14:49:21', NULL, NULL, 0);
+INSERT INTO `sys_dict` VALUES ('1358676279276101634', '国家', 'country', '国家', 0, 'admin', '2021-02-08 15:17:23', 'admin', '2021-02-08 15:34:56', 0);
+INSERT INTO `sys_dict` VALUES ('1358680243140845569', '所在区域', 'country_region', '所在区域', 0, 'admin', '2021-02-08 15:33:08', NULL, NULL, 0);
+INSERT INTO `sys_dict` VALUES ('1358681063177609217', '企业服务范围', 'company_service_range', '企业服务范围', 0, 'admin', '2021-02-08 15:36:23', NULL, NULL, 0);
+INSERT INTO `sys_dict` VALUES ('1358682780921257985', '行业', 'company_business', '行业', 0, 'admin', '2021-02-08 15:43:13', NULL, NULL, 0);
 INSERT INTO `sys_dict` VALUES ('236e8a4baff0db8c62c00dd95632834f', '同步工作流引擎', 'activiti_sync', '同步工作流引擎', 0, 'admin', '2019-05-15 15:27:33', NULL, NULL, 0);
 INSERT INTO `sys_dict` VALUES ('2e02df51611a4b9632828ab7e5338f00', '权限策略', 'perms_type', '权限策略', 0, 'admin', '2019-04-26 18:26:55', NULL, NULL, 0);
 INSERT INTO `sys_dict` VALUES ('2f0320997ade5dd147c90130f7218c3e', '推送类别', 'msg_type', '', 0, 'admin', '2019-03-17 21:21:32', 'admin', '2019-03-26 19:57:45', 0);
@@ -5789,7 +6049,7 @@ CREATE TABLE `sys_dict_item`  (
   INDEX `idx_sdi_role_sort_order`(`sort_order`) USING BTREE,
   INDEX `idx_sdi_status`(`status`) USING BTREE,
   INDEX `idx_sdi_dict_val`(`dict_id`, `item_value`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_item
@@ -5848,6 +6108,63 @@ INSERT INTO `sys_dict_item` VALUES ('1357533972233482241', '1357533802389336066'
 INSERT INTO `sys_dict_item` VALUES ('1357534037828202498', '1357533802389336066', '吨', '2', '', 1, 1, 'admin', '2021-02-05 11:38:31', NULL, NULL);
 INSERT INTO `sys_dict_item` VALUES ('1358397634150223873', '1358397526201421826', '人民币', 'CNY', '人民币', 1, 1, 'admin', '2021-02-07 20:50:08', NULL, NULL);
 INSERT INTO `sys_dict_item` VALUES ('1358397705415643138', '1358397526201421826', '美元', 'USD', '美元', 2, 1, 'admin', '2021-02-07 20:50:25', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358663313898102786', '1358663259254710273', 'A级', 'A', '', 1, 1, 'admin', '2021-02-08 14:25:51', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358663347028910081', '1358663259254710273', 'B级', 'B', '', 2, 1, 'admin', '2021-02-08 14:25:59', 'admin', '2021-02-08 14:26:20');
+INSERT INTO `sys_dict_item` VALUES ('1358663409234632705', '1358663259254710273', 'C级', 'C', '', 3, 1, 'admin', '2021-02-08 14:26:14', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358663482551066625', '1358663259254710273', 'D级', 'D', '', 4, 1, 'admin', '2021-02-08 14:26:32', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358665099035828226', '1358664946547712002', '供应商', '1', '供应商', 1, 1, 'admin', '2021-02-08 14:32:57', 'admin', '2021-02-08 14:33:40');
+INSERT INTO `sys_dict_item` VALUES ('1358665162676002818', '1358664946547712002', '客户', '2', '客户', 2, 1, 'admin', '2021-02-08 14:33:12', 'admin', '2021-02-08 14:33:42');
+INSERT INTO `sys_dict_item` VALUES ('1358665249590370306', '1358664946547712002', '合作伙伴', '3', '', 3, 1, 'admin', '2021-02-08 14:33:33', 'admin', '2021-02-08 14:33:46');
+INSERT INTO `sys_dict_item` VALUES ('1358665362563948546', '1358664946547712002', '咨询单位', '4', '', 4, 1, 'admin', '2021-02-08 14:34:00', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358665504763437058', '1358664946547712002', '中介机构', '5', '', 5, 1, 'admin', '2021-02-08 14:34:34', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358666069098651650', '1358664946547712002', '政府单位', '6', '', 6, 1, 'admin', '2021-02-08 14:36:48', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358667151384272898', '1358666900074160129', '未认证', '1', '', 1, 1, 'admin', '2021-02-08 14:41:06', 'admin', '2021-02-08 14:42:38');
+INSERT INTO `sys_dict_item` VALUES ('1358667211979382785', '1358666900074160129', '认证中', '2', '', 2, 1, 'admin', '2021-02-08 14:41:21', 'admin', '2021-02-08 14:42:46');
+INSERT INTO `sys_dict_item` VALUES ('1358667607183482881', '1358666900074160129', '已认证', '3', '', 3, 1, 'admin', '2021-02-08 14:42:55', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358667805557284865', '1358666900074160129', '停用', '4', '', 4, 1, 'admin', '2021-02-08 14:43:42', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358667853632397314', '1358666900074160129', '黑名单', '5', '', 5, 1, 'admin', '2021-02-08 14:43:54', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358669273291055106', '1358669224616157185', '存续', '1', '', 1, 1, 'admin', '2021-02-08 14:49:32', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358669328962052097', '1358669224616157185', '注销', '2', '', 2, 1, 'admin', '2021-02-08 14:49:46', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358669367138607105', '1358669224616157185', '吊销', '3', '', 3, 1, 'admin', '2021-02-08 14:49:55', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358676373207539713', '1358676279276101634', '中国', '1', '', 1, 1, 'admin', '2021-02-08 15:17:45', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358676419105808385', '1358676279276101634', '美国', '2', '', 2, 1, 'admin', '2021-02-08 15:17:56', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358676482536267777', '1358676279276101634', '英国', '3', '', 3, 1, 'admin', '2021-02-08 15:18:11', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358676522927415297', '1358676279276101634', '法国', '4', '', 4, 1, 'admin', '2021-02-08 15:18:21', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358676592703856642', '1358676279276101634', '日本', '5', '', 5, 1, 'admin', '2021-02-08 15:18:37', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358676685767073794', '1358676279276101634', '意大利', '6', '', 6, 1, 'admin', '2021-02-08 15:19:00', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358676762095017985', '1358676279276101634', '德国', '7', '', 7, 1, 'admin', '2021-02-08 15:19:18', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358676829275185153', '1358676279276101634', '韩国', '8', '', 8, 1, 'admin', '2021-02-08 15:19:34', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358676922984325122', '1358676279276101634', '西班牙', '9', '', 9, 1, 'admin', '2021-02-08 15:19:56', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358676971269152769', '1358676279276101634', '葡萄牙', '10', '', 10, 1, 'admin', '2021-02-08 15:20:08', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358677146087743490', '1358676279276101634', '印度', '11', '', 11, 1, 'admin', '2021-02-08 15:20:49', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358680303991808002', '1358680243140845569', '华中', '1', '', 1, 1, 'admin', '2021-02-08 15:33:22', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358680351349694466', '1358680243140845569', '华南', '2', '', 2, 1, 'admin', '2021-02-08 15:33:33', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358680403698802690', '1358680243140845569', '华东', '3', '', 3, 1, 'admin', '2021-02-08 15:33:46', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358680475459149825', '1358680243140845569', '西南', '4', '', 4, 1, 'admin', '2021-02-08 15:34:03', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358680527661457409', '1358680243140845569', '西北', '5', '', 5, 1, 'admin', '2021-02-08 15:34:16', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358680574746714113', '1358680243140845569', '东南', '6', '', 6, 1, 'admin', '2021-02-08 15:34:27', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358680619713847298', '1358680243140845569', '东北', '7', '', 7, 1, 'admin', '2021-02-08 15:34:37', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358680656418201602', '1358680243140845569', '华北', '8', '', 8, 1, 'admin', '2021-02-08 15:34:46', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358681187345784833', '1358681063177609217', '主辅料', '1', '', 1, 1, 'admin', '2021-02-08 15:36:53', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358681264093159425', '1358681063177609217', '办公用品', '2', '', 2, 1, 'admin', '2021-02-08 15:37:11', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358681323950071810', '1358681063177609217', 'IT设备', '3', '', 3, 1, 'admin', '2021-02-08 15:37:25', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358681417394970625', '1358681063177609217', '技术服务', '4', '', 4, 1, 'admin', '2021-02-08 15:37:48', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358681486387077121', '1358681063177609217', '车辆设备', '5', '', 5, 1, 'admin', '2021-02-08 15:38:04', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358682847421947905', '1358682780921257985', '采购类', '1', '', 1, 1, 'admin', '2021-02-08 15:43:29', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358682887376887809', '1358682780921257985', '工程类', '2', '', 2, 1, 'admin', '2021-02-08 15:43:38', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358683090280538113', '1358682780921257985', '合作类', '3', '', 3, 1, 'admin', '2021-02-08 15:44:26', 'admin', '2021-02-08 15:44:34');
+INSERT INTO `sys_dict_item` VALUES ('1358683175940808705', '1358682780921257985', '服务外包类', '4', '', 4, 1, 'admin', '2021-02-08 15:44:47', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358683242550550530', '1358682780921257985', '租赁类', '5', '', 5, 1, 'admin', '2021-02-08 15:45:03', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358683311882395649', '1358682780921257985', '代理类', '6', '', 6, 1, 'admin', '2021-02-08 15:45:19', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358683379649765377', '1358682780921257985', '政府单位', '7', '', 7, 1, 'admin', '2021-02-08 15:45:35', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358683435115241474', '1358682780921257985', '能源石化', '8', '', 8, 1, 'admin', '2021-02-08 15:45:49', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358683501754343425', '1358682780921257985', '文体娱乐', '9', '', 9, 1, 'admin', '2021-02-08 15:46:05', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358683562856964098', '1358682780921257985', '物流运输', '10', '', 10, 1, 'admin', '2021-02-08 15:46:19', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358683639667253250', '1358682780921257985', '科研院所', '11', '', 11, 1, 'admin', '2021-02-08 15:46:37', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358683918441668610', '1358682780921257985', '日用生化', '12', '', 12, 1, 'admin', '2021-02-08 15:47:44', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358683985508589570', '1358682780921257985', '影视媒体', '13', '', 13, 1, 'admin', '2021-02-08 15:48:00', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358684037425684481', '1358682780921257985', '商务服务', '14', '', 14, 1, 'admin', '2021-02-08 15:48:12', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES ('1358684100503822337', '1358682780921257985', '服装纺织', '15', '', 15, 1, 'admin', '2021-02-08 15:48:27', NULL, NULL);
 INSERT INTO `sys_dict_item` VALUES ('147c48ff4b51545032a9119d13f3222a', 'd6e1152968b02d69ff358c75b48a6ee1', '测试流程', 'test', NULL, 1, 1, 'admin', '2019-03-22 19:27:05', NULL, NULL);
 INSERT INTO `sys_dict_item` VALUES ('1543fe7e5e26fb97cdafe4981bedc0c8', '4c03fca6bf1f0299c381213961566349', '单排布局', 'single', NULL, 2, 1, 'admin', '2022-07-12 17:43:39', 'admin', '2019-04-12 17:43:57');
 INSERT INTO `sys_dict_item` VALUES ('1ce390c52453891f93514c1bd2795d44', 'ad7c65ba97c20a6805d5dcdf13cdaf36', '000', '00', NULL, 1, 1, 'admin', '2019-03-22 16:34:34', NULL, NULL);
@@ -5943,7 +6260,7 @@ CREATE TABLE `sys_fill_rule`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uni_sys_fill_rule_code`(`rule_code`) USING BTREE,
   UNIQUE INDEX `uk_sfr_rule_code`(`rule_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_fill_rule
@@ -5974,7 +6291,7 @@ CREATE TABLE `sys_gateway_route`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   `sys_org_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of sys_gateway_route
@@ -6014,7 +6331,7 @@ CREATE TABLE `sys_log`  (
   INDEX `idx_sl_log_type`(`log_type`) USING BTREE,
   INDEX `idx_sl_operate_type`(`operate_type`) USING BTREE,
   INDEX `idx_sl_create_time`(`create_time`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统日志表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_log
@@ -6199,6 +6516,162 @@ INSERT INTO `sys_log` VALUES ('1358437386219978754', 2, '合同类型-树结构'
 INSERT INTO `sys_log` VALUES ('1358437386232561665', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 7, NULL, '2021-02-07 23:28:06', NULL, NULL);
 INSERT INTO `sys_log` VALUES ('1358437386236755969', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7650b5a8', NULL, 5, NULL, '2021-02-07 23:28:06', NULL, NULL);
 INSERT INTO `sys_log` VALUES ('1358437386236755970', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@29b2e486', NULL, 6, NULL, '2021-02-07 23:28:06', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358577709969580034', 1, '用户名: 管理员,退出成功！', NULL, 'admin', '管理员', '0:0:0:0:0:0:0:1', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-08 08:45:42', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358577802403651586', 1, '用户名: admin,登录成功！', NULL, 'admin', '管理员', '0:0:0:0:0:0:0:1', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-08 08:46:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358577807898189825', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 18, NULL, '2021-02-08 08:46:05', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358577880702918657', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@509cdfd1', NULL, 36, NULL, '2021-02-08 08:46:23', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358577889942970369', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 11, NULL, '2021-02-08 08:46:25', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358577890265931777', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5af41a06', NULL, 80, NULL, '2021-02-08 08:46:25', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358577890286903298', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2bb40149', NULL, 82, NULL, '2021-02-08 08:46:25', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358577890404343809', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 122, NULL, '2021-02-08 08:46:25', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578273524654081', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 7, NULL, '2021-02-08 08:47:56', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578456924790785', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 08:48:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578478143774722', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 7, NULL, '2021-02-08 08:48:45', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578494178598914', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2286d1f2', NULL, 15, NULL, '2021-02-08 08:48:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578515535994883', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 12, NULL, '2021-02-08 08:48:54', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578515535994882', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 21, NULL, '2021-02-08 08:48:54', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578515582132225', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@845b29d', NULL, 22, NULL, '2021-02-08 08:48:54', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578515582132226', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@58d7c8d8', NULL, 14, NULL, '2021-02-08 08:48:54', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578744901509121', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 6, NULL, '2021-02-08 08:49:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578775117275138', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 08:49:56', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578795509981185', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@305e8a30', NULL, 15, NULL, '2021-02-08 08:50:01', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578807300169730', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 08:50:03', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578807367278594', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 20, NULL, '2021-02-08 08:50:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578807392444418', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@48266269', NULL, 16, NULL, '2021-02-08 08:50:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578807409221633', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@52f23ea', NULL, 12, NULL, '2021-02-08 08:50:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578991472058370', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@6c7ff52a', NULL, 13, NULL, '2021-02-08 08:50:47', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578997826428930', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 5, NULL, '2021-02-08 08:50:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578997851594754', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 18, NULL, '2021-02-08 08:50:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578997880954881', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@637c0117', NULL, 10, NULL, '2021-02-08 08:50:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358578997880954882', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7e25598f', NULL, 21, NULL, '2021-02-08 08:50:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579003417436161', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@6592459f', NULL, 15, NULL, '2021-02-08 08:50:50', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579015945822210', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 08:50:53', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579747122061314', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@52ad3bb5', NULL, 13, NULL, '2021-02-08 08:53:48', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579774326317058', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@1d6aa055', NULL, 16, NULL, '2021-02-08 08:53:54', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579797344657409', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 5, NULL, '2021-02-08 08:54:00', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579797369823234', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 10, NULL, '2021-02-08 08:54:00', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579797411766273', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@33e4b58e', NULL, 10, NULL, '2021-02-08 08:54:00', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579797420154881', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5c629de4', NULL, 9, NULL, '2021-02-08 08:54:00', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579802876944386', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5c1073b7', NULL, 18, NULL, '2021-02-08 08:54:01', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579810581880834', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 08:54:03', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579810611240961', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 11, NULL, '2021-02-08 08:54:03', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579810628018177', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@6fd16a8', NULL, 13, NULL, '2021-02-08 08:54:03', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579810661572609', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5780b6f7', NULL, 14, NULL, '2021-02-08 08:54:03', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579831876362242', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 5, NULL, '2021-02-08 08:54:08', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579936473915394', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 08:54:33', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579952823312385', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@78451bc0', NULL, 9, NULL, '2021-02-08 08:54:37', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579968635838466', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 08:54:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579968661004290', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 10, NULL, '2021-02-08 08:54:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579968669392897', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7141f568', NULL, 9, NULL, '2021-02-08 08:54:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358579968669392898', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@6b00c516', NULL, 12, NULL, '2021-02-08 08:54:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358580751037112322', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@686000ab', NULL, 11, NULL, '2021-02-08 08:57:47', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358580761166356481', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 08:57:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358580761250242561', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 12, NULL, '2021-02-08 08:57:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358580761267019777', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2bc58d25', NULL, 11, NULL, '2021-02-08 08:57:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358580761267019778', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@29e37bbd', NULL, 8, NULL, '2021-02-08 08:57:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583552874127362', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 09:08:55', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583558251225089', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:08:56', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583558251225090', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:08:56', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583591776296961', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:09:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583610814242817', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2dc730a8', NULL, 13, NULL, '2021-02-08 09:09:09', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583619811024898', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 09:09:11', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583619840385026', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 11, NULL, '2021-02-08 09:09:11', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583619852967937', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@56afa2e1', NULL, 13, NULL, '2021-02-08 09:09:11', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583619869745154', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@23d5001', NULL, 8, NULL, '2021-02-08 09:09:11', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583650844680194', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:09:18', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583661896671234', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:09:21', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583817782173697', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 09:09:58', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358583876108165121', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:10:12', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584519761862658', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7746fe4c', NULL, 14, NULL, '2021-02-08 09:12:45', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584535440171010', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 10, NULL, '2021-02-08 09:12:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584535465336833', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 5, NULL, '2021-02-08 09:12:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584535507279874', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@43a079c', NULL, 8, NULL, '2021-02-08 09:12:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584535507279875', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@64bbbdd2', NULL, 12, NULL, '2021-02-08 09:12:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584575852290050', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 7, NULL, '2021-02-08 09:12:59', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584575852290051', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 7, NULL, '2021-02-08 09:12:59', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584583758553089', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 22, NULL, '2021-02-08 09:13:01', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584609712906242', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@26dbf8cd', NULL, 15, NULL, '2021-02-08 09:13:07', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584616914526209', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 09:13:09', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584616939692034', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5befc3da', NULL, 11, NULL, '2021-02-08 09:13:09', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584616960663553', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@71ad529d', NULL, 13, NULL, '2021-02-08 09:13:09', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584616990023682', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 18, NULL, '2021-02-08 09:13:09', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584638242562049', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 2, NULL, '2021-02-08 09:13:14', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584647268704258', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:13:16', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584701836599297', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:13:29', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584712397856769', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@6c3a6db0', NULL, 11, NULL, '2021-02-08 09:13:31', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584717892395009', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 6, NULL, '2021-02-08 09:13:33', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584717938532354', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 15, NULL, '2021-02-08 09:13:33', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584717938532355', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@32dc04ce', NULL, 14, NULL, '2021-02-08 09:13:33', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584718060167169', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4fa269d5', NULL, 42, NULL, '2021-02-08 09:13:33', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584729992962050', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 09:13:36', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584735135178754', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:13:37', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584740944289794', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:13:38', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584747348992002', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@339efc8a', NULL, 10, NULL, '2021-02-08 09:13:40', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584753883717634', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 6, NULL, '2021-02-08 09:13:41', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584753921466370', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 12, NULL, '2021-02-08 09:13:41', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584753921466371', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@22024898', NULL, 8, NULL, '2021-02-08 09:13:41', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584753921466372', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@e3c3c6b', NULL, 11, NULL, '2021-02-08 09:13:41', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584790613237762', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4172c442', NULL, 17, NULL, '2021-02-08 09:13:50', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584819331637250', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:13:57', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358584970771177474', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 09:14:33', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358585036403646465', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2355c29f', NULL, 10, NULL, '2021-02-08 09:14:49', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358585048105754625', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:14:51', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358585048135114754', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358224809619656706', NULL, 10, NULL, '2021-02-08 09:14:51', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358585048135114755', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@677da15a', NULL, 13, NULL, '2021-02-08 09:14:51', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358585048156086273', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358224809619656706, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@56684b6b', NULL, 9, NULL, '2021-02-08 09:14:51', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358585083920916483', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:15:00', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358585083920916482', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:15:00', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358585091059621889', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:15:02', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358585909062148097', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 4, NULL, '2021-02-08 09:18:17', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358586164553981954', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:19:18', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358586555039490050', 2, '一般采购合同-添加', 2, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.add()', NULL, '[{\"code\":\"222\",\"firstMember\":\"1\",\"firstMemberObj\":{\"address\":\"1\",\"amount\":\"1\",\"bank\":\"1\",\"bankName\":\"1\",\"bankNo\":\"1\",\"coin\":\"CNY\",\"contactPerson\":\"1\",\"contractId\":\"1358586554699751426\",\"contractPhone\":\"1\",\"createBy\":\"admin\",\"createTime\":1612747250633,\"creditCode\":\"1\",\"id\":\"1358586554792026113\",\"legal\":\"1\",\"lockAmount\":\"1\",\"nameCn\":\"1\",\"nameEn\":\"1\",\"payAmount\":\"1\",\"restAmount\":\"1\",\"sysOrgCode\":\"A01\",\"type\":\"0\"},\"id\":\"1358586554699751426\",\"memberUse\":\"0\",\"name\":\"222222222\",\"params\":{},\"processData\":{\"procDefId\":\"采购申请流程:3:7504\",\"tableName\":\"contract_purchase\",\"procDeTitle\":\"20210208一般采购合同-北京国炬软件-管理员\",\"tableId\":\"1358586554699751426\"},\"remark\":\"1\",\"secondMember\":\"1\",\"secondMemberObj\":{\"address\":\"2\",\"amount\":\"2\",\"bank\":\"2\",\"bankName\":\"2\",\"bankNo\":\"2\",\"coin\":\"CNY\",\"contactPerson\":\"2\",\"contractId\":\"1358586554699751426\",\"contractPhone\":\"2\",\"createBy\":\"admin\",\"createTime\":1612747250639,\"creditCode\":\"2\",\"id\":\"1358586554800414721\",\"legal\":\"2\",\"lockAmount\":\"2\",\"nameCn\":\"2\",\"nameEn\":\"2\",\"payAmount\":\"2\",\"restAmount\":\"2\",\"sysOrgCode\":\"A01\",\"type\":\"1\"},\"subForm\":{\"amount\":\"0\",\"amountLarge\":\"零元整\",\"baseId\":\"1358586554699751426\",\"biddingId\":\"2\",\"budget\":\"0\",\"costCenter\":\"1\",\"createBy\":\"admin\",\"createTime\":1612747250641,\"endTime\":1644249600000,\"fileAttach\":\"2\",\"fileContract\":\"2\",\"filePdf\":\"2\",\"id\":\"1358586554842357761\",\"isSecret\":\"0\",\"isSub\":\"0\",\"modelId\":\"2\",\"protocol\":\"2\",\"purchaseId\":\"2\",\"purchaseType\":\"1\",\"relateProject\":\"0\",\"startTime\":1612713600000,\"sysOrgCode\":\"A01\"},\"thirdMemberObj\":{\"coin\":\"CNY\",\"type\":\"2\"},\"typeCode\":\"T0S000\"}]', NULL, 66, NULL, '2021-02-08 09:20:51', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358586556536856578', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@ae4df90', NULL, 9, NULL, '2021-02-08 09:20:51', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358586573267935233', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:20:55', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358586573330849793', 2, '合同明细项-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractItemController.queryPageList()', NULL, '  contractItem: ContractItem(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358586554699751426, name=null, rowNo=null, model=null, unit=null, price=null, rate=null, number=null, total=null, purchaseWay=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7f79f4dc', NULL, 6, NULL, '2021-02-08 09:20:55', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358586573347627009', 2, '合同付款约定-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractPaymentController.queryPageList()', NULL, '  contractPayment: ContractPayment(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, contractId=1358586554699751426, context=null, payDate=null, payDept=null, payReceive=null, payCondition=null, payAmount=null, duty=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4a6b18d', NULL, 7, NULL, '2021-02-08 09:20:55', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358586573364404225', 2, '一般采购合同-通过id查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractGeneralController.queryById()', NULL, '  id: 1358586554699751426', NULL, 16, NULL, '2021-02-08 09:20:55', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358586651575590913', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@774acd6f', NULL, 12, NULL, '2021-02-08 09:21:14', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358586659641237505', 2, '流程-流程列表', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.activiti.web.ActBusinessController.listData()', NULL, '  param: ActBusiness(routeName=null, dataMap=null, processName=null, id=null, createBy=null, createTime=null, delFlag=null, updateBy=null, updateTime=null, procDefId=null, procInstId=null, result=null, status=null, tableId=null, title=null, userId=null, applyTime=null, isHistory=null, tableName=null, assignees=null, priority=0, currTaskName=null, firstGateway=false, sendMessage=null, sendSms=null, sendEmail=null, params={}, procInstStatus=null)  request: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5753ba32', NULL, 10, NULL, '2021-02-08 09:21:16', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358586680981856258', 2, '合同类型-树结构', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.ContractTypeController.tree()', NULL, '  roles: true', NULL, 3, NULL, '2021-02-08 09:21:21', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358608274689122306', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5da16bb0', NULL, 21, NULL, '2021-02-08 10:47:09', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358610933324210178', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4d61ff98', NULL, 3, NULL, '2021-02-08 10:57:43', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358612528183140353', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@41e7dec9', NULL, 14, NULL, '2021-02-08 11:04:03', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358613216535535617', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4b93e375', NULL, 4, NULL, '2021-02-08 11:06:47', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358613392419479554', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@61a78716', NULL, 3, NULL, '2021-02-08 11:07:29', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358613494752108546', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@39bc9d53', NULL, 4, NULL, '2021-02-08 11:07:54', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358621087717416961', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@1de0891b', NULL, 3, NULL, '2021-02-08 11:38:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358621206164561921', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@31e3ffe5', NULL, 4, NULL, '2021-02-08 11:38:32', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358621607307796481', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@76fc3415', NULL, 3, NULL, '2021-02-08 11:40:08', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358663078455042050', 1, '用户名: 管理员,退出成功！', NULL, 'admin', '管理员', '0:0:0:0:0:0:0:1', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-08 14:24:55', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358663105059512322', 1, '用户名: admin,登录成功！', NULL, 'admin', '管理员', '0:0:0:0:0:0:0:1', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-08 14:25:02', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358685862631596033', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@bd757ee', NULL, 5, NULL, '2021-02-08 15:55:27', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358688242181890050', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@3207b2e1', NULL, 4, NULL, '2021-02-08 16:04:55', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358690903623053313', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5253377a', NULL, 88, NULL, '2021-02-08 16:15:29', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358691106048552961', 2, '企业信息/合作方信息-添加', 2, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.add()', NULL, '[{\"address\":\"1\",\"black\":\"0\",\"business\":\"7,4\",\"capital\":\"1\",\"code\":\"1\",\"contactPerson\":\"1\",\"contactPhone\":\"1\",\"context\":\"1\",\"country\":\"1\",\"createBy\":\"admin\",\"createTime\":1612772177573,\"creditCode\":\"1\",\"email\":\"1\",\"fax\":\"1\",\"id\":\"1358691105985638402\",\"legal\":\"1\",\"level\":\"A\",\"link\":\"1\",\"liveStatus\":\"1\",\"nameCn\":\"221\",\"nameEn\":\"1\",\"province\":\"110101\",\"region\":\"1\",\"register\":\"1\",\"registerTime\":1612713600000,\"serviceRange\":\"2,3\",\"status\":\"3\",\"sysOrgCode\":\"A01\",\"type\":\"1\"}]', NULL, 17, NULL, '2021-02-08 16:16:18', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358691106598006785', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@6e15b232', NULL, 23, NULL, '2021-02-08 16:16:18', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358691302404894722', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@3939937d', NULL, 10, NULL, '2021-02-08 16:17:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358695108379258882', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@463e088f', NULL, 12, NULL, '2021-02-08 16:32:12', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358695281402687490', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@652c3889', NULL, 4, NULL, '2021-02-08 16:32:53', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358695560651059202', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4a296e06', NULL, 7, NULL, '2021-02-08 16:34:00', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358695588929056769', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@6b31354d', NULL, 7, NULL, '2021-02-08 16:34:06', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358695828025356290', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@62ec268e', NULL, 6, NULL, '2021-02-08 16:35:03', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358695832186105857', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@28d97d79', NULL, 6, NULL, '2021-02-08 16:35:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358695833427619841', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@58148a8c', NULL, 6, NULL, '2021-02-08 16:35:05', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358695859260338177', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2d0808ba', NULL, 10, NULL, '2021-02-08 16:35:11', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358697007857905666', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@114f53b4', NULL, 6, NULL, '2021-02-08 16:39:45', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358697029504708610', 1, '用户名: 管理员,退出成功！', NULL, 'admin', '管理员', '0:0:0:0:0:0:0:1', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-08 16:39:50', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358697051830988801', 1, '用户名: admin,登录成功！', NULL, 'admin', '管理员', '0:0:0:0:0:0:0:1', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-08 16:39:55', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358697069702918146', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@72184328', NULL, 6, NULL, '2021-02-08 16:39:59', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358697144776765442', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7a6df8c5', NULL, 7, NULL, '2021-02-08 16:40:17', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358697616342364162', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4e779bb8', NULL, 9, NULL, '2021-02-08 16:42:10', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358697678732636161', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@b954078', NULL, 12, NULL, '2021-02-08 16:42:25', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358697845544300546', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@1dc00c6d', NULL, 10, NULL, '2021-02-08 16:43:04', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358697999366205442', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@558de52a', NULL, 6, NULL, '2021-02-08 16:43:41', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358698884192382977', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@2f20e0fd', NULL, 5, NULL, '2021-02-08 16:47:12', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358698977289154561', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@6a573711', NULL, 4, NULL, '2021-02-08 16:47:34', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358699055269654529', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@7aaba1c6', NULL, 6, NULL, '2021-02-08 16:47:53', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358699393942925313', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@5e3dfb50', NULL, 6, NULL, '2021-02-08 16:49:14', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1358699515925868546', 2, '企业信息/合作方信息-分页列表查询', 1, 'admin', '管理员', '0:0:0:0:0:0:0:1', 'org.jeecg.modules.contract.controller.CompanyController.queryPageList()', NULL, '  company: Company(id=null, createBy=null, createTime=null, updateBy=null, updateTime=null, sysOrgCode=null, nameCn=null, nameEn=null, code=null, level=null, type=null, status=null, black=null, serviceRange=null, business=null, country=null, region=null, address=null, context=null, legal=null, register=null, creditCode=null, capital=null, registerTime=null, liveStatus=null, link=null, email=null, fax=null, province=null, city=null, area=null, contactPerson=null, contactPhone=null)  pageNo: 1  pageSize: 10  req: org.apache.shiro.web.servlet.ShiroHttpServletRequest@4b39dcf4', NULL, 6, NULL, '2021-02-08 16:49:43', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_permission
@@ -6248,7 +6721,7 @@ CREATE TABLE `sys_permission`  (
   INDEX `idx_sp_menu_type`(`menu_type`) USING BTREE,
   INDEX `idx_sp_hidden`(`hidden`) USING BTREE,
   INDEX `idx_sp_status`(`status`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_permission
@@ -6310,6 +6783,7 @@ INSERT INTO `sys_permission` VALUES ('1356137555531169793', '1356137187380330498
 INSERT INTO `sys_permission` VALUES ('1356154745106046977', '', '合同起草', '/contract/draft', 'contract/draft/DraftPage', NULL, NULL, 0, NULL, '1', 0.10, 0, 'logout', 1, 1, 0, 0, NULL, 'admin', '2021-02-01 16:17:42', 'admin', '2021-02-02 21:27:57', 0, 0, '1', 0);
 INSERT INTO `sys_permission` VALUES ('1356594906071613441', '', '合同管理', '/contract/manage', 'layouts/RouteView', NULL, NULL, 0, NULL, '1', 0.20, 0, 'border-left', 1, 0, 0, 0, NULL, 'admin', '2021-02-02 21:26:45', 'admin', '2021-02-02 22:16:48', 0, 0, '1', 0);
 INSERT INTO `sys_permission` VALUES ('1356608076165181442', '1356594906071613441', '合同列表', '/contract/manage/list', 'contract/manage/ContractBaseList', NULL, NULL, 1, NULL, '1', 1.00, 0, 'menu-fold', 1, 1, 0, 0, NULL, 'admin', '2021-02-02 22:19:05', NULL, NULL, 0, 0, '1', 0);
+INSERT INTO `sys_permission` VALUES ('1358607763596402690', '1356137187380330498', '企业信息管理', '/contract/setting/company', 'contract/setting/CompanyList', NULL, NULL, 1, NULL, '1', 0.00, 0, 'swap-right', 1, 1, 0, 0, NULL, 'admin', '2021-02-08 10:45:07', NULL, NULL, 0, 0, '1', 0);
 INSERT INTO `sys_permission` VALUES ('1367a93f2c410b169faa7abcbad2f77c', '6e73eb3c26099c191bf03852ee1310a1', '基本设置', '/account/settings/BaseSetting', 'account/settings/BaseSetting', 'account-settings-base', NULL, 1, 'BaseSettings', NULL, NULL, 0, NULL, 1, 1, NULL, 1, NULL, NULL, '2018-12-26 18:58:35', 'admin', '2019-03-20 12:57:31', 0, 0, NULL, NULL);
 INSERT INTO `sys_permission` VALUES ('190c2b43bec6a5f7a4194a85db67d96a', 'd7d6e2e4e2934f2c9385a623fd98c6f3', '角色管理', '/isystem/roleUserList', 'system/RoleUserList', NULL, NULL, 1, NULL, NULL, 1.20, 0, NULL, 1, 1, 0, 0, NULL, 'admin', '2019-04-17 15:13:56', 'admin', '2019-12-25 09:36:31', 0, 0, NULL, 0);
 INSERT INTO `sys_permission` VALUES ('1a0811914300741f4e11838ff37a1d3a', '3f915b2769fc80648e92d04e84ca059d', '手机号禁用', NULL, NULL, NULL, NULL, 2, 'user:form:phone', '2', 1.00, 0, NULL, 0, 1, NULL, 0, NULL, 'admin', '2019-05-11 17:19:30', 'admin', '2019-05-11 18:00:22', 0, 0, '1', NULL);
@@ -6415,7 +6889,7 @@ CREATE TABLE `sys_permission_data_rule`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_fucntionid`(`permission_id`) USING BTREE,
   INDEX `idx_spdr_permission_id`(`permission_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_permission_data_rule
@@ -6463,7 +6937,7 @@ CREATE TABLE `sys_position`  (
   `sys_org_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组织机构编码',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uniq_code`(`code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_position
@@ -6489,7 +6963,7 @@ CREATE TABLE `sys_quartz_job`  (
   `status` int(1) NULL DEFAULT NULL COMMENT '状态 0正常 -1停止',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uniq_job_class_name`(`job_class_name`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_quartz_job
@@ -6514,7 +6988,7 @@ CREATE TABLE `sys_role`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uniq_sys_role_role_code`(`role_code`) USING BTREE,
   INDEX `idx_sr_role_code`(`role_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
@@ -6543,7 +7017,7 @@ CREATE TABLE `sys_role_permission`  (
   INDEX `idx_srp_role_per_id`(`role_id`, `permission_id`) USING BTREE,
   INDEX `idx_srp_role_id`(`role_id`) USING BTREE,
   INDEX `idx_srp_permission_id`(`permission_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_permission
@@ -6622,6 +7096,7 @@ INSERT INTO `sys_role_permission` VALUES ('1356140118120980481', 'f6817f48af4fb3
 INSERT INTO `sys_role_permission` VALUES ('1356155234069618690', 'f6817f48af4fb3af11b9e8bf182f618b', '1356154745106046977', NULL, '2021-02-01 16:19:39', '0:0:0:0:0:0:0:1');
 INSERT INTO `sys_role_permission` VALUES ('1356595418238074881', 'f6817f48af4fb3af11b9e8bf182f618b', '1356594906071613441', NULL, '2021-02-02 21:28:47', '0:0:0:0:0:0:0:1');
 INSERT INTO `sys_role_permission` VALUES ('1356608536938835970', 'f6817f48af4fb3af11b9e8bf182f618b', '1356608076165181442', NULL, '2021-02-02 22:20:54', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_role_permission` VALUES ('1358608189108543490', 'f6817f48af4fb3af11b9e8bf182f618b', '1358607763596402690', NULL, '2021-02-08 10:46:49', '0:0:0:0:0:0:0:1');
 INSERT INTO `sys_role_permission` VALUES ('145eac8dd88eddbd4ce0a800ab40a92c', 'e51758fa916c881624b046d26bd09230', '08e6b9dc3c04489c8e1ff2ce6f105aa4', NULL, NULL, NULL);
 INSERT INTO `sys_role_permission` VALUES ('154edd0599bd1dc2c7de220b489cd1e2', 'f6817f48af4fb3af11b9e8bf182f618b', '7ac9eb9ccbde2f7a033cd4944272bf1e', NULL, NULL, NULL);
 INSERT INTO `sys_role_permission` VALUES ('165acd6046a0eaf975099f46a3c898ea', 'f6817f48af4fb3af11b9e8bf182f618b', '4f66409ef3bbd69c1d80469d6e2a885e', NULL, NULL, NULL);
@@ -6980,7 +7455,7 @@ CREATE TABLE `sys_sms`  (
   INDEX `idx_ss_es_receiver`(`es_receiver`) USING BTREE,
   INDEX `idx_ss_es_send_time`(`es_send_time`) USING BTREE,
   INDEX `idx_ss_es_send_status`(`es_send_status`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_sms
@@ -7011,7 +7486,7 @@ CREATE TABLE `sys_sms_template`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uniq_templatecode`(`template_code`) USING BTREE,
   UNIQUE INDEX `uk_sst_template_code`(`template_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_sms_template
@@ -7034,7 +7509,7 @@ CREATE TABLE `sys_tenant`  (
   `end_date` datetime(0) NULL DEFAULT NULL COMMENT '结束时间',
   `status` int(1) NULL DEFAULT NULL COMMENT '状态 1正常 0冻结',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '多租户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '多租户信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_tenant
@@ -7055,7 +7530,11 @@ CREATE TABLE `sys_third_account`  (
   `realname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '真实姓名',
   `third_user_uuid` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '第三方账号',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_third_account
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -7100,7 +7579,7 @@ CREATE TABLE `sys_user`  (
   INDEX `idx_su_username`(`username`) USING BTREE,
   INDEX `idx_su_status`(`status`) USING BTREE,
   INDEX `idx_su_del_flag`(`del_flag`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
@@ -7139,7 +7618,11 @@ CREATE TABLE `sys_user_agent`  (
   INDEX `idx_sug_status`(`status`) USING BTREE,
   INDEX `idx_sug_start_time`(`start_time`) USING BTREE,
   INDEX `idx_sug_end_time`(`end_time`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户代理人设置' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户代理人设置' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_user_agent
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_user_depart
@@ -7156,7 +7639,7 @@ CREATE TABLE `sys_user_depart`  (
   INDEX `idx_sud_user_id`(`user_id`) USING BTREE,
   INDEX `idx_sud_dep_id`(`dep_id`) USING BTREE,
   INDEX `idx_sud_user_dep_id`(`user_id`, `dep_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_depart
@@ -7184,7 +7667,7 @@ CREATE TABLE `sys_user_role`  (
   INDEX `idx_sur_user_id`(`user_id`) USING BTREE,
   INDEX `idx_sur_role_id`(`role_id`) USING BTREE,
   INDEX `idx_sur_user_role_id`(`user_id`, `role_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_role
@@ -7230,7 +7713,7 @@ CREATE TABLE `test_demo`  (
   `search_sel` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '搜索下拉',
   `pop` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '弹窗',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of test_demo
@@ -7279,7 +7762,7 @@ CREATE TABLE `test_enhance_select`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
   `create_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of test_enhance_select
@@ -7306,7 +7789,7 @@ CREATE TABLE `test_note`  (
   `birthday` datetime(0) NULL DEFAULT NULL COMMENT '生日',
   `contents` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请假原因',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of test_note
@@ -7329,7 +7812,7 @@ CREATE TABLE `test_order_main`  (
   `order_date` datetime(0) NULL DEFAULT NULL COMMENT '下单时间',
   `descc` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of test_order_main
@@ -7357,7 +7840,7 @@ CREATE TABLE `test_order_product`  (
   `order_fk_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单外键ID',
   `pro_type` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品类型',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of test_order_product
@@ -7399,7 +7882,7 @@ CREATE TABLE `test_person`  (
   `be_date` datetime(0) NULL DEFAULT NULL COMMENT '请假时间',
   `qj_days` int(11) NULL DEFAULT NULL COMMENT '请假天数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of test_person
@@ -7422,7 +7905,7 @@ CREATE TABLE `test_shoptype_tree`  (
   `pid` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '父级节点',
   `has_child` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '是否有子节点',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of test_shoptype_tree
@@ -7448,7 +7931,7 @@ CREATE TABLE `test_sign`  (
   `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标题',
   `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of test_sign
