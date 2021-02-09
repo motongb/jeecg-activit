@@ -157,6 +157,9 @@
               </a-form-item>
             </a-col>
           </a-card>
+          <a-card class="apply-card" title="银行信息">
+            <company-bank-item ref="companyBankItem" :company-id="model.id"></company-bank-item>
+          </a-card>
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
             <a-button @click="submitForm">提 交</a-button>
           </a-col>
@@ -173,10 +176,12 @@
   import { validateDuplicateValue } from '@/utils/util'
   import JFormContainer from '@/components/jeecg/JFormContainer'
   import { initDictOptions } from '@/components/dict/JDictSelectUtil'
+  import CompanyBankItem from '../../components/CompanyBankItem'
 
   export default {
     name: 'CompanyForm',
     components: {
+      CompanyBankItem,
       JFormContainer
     },
     props: {
@@ -292,6 +297,7 @@
               method = 'put'
             }
             let formData = Object.assign(this.model, values)
+            formData.companyBanks = this.$refs.companyBankItem.getData()
             console.log('表单提交数据', formData)
             httpAction(httpurl, formData, method).then((res) => {
               if (res.success) {

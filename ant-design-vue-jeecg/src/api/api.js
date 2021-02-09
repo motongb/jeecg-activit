@@ -68,7 +68,7 @@ export const ajaxGetDictItems = (code, params)=>getAction(`/sys/dict/getDictItem
 function getDictItemsFromCache(dictCode) {
   if (Vue.ls.get(UI_CACHE_DB_DICT_DATA) && Vue.ls.get(UI_CACHE_DB_DICT_DATA)[dictCode]) {
     let dictItems = Vue.ls.get(UI_CACHE_DB_DICT_DATA)[dictCode];
-    console.log("-----------getDictItemsFromCache----------dictCode="+dictCode+"---- dictItems=",dictItems)
+    // console.log("-----------getDictItemsFromCache----------dictCode="+dictCode+"---- dictItems=",dictItems)
     return dictItems;
   }
 }

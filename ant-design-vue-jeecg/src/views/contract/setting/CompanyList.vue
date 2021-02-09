@@ -162,7 +162,6 @@
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import CompanyModal from './modules/CompanyModal'
-  import { filterDictTextByDictCode } from '@/components/dict/JDictSelectUtil'
 
   export default {
     name: 'CompanyList',
@@ -206,7 +205,7 @@
             dataIndex: 'level',
             customRender: (text, record, index) => {
               //字典值替换通用方法
-              return filterDictTextByDictCode('company_level', text)
+              return this.filterDictTextByDictCode('company_level', text)
             }
           },
           {
@@ -215,7 +214,7 @@
             dataIndex: 'type',
             customRender: (text, record, index) => {
               //字典值替换通用方法
-              return filterDictTextByDictCode('company_type', text)
+              return this.filterDictTextByDictCode('company_type', text)
             }
           },
           {
@@ -224,7 +223,7 @@
             dataIndex: 'status',
             customRender: (text, record, index) => {
               //字典值替换通用方法
-              return filterDictTextByDictCode('company_status', text)
+              return this.filterDictTextByDictCode('company_status', text)
             }
           },
           // {
@@ -293,7 +292,7 @@
             dataIndex: 'liveStatus',
             customRender: (text, record, index) => {
               //字典值替换通用方法
-              return filterDictTextByDictCode('company_live_status', text)
+              return this.filterDictTextByDictCode('company_live_status', text)
             }
           },
           // {

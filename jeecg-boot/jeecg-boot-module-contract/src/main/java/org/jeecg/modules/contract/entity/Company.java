@@ -1,6 +1,7 @@
 package org.jeecg.modules.contract.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -14,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description: 企业信息/合作方信息
@@ -228,4 +230,8 @@ public class Company implements Serializable {
     @Excel(name = "联系电话", width = 15)
     @ApiModelProperty(value = "联系电话")
     private String contactPhone;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "银行信息")
+    private List<CompanyBank> companyBanks;
 }

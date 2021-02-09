@@ -155,10 +155,10 @@ public class ContractMember implements Serializable {
     @ApiModelProperty(value = "已付金额")
     private String payAmount;
     /**
-     * 锁定金额
+     * 预付比例
      */
-    @Excel(name = "锁定金额", width = 15)
-    @ApiModelProperty(value = "锁定金额")
+    @Excel(name = "预付比例", width = 15)
+    @ApiModelProperty(value = "预付比例")
     private String lockAmount;
     /**
      * 剩余金额
