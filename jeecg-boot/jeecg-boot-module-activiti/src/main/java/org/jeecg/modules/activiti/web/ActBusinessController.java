@@ -68,6 +68,7 @@ public class ActBusinessController {
         String procDefId = (String) paramsData.get("procDefId");
         String procDeTitle = (String) paramsData.get("procDeTitle");
         String tableName = (String) paramsData.get("tableName");
+        String dept = (String) paramsData.get("dept");
         /*保存业务表单数据到数据库表*/
         String tableId = IdUtil.simpleUUID();
         //如果前端上传了id
@@ -85,6 +86,7 @@ public class ActBusinessController {
             actBusiness.setUserId(username);
             actBusiness.setTableId(tableId);
             actBusiness.setProcDefId(procDefId);
+            actBusiness.setDept(dept);
             String title = (String) paramsData.get(ActivitiConstant.titleKey);
             if (StrUtil.isNotBlank(title)) {
                 actBusiness.setTitle(title);

@@ -75,7 +75,6 @@
         url: {
           getNextNode: '/activiti_process/getNextNode',
           getBackList: '/actTask/getBackList/',
-          userWithDepart: '/sys/user/userDepartList'
         },
         backList: [
           {
@@ -124,19 +123,7 @@
           this.userInfo = this.$store.getters.userInfo
           this.lcModa.userName = this.userInfo.realname
           this.lcModa.applyTime = formatDate(new Date().getTime(), 'yyyy-MM-dd hh:mm:ss')
-          this.getUserDepart()
         }
-      },
-      getUserDepart() {
-        this.getAction(this.url.userWithDepart, { userId: this.userInfo.id }).then(res => {
-          if (res.success) {
-            this.lcModa.dept = res.result.map(m => m.title).join(',')
-            if (this.lcModa.isNew) {
-              this.lcModa.title += '-' + this.lcModa.dept + '-' + this.lcModa.userName
-            }
-            console.log('lcModa', this.lcModa)
-          }
-        })
       },
       handleSubmit(e) {
         this.btndisabled = true

@@ -323,6 +323,7 @@
         this.form.typeCode = this.lcModa.typeCode
         this.form.processData.procDefId = this.processData.id
         this.form.processData.tableName = this.processData.businessTable
+        this.form.processData.dept = this.lcModa.dept
         this.form.name = this.lcModa.dept + '-' + this.lcModa.typeName
         this.form.code = this.lcModa.dept + '-' + this.lcModa.typeName + moment().format('YYYYMMDD')
       }

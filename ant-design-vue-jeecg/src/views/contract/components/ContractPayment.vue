@@ -19,7 +19,7 @@
             <template v-else>{{ text }}</template>
           </template>
         </template>
-        <template slot="operation" slot-scope="text, record, index">
+        <template v-if="!disabled" slot="operation" slot-scope="text, record, index">
           <template v-if="record.editable">
               <span v-if="record.isNew">
                 <a @click="saveRow(index)">添加</a>
@@ -43,7 +43,7 @@
             </span>
         </template>
       </a-table>
-      <a-button style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newMember">
+      <a-button v-if="!disabled" style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newMember">
         新增
       </a-button>
     </a-card>
@@ -59,6 +59,12 @@
       contractId: {
         type: String,
         default: null
+      },
+      //表单禁用
+      disabled: {
+        type: Boolean,
+        default: false,
+        required: false
       }
     },
     data() {

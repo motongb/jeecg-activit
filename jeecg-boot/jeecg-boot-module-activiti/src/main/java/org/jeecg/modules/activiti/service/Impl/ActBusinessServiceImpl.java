@@ -408,6 +408,7 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
         String procDeTitle = (String) processData.get("procDeTitle");
         String tableName = (String) processData.get("tableName");
         String tableId = (String) processData.get("tableId");
+        String dept = (String) processData.get("dept");
         if (isNew) {
             LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
             actBusiness.setId(UUIDGenerator.generate());
@@ -416,6 +417,7 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
             actBusiness.setTableName(tableName);
             actBusiness.setProcDefId(procDefId);
             actBusiness.setTitle(procDeTitle);
+            actBusiness.setDept(dept);
             save(actBusiness);
         } else {
             actBusiness.setTitle(procDeTitle);

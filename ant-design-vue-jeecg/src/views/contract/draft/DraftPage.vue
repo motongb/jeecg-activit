@@ -25,7 +25,7 @@
 <script>
   import { setStore } from '@/utils/storage'
   import activitiSetting from '../../activiti/mixins/activitiSetting'
-  import { formatDate } from '@/utils/util'
+  import moment from 'moment'
 
   export default {
     name: 'DraftPage',
@@ -33,13 +33,16 @@
       return {
         activeKey: [],
         dataList: [],
+        userInfo: {},
         url: {
           treeList: '/contract/contractType/tree',
-          queryNewestProcess: '/activiti_process/queryNewestProcess'
+          queryNewestProcess: '/activiti_process/queryNewestProcess',
+          userWithDepart: '/sys/user/userDepartList'
         }
       }
     },
     created() {
+      this.userInfo = this.$store.getters.userInfo
       this.loadData()
     },
     methods: {
@@ -58,8 +61,18 @@
             lcModa.from = activitiSetting.draftPagePath
             lcModa.processData = res.result[0]
             lcModa.isNew = true
-            lcModa.title = formatDate(new Date().getTime(), 'yyyy-MM-dd').replaceAll('-', '') + child.name
+            lcModa.title = moment().format('YYYYMMDD') + child.name
             lcModa.typeCode = child.code
+            lcModa.typeName = child.name
+            this.getUserDepart(lcModa)
+          }
+        })
+      },
+      getUserDepart(lcModa) {
+        this.getAction(this.url.userWithDepart, { userId: this.userInfo.id }).then(res => {
+          if (res.success) {
+            lcModa.dept = res.result.map(m => m.title).join('-')
+            lcModa.title += '-' + lcModa.dept + '-' + this.userInfo.realname
             setStore('lcModa', lcModa)
             this.$router.push(activitiSetting.applyFormPath)
           }
