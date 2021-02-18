@@ -192,7 +192,8 @@
             <a-row>
               <a-col :span="12">
                 <a-form-model-item label="模板id">
-                  <a-input v-model="form.subForm.modelId" placeholder="请输入模板id"></a-input>
+                  <a-input v-model="form.subForm.modelId" placeholder="请输入模板id" @click.native="showFileUpload"></a-input>
+                  <j-file-pop ref="filePop" @ok="handleFileSuccess"></j-file-pop>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
@@ -330,6 +331,13 @@
       this.getContractType()
     },
     methods: {
+      showFileUpload(){
+        this.$refs.filePop.show('','')
+      },
+      /*文件选择回调*/
+      handleFileSuccess(obj) {
+        console.log(obj)
+      },
       /*企业选择回调*/
       handleCompanySelect(item, type) {
         let memberObj = {}

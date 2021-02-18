@@ -74,7 +74,7 @@
         wrapperCol: { span: 12 },
         url: {
           getNextNode: '/activiti_process/getNextNode',
-          getBackList: '/actTask/getBackList/',
+          getBackList: '/actTask/getBackList/'
         },
         backList: [
           {
@@ -123,6 +123,7 @@
           this.userInfo = this.$store.getters.userInfo
           this.lcModa.userName = this.userInfo.realname
           this.lcModa.applyTime = formatDate(new Date().getTime(), 'yyyy-MM-dd hh:mm:ss')
+          this.lcModa.dept = params.isNew ? params.dept : params.processData.dept
         }
       },
       handleSubmit(e) {
