@@ -42,7 +42,8 @@
             </span>
         </template>
       </a-table>
-      <a-button v-if="!disabled" style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newMember">
+      <a-button v-if="!disabled" style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus"
+                @click="newMember">
         新增
       </a-button>
     </a-card>
@@ -50,6 +51,8 @@
 </template>
 
 <script>
+  import { getAction } from '@/api/manage'
+
   export default {
     name: 'ContractItem',
     props: {
@@ -157,7 +160,7 @@
     },
     methods: {
       initValue() {
-        this.getAction(this.url.list, { contractId: this.contractId }).then(res => {
+        getAction(this.url.list, { contractId: this.contractId }).then(res => {
           if (res.success) {
             res.result.records.forEach(item => {
               item.editable = false

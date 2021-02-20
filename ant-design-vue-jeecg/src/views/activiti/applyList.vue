@@ -61,7 +61,7 @@
     </div>
 
     <!-- table区域-begin -->
-    <a-table :scroll="scroll" bordered
+    <a-table bordered
              ref="table"
              size="middle"
              rowKey="id"
@@ -255,12 +255,13 @@
   import { filterObj } from '@/utils/util'
   import { setStore } from '@/utils/storage'
   import JEllipsis from '@/components/jeecg/JEllipsis'
-  import { deleteAction, getAction, downFile } from '@/api/manage'
+  import { getAction, postFormAction } from '@/api/manage'
   import pick from 'lodash.pick'
   import JTreeSelect from '@/components/jeecg/JTreeSelect'
   import { initDictOptions, filterDictText } from '@/components/dict/JDictSelectUtil'
   import historicDetail from '@/views/activiti/historicDetail'
   import activitiSetting from './mixins/activitiSetting'
+  import moment from 'moment'
 
   export default {
     name: 'applyList',
@@ -285,7 +286,9 @@
         // 查询条件
         queryParam: {
           createTimeRange: [],
-          keyWord: ''
+          keyWord: '',
+          pageNumber: 1, // 当前页数
+          pageSize: 10 // 页面大小
         },
         // 表头
         labelCol: {
@@ -324,7 +327,12 @@
         modalLsVisible: false,
         procInstId: '',
         modalCancelVisible: false,
-        cancelForm: {}
+        cancelForm: {},
+        ipagination: {
+          current: 1,
+          pageSize: 10,
+          total: 0  // 表数据总数
+        }
       }
     },
     computed: {},
@@ -350,7 +358,7 @@
       },
       getProcessList() {
         this.addApplyLoading = true
-        this.getAction(this.url.getProcessDataList, { status: 1, roles: true }).then(res => {
+        getAction(this.url.getProcessDataList, { status: 1, roles: true }).then(res => {
           this.activeKeyAll = []
           if (res.success) {
             var result = res.result || []
@@ -373,23 +381,13 @@
           }
         }).finally(() => this.addApplyLoading = false)
       },
-      loadData(arg) {
-        console.log('loadData')
-        if (!this.url.list) {
-          this.$message.error('请设置url.list属性!')
-          return
-        }
-        //加载数据 若传入参数1则加载第一页的内容
-        if (arg === 1) {
-          this.ipagination.current = 1
-        }
-        var params = this.getQueryParams()//查询条件
+      loadData() {
+        let params = this.getQueryParams()//查询条件
         this.loading = true
         getAction(this.url.list, params).then((res) => {
           if (res.success) {
-            let records = res.result || []
-            this.dataSource = records
-            this.ipagination.total = records.length
+            this.dataSource = res.result.records || []
+            this.ipagination.total = res.result.total
           }
           if (res.code === 510) {
             this.$message.warning(res.message)
@@ -407,9 +405,9 @@
       searchReset() {
         var that = this
         var logType = that.queryParam.logType
-        that.queryParam = {} //清空查询区域参数
+        that.queryParam = { pageNumber: 1, pageSize: 10 } //清空查询区域参数
         that.queryParam.logType = logType
-        that.loadData(this.ipagination.current)
+        that.loadData()
       },
       onDateChange: function(value, dateString) {
         console.log(dateString[0], dateString[1])
@@ -464,7 +462,7 @@
         this.form.procDefId = v.procDefId
         this.form.title = v.title
         // 加载审批人
-        this.getAction(this.url.getFirstNode, {
+        getAction(this.url.getFirstNode, {
           procDefId: v.procDefId,
           tableId: v.tableId,
           tableName: v.tableName
@@ -507,17 +505,10 @@
 
       },
       applySubmit() {
-        // if (this.showAssign && this.form.assignees.length < 1) {
-        //   this.error = "请至少选择一个审批人";
-        //   this.$message.error(this.error)
-        //   return;
-        // } else {
-        //   this.error = "";
-        // }
         this.submitLoading = true
         var params = Object.assign({}, this.form)
         params.assignees = params.assignees.join(',')
-        this.postFormAction(this.url.applyBusiness, params).then(res => {
+        postFormAction(this.url.applyBusiness, params).then(res => {
           if (res.success) {
             this.$message.success('操作成功')
             this.loadData()
@@ -537,7 +528,6 @@
         isView = isView || false
         this.lcModa.disabled = isView
         this.lcModa.title = r.title
-        // if (isView) this.lcModa.title = '查看流程业务信息：' + r.title
         this.lcModa.from = activitiSetting.applyListPath
         this.lcModa.processData = r
         this.lcModa.isNew = false
@@ -545,7 +535,7 @@
         this.$router.push(activitiSetting.applyFormPath)
       },
       remove(r) {
-        this.postFormAction(this.url.delByIds, { ids: r.id }).then((res) => {
+        postFormAction(this.url.delByIds, { ids: r.id }).then((res) => {
           if (res.success) {
             this.$message.success(res.message)
             this.loadData()
@@ -561,7 +551,7 @@
       },
       handelSubmitCancel() {
         this.submitLoading = true
-        this.postFormAction(this.url.cancelApply, this.cancelForm).then(res => {
+        postFormAction(this.url.cancelApply, this.cancelForm).then(res => {
           if (res.success) {
             this.$message.success('操作成功')
             this.loadData()
@@ -590,7 +580,9 @@
           this.isorter.order = 'ascend' == sorter.order ? 'asc' : 'desc'
         }
         this.ipagination = pagination
-        // this.loadData();
+        this.queryParam.pageNumber = pagination.current
+        this.queryParam.pageSize = pagination.pageSize
+        this.loadData()
       },
       addApply() {
         this.getProcessList()
@@ -606,7 +598,7 @@
           )
           return
         }
-        this.lcModa.title = '发起流程：' + v.name
+        this.lcModa.title = moment().format('YYYYMMDD') + v.name
         this.lcModa.isNew = true
         this.lcModa.processData = v
         this.lcModa.from = activitiSetting.applyListPath

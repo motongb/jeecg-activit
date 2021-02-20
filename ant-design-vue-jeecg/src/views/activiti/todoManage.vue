@@ -32,15 +32,19 @@
         <a-button @click="getDataList" icon="md-refresh">刷新</a-button>
       </a-row>-->
       <a-row>
-        <a-table :scroll="scroll" bordered
+        <a-table bordered
                  :loading="loading" rowKey="id"
                  :dataSource="data"
                  :pagination="ipagination" @change="handleTableChange"
-                 ref="table"
-        >
+                 ref="table">
           <a-table-column title="#" :width="50">
             <template slot-scope="t,r,i">
               <span> {{i+1}} </span>
+            </template>
+          </a-table-column>
+          <a-table-column title="标题" dataIndex="title" :width="150" align="center">
+            <template slot-scope="t,r,i">
+              <span> {{t}} </span>
             </template>
           </a-table-column>
           <a-table-column title="任务名称" dataIndex="name" :width="150" align="center">
@@ -127,6 +131,7 @@
   import { setStore } from '@/utils/storage'
   import SignModal from './signModal'
   import activitiSetting from './mixins/activitiSetting'
+  import { getAction, postFormAction } from '@/api/manage'
 
   export default {
     name: 'todo-manage',
@@ -206,7 +211,7 @@
       },
       getDataList() {
         this.loading = true
-        this.getAction(this.url.todoList, this.searchForm).then(res => {
+        getAction(this.url.todoList, this.searchForm).then(res => {
           this.loading = false
           if (res.success) {
             this.data = res.result || []
@@ -231,10 +236,6 @@
         // 重新加载数据
         this.getDataList()
       },
-      showSelect(e) {
-        this.selectList = e
-        this.selectCount = e.length
-      },
       clearSelectAll() {
         this.$refs.table.selectAll(false)
       },
@@ -246,7 +247,7 @@
           return
         }
         this.lcModa.disabled = true
-        this.lcModa.title =   r.title
+        this.lcModa.title = r.title
         this.lcModa.processData = r
         this.lcModa.isNew = false
         this.lcModa.from = activitiSetting.todoManage
@@ -289,7 +290,7 @@
               ids += e.id + ','
             })
             ids = ids.substring(0, ids.length - 1)
-            this.postFormAction(this.url.passAll, { ids: ids }).then(res => {
+            postFormAction(this.url.passAll, { ids: ids }).then(res => {
               if (res.success) {
                 this.$message.success('操作成功')
                 this.clearSelectAll()
@@ -318,7 +319,7 @@
               procInstIds += e.procInstId + ','
             })
             procInstIds = procInstIds.substring(0, procInstIds.length - 1)
-            this.postFormAction(this.url.backAll, { procInstIds: procInstIds }).then(res => {
+            postFormAction(this.url.backAll, { procInstIds: procInstIds }).then(res => {
               if (res.success) {
                 this.$message.success('操作成功')
                 this.clearSelectAll()

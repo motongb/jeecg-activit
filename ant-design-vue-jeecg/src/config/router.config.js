@@ -13,6 +13,7 @@ export const asyncRouterMap = [
     meta: { title: '首页' },
     redirect: '/dashboard/analysis',
     children: [
+
       // // dashboard
       // {
       //   path: '/dashboard',
@@ -318,7 +319,7 @@ export const constantRouterMap = [
         path: 'alteration',
         name: 'alteration',
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/alteration/Alteration')
-      }
+      },
     ]
   },
 
@@ -361,6 +362,6 @@ export const constantRouterMap = [
   {
     path: '/404',
     component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404')
-  }
+  },
 
 ]

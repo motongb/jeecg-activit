@@ -4,8 +4,8 @@
  * date: 20190109
  */
 
-import { ajaxGetDictItems, getDictItemsFromCache } from '@/api/api'
-import { getAction } from '@/api/manage'
+import {ajaxGetDictItems,getDictItemsFromCache} from '@/api/api'
+import {getAction} from '@/api/manage'
 
 /**
  * 获取字典数组
@@ -14,18 +14,18 @@ import { getAction } from '@/api/manage'
  */
 export async function initDictOptions(dictCode) {
   if (!dictCode) {
-    return '字典Code不能为空!'
+    return '字典Code不能为空!';
   }
   //优先从缓存中读取字典配置
-  if (getDictItemsFromCache(dictCode)) {
+  if(getDictItemsFromCache(dictCode)){
     let res = {}
-    res.result = getDictItemsFromCache(dictCode)
-    res.success = true
-    return res
+    res.result = getDictItemsFromCache(dictCode);
+    res.success = true;
+    return res;
   }
   //获取字典数组
-  let res = await ajaxGetDictItems(dictCode)
-  return res
+  let res = await ajaxGetDictItems(dictCode);
+  return res;
 }
 
 /**
@@ -40,6 +40,7 @@ export function filterDictTextByDictCode(dictCode, text) {
   }
   return text
 }
+
 
 /**
  * 字典值替换文本通用方法
@@ -82,8 +83,8 @@ export function filterDictText(dictOptions, text) {
  */
 export function filterMultiDictText(dictOptions, text) {
   //js “!text” 认为0为空，所以做提前处理
-  if (text === 0 || text === '0') {
-    if (dictOptions) {
+  if(text === 0 || text === '0'){
+    if(dictOptions){
       for (let dictItem of dictOptions) {
         if (text == dictItem.value) {
           return dictItem.text
@@ -92,26 +93,26 @@ export function filterMultiDictText(dictOptions, text) {
     }
   }
 
-  if (!text || text == 'null' || !dictOptions || dictOptions.length == 0) {
-    return ''
+  if(!text || text=='null' || !dictOptions || dictOptions.length==0){
+    return ""
   }
-  let re = ''
+  let re = "";
   text = text.toString()
-  let arr = text.split(',')
-  dictOptions.forEach(function(option) {
-    if (option) {
-      for (let i = 0; i < arr.length; i++) {
+  let arr = text.split(",")
+  dictOptions.forEach(function (option) {
+    if(option){
+      for(let i=0;i<arr.length;i++){
         if (arr[i] === option.value) {
-          re += option.text + ','
-          break
+          re += option.text+",";
+          break;
         }
       }
     }
-  })
-  if (re == '') {
-    return text
+  });
+  if(re==""){
+    return text;
   }
-  return re.substring(0, re.length - 1)
+  return re.substring(0,re.length-1);
 }
 
 /**
@@ -120,41 +121,41 @@ export function filterMultiDictText(dictOptions, text) {
  * @returns string
  */
 export function filterDictTextByCache(dictCode, key) {
-  if (key == null || key.length == 0) {
-    return
+  if(key==null ||key.length==0){
+    return;
   }
   if (!dictCode) {
-    return '字典Code不能为空!'
+    return '字典Code不能为空!';
   }
-  //优先从缓存中读取字典配置
-  if (getDictItemsFromCache(dictCode)) {
-    let item = getDictItemsFromCache(dictCode).filter(t => t['value'] == key)
-    if (item && item.length > 0) {
-      return item[0]['text']
+   //优先从缓存中读取字典配置
+  if(getDictItemsFromCache(dictCode)){
+    let item = getDictItemsFromCache(dictCode).filter(t => t["value"] == key)
+    if(item && item.length>0){
+      return item[0]["text"]
     }
   }
 }
 
 /** 通过code获取字典数组 */
 export async function getDictItems(dictCode, params) {
-  //优先从缓存中读取字典配置
-  if (getDictItemsFromCache(dictCode)) {
-    let desformDictItems = getDictItemsFromCache(dictCode).map(item => ({ ...item, label: item.text }))
-    return desformDictItems
-  }
-
-  //缓存中没有，就请求后台
-  return await ajaxGetDictItems(dictCode, params).then(({ success, result }) => {
-    if (success) {
-      let res = result.map(item => ({ ...item, label: item.text }))
-      console.log('------- 从DB中获取到了字典-------dictCode : ', dictCode, res)
-      return Promise.resolve(res)
-    } else {
-      console.error('getDictItems error: : ', res)
-      return Promise.resolve([])
+    //优先从缓存中读取字典配置
+    if(getDictItemsFromCache(dictCode)){
+      let desformDictItems = getDictItemsFromCache(dictCode).map(item => ({...item, label: item.text}))
+      return desformDictItems;
     }
-  }).catch((res) => {
-    console.error('getDictItems error: ', res)
-    return Promise.resolve([])
-  })
+
+    //缓存中没有，就请求后台
+    return await ajaxGetDictItems(dictCode, params).then(({success, result}) => {
+      if (success) {
+        let res = result.map(item => ({...item, label: item.text}))
+        console.log('------- 从DB中获取到了字典-------dictCode : ', dictCode, res)
+        return Promise.resolve(res)
+      } else {
+        console.error('getDictItems error: : ', res)
+        return Promise.resolve([])
+      }
+    }).catch((res) => {
+      console.error('getDictItems error: ', res)
+      return Promise.resolve([])
+    })
 }

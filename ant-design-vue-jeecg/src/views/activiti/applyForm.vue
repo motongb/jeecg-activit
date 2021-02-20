@@ -2,17 +2,22 @@
   <div>
     <a-card class="apply-card" title="申请信息">
       <div slot="extra">
-        <a-button v-show="!btndisabled" type="primary" :disabled="lcModa.disabled||btndisabled" @click="handleSubmit">
+        <template v-if="lcModa.isTask">
+          <a-button type="primary" @click="passTask">通 过</a-button>
+          <a-button style="margin-left: 8px" @click="backTask">驳 回</a-button>
+        </template>
+        <a-button v-show="!lcModa.disabled&&!btndisabled" type="primary" @click="handleSubmit">
           保存
         </a-button>
         <a-button style="margin-left: 8px" type="primary" ghost @click="closed">返 回</a-button>
       </div>
       <div class="apply-header">
         <j-form-container :disabled="lcModa.disabled">
-          <a-form-model slot="detail" :model="lcModa" :label-col="labelCol" :wrapper-col="wrapperCol">
+          <a-form-model ref="ruleForm" slot="detail" :rules="rules" :model="lcModa" :label-col="labelCol"
+                        :wrapper-col="wrapperCol">
             <a-row>
               <a-col :span="24">
-                <a-form-model-item :label-col="{ span: 2 }" :wrapper-col="{span:20}" label="标题">
+                <a-form-model-item :label-col="{ span: 2 }" :wrapper-col="{span:20}" label="标题" prop="title">
                   <a-input v-model="lcModa.title" placeholder="请输入标题"/>
                 </a-form-model-item>
               </a-col>
@@ -42,12 +47,7 @@
     <!--流程表单-->
     <component :disabled="lcModa.disabled" :is="lcModa.formComponent" ref="processForm"
                :processData="lcModa.processData" :isNew="lcModa.isNew" :title="lcModa.title"
-               :task="lcModa.isTask"></component>
-
-    <a-form-item v-if="lcModa.isTask" :wrapperCol="{ span: 24 }" style="text-align: center">
-      <a-button type="primary" @click="passTask">通 过</a-button>
-      <a-button style="margin-left: 8px" @click="backTask">驳 回</a-button>
-    </a-form-item>
+               :task="lcModa.isTask" :dept="lcModa.dept"></component>
 
     <sign-modal :form="form" :modal-task-title="modalTaskTitle" :modal-task-visible="modalTaskVisible"
                 :assignee-list="assigneeList" :user-loading="userLoading" @cancel="modalTaskVisible = false"
@@ -63,6 +63,7 @@
   import { formatDate } from '@/utils/util'
   import activitiSetting from './mixins/activitiSetting'
   import JFormContainer from '@/components/jeecg/JFormContainer'
+  import { getAction, postFormAction } from '@/api/manage'
 
   export default {
     name: 'applyForm',
@@ -74,7 +75,8 @@
         wrapperCol: { span: 12 },
         url: {
           getNextNode: '/activiti_process/getNextNode',
-          getBackList: '/actTask/getBackList/'
+          getBackList: '/actTask/getBackList/',
+          userWithDepart: '/sys/user/userDepartList'
         },
         backList: [
           {
@@ -84,6 +86,9 @@
         ],
         lcModa: {},
         modalTaskTitle: '',
+        rules: {
+          title: { required: true, message: '请输入标题', trigger: 'blur' }
+        },
         form: {
           id: '',
           userId: '',
@@ -123,16 +128,35 @@
           this.userInfo = this.$store.getters.userInfo
           this.lcModa.userName = this.userInfo.realname
           this.lcModa.applyTime = formatDate(new Date().getTime(), 'yyyy-MM-dd hh:mm:ss')
-          this.lcModa.dept = params.isNew ? params.dept : params.processData.dept
+          if (params.isNew) {
+            this.getUserDepart()
+          } else {
+            this.lcModa.dept = params.processData.dept
+          }
         }
       },
+      getUserDepart() {
+        getAction(this.url.userWithDepart, { userId: this.userInfo.id }).then(res => {
+          if (res.success) {
+            this.lcModa.dept = res.result.map(m => m.title).join('-')
+            this.lcModa.title += '-' + this.lcModa.dept + '-' + this.userInfo.realname
+          }
+        })
+      },
       handleSubmit(e) {
-        this.btndisabled = true
-        this.$refs.processForm.handleSubmit(e).then(res => {
-          this.afterSub(res)
-          this.btndisabled = false
-        }).catch(_ => {
-          this.btndisabled = false
+        this.$refs.ruleForm.validate(valid => {
+          if (valid) {
+            this.btndisabled = true
+            this.$refs.processForm.handleSubmit(e).then(res => {
+              this.afterSub(res)
+              this.btndisabled = false
+            }).catch(_ => {
+              this.btndisabled = false
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
         })
       },
       /*通过审批*/
@@ -144,7 +168,7 @@
         this.form.priority = v.priority
         this.form.type = 0
         this.userLoading = true
-        this.postFormAction(this.url.getNextNode, {
+        postFormAction(this.url.getNextNode, {
           procDefId: v.procDefId,
           currActId: v.key,
           procInstId: v.procInstId
@@ -153,10 +177,15 @@
           if (res.success) {
             this.assigneeList = res.result
             this.showAssign = true
+            //没有下一处理人或最后节点
             if (res.result.length === 0 || res.result[0].type === 2) {
               this.showAssign = false
+            } else {
+              //默认选中候选人
+              this.assigneeList.forEach(item => item.values = item.users.map(m => m.username))
             }
             this.modalTaskVisible = true
+            console.log(this.assigneeList)
           }
         })
       },
@@ -180,7 +209,7 @@
         ]
         this.form.backTaskKey = '-1'
         this.backLoading = true
-        this.getAction(this.url.getBackList + v.procInstId).then(res => {
+        getAction(this.url.getBackList + v.procInstId).then(res => {
           this.backLoading = false
           if (res.success) {
             res.result.forEach(e => {
@@ -193,16 +222,11 @@
       afterSub(formData) {
         clearStore('lcModa')
         this.$router.push(activitiSetting.applyListPath)
-        // this.closedCall()
       },
       closed() {
         clearStore('lcModa')
         this.$router.push(this.lcModa.from)
-        // this.closedCall()
         this.modalTaskVisible = false
-      },
-      closedCall() {
-        this.$bus.$emit('closed-current-tabs')
       }
     }
   }

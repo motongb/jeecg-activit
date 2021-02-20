@@ -11,8 +11,6 @@ export const activitiMixin = {
   },
   data() {
     return {
-      //token header
-      tokenHeader: { 'X-Access-Token': Vue.ls.get(ACCESS_TOKEN) },
     }
   },
   computed: {

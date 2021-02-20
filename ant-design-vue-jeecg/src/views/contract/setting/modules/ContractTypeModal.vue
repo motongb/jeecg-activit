@@ -57,7 +57,7 @@
 
 <script>
 
-  import { httpAction } from '@/api/manage'
+  import { httpAction, getAction } from '@/api/manage'
   import pick from 'lodash.pick'
   import { validateDuplicateValue } from '@/utils/util'
   import { initDictOptions } from '@/components/dict/JDictSelectUtil'
@@ -122,7 +122,7 @@
     },
     methods: {
       getProcess() {
-        this.getAction(this.url.getProcessDataList, { status: 1, roles: true, zx: true }).then(res => {
+        getAction(this.url.getProcessDataList, { status: 1, roles: true, zx: true }).then(res => {
           if (res.success) {
             this.options.forEach(option => {
               let temp = res.result.filter(c => c.categoryId === option.value)

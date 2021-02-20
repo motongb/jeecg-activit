@@ -13,7 +13,8 @@
         <a-table
           :columns="columns"
           :dataSource="data"
-          :pagination="false">
+          :pagination="false"
+        >
           <template v-for="(col, i) in ['name', 'workId', 'department']" :slot="col" slot-scope="text, record, index">
             <a-input
               :key="col"
@@ -21,7 +22,8 @@
               style="margin: -5px 0"
               :value="text"
               :placeholder="columns[i].title"
-              @change="e => handleChange(e.target.value, record.key, col)"/>
+              @change="e => handleChange(e.target.value, record.key, col)"
+            />
             <template v-else>{{ text }}</template>
           </template>
           <template slot="operation" slot-scope="text, record, index">

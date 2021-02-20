@@ -9,14 +9,14 @@
           </a-form-item>
 
           <template v-if="showAssign">
-            <a-form-item v-for="assignee in assigneeList" :label="assignee.title" :error="error">
+            <a-form-item v-for="(assignee,index) in assigneeList" :label="assignee.title" :error="error">
               <a-select
-                v-model="assignee.values"
+                :defaultValue="assignee.values"
                 placeholder="请选择"
                 allowClear
-                mode="multiple"
-                :loading="userLoading">
-                <a-select-option v-for="(item, i) in assignee.users" :key="i" :value="item.username">{{item.realname}}
+                @change="(selected)=>assignChangeHandle(index,selected)"
+                mode="multiple">
+                <a-select-option v-for="item in assignee.users" :key="item.id" :value="item.username">{{item.realname}}
                 </a-select-option>
               </a-select>
             </a-form-item>
@@ -34,11 +34,11 @@
             </a-form-item>
             <a-form-item label="指定原节点审批人" prop="assignees" v-if="form.backTaskKey!=-1" :error="error">
               <a-select
-                        v-model="form.assignees"
-                        placeholder="请选择"
-                        allowClear
-                        mode="multiple"
-                        :loading="userLoading">
+                v-model="form.assignees"
+                placeholder="请选择"
+                allowClear
+                mode="multiple"
+                :loading="userLoading">
                 <a-select-option v-for="(item, i) in assignees" :key="i" :value="item.username">{{item.realname}}
                 </a-select-option>
               </a-select>
@@ -65,6 +65,8 @@
 <script>
   import JSelectUserByDep from '@/components/jeecgbiz/JSelectUserByDep'
   import { getStore, clearStore } from '@/utils/storage'
+  import { getAction, postAction, postFormAction } from '@/api/manage'
+
   export default {
     name: 'signModal',
     components: { JSelectUserByDep },
@@ -113,15 +115,29 @@
           getNode: '/activiti_process/getNode/'
         },
         error: '',
-        assignees:[]
+        assignees: []
       }
     },
     methods: {
-      afterSub(){
+      /* 审批人选中处理*/
+      assignChangeHandle(index, selected) {
+        this.assigneeList[index].values = selected
+        console.log(this.assigneeList)
+      },
+      afterSub() {
         this.$emit('afterSub')
       },
       cancel() {
         this.$emit('cancel')
+      },
+      /*判断是否选择审批人*/
+      notAssignee() {
+        for (let item of this.assigneeList) {
+          if (!item.values || item.values.length < 1) {
+            this.$message.error(`${item.title}缺少审批人`)
+            return true
+          }
+        }
       },
       /*审批提交的方法*/
       handelSubmit() {
@@ -130,21 +146,20 @@
         let formData = Object.assign({}, this.form)
         if (formData.type == 0) {
           // 通过
-          // if (this.showAssign && formData.assignees.length < 1) {
-          //   this.$message.error("请至少选择一个审批人")
-          //   this.submitLoading = false;
-          //   return;
-          // } else {
-          //   this.error = "";
-          // }
+          if (this.showAssign && this.notAssignee()) {
+            this.submitLoading = false
+            return
+          } else {
+            this.error = ''
+          }
           formData.assignees = []
           this.assigneeList.forEach(item => {
-            if (item.values) {
+            if (item.values && item.values.length > 0) {
               let assignee = { id: item.id, assignees: item.values.join(',') }
               formData.assignees.push(assignee)
             }
           })
-          this.postDataAction(this.url.pass, formData).then(res => {
+          postAction(this.url.pass, formData).then(res => {
             this.submitLoading = false
             if (res.success) {
               this.$message.success('操作成功')
@@ -152,11 +167,11 @@
             }
           })
         } else if (formData.type == 1) {
-          formData.assignees = formData.assignees.join(',');
+          formData.assignees = formData.assignees.join(',')
           // 驳回
           if (formData.backTaskKey == '-1') {
             // 驳回至发起人
-            this.postFormAction(this.url.back, formData).then(res => {
+            postFormAction(this.url.back, formData).then(res => {
               this.submitLoading = false
               if (res.success) {
                 this.$message.success('操作成功')
@@ -172,7 +187,7 @@
             } else {
               this.error = ''
             }
-            this.postFormAction(this.url.backToTask, formData).then(res => {
+            postFormAction(this.url.backToTask, formData).then(res => {
               this.submitLoading = false
               if (res.success) {
                 this.$message.success('操作成功')
@@ -189,7 +204,7 @@
           } else {
             this.error = ''
           }
-          this.postFormAction(this.url.delegate, formData).then(res => {
+          postFormAction(this.url.delegate, formData).then(res => {
             this.submitLoading = false
             if (res.success) {
               this.$message.success('操作成功')
@@ -202,15 +217,16 @@
         if (v == '-1') {
           return
         }
-        let params = getStore('lcModa');
-        this.getAction(this.url.getNode, {
+        let params = getStore('lcModa')
+        getAction(this.url.getNode, {
           nodeId: v,
           tableName: params.processData.tableName,
           tableId: params.processData.tableId
         }).then(res => {
           if (res.success) {
             if (res.result.users && res.result.users.length > 0) {
-              this.assignees = res.result.users;
+              this.assignees = res.result.users
+              this.form.assignees = res.result.users.map(m => m.username)
             }
           }
         })

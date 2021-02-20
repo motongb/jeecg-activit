@@ -52,6 +52,7 @@
 
 <script>
   import moment from 'moment'
+  import { getAction } from '@/api/manage'
 
   export default {
     name: 'ContractPayment',
@@ -146,7 +147,7 @@
     },
     methods: {
       initValue() {
-        this.getAction(this.url.list, { contractId: this.contractId }).then(res => {
+        getAction(this.url.list, { contractId: this.contractId }).then(res => {
           if (res.success) {
             res.result.records.forEach(item => {
               item.editable = false

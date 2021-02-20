@@ -13,6 +13,8 @@
 </template>
 
 <script>
+  import { getAction } from '@/api/manage'
+
   export default {
     name: 'CompanySelectTag',
     model: {
@@ -57,14 +59,14 @@
         }
       },
       queryById() {
-        this.getAction(this.url.queryById, { id: this.value }).then(res => {
+        getAction(this.url.queryById, { id: this.value }).then(res => {
           if (res.success) {
             this.text = res.result.nameCn
           }
         })
       },
       query(searchText) {
-        this.getAction(this.url.list, { nameCn: searchText }).then(res => {
+        getAction(this.url.list, { nameCn: searchText }).then(res => {
           this.isLoading = !this.isLoading
           if (res.success) {
             this.dataSource = res.result.records

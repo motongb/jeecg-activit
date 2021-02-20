@@ -14,6 +14,7 @@
 <script>
 
   import ContractPurchaseList from './ContractPurchaseList'
+  import { getAction } from '@/api/manage'
   export default {
     name: 'ContractBaseList',
     // mixins: [JeecgListMixin],
@@ -37,7 +38,7 @@
         return this.contractTypeList.map(m=>m.code).includes(code);
       },
       getContractType() {
-        this.getAction(this.url.treeList, { roles: true }).then(res => {
+        getAction(this.url.treeList, { roles: true }).then(res => {
           if (res.success) {
             this.contractTypeList = res.result
           }

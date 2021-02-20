@@ -26,6 +26,7 @@
   import { setStore } from '@/utils/storage'
   import activitiSetting from '../../activiti/mixins/activitiSetting'
   import moment from 'moment'
+  import { getAction } from '@/api/manage'
 
   export default {
     name: 'DraftPage',
@@ -37,17 +38,15 @@
         url: {
           treeList: '/contract/contractType/tree',
           queryNewestProcess: '/activiti_process/queryNewestProcess',
-          userWithDepart: '/sys/user/userDepartList'
         }
       }
     },
     created() {
-      this.userInfo = this.$store.getters.userInfo
       this.loadData()
     },
     methods: {
       loadData() {
-        this.getAction(this.url.treeList, { roles: true }).then(res => {
+        getAction(this.url.treeList, { roles: true }).then(res => {
           if (res.success) {
             this.dataList = res.result
             this.dataList.forEach(item => this.activeKey.push(item.id))
@@ -55,7 +54,7 @@
         })
       },
       chooseProcess(child) {
-        this.getAction(this.url.queryNewestProcess, { processKey: child.processDef }).then(res => {
+        getAction(this.url.queryNewestProcess, { processKey: child.processDef }).then(res => {
           if (res.success && res.result.length > 0) {
             let lcModa = {}
             lcModa.from = activitiSetting.draftPagePath
@@ -64,20 +63,12 @@
             lcModa.title = moment().format('YYYYMMDD') + child.name
             lcModa.typeCode = child.code
             lcModa.typeName = child.name
-            this.getUserDepart(lcModa)
-          }
-        })
-      },
-      getUserDepart(lcModa) {
-        this.getAction(this.url.userWithDepart, { userId: this.userInfo.id }).then(res => {
-          if (res.success) {
-            lcModa.dept = res.result.map(m => m.title).join('-')
-            lcModa.title += '-' + lcModa.dept + '-' + this.userInfo.realname
             setStore('lcModa', lcModa)
             this.$router.push(activitiSetting.applyFormPath)
           }
         })
-      }
+      },
+
     }
   }
 </script>

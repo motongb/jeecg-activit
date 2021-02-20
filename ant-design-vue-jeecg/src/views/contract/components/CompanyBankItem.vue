@@ -61,7 +61,8 @@
 </template>
 
 <script>
-
+  import { getAction } from '@/api/manage'
+  import {filterDictTextByDictCode} from '@comp/dict/JDictSelectUtil'
   export default {
     name: 'CompanyBankItem',
     props: {
@@ -149,8 +150,11 @@
       }
     },
     methods: {
+      filterDictTextByDictCode(dictCode,key){
+        return filterDictTextByDictCode(dictCode,key)
+      },
       initValue() {
-        this.getAction(this.url.list, { companyId: this.companyId }).then(res => {
+        getAction(this.url.list, { companyId: this.companyId }).then(res => {
           if (res.success) {
             res.result.records.forEach(item => {
               item.editable = false

@@ -1175,7 +1175,7 @@ module.exports = function (that, target, C) {
 };
 
 },{"57":57,"98":98}],52:[function(_dereq_,module,exports){
-// fast draft, http://jsperf.lnkit.com/fast-apply/5
+// fast apply, http://jsperf.lnkit.com/fast-apply/5
 module.exports = function (fn, args, that) {
   var un = that === undefined;
   switch (args.length) {
@@ -4610,7 +4610,7 @@ $export($export.S + $export.F * !(USE_NATIVE && _dereq_(62)(function (iter) {
 });
 
 },{"100":100,"103":103,"11":11,"112":112,"124":124,"128":128,"15":15,"25":25,"30":30,"32":32,"40":40,"45":45,"46":46,"57":57,"62":62,"65":65,"71":71,"72":72,"90":90,"91":91,"93":93,"99":99}],209:[function(_dereq_,module,exports){
-// 26.1.1 Reflect.draft(target, thisArgument, argumentsList)
+// 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
 var $export = _dereq_(40);
 var aFunction = _dereq_(11);
 var anObject = _dereq_(16);

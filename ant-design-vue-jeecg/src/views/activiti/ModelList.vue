@@ -41,7 +41,7 @@
     </div>
 
     <!-- table区域-begin -->
-    <a-table :scroll="{x:1280,y:innerHeight/2}" bordered
+    <a-table bordered
       ref="table"
       size="middle"
       rowKey="id"

@@ -9,6 +9,7 @@ export const setStore = (name, content, maxAge = null) => {
   if (!global.window || !name) {
     return;
   }
+
   if (typeof content !== 'string') {
     content = JSON.stringify(content)
   }

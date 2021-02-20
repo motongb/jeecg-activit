@@ -191,24 +191,25 @@
           <a-card class="apply-card" title="签署文件">
             <a-row>
               <a-col :span="12">
-                <a-form-model-item label="模板id">
-                  <a-input v-model="form.subForm.modelId" placeholder="请输入模板id" @click.native="showFileUpload"></a-input>
-                  <j-file-pop ref="filePop" @ok="handleFileSuccess"></j-file-pop>
+                <a-form-model-item label="模板文件">
+                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.subForm.fileModel"
+                            :number="1"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="合同影像文件">
-                  <a-input v-model="form.subForm.filePdf" placeholder="请输入合同影像文件"></a-input>
+                  <j-upload fileType="image" :disabled="disabled" :buttonVisible="!disabled"
+                            v-model="form.subForm.filePdf"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="附件">
-                  <a-input v-model="form.subForm.fileAttach" placeholder="请输入附件"></a-input>
+                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.subForm.fileAttach"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="合同文件">
-                  <a-input v-model="form.subForm.fileContract" placeholder="请输入合同文件"></a-input>
+                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.subForm.fileContract"/>
                 </a-form-model-item>
               </a-col>
             </a-row>
@@ -237,7 +238,7 @@
 
 <script>
 
-  import { httpAction } from '@/api/manage'
+  import { httpAction, getAction } from '@/api/manage'
   import { validateDuplicateValue, digitUppercase } from '@/utils/util'
   import { getStore } from '@/utils/storage'
   import JFormContainer from '@/components/jeecg/JFormContainer'
@@ -263,14 +264,7 @@
       JDate
     },
     mixins: [activitiApproveMixin],
-    props: {
-      //表单禁用
-      disabled: {
-        type: Boolean,
-        default: false,
-        required: false
-      }
-    },
+    props: {},
     data() {
       return {
         // 合同类型树
@@ -288,7 +282,11 @@
             isSecret: '0',
             purchaseType: '0',
             startTime: moment().format('YYYY-MM-DD'),
-            endTime: moment().subtract(-1, 'years').format('YYYY-MM-DD')
+            endTime: moment().subtract(-1, 'years').format('YYYY-MM-DD'),
+            fileModel: '',
+            filePdf: '',
+            fileAttach: '',
+            fileContract: ''
           },
           firstMemberObj: { type: '0', coin: 'CNY' },
           secondMemberObj: { type: '1', coin: 'CNY' },
@@ -324,20 +322,12 @@
         this.form.typeCode = this.lcModa.typeCode
         this.form.processData.procDefId = this.processData.id
         this.form.processData.tableName = this.processData.businessTable
-        this.form.processData.dept = this.lcModa.dept
-        this.form.name = this.lcModa.dept + '-' + this.lcModa.typeName
-        this.form.code = this.lcModa.dept + '-' + this.lcModa.typeName + moment().format('YYYYMMDD')
+        // this.form.name = this.dept + '-' + this.lcModa.typeName
+        // this.form.code = this.dept + '-' + this.lcModa.typeName + moment().format('YYYYMMDD')
       }
       this.getContractType()
     },
     methods: {
-      showFileUpload(){
-        this.$refs.filePop.show('','')
-      },
-      /*文件选择回调*/
-      handleFileSuccess(obj) {
-        console.log(obj)
-      },
       /*企业选择回调*/
       handleCompanySelect(item, type) {
         let memberObj = {}
@@ -350,7 +340,7 @@
           lockAmount: 0,
           restAmount: 0
         }, memberObj)
-        this.getAction(this.url.bankList, { companyId: item.id }).then(res => {
+        getAction(this.url.bankList, { companyId: item.id }).then(res => {
           if (res.success && res.result.records.length > 0) {
             let bankItem = res.result.records[0]
             memberObj.bank = bankItem.bank
@@ -372,7 +362,7 @@
       },
       /*获取合同类型树*/
       getContractType() {
-        this.getAction(this.url.treeList, { roles: true }).then(res => {
+        getAction(this.url.treeList, { roles: true }).then(res => {
           if (res.success) {
             this.contractTypeData = res.result
           }
@@ -380,7 +370,7 @@
       },
       /*初始化数据*/
       init() {
-        this.getAction(this.url.queryById, { id: this.processData.tableId }).then((res) => {
+        getAction(this.url.queryById, { id: this.processData.tableId }).then((res) => {
           if (res.success) {
             this.form = res.result
             this.form.processData = {}
@@ -396,6 +386,7 @@
           this.$refs.ruleForm.validate(valid => {
             if (valid) {
               this.form.processData.procDeTitle = this.title
+              this.form.processData.dept = this.dept
               this.confirmLoading = true
               let httpurl = ''
               let method = ''

@@ -1,7 +1,11 @@
-import pick from 'lodash.pick'
+import { getAction, postAction } from '@/api/manage'
 
 export const activitiApproveMixin = {
   props: {
+    dept: {
+      type: String,
+      default: ''
+    },
     /*标题*/
     title: {
       type: String,
@@ -52,7 +56,7 @@ export const activitiApproveMixin = {
     /*回显数据*/
     init() {
       var r = this.processData
-      this.getAction(this.url.getForm, {
+      getAction(this.url.getForm, {
         tableId: r.tableId,
         tableName: r.tableName
       }).then((res) => {
@@ -86,7 +90,7 @@ export const activitiApproveMixin = {
             if (!this.isNew) {
               url = this.url.editForm
             }
-            this.postDataAction(url, this.form).then((res) => {
+            postAction(url, this.form).then((res) => {
               if (res.success) {
                 this.$message.success('保存成功！')
                 //todo 将表单的数据传给父组件
