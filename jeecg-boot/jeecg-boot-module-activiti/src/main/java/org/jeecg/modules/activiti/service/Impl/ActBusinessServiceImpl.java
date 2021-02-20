@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -28,6 +29,8 @@ import org.jeecg.modules.activiti.service.IActBusinessService;
 import org.jeecg.modules.activiti.service.IActZParamsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -63,7 +66,7 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
      * @param request
      * @return
      */
-    public List<ActBusiness> approveList(HttpServletRequest request, ActBusiness param) {
+    public Page<ActBusiness> approveList(HttpServletRequest request, ActBusiness param) {
         // 按时间排序
         LambdaQueryWrapper<ActBusiness> queryWrapper = new LambdaQueryWrapper<>();
 
@@ -105,7 +108,11 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
                 queryWrapper.in(ActBusiness::getId, actBusinessIdsByType);
             }
         }
-        List<ActBusiness> actBusinessList = this.list(queryWrapper);
+        int pageNum = StringUtils.hasText(request.getParameter("pageNumber")) ? Integer.parseInt(request.getParameter("pageNumber")) : 1;
+        int pageSize = StringUtils.hasText(request.getParameter("pageSize")) ? Integer.parseInt(request.getParameter("pageSize")) : 9999;
+        Page<ActBusiness> page = new Page<>(pageNum, pageSize);
+        page = this.page(page, queryWrapper);
+        List<ActBusiness> actBusinessList = page.getRecords();
 
         // 是否需要业务数据
         String needData = request.getParameter("needData");
@@ -143,7 +150,8 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
                 e.setDataMap(applyForm);
             }
         });
-        return actBusinessList;
+        page.setRecords(actBusinessList);
+        return page;
 
     }
 
@@ -286,8 +294,7 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
      * @param priority   优先级别
      * @return
      */
-
-    public List<HistoricTaskVo> getHistoricTaskVos(HttpServletRequest req, String name, String categoryId, Integer priority) {
+    public Page<HistoricTaskVo> getHistoricTaskVos(HttpServletRequest req, String name, String categoryId, Integer priority) {
         List<HistoricTaskVo> list = new ArrayList<>();
         LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         String userId = loginUser.getUsername();
@@ -319,26 +326,26 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
                     .like(ActBusiness::getTitle, searchVal) //标题查询
                     .or().in(ActBusiness::getUserId, uNames)
             );
-            if (businessList.size() > 0) {
+            if (CollectionUtils.isEmpty(businessList)) {
+                query.processInstanceIdIn(Lists.newArrayList(""));
+            } else {
                 // 定义id
                 List<String> pids = businessList.stream().filter(act -> act.getProcInstId() != null).map(act -> act.getProcInstId()).collect(Collectors.toList());
                 query.processInstanceIdIn(pids);
-            } else {
-                query.processInstanceIdIn(Lists.newArrayList(""));
             }
         }
         String type = req.getParameter("type");
         if (StrUtil.isNotBlank(type)) {
-            List<String> deployment_idList = this.getBaseMapper().deployment_idListByType(type);
-            if (deployment_idList.size() == 0) {
+            List<String> deploymentIdList = this.getBaseMapper().deployment_idListByType(type);
+            if (CollectionUtils.isEmpty(deploymentIdList)) {
                 query.deploymentIdIn(Lists.newArrayList(""));
             } else {
-                query.deploymentIdIn(deployment_idList);
+                query.deploymentIdIn(deploymentIdList);
             }
         }
-        String createTime_end = req.getParameter("createTime_end");
-        if (StrUtil.isNotBlank(createTime_end)) {
-            Date end = DateUtil.parse(createTime_end);
+        String createTimeEnd = req.getParameter("createTime_end");
+        if (StrUtil.isNotBlank(createTimeEnd)) {
+            Date end = DateUtil.parse(createTimeEnd);
             query.taskCreatedBefore(DateUtil.endOfDay(end));
         }
         // 流程定义key
@@ -347,8 +354,10 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
             query.processDefinitionId(procDefKey);
         }
 
-
-        List<HistoricTaskInstance> taskList = query.list();
+        int pageNum = StringUtils.hasText(req.getParameter("pageNumber")) ? Integer.parseInt(req.getParameter("pageNumber")) : 1;
+        int pageSize = StringUtils.hasText(req.getParameter("pageSize")) ? Integer.parseInt(req.getParameter("pageSize")) : 9999;
+        List<HistoricTaskInstance> taskList = query.listPage(pageNum, pageSize);
+        Page<HistoricTaskVo> page = new Page<>(pageNum, pageSize, query.count());
         // 是否需要业务数据
         String needData = req.getParameter("needData");
         // 转换vo
@@ -369,7 +378,7 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
             }
             // 关联审批意见
             List<Comment> comments = taskService.getTaskComments(htv.getId(), "comment");
-            if (comments != null && comments.size() > 0) {
+            if (!CollectionUtils.isEmpty(comments)) {
                 htv.setComment(comments.get(0).getFullMessage());
             }
             // 关联流程信息
@@ -394,10 +403,10 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
                     htv.setDataMap(applyForm);
                 }
             }
-
             list.add(htv);
         });
-        return list;
+        page.setRecords(list);
+        return page;
     }
 
 

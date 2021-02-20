@@ -26,13 +26,16 @@ import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.jeecg.common.api.event.ActivitiBackEvent;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.vo.LoginUser;
+import org.jeecg.config.WorkflowConstants;
 import org.jeecg.modules.activiti.entity.*;
 import org.jeecg.modules.activiti.service.Impl.ActBusinessServiceImpl;
 import org.jeecg.modules.activiti.service.Impl.ActZprocessServiceImpl;
+import org.jeecgframework.core.util.ApplicationContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -268,20 +271,20 @@ public class ActTaskController {
         taskService.addComment(id, procInstId, comment);
         ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(procInstId).singleResult();
         // 删除流程实例
-        runtimeService.deleteProcessInstance(procInstId, "backed");
+        runtimeService.deleteProcessInstance(procInstId, ActivitiConstant.BACKED_FLAG);
         ActBusiness actBusiness = actBusinessService.getById(pi.getBusinessKey());
         actBusiness.setStatus(ActivitiConstant.STATUS_FINISH);
         actBusiness.setResult(ActivitiConstant.RESULT_FAIL);
         actBusinessService.updateById(actBusiness);
         // 异步发消息
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        ApplicationContextUtil.getContext().publishEvent(new ActivitiBackEvent<>(WorkflowConstants.FAIL, actBusiness));
         actZprocessService.sendMessage(actBusiness.getId(), sysUser, sysBaseAPI.getUserByName(actBusiness.getUserId()), ActivitiConstant.MESSAGE_BACK_CONTENT,
                 String.format("您的 【%s】 申请已被驳回！", actBusiness.getTitle()), sendMessage, sendSms, sendEmail);
         // 记录实际审批人员
-        actBusinessService.insertHI_IDENTITYLINK(IdUtil.simpleUUID(),
-                ActivitiConstant.EXECUTOR_TYPE_b, sysUser.getUsername(), id, procInstId);
+        actBusinessService.insertHI_IDENTITYLINK(IdUtil.simpleUUID(), ActivitiConstant.EXECUTOR_TYPE_b, sysUser.getUsername(), id, procInstId);
         //修改业务表的流程字段
-        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), "驳回");
+        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), WorkflowConstants.FAIL);
         return Result.ok("操作成功");
     }
 
@@ -389,7 +392,7 @@ public class ActTaskController {
         taskService.complete(id);
         ActBusiness actBusiness = actBusinessService.getById(pi.getBusinessKey());
         //修改业务表的流程字段
-        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), "审批中-" + task.getTaskDefinitionKey() + "-" + task.getName());
+        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), WorkflowConstants.SIGNING);
 
         LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         List<Task> tasks = taskService.createTaskQuery().processInstanceId(procInstId).list();
@@ -445,7 +448,7 @@ public class ActTaskController {
             actZprocessService.sendMessage(actBusiness.getId(), loginUser, user, ActivitiConstant.MESSAGE_PASS_CONTENT,
                     String.format("您的 【%s】 申请已通过！", actBusiness.getTitle()), sendMessage, sendSms, sendEmail);
             //修改业务表的流程字段
-            actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), "审批通过");
+            actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), WorkflowConstants.FINALIZED);
 
         }
         // 记录实际审批人员
@@ -560,8 +563,7 @@ public class ActTaskController {
                                    Integer priority,
                                    HttpServletRequest req) {
 
-        List<HistoricTaskVo> list = actBusinessService.getHistoricTaskVos(req, name, categoryId, priority);
-        return Result.ok(list);
+        return Result.ok(actBusinessService.getHistoricTaskVos(req, name, categoryId, priority));
     }
 
     /*删除任务历史*/
@@ -582,7 +584,6 @@ public class ActTaskController {
         actBusiness.setResult(ActivitiConstant.RESULT_TO_SUBMIT);
         actBusinessService.updateById(actBusiness);
         //修改业务表的流程字段
-        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), "审批异常-" + task.getTaskDefinitionKey() + "-" + task.getName() + "-审批节点未分配审批人，流程自动中断取消");
-
+        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), WorkflowConstants.FAIL);
     }
 }

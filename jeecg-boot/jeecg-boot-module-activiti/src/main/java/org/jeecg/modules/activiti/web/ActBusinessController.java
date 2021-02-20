@@ -18,6 +18,7 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.UUIDGenerator;
+import org.jeecg.config.WorkflowConstants;
 import org.jeecg.modules.activiti.entity.*;
 import org.jeecg.modules.activiti.service.IActZParamsService;
 import org.jeecg.modules.activiti.service.Impl.ActBusinessServiceImpl;
@@ -181,8 +182,6 @@ public class ActBusinessController {
         actBusiness.setResult(ActivitiConstant.RESULT_DEALING);
         actBusiness.setApplyTime(new Date());
         actBusinessService.updateById(actBusiness);
-        //修改业务表的流程字段
-        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), "启动");
         return Result.ok("操作成功");
     }
 
@@ -203,7 +202,7 @@ public class ActBusinessController {
         actBusiness.setResult(ActivitiConstant.RESULT_TO_SUBMIT);
         actBusinessService.updateById(actBusiness);
         //修改业务表的流程字段
-        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), "撤回");
+        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), WorkflowConstants.FAIL);
         return Result.ok("操作成功");
     }
 
@@ -234,10 +233,10 @@ public class ActBusinessController {
         List<ActDoAndApplyVo> list = new ArrayList<>();
 
         // 查询审批列表
-        List<ActBusiness> actBusinesses = actBusinessService.approveList(request, param);
+        List<ActBusiness> actBusinesses = actBusinessService.approveList(request, param).getRecords();
 
         // 查询已办列表
-        List<HistoricTaskVo> doneList = actBusinessService.getHistoricTaskVos(request, name, categoryId, priority);
+        List<HistoricTaskVo> doneList = actBusinessService.getHistoricTaskVos(request, name, categoryId, priority).getRecords();
 
         // 复制
         try {

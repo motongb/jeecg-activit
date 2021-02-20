@@ -42,7 +42,7 @@ public interface ActBusinessMapper extends BaseMapper<ActBusiness> {
             "      WHERE TYPE_ = #{type} AND TASK_ID_ = #{taskId}")
     List<String> selectIRunIdentity(@Param("taskId")String taskId,@Param("type") String type);
 
-    @Update("update ${tableName} set act_status = #{actStatus} where id = #{tableId}")
+    @Update("update ${tableName} set status = #{actStatus} where id = #{tableId}")
     int updateBusinessStatus(@Param("tableName")String tableName, @Param("tableId")String tableId, @Param("actStatus")String actStatus);
 
     @Select("select id from act_z_business where proc_def_id in " +

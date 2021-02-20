@@ -14,4 +14,5 @@ import java.util.Map;
 public interface IActBusinessService extends IService<ActBusiness> {
 
     ActBusiness saveBusiness(boolean isNew, Map<String, Object> processData, Map<String, Object> params);
+
 }

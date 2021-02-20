@@ -10,7 +10,17 @@ public interface ContractConst {
     /**
      * 起草
      */
-    String STATUS_START = "0";
+    String STATUS_START = "1";
+
+    /**
+     * 会签阶段
+     */
+    String STATUS_SIGNING = "2";
+
+    /**
+     * 定稿结束
+     */
+    String STATUS_FINALIZED = "3";
 
     /**
      * 我方

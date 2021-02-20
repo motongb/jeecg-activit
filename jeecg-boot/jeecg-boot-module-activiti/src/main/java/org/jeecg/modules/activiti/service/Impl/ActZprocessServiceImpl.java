@@ -507,8 +507,11 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
         wrapper.eq(ActBusiness::getProcInstId, procInsId);
         ActBusiness one = actBusinessService.getOne(wrapper);
         Map<String, Object> vals = actBusinessService.getApplyForm(one.getTableId(), one.getTableName());
-        vals.putAll((Map<String, Object>) vals.get("params"));
-        vals.remove("params");
+        Map<String, Object> params = (Map<String, Object>) vals.get("params");
+        if (Objects.nonNull(params)) {
+            vals.putAll(params);
+            vals.remove("params");
+        }
         return vals;
     }
 }

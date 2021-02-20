@@ -159,11 +159,11 @@ public class ContractGeneral implements Serializable {
     @ApiModelProperty(value = "合同金额大写")
     private String amountLarge;
     /**
-     * 模板id
+     * 模板文件
      */
-    @Excel(name = "模板id", width = 15)
-    @ApiModelProperty(value = "模板id")
-    private String modelId;
+    @Excel(name = "模板文件", width = 15)
+    @ApiModelProperty(value = "模板文件")
+    private String fileModel;
     /**
      * 合同影像文件
      */

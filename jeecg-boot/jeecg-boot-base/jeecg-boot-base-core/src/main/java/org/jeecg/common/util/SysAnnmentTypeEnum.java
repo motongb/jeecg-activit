@@ -11,8 +11,7 @@ public enum SysAnnmentTypeEnum {
     /**
      * 工作流跳转链接我的办公
      */
-    //BPM("bpm", "url", "/bpm/task/MyTaskList");
-    BPM("bpm", "url", "/activiti/todoManage");
+    BPM("bpm", "url", "/bpm/task/MyTaskList");
 
     /**
      * 业务类型(email:邮件 bpm:流程)

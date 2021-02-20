@@ -155,7 +155,6 @@ public class ActivitiProcessController {
     }
 
     public void deleteNodeUsers(String processId) {
-
         BpmnModel bpmnModel = repositoryService.getBpmnModel(processId);
         List<Process> processes = bpmnModel.getProcesses();
         for (Process process : processes) {
@@ -342,7 +341,7 @@ public class ActivitiProcessController {
             actNode.setType(6);
             actNodeService.save(actNode);
         }
-
+        //发起人的部门负责人
         if (chooseDepHeader != null && chooseDepHeader) {
             ActNode actNode = new ActNode();
             actNode.setProcDefId(procDefId);
@@ -350,6 +349,7 @@ public class ActivitiProcessController {
             actNode.setType(4);
             actNodeService.save(actNode);
         }
+        //发起人
         if (chooseSponsor != null && chooseSponsor) {
             ActNode actNode = new ActNode();
             actNode.setProcDefId(procDefId);
