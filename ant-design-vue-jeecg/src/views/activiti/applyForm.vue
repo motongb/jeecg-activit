@@ -47,7 +47,7 @@
     <!--流程表单-->
     <component :disabled="lcModa.disabled" :is="lcModa.formComponent" ref="processForm"
                :processData="lcModa.processData" :isNew="lcModa.isNew" :title="lcModa.title"
-               :task="lcModa.isTask" :dept="lcModa.dept"></component>
+               :task="lcModa.isTask" :dept="lcModa.dept" :tableId="lcModa.processData.tableId"></component>
 
     <sign-modal :form="form" :modal-task-title="modalTaskTitle" :modal-task-visible="modalTaskVisible"
                 :assignee-list="assigneeList" :user-loading="userLoading" @cancel="modalTaskVisible = false"
@@ -128,7 +128,7 @@
           this.userInfo = this.$store.getters.userInfo
           this.lcModa.userName = this.userInfo.realname
           this.lcModa.applyTime = formatDate(new Date().getTime(), 'yyyy-MM-dd hh:mm:ss')
-          if (params.isNew) {
+          if (!params.processData.dept) {
             this.getUserDepart()
           } else {
             this.lcModa.dept = params.processData.dept

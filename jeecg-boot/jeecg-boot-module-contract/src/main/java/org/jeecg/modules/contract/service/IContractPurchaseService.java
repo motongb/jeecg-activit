@@ -1,5 +1,7 @@
 package org.jeecg.modules.contract.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.contract.entity.ContractPurchase;
 import org.jeecg.modules.contract.entity.vo.ContractPurchaseVo;
@@ -20,4 +22,6 @@ public interface IContractPurchaseService extends IService<ContractPurchase> {
      * @param contractPurchaseVo
      */
     void setMember(ContractPurchaseVo contractPurchaseVo);
+
+    IPage<ContractPurchase> pageVo(Page<ContractPurchase> page, ContractPurchase contractPurchase);
 }

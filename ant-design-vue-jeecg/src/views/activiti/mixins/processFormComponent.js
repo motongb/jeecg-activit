@@ -11,11 +11,4 @@ export default [
     component: () => import(`@/views/activiti/form/demoForm`),
     businessTable: 'test_demo'
   },
-  {
-    text: '会签表单',
-    routeName: '@/views/contract/modules/TestSignForm',
-    component: () => import(`@/views/contract/modules/TestSignForm`),
-    businessTable: 'test_sign'
-  },
-
 ]

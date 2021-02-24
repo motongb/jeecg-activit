@@ -153,6 +153,11 @@
         }
       }
     },
+    watch: {
+      contractId() {
+        this.initValue()
+      }
+    },
     created() {
       if (this.contractId) {
         this.initValue()

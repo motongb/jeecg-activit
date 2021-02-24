@@ -13,21 +13,28 @@
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('采购合同基础表')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
+                @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
+          <a-menu-item key="1" @click="batchDel">
+            <a-icon type="delete"/>
+            删除
+          </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
+        <a-button style="margin-left: 8px"> 批量操作
+          <a-icon type="down"/>
+        </a-button>
       </a-dropdown>
     </div>
 
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{
+        selectedRowKeys.length }}</a>项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -50,7 +57,8 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="" style="max-width:80px;font-size: 12px;font-style: italic;"/>
+          <img v-else :src="getImgView(text)" height="25px" alt=""
+               style="max-width:80px;font-size: 12px;font-style: italic;"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
@@ -68,9 +76,9 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a @click="handleDetail(record)">详情</a>
@@ -98,15 +106,15 @@
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import ContractPurchaseModal from './modules/ContractPurchaseModal'
   import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
-
+  import { filterDictTextByDictCode } from '@/components/dict/JDictSelectUtil'
   export default {
     name: 'ContractPurchaseList',
-    mixins:[JeecgListMixin, mixinDevice],
+    mixins: [JeecgListMixin, mixinDevice],
     components: {
       ContractPurchaseModal,
-      JSuperQuery,
+      JSuperQuery
     },
-    data () {
+    data() {
       return {
         description: '采购合同基础表管理页面',
         // 表头
@@ -114,107 +122,112 @@
           {
             title: '#',
             dataIndex: '',
-            key:'rowIndex',
-            width:60,
-            align:"center",
-            customRender:function (t,r,index) {
-              return parseInt(index)+1;
+            key: 'rowIndex',
+            width: 60,
+            align: 'center',
+            customRender: function(t, r, index) {
+              return parseInt(index) + 1
             }
           },
           {
-            title:'合同名称',
-            align:"center",
+            title: '合同名称',
+            align: 'center',
             dataIndex: 'name'
           },
           {
-            title:'合同编号',
-            align:"center",
+            title: '合同编号',
+            align: 'center',
             dataIndex: 'code'
           },
           {
-            title:'类型编码',
-            align:"center",
-            dataIndex: 'typeCode'
+            title: '类型',
+            align: 'center',
+            dataIndex: 'typeName'
           },
           {
-            title:'我方',
-            align:"center",
-            dataIndex: 'firstMember'
+            title: '我方',
+            align: 'center',
+            dataIndex: 'firstMemberName'
           },
           {
-            title:'乙方',
-            align:"center",
-            dataIndex: 'secondMember'
+            title: '乙方',
+            align: 'center',
+            dataIndex: 'secondMemberName'
           },
           {
-            title:'丙方',
-            align:"center",
-            dataIndex: 'thirdMember'
+            title: '丙方',
+            align: 'center',
+            dataIndex: 'thirdMemberName'
           },
           {
-            title:'用户id',
-            align:"center",
-            dataIndex: 'userId'
+            title: '创建人',
+            align: 'center',
+            dataIndex: 'userName'
           },
           {
-            title:'状态',
-            align:"center",
-            dataIndex: 'status'
+            title: '状态',
+            align: 'center',
+            dataIndex: 'status',
+            customRender: (t, r, index) => {
+              return filterDictTextByDictCode('contract_status', t)
+            }
           },
+          // {
+          //   title: '备注',
+          //   align: 'center',
+          //   dataIndex: 'remark'
+          // },
           {
-            title:'备注',
-            align:"center",
-            dataIndex: 'remark'
-          },
-          {
-            title:'签署方数',
-            align:"center",
-            dataIndex: 'memberUse'
+            title: '签署方数',
+            align: 'center',
+            dataIndex: 'memberUse',
+            customRender: (t, r, index) => {
+              return t === '0' ? '双方签署' : '三方签署'
+            }
           },
           {
             title: '操作',
             dataIndex: 'action',
-            align:"center",
-            fixed:"right",
-            width:147,
+            align: 'center',
+            fixed: 'right',
+            width: 147,
             scopedSlots: { customRender: 'action' }
           }
         ],
         url: {
-          list: "/contract/contractPurchase/list",
-          delete: "/contract/contractPurchase/delete",
-          deleteBatch: "/contract/contractPurchase/deleteBatch",
-          exportXlsUrl: "/contract/contractPurchase/exportXls",
-          importExcelUrl: "contract/contractPurchase/importExcel",
-          
+          list: '/contract/contractPurchase/list',
+          delete: '/contract/contractPurchase/delete',
+          deleteBatch: '/contract/contractPurchase/deleteBatch',
+          exportXlsUrl: '/contract/contractPurchase/exportXls',
+          importExcelUrl: 'contract/contractPurchase/importExcel',
         },
-        dictOptions:{},
-        superFieldList:[],
+        dictOptions: {},
+        superFieldList: []
       }
     },
     created() {
-    this.getSuperFieldList();
+      this.getSuperFieldList()
     },
     computed: {
-      importExcelUrl: function(){
-        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
-      },
+      importExcelUrl: function() {
+        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`
+      }
     },
     methods: {
-      initDictConfig(){
+      initDictConfig() {
       },
-      getSuperFieldList(){
-        let fieldList=[];
-        fieldList.push({type:'string',value:'name',text:'合同名称',dictCode:''})
-        fieldList.push({type:'string',value:'code',text:'合同编号',dictCode:''})
-        fieldList.push({type:'string',value:'typeCode',text:'类型编码',dictCode:''})
-        fieldList.push({type:'string',value:'firstMember',text:'我方',dictCode:''})
-        fieldList.push({type:'string',value:'secondMember',text:'乙方',dictCode:''})
-        fieldList.push({type:'string',value:'thirdMember',text:'丙方',dictCode:''})
-        fieldList.push({type:'string',value:'userId',text:'用户id',dictCode:''})
-        fieldList.push({type:'string',value:'status',text:'状态',dictCode:''})
-        fieldList.push({type:'string',value:'remark',text:'备注',dictCode:''})
-        fieldList.push({type:'string',value:'memberUse',text:'签署方数',dictCode:''})
+      getSuperFieldList() {
+        let fieldList = []
+        fieldList.push({ type: 'string', value: 'name', text: '合同名称', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'code', text: '合同编号', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'typeCode', text: '类型编码', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'firstMember', text: '我方', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'secondMember', text: '乙方', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'thirdMember', text: '丙方', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'userId', text: '用户id', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'status', text: '状态', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'remark', text: '备注', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'memberUse', text: '签署方数', dictCode: '' })
         this.superFieldList = fieldList
       }
     }

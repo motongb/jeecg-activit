@@ -1,6 +1,5 @@
 package org.jeecg.modules.contract.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -9,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.contract.entity.ContractPurchase;
 import org.jeecg.modules.contract.service.IContractPurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +48,9 @@ public class ContractPurchaseController extends JeecgController<ContractPurchase
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<ContractPurchase> queryWrapper = QueryGenerator.initQueryWrapper(contractPurchase, req.getParameterMap());
-        Page<ContractPurchase> page = new Page<ContractPurchase>(pageNo, pageSize);
-        IPage<ContractPurchase> pageList = contractPurchaseService.page(page, queryWrapper);
+//        QueryWrapper<ContractPurchase> queryWrapper = QueryGenerator.initQueryWrapper(contractPurchase, req.getParameterMap());
+        Page<ContractPurchase> page = new Page<>(pageNo, pageSize);
+        IPage<ContractPurchase> pageList = contractPurchaseService.pageVo(page, contractPurchase);
         return Result.OK(pageList);
     }
 

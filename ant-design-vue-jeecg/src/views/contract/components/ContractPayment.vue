@@ -43,7 +43,8 @@
             </span>
         </template>
       </a-table>
-      <a-button v-if="!disabled" style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newMember">
+      <a-button v-if="!disabled" style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus"
+                @click="newMember">
         新增
       </a-button>
     </a-card>
@@ -138,6 +139,11 @@
         url: {
           list: '/contract/contractPayment/list'
         }
+      }
+    },
+    watch: {
+      contractId() {
+        this.initValue()
       }
     },
     created() {

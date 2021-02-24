@@ -239,7 +239,7 @@
 <script>
 
   import { httpAction, getAction } from '@/api/manage'
-  import { validateDuplicateValue, digitUppercase } from '@/utils/util'
+  import { digitUppercase } from '@/utils/util'
   import { getStore } from '@/utils/storage'
   import JFormContainer from '@/components/jeecg/JFormContainer'
   import JDate from '@/components/jeecg/JDate'
@@ -264,7 +264,9 @@
       JDate
     },
     mixins: [activitiApproveMixin],
-    props: {},
+    props: {
+
+    },
     data() {
       return {
         // 合同类型树
@@ -312,18 +314,21 @@
           queryById: '/contract/contractGeneral/queryById',
           treeList: '/contract/contractType/tree',
           bankList: '/contract/companyBank/list'
-        }
+        },
       }
     },
     computed: {},
+    watch:{
+      tableId(){
+        this.init()
+      }
+    },
     created() {
       this.lcModa = getStore('lcModa')
       if (this.isNew) {
         this.form.typeCode = this.lcModa.typeCode
         this.form.processData.procDefId = this.processData.id
         this.form.processData.tableName = this.processData.businessTable
-        // this.form.name = this.dept + '-' + this.lcModa.typeName
-        // this.form.code = this.dept + '-' + this.lcModa.typeName + moment().format('YYYYMMDD')
       }
       this.getContractType()
     },
@@ -370,7 +375,7 @@
       },
       /*初始化数据*/
       init() {
-        getAction(this.url.queryById, { id: this.processData.tableId }).then((res) => {
+        getAction(this.url.queryById, { id: this.tableId }).then((res) => {
           if (res.success) {
             this.form = res.result
             this.form.processData = {}

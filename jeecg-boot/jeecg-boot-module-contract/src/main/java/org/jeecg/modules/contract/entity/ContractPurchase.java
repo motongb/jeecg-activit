@@ -1,6 +1,7 @@
 package org.jeecg.modules.contract.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -82,30 +83,50 @@ public class ContractPurchase implements Serializable {
     @Excel(name = "类型编码", width = 15)
     @ApiModelProperty(value = "类型编码")
     private String typeCode;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "类型名称")
+    private String typeName;
     /**
      * 我方
      */
     @Excel(name = "我方", width = 15)
     @ApiModelProperty(value = "我方")
     private String firstMember;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "我方名称")
+    private String firstMemberName;
     /**
      * 乙方
      */
     @Excel(name = "乙方", width = 15)
     @ApiModelProperty(value = "乙方")
     private String secondMember;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "乙方名称")
+    private String secondMemberName;
     /**
      * 丙方
      */
     @Excel(name = "丙方", width = 15)
     @ApiModelProperty(value = "丙方")
     private String thirdMember;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "丙方名称")
+    private String thirdMemberName;
     /**
      * 用户id
      */
     @Excel(name = "用户id", width = 15)
     @ApiModelProperty(value = "用户id")
     private String userId;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "创建人名称")
+    private String userName;
     /**
      * 状态
      */
@@ -124,4 +145,8 @@ public class ContractPurchase implements Serializable {
     @Excel(name = "签署方数", width = 15)
     @ApiModelProperty(value = "签署方数")
     private String memberUse;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "流程定义")
+    private String processDef;
 }

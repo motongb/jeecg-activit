@@ -22,6 +22,11 @@ export const activitiApproveMixin = {
       type: Boolean,
       default: false
     },
+    /*数据id*/
+    tableId: {
+      type: String,
+      default: ''
+    },
     /*流程数据*/
     processData: {
       type: Object,

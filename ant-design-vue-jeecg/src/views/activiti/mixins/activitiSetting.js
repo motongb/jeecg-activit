@@ -4,5 +4,6 @@ export default {
   draftPagePath: '/contract/draft',
   applyListPath: '/activiti/applyList',
   todoManage: '/activiti/todoManage',
-  doneManage: '/activiti/doneManage'
+  doneManage: '/activiti/doneManage',
+  contractPurchaseList: '/contract/manage/list'
 }

@@ -2,6 +2,8 @@ package org.jeecg.modules.contract.service.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.system.vo.LoginUser;
@@ -89,5 +91,10 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
             }
         }
 
+    }
+
+    @Override
+    public IPage<ContractPurchase> pageVo(Page<ContractPurchase> page, ContractPurchase contractPurchase) {
+        return this.baseMapper.pageVo(page, contractPurchase);
     }
 }
