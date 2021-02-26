@@ -54,7 +54,7 @@
             this.visible = true
             let processData = res.result[0]
             this.lcModa.formComponent = this.getFormComponent(processData.routeName).component
-            this.lcModa.disabled = true
+            this.lcModa.disabled = false
             this.lcModa.title = processData.title
             this.lcModa.processData = processData
             this.lcModa.processData.tableId = record.id
