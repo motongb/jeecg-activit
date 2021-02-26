@@ -172,6 +172,7 @@ mybatis-plus:
     call-setters-on-nulls: true
 #jeecg专用配置
 jeecg :
+  host: http://localhost:8080
   # 本地：local\Minio：minio\阿里云：alioss
   uploadType: local
   path :
@@ -219,8 +220,8 @@ jeecg :
   #Wps在线文档
   wps:
     domain: https://wwo.wps.cn/office/
-    appid: ??
-    appsecret: ??
+    appid: 507c04f33ca441d8803199491ae8a42f
+    appsecret: 00f7d38d277a4bc796c81e71aa55ddbd
   #xxl-job配置
   xxljob:
     enabled: false

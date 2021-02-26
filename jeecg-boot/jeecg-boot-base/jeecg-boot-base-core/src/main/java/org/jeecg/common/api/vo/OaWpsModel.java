@@ -1,7 +1,6 @@
 package org.jeecg.common.api.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -31,7 +30,7 @@ public class OaWpsModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * id
+     * 唯一键id
      */
     @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty(value = "id")
@@ -47,13 +46,13 @@ public class OaWpsModel implements Serializable {
      */
     @Excel(name = "version", width = 15)
     @ApiModelProperty(value = "version")
-    private Integer version;
+    private Integer version = 0;
     /**
      * size
      */
     @Excel(name = "size", width = 15)
     @ApiModelProperty(value = "size")
-    private Integer size;
+    private Long size;
     /**
      * downloadUrl
      */
@@ -102,6 +101,6 @@ public class OaWpsModel implements Serializable {
     @ApiModelProperty(value = "组织机构编码")
     private String sysOrgCode;
 
-    @TableField(exist = false)
-    private String userId;
+    @ApiModelProperty(value = "文件id")
+    private String fileId;
 }
