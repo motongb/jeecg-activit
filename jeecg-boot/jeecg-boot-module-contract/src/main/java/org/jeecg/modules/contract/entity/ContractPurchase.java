@@ -146,6 +146,12 @@ public class ContractPurchase implements Serializable {
     @ApiModelProperty(value = "签署方数")
     private String memberUse;
 
+    /**
+     * 是否使用模板
+     */
+    @ApiModelProperty(value = "是否使用模板：1-是，0-否")
+    private String useModel;
+
     @TableField(exist = false)
     @ApiModelProperty(value = "流程定义")
     private String processDef;

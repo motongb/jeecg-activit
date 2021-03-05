@@ -98,6 +98,8 @@
       this.activePage = currentRoute.fullPath
     },
     mounted() {
+      this.$bus.$on('closed-current-tabs', () => this.closeCurrent())
+      this.$bus.$on('reload-route', () => this.routeReload())
     },
     watch: {
       '$route': function(newRoute) {

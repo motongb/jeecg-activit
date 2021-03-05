@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.dto.wps.WpsFileDTO;
+import org.jeecg.common.api.dto.wps.WpsFileHisDTO;
 import org.jeecg.common.api.dto.wps.WpsUserDTO;
 import org.jeecg.common.api.vo.OaWpsModel;
 import org.jeecg.common.constant.WpsConstant;
@@ -20,10 +21,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -47,11 +45,11 @@ public class WebOfficeService {
     @Value("${jeecg.host}")
     private String domain;
 
-    public String getViewUrl(String fileId, String fileType, String userId) {
+    public String getViewUrl(String fileId, String fileType, String userId, boolean checkToken) {
         Map<String, String> params = new HashMap<>();
         params.put("_w_fileid", fileId);
         params.put("_w_userid", userId);
-        return wpsUtil.getWpsUrl(params, fileType, fileId);
+        return wpsUtil.getWpsUrl(params, fileType, fileId, checkToken);
     }
 
     public String getNewFileUrl(String fileType) {
@@ -60,6 +58,22 @@ public class WebOfficeService {
         params.put("_w_userid", sysUser.getUsername());
         params.put("_w_filetype", fileType);
         return wpsUtil.getNewFileUrl(params, fileType);
+    }
+
+
+    public Map<String, Object> saveWpsModel(OaWpsModel oaWpsModel) {
+        Map<String, Object> result = new HashMap<>();
+        String fileId = IdUtil.simpleUUID();
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        oaWpsModel.setFileId(fileId);
+        oaWpsModel.setCanDelete("0");
+        oaWpsModel.setDeleted("0");
+        oaWpsModel.setUpdateBy(sysUser.getUsername());
+        oaWpsModel.setUpdateTime(new Date());
+        oaWpsModelService.save(oaWpsModel);
+        result.put("model", oaWpsModel);
+        result.put("preViewUrl", this.getViewUrl(fileId, oaWpsModel.getFileType(), oaWpsModel.getCreateBy(), true));
+        return result;
     }
 
     /*********wps回调方法 start**********/
@@ -76,13 +90,14 @@ public class WebOfficeService {
         return result;
     }
 
-    public Map<String, String> createNewFile(MultipartFile file, String filename, String userId, String fileType) {
+    public Map<String, Object> createNewFile(MultipartFile file, String filename, String userId, String fileType) {
         String filePath = wpsUtil.upload(file, "");
-        Map<String, String> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
         if (StringUtils.hasText(filePath)) {
             OaWpsModel oaWpsModel = new OaWpsModel();
             String fileId = IdUtil.simpleUUID();
             LoginUser user = sysBaseAPI.getUserByName(userId);
+            oaWpsModel.setFileType(fileType);
             oaWpsModel.setCanDelete("0");
             oaWpsModel.setDeleted("0");
             oaWpsModel.setDownloadUrl(filePath);
@@ -91,8 +106,10 @@ public class WebOfficeService {
             oaWpsModel.setFileId(fileId);
             oaWpsModel.setCreateBy(userId);
             oaWpsModel.setSysOrgCode(user.getOrgCode());
+            oaWpsModel.setUpdateBy(userId);
+            oaWpsModel.setUpdateTime(new Date());
             oaWpsModelService.save(oaWpsModel);
-            result.put("redirect_url", this.getViewUrl(fileId, fileType, userId));
+            result.put("redirect_url", this.getViewUrl(fileId, fileType, userId, false));
             result.put("user_id", userId);
         }
         return result;
@@ -105,17 +122,21 @@ public class WebOfficeService {
             OaWpsModel oaWpsModel = oaWpsModelService.getOne(new LambdaQueryWrapper<OaWpsModel>()
                     .eq(OaWpsModel::getFileId, fileId).orderByDesc(OaWpsModel::getVersion).last("limit 1"));
             OaWpsModel newOaWpsModel = new OaWpsModel();
+            newOaWpsModel.setFileType(oaWpsModel.getFileType());
             newOaWpsModel.setCanDelete("0");
             newOaWpsModel.setDeleted("0");
             newOaWpsModel.setDownloadUrl(filePath);
             newOaWpsModel.setName(oaWpsModel.getName());
             newOaWpsModel.setSize(file.getSize());
             newOaWpsModel.setFileId(fileId);
-            newOaWpsModel.setCreateBy(userId);
+            newOaWpsModel.setCreateBy(oaWpsModel.getCreateBy());
+            newOaWpsModel.setCreateTime(oaWpsModel.getCreateTime());
             newOaWpsModel.setSysOrgCode(oaWpsModel.getSysOrgCode());
+            newOaWpsModel.setUpdateBy(userId);
+            newOaWpsModel.setUpdateTime(new Date());
             int version = oaWpsModel.getVersion();
             newOaWpsModel.setVersion(++version);
-            oaWpsModelService.save(oaWpsModel);
+            oaWpsModelService.save(newOaWpsModel);
             result.put("file", setFileDTO(fileId, newOaWpsModel));
         }
         return result;
@@ -163,40 +184,38 @@ public class WebOfficeService {
         oaWpsModelService.page(page, new LambdaQueryWrapper<OaWpsModel>().eq(OaWpsModel::getFileId, fileId));
         List<OaWpsModel> oaWpsModelList = page.getRecords();
         if (!CollectionUtils.isEmpty(oaWpsModelList)) {
-            List<Map<String, Object>> fileMaps = oaWpsModelList.stream().map(oaWpsModel -> {
-                Map<String, Object> fileMap = new HashMap<>();
-                fileMap.put("id", fileId);
-                fileMap.put("name", oaWpsModel.getName());
-                fileMap.put("version", oaWpsModel.getVersion());
-                fileMap.put("size", oaWpsModel.getSize());
-                fileMap.put("download_url", this.domain + WpsConstant.WPS_FILE_DOWN_PRE + oaWpsModel.getDownloadUrl());
-                String createTime = String.valueOf(oaWpsModel.getCreateTime().getTime());
-                String updateTime = String.valueOf(oaWpsModel.getUpdateTime().getTime());
-                if (StringUtils.hasText(createTime)) {
-                    fileMap.put("create_time", Long.valueOf(createTime.substring(0, createTime.length() - 3)));
+            List<WpsFileHisDTO> fileHisDTOS = oaWpsModelList.stream().map(oaWpsModel -> {
+                WpsFileHisDTO fileHisDTO = new WpsFileHisDTO();
+                fileHisDTO.setId(fileId);
+                fileHisDTO.setName(oaWpsModel.getName());
+                fileHisDTO.setVersion(oaWpsModel.getVersion());
+                fileHisDTO.setSize(oaWpsModel.getSize());
+                fileHisDTO.setDownload_url(this.domain + WpsConstant.WPS_FILE_DOWN_PRE + oaWpsModel.getDownloadUrl());
+                if (Objects.nonNull(oaWpsModel.getCreateTime())) {
+                    fileHisDTO.setCreate_time(oaWpsModel.getCreateTime().getTime());
                 }
-                if (StringUtils.hasText(updateTime)) {
-                    fileMap.put("modify_time", Long.valueOf(updateTime.substring(0, updateTime.length() - 3)));
+                if (Objects.nonNull(oaWpsModel.getUpdateTime())) {
+                    fileHisDTO.setModify_time(oaWpsModel.getUpdateTime().getTime());
                 }
-                LoginUser creator = sysBaseAPI.getUserByName(oaWpsModel.getCreateBy());
-                if (Objects.nonNull(creator)) {
-                    Map<String, String> userMap = new HashMap<>();
-                    userMap.put("id", creator.getUsername());
-                    userMap.put("name", creator.getRealname());
-                    userMap.put("avatar_url", creator.getAvatar());
-                    fileMap.put("creator", userMap);
+                List<LoginUser> creators = sysBaseAPI.queryUserByNames(new String[]{oaWpsModel.getCreateBy()});
+                List<LoginUser> modifiers = sysBaseAPI.queryUserByNames(new String[]{oaWpsModel.getUpdateBy()});
+                WpsUserDTO creator = new WpsUserDTO();
+                WpsUserDTO modifier = new WpsUserDTO();
+                if (!CollectionUtils.isEmpty(creators)) {
+                    creator.setId(creators.get(0).getUsername());
+                    creator.setName(creators.get(0).getRealname());
+                    creator.setAvatar_url(creators.get(0).getAvatar());
                 }
-                LoginUser modifier = sysBaseAPI.getUserByName(oaWpsModel.getUpdateBy());
-                if (Objects.nonNull(modifier)) {
-                    Map<String, String> userMap = new HashMap<>();
-                    userMap.put("id", modifier.getUsername());
-                    userMap.put("name", modifier.getRealname());
-                    userMap.put("avatar_url", modifier.getAvatar());
-                    fileMap.put("modifier", userMap);
+                if (!CollectionUtils.isEmpty(modifiers)) {
+                    modifier.setId(modifiers.get(0).getUsername());
+                    modifier.setName(modifiers.get(0).getRealname());
+                    modifier.setAvatar_url(modifiers.get(0).getAvatar());
                 }
-                return fileMap;
+                fileHisDTO.setCreator(creator);
+                fileHisDTO.setModifier(modifier);
+                return fileHisDTO;
             }).collect(Collectors.toList());
-            result.put("histories", fileMaps);
+            result.put("histories", fileHisDTOS);
         }
         return result;
     }
@@ -209,14 +228,12 @@ public class WebOfficeService {
         fileDTO.setVersion(oaWpsModel.getVersion());
         fileDTO.setDownload_url(this.domain + WpsConstant.WPS_FILE_DOWN_PRE + oaWpsModel.getDownloadUrl());
         fileDTO.setCreator(oaWpsModel.getCreateBy());
-        String createTime = String.valueOf(oaWpsModel.getCreateTime().getTime());
-        if (StringUtils.hasText(createTime)) {
-            fileDTO.setCreate_time(Long.valueOf(createTime.substring(0, createTime.length() - 3)));
+        if (Objects.nonNull(oaWpsModel.getCreateTime())) {
+            fileDTO.setCreate_time(oaWpsModel.getCreateTime().getTime());
         }
         fileDTO.setModifier(oaWpsModel.getUpdateBy());
-        String updateTime = String.valueOf(oaWpsModel.getUpdateTime().getTime());
-        if (StringUtils.hasText(updateTime)) {
-            fileDTO.setModify_time(Long.valueOf(updateTime.substring(0, updateTime.length() - 3)));
+        if (Objects.nonNull(oaWpsModel.getUpdateTime())) {
+            fileDTO.setModify_time(oaWpsModel.getUpdateTime().getTime());
         }
         return fileDTO;
     }

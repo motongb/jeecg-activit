@@ -24,12 +24,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @Description: 企业信息/合作方信息
+ * @Description: 企业信息-合作方信息
  * @Author: jeecg-boot
  * @Date: 2021-02-08
  * @Version: V1.0
  */
-@Api(tags = "企业信息/合作方信息")
+@Api(tags = "企业信息-合作方信息")
 @RestController
 @RequestMapping("/contract/company")
 @Slf4j

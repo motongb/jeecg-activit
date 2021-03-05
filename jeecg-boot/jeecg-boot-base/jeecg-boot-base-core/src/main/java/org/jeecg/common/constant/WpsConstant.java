@@ -11,5 +11,5 @@ public interface WpsConstant {
 
     String WPS_FILE_ID_KEY = "x-weboffice-file-id";
 
-    String WPS_FILE_DOWN_PRE ="/common/static/";
+    String WPS_FILE_DOWN_PRE = "/jeecg-boot/sys/common/static/";
 }

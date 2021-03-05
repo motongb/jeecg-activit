@@ -1,6 +1,6 @@
 <template>
   <a-spin :spinning="confirmLoading">
-    <a-tabs default-active-key="1">
+    <a-tabs :active-key="activeKey" @change="tabChange">
       <a-tab-pane key="1" tab="表单">
         <a-form-model ref="ruleForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
           <a-card class="apply-card" title="合同信息">
@@ -191,15 +191,22 @@
           <a-card class="apply-card" title="签署文件">
             <a-row>
               <a-col :span="12">
-                <a-form-model-item label="模板文件">
+                <a-form-model-item label="是否使用模板">
+                  <a-radio-group v-model="form.useModel">
+                    <a-radio value="0">否</a-radio>
+                    <a-radio value="1">是</a-radio>
+                  </a-radio-group>
+                </a-form-model-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-model-item v-show="form.useModel==='1'" label="选择模板文件">
                   <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.subForm.fileModel"
                             :number="1"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="合同影像文件">
-                  <j-upload fileType="image" :disabled="disabled" :buttonVisible="!disabled"
-                            v-model="form.subForm.filePdf"/>
+                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.subForm.filePdf"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
@@ -207,11 +214,11 @@
                   <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.subForm.fileAttach"/>
                 </a-form-model-item>
               </a-col>
-              <a-col :span="12">
-                <a-form-model-item label="合同文件">
-                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.subForm.fileContract"/>
-                </a-form-model-item>
-              </a-col>
+              <!--              <a-col :span="12">-->
+              <!--                <a-form-model-item label="合同文件">-->
+              <!--                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.subForm.fileContract"/>-->
+              <!--                </a-form-model-item>-->
+              <!--              </a-col>-->
             </a-row>
           </a-card>
           <!--            <a-card v-show="!task" class="apply-card" title="条件选择">-->
@@ -228,8 +235,8 @@
           <!--            </a-card>-->
         </a-form-model>
       </a-tab-pane>
-      <a-tab-pane key="2" tab="正文" force-render>
-        Content of Tab Pane 2
+      <a-tab-pane key="2" tab="正文" :forceRender="true">
+        <wps-view-tag ref="wpsView" @fileOpen="fileOpenCallback" :file-id="form.subForm.fileContract"></wps-view-tag>
       </a-tab-pane>
     </a-tabs>
 
@@ -251,10 +258,12 @@
   import ContractPayment from '../../components/ContractPayment'
   import ContractMemberForm from './ContractMemberForm'
   import CompanySelectTag from '../../components/CompanySelectTag'
+  import WpsViewTag from '../../components/WpsViewTag'
 
   export default {
     name: 'ContractGeneralForm',
     components: {
+      WpsViewTag,
       CompanySelectTag,
       ContractMemberForm,
       ContractPayment,
@@ -264,15 +273,14 @@
       JDate
     },
     mixins: [activitiApproveMixin],
-    props: {
-
-    },
+    props: {},
     data() {
       return {
         // 合同类型树
         contractTypeData: [],
         // 表单
         form: {
+          useModel: '0',
           typeCode: undefined,
           memberUse: '0',
           subForm: {
@@ -315,11 +323,13 @@
           treeList: '/contract/contractType/tree',
           bankList: '/contract/companyBank/list'
         },
+        docType: 'word',
+        activeKey: '1'
       }
     },
     computed: {},
-    watch:{
-      tableId(){
+    watch: {
+      tableId() {
         this.init()
       }
     },
@@ -333,6 +343,22 @@
       this.getContractType()
     },
     methods: {
+      /*文件打开回调*/
+      fileOpenCallback(file) {
+        if (file) {
+          this.form.subForm.fileContract = file.id.split('-')[1]
+        }
+        console.log(this.form.subForm.fileContract)
+      },
+      tabChange(key) {
+        this.activeKey = key
+        if (key === '1') {
+          this.$refs.wpsView.destroyIframe()
+        } else {
+          this.$refs.wpsView.init()
+        }
+      },
+
       /*企业选择回调*/
       handleCompanySelect(item, type) {
         let memberObj = {}
@@ -390,6 +416,7 @@
         return new Promise((resolve, reject) => {
           this.$refs.ruleForm.validate(valid => {
             if (valid) {
+              this.$refs.wpsView.save()
               this.form.processData.procDeTitle = this.title
               this.form.processData.dept = this.dept
               this.confirmLoading = true

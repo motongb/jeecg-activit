@@ -46,7 +46,7 @@ public class OaWpsModel implements Serializable {
      */
     @Excel(name = "version", width = 15)
     @ApiModelProperty(value = "version")
-    private Integer version = 0;
+    private Integer version = 1;
     /**
      * size
      */
@@ -103,4 +103,7 @@ public class OaWpsModel implements Serializable {
 
     @ApiModelProperty(value = "文件id")
     private String fileId;
+
+    @ApiModelProperty(value = "文件类型")
+    private String fileType;
 }

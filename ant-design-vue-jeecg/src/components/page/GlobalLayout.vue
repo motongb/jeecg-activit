@@ -71,7 +71,7 @@
 
       <!-- layout footer -->
       <a-layout-footer style="padding: 0px">
-        <global-footer/>
+<!--        <global-footer/>-->
       </a-layout-footer>
     </a-layout>
 

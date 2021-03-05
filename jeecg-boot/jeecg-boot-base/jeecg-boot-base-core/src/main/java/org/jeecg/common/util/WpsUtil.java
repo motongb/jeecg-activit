@@ -44,7 +44,11 @@ public class WpsUtil {
         this.wpsProperties = wpsProperties;
     }
 
-    public String getWpsUrl(Map<String, String> values, String fileType, String fileId) {
+    public String getWpsUrl(Map<String, String> values, String fileType, String fileId, boolean checkToken) {
+        values.put("_w_appid", wpsProperties.getAppid());
+        if (checkToken) {
+            values.put("_w_tokentype", "1");
+        }
         String keyValueStr = getUrlParam(values);
         String signature = getSignature(values, wpsProperties.getAppsecret());
         String fileTypeCode = getTypeCode(fileType);
@@ -52,6 +56,7 @@ public class WpsUtil {
     }
 
     public String getNewFileUrl(Map<String, String> values, String fileType) {
+        values.put("_w_appid", wpsProperties.getAppid());
         String keyValueStr = getUrlParam(values);
         String signature = getSignature(values, wpsProperties.getAppsecret());
         String fileTypeCode = getTypeCode(fileType);
@@ -60,7 +65,6 @@ public class WpsUtil {
 
     private String getUrlParam(Map<String, String> params) {
         StringBuilder builder = new StringBuilder();
-        params.put("_w_appid", wpsProperties.getAppid());
         try {
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 if (builder.length() > 0) {

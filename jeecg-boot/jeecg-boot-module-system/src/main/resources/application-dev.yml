@@ -172,7 +172,7 @@ mybatis-plus:
     call-setters-on-nulls: true
 #jeecg专用配置
 jeecg :
-  host: http://localhost:8080
+  host: http://www.motb.fun:18080
   # 本地：local\Minio：minio\阿里云：alioss
   uploadType: local
   path :
@@ -181,7 +181,7 @@ jeecg :
     #webapp文件路径
     webapp: D://opt//webapp
   shiro:
-    excludeUrls: /test/jeecgDemo/demo3,/test/jeecgDemo/redisDemo/**,/category/**,/visual/**,/map/**,/jmreport/bigscreen2/**
+    excludeUrls: /test/jeecgDemo/demo3,/test/jeecgDemo/redisDemo/**,/category/**,/visual/**,/map/**,/jmreport/bigscreen2/**,/base/wps/**
   #阿里云oss存储配置
   oss:
     endpoint: oss-cn-beijing.aliyuncs.com

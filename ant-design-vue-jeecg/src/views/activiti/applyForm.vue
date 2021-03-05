@@ -47,7 +47,7 @@
     <!--流程表单-->
     <component :disabled="lcModa.disabled" :is="lcModa.formComponent" ref="processForm"
                :processData="lcModa.processData" :isNew="lcModa.isNew" :title="lcModa.title"
-               :task="lcModa.isTask" :dept="lcModa.dept" :tableId="lcModa.processData.tableId"></component>
+               :task="lcModa.isTask" :dept="lcModa.dept" :tableId="tableId"></component>
 
     <sign-modal :form="form" :modal-task-title="modalTaskTitle" :modal-task-visible="modalTaskVisible"
                 :assignee-list="assigneeList" :user-loading="userLoading" @cancel="modalTaskVisible = false"
@@ -107,13 +107,17 @@
         showAssign: true,
         backLoading: false,
         btndisabled: false,
-        userInfo: {}
+        userInfo: {},
+        tableId: ''
       }
     },
     watch: {
       // 解决tabs切换页面不刷新问题
       '$route': function(newRoute) {
-        this.$bus.$emit('reload-route')
+        let params = getStore('lcModa')
+        if (params && params.reload) {
+          this.$bus.$emit('reload-route')
+        }
       }
     },
     created() {
@@ -128,6 +132,7 @@
           this.userInfo = this.$store.getters.userInfo
           this.lcModa.userName = this.userInfo.realname
           this.lcModa.applyTime = formatDate(new Date().getTime(), 'yyyy-MM-dd hh:mm:ss')
+          this.tableId = this.lcModa.processData.tableId
           if (!params.processData.dept) {
             this.getUserDepart()
           } else {
@@ -220,13 +225,18 @@
         })
       },
       afterSub(formData) {
-        clearStore('lcModa')
         this.$router.push(activitiSetting.applyListPath)
+        clearStore('lcModa')
+        this.closedCurrentPage()
       },
       closed() {
-        clearStore('lcModa')
         this.$router.push(this.lcModa.from)
+        clearStore('lcModa')
         this.modalTaskVisible = false
+        this.closedCurrentPage()
+      },
+      closedCurrentPage() {
+        this.$bus.$emit('closed-current-tabs')
       }
     }
   }

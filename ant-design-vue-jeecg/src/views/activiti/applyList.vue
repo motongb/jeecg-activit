@@ -337,7 +337,6 @@
     },
     computed: {},
     methods: {
-
       initDictConfig() {
         //初始化字典 - 流程分类
         initDictOptions('bpm_process_type').then((res) => {
@@ -531,6 +530,7 @@
         this.lcModa.from = activitiSetting.applyListPath
         this.lcModa.processData = r
         this.lcModa.isNew = false
+        this.lcModa.reload = true
         setStore('lcModa', this.lcModa)
         this.$router.push(activitiSetting.applyFormPath)
       },
@@ -601,6 +601,7 @@
         this.lcModa.title = moment().format('YYYYMMDD') + v.name
         this.lcModa.isNew = true
         this.lcModa.processData = v
+        this.lcModa.reload = true
         this.lcModa.from = activitiSetting.applyListPath
         setStore('lcModa', this.lcModa)
         this.$router.push(activitiSetting.applyFormPath)
