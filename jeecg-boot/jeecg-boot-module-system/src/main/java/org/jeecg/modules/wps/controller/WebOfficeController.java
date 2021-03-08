@@ -45,4 +45,10 @@ public class WebOfficeController {
     public Result<Object> saveWpsModel(@RequestBody OaWpsModel oaWpsModel) {
         return Result.OK(webOfficeService.saveWpsModel(oaWpsModel));
     }
+
+    @ApiOperation("从模板文件复制")
+    @GetMapping("/copyByModelFile")
+    public Result<Object> copyByModelFile(@RequestParam @ApiParam("模板文件id") String fileId) {
+        return Result.OK(webOfficeService.copyByModelFile(fileId));
+    }
 }

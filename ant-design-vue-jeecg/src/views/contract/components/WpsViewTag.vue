@@ -26,13 +26,13 @@
   export default {
     name: 'WpsViewTag',
     props: {
+      showOpenDocBtn: {
+        type: Boolean,
+        default: true
+      },
       showSaveBtn: {
         type: Boolean,
         default: false
-      },
-      fileId: {
-        type: String,
-        default: ''
       },
       docType: {
         type: String,
@@ -49,7 +49,6 @@
         loading: false,
         // 文件上传文件夹
         bizPath: 'temp',
-        showOpenDocBtn: true,
         token: Vue.ls.get(ACCESS_TOKEN),
         headers: {},
         uploadAction: window._CONFIG['domianURL'] + '/sys/common/upload',
@@ -107,10 +106,10 @@
           iframe.onload = () => this.loaded()
         }
       },
-      async init() {
-        console.log(this.fileId)
-        if (this.fileId && this.fileId.length > 0) {
-          await getPreViewUrl(this.fileId, this.docType).then(res => {
+      async init(fileId) {
+        console.log(fileId)
+        if (fileId && fileId.length > 0) {
+          await getPreViewUrl(fileId, this.docType).then(res => {
             if (res.success) {
               this.docUrl = res.result
             }

@@ -158,6 +158,40 @@ public class WpsUtil {
         return savePath;
     }
 
+    public String copyFile(String oldFilePath, String bizPath) {
+        if (StringUtils.isEmpty(bizPath)) {
+            bizPath = "new";
+        }
+        String savePath = "";
+        if (CommonConstant.UPLOAD_TYPE_LOCAL.equals(uploadType)) {
+            savePath = this.copyLocal(oldFilePath, bizPath);
+        } else {
+
+        }
+        return savePath;
+    }
+
+    private String copyLocal(String oldFilePath, String bizPath) {
+        File oldFile = new File(uploadpath + File.separator + oldFilePath);
+        if (!oldFile.exists()) {
+            throw new RuntimeException("文件不存在..");
+        }
+        File file = new File(uploadpath + File.separator + bizPath + File.separator);
+        if (!file.exists()) {
+            file.mkdirs();// 创建文件根目录
+        }
+        long currentTime = System.currentTimeMillis();
+        String fileName = oldFile.getName().replace("_(.*?)\\.", String.valueOf(currentTime));
+        String savePath = file.getPath() + File.separator + fileName;
+        File saveFile = new File(savePath);
+        try {
+            FileCopyUtils.copy(oldFile, saveFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return pathParse(bizPath, fileName);
+    }
+
     /**
      * 本地上传
      *
@@ -183,19 +217,23 @@ public class WpsUtil {
             String savePath = file.getPath() + File.separator + fileName;
             File savefile = new File(savePath);
             FileCopyUtils.copy(mf.getBytes(), savefile);
-            String dbpath = null;
-            if (oConvertUtils.isNotEmpty(bizPath)) {
-                dbpath = bizPath + File.separator + fileName;
-            } else {
-                dbpath = fileName;
-            }
-            if (dbpath.contains("\\")) {
-                dbpath = dbpath.replace("\\", "/");
-            }
-            return dbpath;
+            return pathParse(bizPath, fileName);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
         return "";
+    }
+
+    private String pathParse(String bizPath, String fileName) {
+        String dbpath = null;
+        if (oConvertUtils.isNotEmpty(bizPath)) {
+            dbpath = bizPath + File.separator + fileName;
+        } else {
+            dbpath = fileName;
+        }
+        if (dbpath.contains("\\")) {
+            dbpath = dbpath.replace("\\", "/");
+        }
+        return dbpath;
     }
 }

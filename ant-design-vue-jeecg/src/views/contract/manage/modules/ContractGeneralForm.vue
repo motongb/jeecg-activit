@@ -200,8 +200,7 @@
               </a-col>
               <a-col :span="12">
                 <a-form-model-item v-show="form.useModel==='1'" label="选择模板文件">
-                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.subForm.fileModel"
-                            :number="1"/>
+                  <model-select v-model="form.subForm.fileModel" @change="modelSelectChange"></model-select>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
@@ -236,10 +235,10 @@
         </a-form-model>
       </a-tab-pane>
       <a-tab-pane key="2" tab="正文" :forceRender="true">
-        <wps-view-tag ref="wpsView" @fileOpen="fileOpenCallback" :file-id="form.subForm.fileContract"></wps-view-tag>
+        <wps-view-tag ref="wpsView" @fileOpen="fileOpenCallback"
+                      :show-open-doc-btn="form.useModel==='0'"></wps-view-tag>
       </a-tab-pane>
     </a-tabs>
-
   </a-spin>
 </template>
 
@@ -259,10 +258,13 @@
   import ContractMemberForm from './ContractMemberForm'
   import CompanySelectTag from '../../components/CompanySelectTag'
   import WpsViewTag from '../../components/WpsViewTag'
+  import ModelSelect from '../../components/ModelSelect'
+  import { copyByModelFile } from '@/api/wpsApi'
 
   export default {
     name: 'ContractGeneralForm',
     components: {
+      ModelSelect,
       WpsViewTag,
       CompanySelectTag,
       ContractMemberForm,
@@ -343,6 +345,16 @@
       this.getContractType()
     },
     methods: {
+      /*模板选择回调*/
+      modelSelectChange() {
+        if (this.form.useModel === '1' &&
+          this.form.subForm.fileModel &&
+          this.form.subForm.fileModel.length > 0) {
+          copyByModelFile(this.form.subForm.fileModel).then(res => {
+            this.form.subForm.fileContract = res.result.fileId
+          })
+        }
+      },
       /*文件打开回调*/
       fileOpenCallback(file) {
         if (file) {
@@ -355,7 +367,7 @@
         if (key === '1') {
           this.$refs.wpsView.destroyIframe()
         } else {
-          this.$refs.wpsView.init()
+          this.$refs.wpsView.init(this.form.subForm.fileContract)
         }
       },
 
@@ -410,7 +422,9 @@
             this.$message.error(res.message)
           }
         })
+        let str = ''
       },
+
       /*重写提交*/
       handleSubmit() {
         return new Promise((resolve, reject) => {

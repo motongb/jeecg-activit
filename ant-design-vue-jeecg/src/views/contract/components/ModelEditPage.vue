@@ -1,7 +1,6 @@
 <template>
   <div>
-    <wps-view-tag ref="wpsView" :showSaveBtn="true" :file-id="fileId" @save="handleSave"
-                  @fileOpen="fileOpenCallback"></wps-view-tag>
+    <wps-view-tag ref="wpsView" :showSaveBtn="true" @save="handleSave" @fileOpen="fileOpenCallback"></wps-view-tag>
   </div>
 </template>
 
@@ -26,7 +25,7 @@
       console.log(params)
       this.fileId = params.fileId
       this.modelId = params.id
-      this.$refs.wpsView.init()
+      this.$refs.wpsView.init(params.fileId)
     },
     methods: {
       fileOpenCallback(file) {
@@ -43,6 +42,7 @@
         })
       },
       closed() {
+        this.$router.push('/contract/setting/model')
         this.$bus.$emit('closed-current-tabs')
       }
     }

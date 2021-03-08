@@ -1,5 +1,6 @@
 package org.jeecg.modules.wps.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -74,6 +75,22 @@ public class WebOfficeService {
         result.put("model", oaWpsModel);
         result.put("preViewUrl", this.getViewUrl(fileId, oaWpsModel.getFileType(), oaWpsModel.getCreateBy(), true));
         return result;
+    }
+
+    public OaWpsModel copyByModelFile(String fileId) {
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        OaWpsModel oaWpsModel = oaWpsModelService.getOne(new LambdaQueryWrapper<OaWpsModel>()
+                .eq(OaWpsModel::getFileId, fileId).orderByDesc(OaWpsModel::getVersion).last("limit 1"));
+        String newFileId = IdUtil.simpleUUID();
+        OaWpsModel newOaWpsModel = new OaWpsModel();
+        BeanUtil.copyProperties(oaWpsModel, newOaWpsModel);
+        newOaWpsModel.setFileId(newFileId);
+        newOaWpsModel.setUpdateBy(sysUser.getUsername());
+        newOaWpsModel.setUpdateTime(new Date());
+        newOaWpsModel.setId(null);
+        newOaWpsModel.setDownloadUrl(wpsUtil.copyFile(oaWpsModel.getDownloadUrl(), ""));
+        oaWpsModelService.save(newOaWpsModel);
+        return newOaWpsModel;
     }
 
     /*********wps回调方法 start**********/
