@@ -1,24 +1,28 @@
 package org.jeecg.common.util;
 
+import cn.hutool.core.map.MapUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.xwpf.usermodel.*;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.config.WpsProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static org.apache.tomcat.util.codec.binary.Base64.encodeBase64String;
 
@@ -145,6 +149,13 @@ public class WpsUtil {
         return null;
     }
 
+    /**
+     * 上传文件
+     *
+     * @param file
+     * @param bizPath
+     * @return
+     */
     public String upload(MultipartFile file, String bizPath) {
         if (StringUtils.isEmpty(bizPath)) {
             bizPath = "temp";
@@ -158,6 +169,13 @@ public class WpsUtil {
         return savePath;
     }
 
+    /**
+     * 复制文件
+     *
+     * @param oldFilePath
+     * @param bizPath
+     * @return
+     */
     public String copyFile(String oldFilePath, String bizPath) {
         if (StringUtils.isEmpty(bizPath)) {
             bizPath = "new";
@@ -171,8 +189,15 @@ public class WpsUtil {
         return savePath;
     }
 
+    /**
+     * 复制本地文件
+     *
+     * @param oldFilePath
+     * @param bizPath
+     * @return
+     */
     private String copyLocal(String oldFilePath, String bizPath) {
-        File oldFile = new File(uploadpath + File.separator + oldFilePath);
+        File oldFile = getLocalFile(oldFilePath);
         if (!oldFile.exists()) {
             throw new RuntimeException("文件不存在..");
         }
@@ -190,6 +215,63 @@ public class WpsUtil {
             e.printStackTrace();
         }
         return pathParse(bizPath, fileName);
+    }
+
+    /**
+     * 替换文档内容
+     *
+     * @param sourcesPath
+     * @param targetPath
+     * @param params
+     */
+    public void replaceContent(String sourcesPath, String targetPath, Map<String, Object> params, Map<Integer, String> indexMap) {
+        if (MapUtil.isEmpty(params)) {
+            return;
+        }
+        XWPFDocument xwpfDocument = getDocument(sourcesPath);
+        // 替换文本
+        Word.ParagraphSearchAndReplace(xwpfDocument.getParagraphs(), params, "", true);
+        // 替换表格
+        Word.replaceTable(xwpfDocument, indexMap, params);
+        try (FileOutputStream outputStream = new FileOutputStream(getLocalFile(targetPath))) {
+            xwpfDocument.write(outputStream);
+            xwpfDocument.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /**
+     * 获取文档实例
+     *
+     * @param filePath
+     * @return
+     */
+    private XWPFDocument getDocument(String filePath) {
+        File file = null;
+        if (CommonConstant.UPLOAD_TYPE_LOCAL.equals(uploadType)) {
+            file = this.getLocalFile(filePath);
+        }
+        if (file != null && file.exists()) {
+            try (FileInputStream is = new FileInputStream(file)) {
+                return new XWPFDocument(is);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        throw new RuntimeException("文件不存在");
+    }
+
+    /**
+     * 获取本地文件
+     *
+     * @param filePath
+     * @return
+     */
+    private File getLocalFile(String filePath) {
+        return new File(uploadpath + File.separator + filePath);
     }
 
     /**

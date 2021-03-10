@@ -3,7 +3,8 @@ import { getAction, postAction } from './manage'
 const api = {
   createNewFileUrl: '/base/webOffice/getNewFileUrl',
   preViewUrl: '/base/webOffice/getViewUrl',
-  saveWpsModel: '/base/webOffice/saveWpsModel'
+  saveWpsModel: '/base/webOffice/saveWpsModel',
+  copyByModelFile: '/base/webOffice/copyByModelFile'
 }
 
 export const createNewFile = (fileType) => {
@@ -22,4 +23,8 @@ export const getPreViewUrl = (fileId, fileType) => {
 
 export const saveWpsModel = (data) => {
   return postAction(api.saveWpsModel, data)
+}
+
+export const copyByModelFile = (fileId) => {
+  return getAction(api.copyByModelFile, { fileId })
 }
