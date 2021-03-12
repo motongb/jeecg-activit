@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-auto-complete v-model="text" :data-source="dataSource" optionLabelProp="label" style="width: 100%"
+    <a-auto-complete :disabled="disabled"  v-model="text" :data-source="dataSource" optionLabelProp="label" style="width: 100%"
                      @select="onSelect" @search="onSearch">
       <template slot="dataSource">
         <a-select-option v-for="(item,index) in dataSource" :key="index" :value="item.fileId" :label="item.name">
@@ -56,6 +56,10 @@
       event: 'change'
     },
     props: {
+      disabled:{
+        type:Boolean,
+        default:false
+      },
       value: {
         type: String,
         default: undefined
@@ -98,7 +102,6 @@
         loading: false,
         url: {
           list: '/contract/contractModel/list',
-          queryById: '/contract/contractModel/queryById'
         }
       }
     },
@@ -114,9 +117,9 @@
     },
     methods: {
       queryById() {
-        getAction(this.url.queryById, { id: this.value }).then(res => {
+        getAction(this.url.list, { fileId: this.value }).then(res => {
           if (res.success) {
-            this.text = res.result.name
+            this.text = res.result.records[0].name
           }
         })
       },

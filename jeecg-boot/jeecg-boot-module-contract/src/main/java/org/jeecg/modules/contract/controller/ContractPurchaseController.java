@@ -1,5 +1,6 @@
 package org.jeecg.modules.contract.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -9,6 +10,7 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.modules.contract.entity.ContractPurchase;
+import org.jeecg.modules.contract.entity.vo.ContractPurchaseVo;
 import org.jeecg.modules.contract.service.IContractPurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -57,28 +59,30 @@ public class ContractPurchaseController extends JeecgController<ContractPurchase
     /**
      * 添加
      *
-     * @param contractPurchase
+     * @param contractPurchaseVo
      * @return
      */
     @AutoLog(value = "采购合同基础表-添加")
     @ApiOperation(value = "采购合同基础表-添加", notes = "采购合同基础表-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody ContractPurchase contractPurchase) {
-        contractPurchaseService.save(contractPurchase);
+    public Result<?> add(@RequestBody ContractPurchaseVo contractPurchaseVo) {
+        contractPurchaseService.saveWithProcess(contractPurchaseVo);
+        contractPurchaseService.saveMoreItem(contractPurchaseVo);
         return Result.OK("添加成功！");
     }
 
     /**
      * 编辑
      *
-     * @param contractPurchase
+     * @param contractPurchaseVo
      * @return
      */
     @AutoLog(value = "采购合同基础表-编辑")
     @ApiOperation(value = "采购合同基础表-编辑", notes = "采购合同基础表-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody ContractPurchase contractPurchase) {
-        contractPurchaseService.updateById(contractPurchase);
+    public Result<?> edit(@RequestBody ContractPurchaseVo contractPurchaseVo) {
+        contractPurchaseService.saveWithProcess(contractPurchaseVo);
+        contractPurchaseService.saveMoreItem(contractPurchaseVo);
         return Result.OK("编辑成功!");
     }
 
@@ -93,6 +97,7 @@ public class ContractPurchaseController extends JeecgController<ContractPurchase
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id", required = true) String id) {
         contractPurchaseService.removeById(id);
+        contractPurchaseService.removeMoreItem(id);
         return Result.OK("删除成功!");
     }
 
@@ -124,7 +129,9 @@ public class ContractPurchaseController extends JeecgController<ContractPurchase
         if (contractPurchase == null) {
             return Result.error("未找到对应数据");
         }
-        return Result.OK(contractPurchase);
+        ContractPurchaseVo contractPurchaseVo = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchase), ContractPurchaseVo.class);
+        contractPurchaseService.setMember(contractPurchaseVo, false);
+        return Result.OK(contractPurchaseVo);
     }
 
     /**

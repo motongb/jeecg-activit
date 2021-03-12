@@ -2,8 +2,13 @@ package org.jeecg.modules.contract.entity.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.jeecg.modules.contract.entity.ContractItem;
 import org.jeecg.modules.contract.entity.ContractMember;
+import org.jeecg.modules.contract.entity.ContractPayment;
+import org.jeecg.modules.contract.entity.ContractPurchase;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,77 +17,23 @@ import java.util.Map;
  * @description //TODO ContractPurchaseVo
  **/
 @Data
-public class ContractPurchaseVo {
-    /**
-     * 主键
-     */
-    @ApiModelProperty(value = "主键")
-    private String id;
-    /**
-     * 合同名称
-     */
-    @ApiModelProperty(value = "合同名称")
-    private String name;
-    /**
-     * 合同编号
-     */
-    @ApiModelProperty(value = "合同编号")
-    private String code;
-    /**
-     * 类型编码
-     */
-    @ApiModelProperty(value = "类型编码")
-    private String typeCode;
-    /**
-     * 我方
-     */
-    @ApiModelProperty(value = "我方")
-    private String firstMember;
+@EqualsAndHashCode(callSuper = false)
+public class ContractPurchaseVo extends ContractPurchase {
     /**
      * 我方信息
      */
     @ApiModelProperty(value = "我方信息")
     private ContractMember firstMemberObj = new ContractMember();
     /**
-     * 乙方
-     */
-    @ApiModelProperty(value = "乙方")
-    private String secondMember;
-    /**
      * 乙方信息
      */
     @ApiModelProperty(value = "乙方信息")
     private ContractMember secondMemberObj = new ContractMember();
     /**
-     * 丙方
-     */
-    @ApiModelProperty(value = "丙方")
-    private String thirdMember;
-    /**
      * 丙方信息
      */
     @ApiModelProperty(value = "丙方信息")
     private ContractMember thirdMemberObj = new ContractMember();
-    /**
-     * 用户id
-     */
-    @ApiModelProperty(value = "用户id")
-    private String userId;
-    /**
-     * 状态
-     */
-    @ApiModelProperty(value = "状态")
-    private String status;
-    /**
-     * 备注
-     */
-    @ApiModelProperty(value = "备注")
-    private String remark;
-    /**
-     * 签署方数
-     */
-    @ApiModelProperty(value = "签署方数")
-    private String memberUse;
 
     /**
      * 流程数据
@@ -95,5 +46,18 @@ public class ContractPurchaseVo {
      */
     @ApiModelProperty(value = "流程参数")
     private Map<String, Object> params;
+
+
+    /**
+     * 合同明细项
+     */
+    @ApiModelProperty(value = "合同明细项")
+    private List<ContractItem> contractItems;
+
+    /**
+     * 合同付款约定
+     */
+    @ApiModelProperty(value = "合同付款约定")
+    private List<ContractPayment> contractPayments;
 
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <wps-view-tag ref="wpsView" :showSaveBtn="true" @save="handleSave" @fileOpen="fileOpenCallback"></wps-view-tag>
+    <wps-view-tag ref="wpsView" :showSaveBtn="true" @closed="closed" @fileOpen="fileOpenCallback"></wps-view-tag>
   </div>
 </template>
 
@@ -31,15 +31,12 @@
       fileOpenCallback(file) {
         if (file) {
           this.fileId = file.id.split('-')[1]
+          putAction(this.url.edit, { id: this.modelId, fileId: this.fileId }).then(res => {
+            if (res.success) {
+            }
+          })
         }
         console.log(this.fileId)
-      },
-      handleSave() {
-        putAction(this.url.edit, { id: this.modelId, fileId: this.fileId }).then(res => {
-          if (res.success) {
-            this.closed()
-          }
-        })
       },
       closed() {
         this.$router.push('/contract/setting/model')

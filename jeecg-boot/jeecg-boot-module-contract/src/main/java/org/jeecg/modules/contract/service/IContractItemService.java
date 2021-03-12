@@ -10,6 +10,5 @@ import org.jeecg.modules.contract.entity.ContractItem;
  * @Version: V1.0
  */
 public interface IContractItemService extends IService<ContractItem> {
-
-
+    void translateDict(ContractItem contractItem);
 }

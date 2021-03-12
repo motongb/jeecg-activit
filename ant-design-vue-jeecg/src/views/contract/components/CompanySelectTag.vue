@@ -1,5 +1,5 @@
 <template>
-  <a-auto-complete v-model="text" :data-source="dataSource" optionLabelProp="label" style="width: 100%"
+  <a-auto-complete :disabled="disabled" v-model="text" :data-source="dataSource" optionLabelProp="label" style="width: 100%"
                    @select="onSelect" @search="onSearch">
     <template slot="dataSource">
       <a-select-option v-for="(item,index) in dataSource" :key="index" :value="item.id" :label="item.nameCn">
@@ -22,6 +22,10 @@
       event: 'change'
     },
     props: {
+      disabled:{
+        type:Boolean,
+        default:false
+      },
       value: {
         type: String,
         default: undefined

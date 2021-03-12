@@ -11,4 +11,5 @@ import org.jeecg.modules.contract.entity.ContractMember;
  */
 public interface IContractMemberService extends IService<ContractMember> {
 
+    void translateDict(ContractMember contractMember);
 }

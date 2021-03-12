@@ -23,6 +23,11 @@ public interface ContractConst {
     String STATUS_FINALIZED = "3";
 
     /**
+     * 申请中断
+     */
+    String STATUS_BACK = "-1";
+
+    /**
      * 我方
      */
     String FIRST_MEMBER = "0";
@@ -36,4 +41,24 @@ public interface ContractConst {
      * 丙方
      */
     String THIRD_MEMBER = "2";
+
+    /**
+     * 使用模板
+     */
+    String IS_USE_MODEL = "1";
+
+    /**
+     * 币种
+     */
+    String DICT_COIN = "coin_type";
+
+    /**
+     * 合同明细单位
+     */
+    String DICT_ITEM_UNIT = "contract_item_unit";
+
+    /**
+     * 采购方式
+     */
+    String DICT_PURCHASE_WAY = "purchase_way";
 }

@@ -10,5 +10,5 @@ import org.jeecg.modules.contract.entity.ContractPayment;
  * @Version: V1.0
  */
 public interface IContractPaymentService extends IService<ContractPayment> {
-
+    void translateDict(ContractPayment contractPayment);
 }

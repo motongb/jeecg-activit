@@ -1,4 +1,4 @@
-package org.jeecg.common.api.event;
+package org.jeecg.event;
 
 import org.springframework.context.ApplicationEvent;
 
@@ -7,11 +7,11 @@ import org.springframework.context.ApplicationEvent;
  * @date 2021/2/20 14:28
  * @description //TODO ActivitiBackEvent
  **/
-public class ActivitiBackEvent<T> extends ApplicationEvent {
+public class ActivitiEvent<T> extends ApplicationEvent {
 
     private T data;
 
-    public ActivitiBackEvent(Object source, T data) {
+    public ActivitiEvent(Object source, T data) {
         super(source);
         this.data = data;
     }

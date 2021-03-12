@@ -26,12 +26,12 @@ import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.jeecg.common.api.event.ActivitiBackEvent;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.config.WorkflowConstants;
+import org.jeecg.event.ActivitiEvent;
 import org.jeecg.modules.activiti.entity.*;
 import org.jeecg.modules.activiti.service.Impl.ActBusinessServiceImpl;
 import org.jeecg.modules.activiti.service.Impl.ActZprocessServiceImpl;
@@ -278,13 +278,12 @@ public class ActTaskController {
         actBusinessService.updateById(actBusiness);
         // 异步发消息
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-        ApplicationContextUtil.getContext().publishEvent(new ActivitiBackEvent<>(WorkflowConstants.FAIL, actBusiness));
         actZprocessService.sendMessage(actBusiness.getId(), sysUser, sysBaseAPI.getUserByName(actBusiness.getUserId()), ActivitiConstant.MESSAGE_BACK_CONTENT,
                 String.format("您的 【%s】 申请已被驳回！", actBusiness.getTitle()), sendMessage, sendSms, sendEmail);
         // 记录实际审批人员
         actBusinessService.insertHI_IDENTITYLINK(IdUtil.simpleUUID(), ActivitiConstant.EXECUTOR_TYPE_b, sysUser.getUsername(), id, procInstId);
-        //修改业务表的流程字段
-        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), WorkflowConstants.FAIL);
+        // 发布事件
+        ApplicationContextUtil.getContext().publishEvent(new ActivitiEvent<>(WorkflowConstants.EVENT_BACK, actBusiness));
         return Result.ok("操作成功");
     }
 
@@ -391,8 +390,8 @@ public class ActTaskController {
         /*完成任务*/
         taskService.complete(id);
         ActBusiness actBusiness = actBusinessService.getById(pi.getBusinessKey());
-        //修改业务表的流程字段
-        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), WorkflowConstants.SIGNING);
+        // 发布审批通过事件
+        ApplicationContextUtil.getContext().publishEvent(new ActivitiEvent<>(WorkflowConstants.EVENT_PASS, actBusiness));
 
         LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         List<Task> tasks = taskService.createTaskQuery().processInstanceId(procInstId).list();
@@ -447,9 +446,8 @@ public class ActTaskController {
             LoginUser user = sysBaseAPI.getUserByName(actBusiness.getUserId());
             actZprocessService.sendMessage(actBusiness.getId(), loginUser, user, ActivitiConstant.MESSAGE_PASS_CONTENT,
                     String.format("您的 【%s】 申请已通过！", actBusiness.getTitle()), sendMessage, sendSms, sendEmail);
-            //修改业务表的流程字段
-            actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), WorkflowConstants.FINALIZED);
-
+            // 发布流程完成事件
+            ApplicationContextUtil.getContext().publishEvent(new ActivitiEvent<>(WorkflowConstants.EVENT_FINALIZED, actBusiness));
         }
         // 记录实际审批人员
         actBusinessService.insertHI_IDENTITYLINK(IdUtil.simpleUUID(),
@@ -583,7 +581,7 @@ public class ActTaskController {
         actBusiness.setStatus(ActivitiConstant.STATUS_CANCELED);
         actBusiness.setResult(ActivitiConstant.RESULT_TO_SUBMIT);
         actBusinessService.updateById(actBusiness);
-        //修改业务表的流程字段
-        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), WorkflowConstants.FAIL);
+        //发布流程取消事件
+        ApplicationContextUtil.getContext().publishEvent(new ActivitiEvent<>(WorkflowConstants.EVENT_CANCEL, actBusiness));
     }
 }

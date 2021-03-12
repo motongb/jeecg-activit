@@ -19,10 +19,12 @@ import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.UUIDGenerator;
 import org.jeecg.config.WorkflowConstants;
+import org.jeecg.event.ActivitiEvent;
 import org.jeecg.modules.activiti.entity.*;
 import org.jeecg.modules.activiti.service.IActZParamsService;
 import org.jeecg.modules.activiti.service.Impl.ActBusinessServiceImpl;
 import org.jeecg.modules.activiti.service.Impl.ActZprocessServiceImpl;
+import org.jeecgframework.core.util.ApplicationContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -182,6 +184,7 @@ public class ActBusinessController {
         actBusiness.setResult(ActivitiConstant.RESULT_DEALING);
         actBusiness.setApplyTime(new Date());
         actBusinessService.updateById(actBusiness);
+        ApplicationContextUtil.getContext().publishEvent(new ActivitiEvent<>(WorkflowConstants.EVENT_APPLY, actBusiness));
         return Result.ok("操作成功");
     }
 
@@ -201,8 +204,8 @@ public class ActBusinessController {
         actBusiness.setStatus(ActivitiConstant.STATUS_CANCELED);
         actBusiness.setResult(ActivitiConstant.RESULT_TO_SUBMIT);
         actBusinessService.updateById(actBusiness);
-        //修改业务表的流程字段
-        actBusinessService.updateBusinessStatus(actBusiness.getTableName(), actBusiness.getTableId(), WorkflowConstants.FAIL);
+        //发布撤回申请事件
+        ApplicationContextUtil.getContext().publishEvent(new ActivitiEvent<>(WorkflowConstants.EVENT_CANCEL, actBusiness));
         return Result.ok("操作成功");
     }
 

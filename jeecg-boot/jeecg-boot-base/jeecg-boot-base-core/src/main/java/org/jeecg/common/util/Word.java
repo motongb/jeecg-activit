@@ -3,6 +3,7 @@ package org.jeecg.common.util;
 import cn.hutool.core.map.MapUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xwpf.usermodel.*;
+import org.jeecg.common.api.dto.wps.WpsTableStyle;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -47,8 +48,12 @@ public class Word {
         }
         indexMap.forEach((index, dataKey) -> {
             XWPFTable xwpfTable = null;
+            WpsTableStyle tableStyle = null;
             try {
                 xwpfTable = xwpfDocument.getTables().get(index);
+                XWPFTableRow headerRow = xwpfTable.getRow(1);
+                XWPFRun run = headerRow.getTableCells().get(0).getParagraphs().get(0).getRuns().get(0);
+                tableStyle = new WpsTableStyle(run.isBold(), run.getFontFamily(), run.getFontSize(), headerRow.getHeight());
             } catch (ArrayIndexOutOfBoundsException e) {
                 log.error(e.getMessage());
             }
@@ -58,7 +63,7 @@ public class Word {
                 Map<String, Object> map = getTableFields(rows, params);
                 int rowIndex = (int) map.get("rowIndex");//寻找字段绑定行索引
                 List<String> fields = (List<String>) map.get("fields"); //字段绑定行字段顺序
-                insertTable(rowIndex, rows, fields, dataMapList, xwpfTable);
+                insertTable(rowIndex, rows, fields, dataMapList, xwpfTable, tableStyle);
             }
         });
     }
@@ -108,7 +113,7 @@ public class Word {
      * @param dataMapList
      * @param xwpfTable
      */
-    private static void insertTable(int rowIndex, List<XWPFTableRow> rows, List<String> fields, List<Map<String, Object>> dataMapList, XWPFTable xwpfTable) {
+    private static void insertTable(int rowIndex, List<XWPFTableRow> rows, List<String> fields, List<Map<String, Object>> dataMapList, XWPFTable xwpfTable, WpsTableStyle tableStyle) {
         if (CollectionUtils.isEmpty(fields)) {
             return;
         }
@@ -122,6 +127,7 @@ public class Word {
             }
             if (row != null) {
                 List<XWPFTableCell> cells = row.getTableCells();
+                row.setHeight(tableStyle.getHeight());
                 int cellIndex = 0;
                 for (XWPFTableCell cell : cells) {
                     Object value = rowData.get(fields.get(cellIndex));
@@ -129,6 +135,9 @@ public class Word {
                         cell.removeParagraph(0);
                         XWPFParagraph newPara = cell.addParagraph();
                         XWPFRun run = newPara.createRun();
+                        run.setBold(tableStyle.isBold());
+                        run.setFontFamily(tableStyle.getFontFamily());
+                        run.setFontSize(tableStyle.getFontSize());
                         run.setText(value.toString());
                     }
                     cellIndex++;

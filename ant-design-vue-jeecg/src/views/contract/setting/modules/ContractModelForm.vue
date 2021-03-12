@@ -10,7 +10,7 @@
           </a-col>
           <a-col :span="24">
             <a-form-item label="模板文件id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['fileId']" placeholder="请输入模板文件id"  ></a-input>
+              <a-input disabled v-decorator="['fileId']" placeholder="请输入模板文件id"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="24">

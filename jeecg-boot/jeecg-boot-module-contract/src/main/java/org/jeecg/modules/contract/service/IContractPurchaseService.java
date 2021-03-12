@@ -21,7 +21,17 @@ public interface IContractPurchaseService extends IService<ContractPurchase> {
      *
      * @param contractPurchaseVo
      */
-    void setMember(ContractPurchaseVo contractPurchaseVo);
+    void setMember(ContractPurchaseVo contractPurchaseVo, boolean translateDict);
 
     IPage<ContractPurchase> pageVo(Page<ContractPurchase> page, ContractPurchase contractPurchase);
+
+    void saveMoreItem(ContractPurchaseVo contractPurchaseVo);
+
+    void setMoreItem(ContractPurchaseVo contractPurchaseVo, boolean translateDict);
+
+    void removeMoreItem(String contractId);
+
+    ContractPurchaseVo getContractVoById(String contractId, boolean translateDict);
+
+    void translateDict(ContractPurchase contractPurchase);
 }

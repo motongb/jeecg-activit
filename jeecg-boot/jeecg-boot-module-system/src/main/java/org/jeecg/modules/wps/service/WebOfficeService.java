@@ -5,6 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.dto.wps.WpsFileDTO;
@@ -13,6 +14,7 @@ import org.jeecg.common.api.dto.wps.WpsUserDTO;
 import org.jeecg.common.api.vo.OaWpsModel;
 import org.jeecg.common.constant.WpsConstant;
 import org.jeecg.common.system.api.ISysBaseAPI;
+import org.jeecg.common.system.api.WebOfficeAPI;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.WpsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ import java.util.stream.Collectors;
  **/
 @Slf4j
 @Service
-public class WebOfficeService {
+public class WebOfficeService implements WebOfficeAPI {
 
     @Autowired
     private WpsUtil wpsUtil;
@@ -77,10 +79,14 @@ public class WebOfficeService {
         return result;
     }
 
+    @Override
     public OaWpsModel copyByModelFile(String fileId) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         OaWpsModel oaWpsModel = oaWpsModelService.getOne(new LambdaQueryWrapper<OaWpsModel>()
                 .eq(OaWpsModel::getFileId, fileId).orderByDesc(OaWpsModel::getVersion).last("limit 1"));
+        if (Objects.isNull(oaWpsModel)) {
+            throw new RuntimeException("文件丢失");
+        }
         String newFileId = IdUtil.simpleUUID();
         OaWpsModel newOaWpsModel = new OaWpsModel();
         BeanUtil.copyProperties(oaWpsModel, newOaWpsModel);
@@ -91,6 +97,11 @@ public class WebOfficeService {
         newOaWpsModel.setDownloadUrl(wpsUtil.copyFile(oaWpsModel.getDownloadUrl(), ""));
         oaWpsModelService.save(newOaWpsModel);
         return newOaWpsModel;
+    }
+
+    @Override
+    public IService<OaWpsModel> getOaWpsModelService() {
+        return this.oaWpsModelService;
     }
 
     /*********wps回调方法 start**********/

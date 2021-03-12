@@ -7,17 +7,17 @@
             <a-row>
               <a-col :span="12">
                 <a-form-model-item label="合同名称">
-                  <a-input v-model="form.name" placeholder="请输入合同名称"></a-input>
+                  <a-input :disabled="disabled" v-model="form.name" placeholder="请输入合同名称"></a-input>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="合同编号">
-                  <a-input v-model="form.code" placeholder="请输入合同编号"></a-input>
+                  <a-input :disabled="disabled" v-model="form.code" placeholder="请输入合同编号"></a-input>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="合同类型">
-                  <a-tree-select v-model="form.typeCode"
+                  <a-tree-select :disabled="disabled" v-model="form.typeCode"
                                  :show-search="true"
                                  allow-clear
                                  treeNodeFilterProp="title"
@@ -29,17 +29,17 @@
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="成本中心">
-                  <a-input v-model="form.subForm.costCenter" placeholder="请输入成本中心"></a-input>
+                  <a-input :disabled="disabled" v-model="form.costCenter" placeholder="请输入成本中心"></a-input>
                 </a-form-model-item>
               </a-col>
               <a-col :span="24">
                 <a-form-model-item label="合同说明" :label-col="{ span: 2 }" :wrapper-col="{ span: 20 }">
-                  <a-textarea v-model="form.remark" placeholder="请输入合同说明" :rows="5"/>
+                  <a-textarea :disabled="disabled" v-model="form.remark" placeholder="请输入合同说明" :rows="5"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="项目相关合同">
-                  <a-select v-model="form.subForm.relateProject">
+                  <a-select :disabled="disabled" v-model="form.relateProject">
                     <a-select-option value="0">项目无关合同</a-select-option>
                     <a-select-option value="1">项目相关合同</a-select-option>
                   </a-select>
@@ -47,13 +47,13 @@
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="相关项目">
-                  <a-input-search v-model="form.subForm.project" :disabled="form.subForm.relateProject=='0'"
+                  <a-input-search v-model="form.project" :disabled="form.relateProject=='0'||disabled"
                                   placeholder="请选择相关项目"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="是否子合同">
-                  <a-radio-group v-model="form.subForm.isSub">
+                  <a-radio-group :disabled="disabled" v-model="form.isSub">
                     <a-radio value="0">否</a-radio>
                     <a-radio value="1">是</a-radio>
                   </a-radio-group>
@@ -61,13 +61,13 @@
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="主合同">
-                  <a-input-search v-model="form.subForm.parentId" :disabled="form.subForm.isSub=='0'"
+                  <a-input-search v-model="form.parentId" :disabled="form.isSub=='0'||disabled"
                                   placeholder="请选择主合同"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="预算相关合同">
-                  <a-select v-model="form.subForm.budget">
+                  <a-select :disabled="disabled" v-model="form.budget">
                     <a-select-option value="0">预算内合同</a-select-option>
                     <a-select-option value="1">预售外合同</a-select-option>
                   </a-select>
@@ -75,7 +75,7 @@
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="密级">
-                  <a-select v-model="form.subForm.isSecret">
+                  <a-select :disabled="disabled" v-model="form.isSecret">
                     <a-select-option value="0">非密</a-select-option>
                     <a-select-option value="1">保密</a-select-option>
                   </a-select>
@@ -83,19 +83,19 @@
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="开始时间">
-                  <j-date placeholder="请选择开始时间" v-model="form.subForm.startTime" :trigger-change="true"
+                  <j-date :disabled="disabled" placeholder="请选择开始时间" v-model="form.startTime" :trigger-change="true"
                           style="width: 100%"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="结束时间">
-                  <j-date placeholder="请选择结束时间" v-model="form.subForm.endTime" :trigger-change="true"
+                  <j-date :disabled="disabled" placeholder="请选择结束时间" v-model="form.endTime" :trigger-change="true"
                           style="width: 100%"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="合同金额">
-                  <a-input-number v-model="form.subForm.amount" style="width: 100%"
+                  <a-input-number :disabled="disabled" v-model="form.amount" style="width: 100%"
                                   :formatter="value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                                   :parser="value => value.replace(/\$\s?|(,*)/g, '')"
                                   @change="amountChange"/>
@@ -103,7 +103,7 @@
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="合同金额大写">
-                  <a-input v-model="form.subForm.amountLarge" disabled></a-input>
+                  <a-input v-model="form.amountLarge" disabled></a-input>
                 </a-form-model-item>
               </a-col>
             </a-row>
@@ -112,22 +112,22 @@
             <a-row>
               <a-col :span="12">
                 <a-form-model-item label="采购方式">
-                  <j-dict-select-tag v-model="form.subForm.purchaseType" dictCode="purchase_way"/>
+                  <j-dict-select-tag :disabled="disabled" v-model="form.purchaseType" dictCode="purchase_way"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="招标编号">
-                  <a-input-search v-model="form.subForm.biddingId" placeholder="请选择招标编号"/>
+                  <a-input-search :disabled="disabled" v-model="form.biddingId" placeholder="请选择招标编号"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="相关框架协议">
-                  <a-input-search v-model="form.subForm.protocol" placeholder="请选择相关框架协议"/>
+                  <a-input-search :disabled="disabled" v-model="form.protocol" placeholder="请选择相关框架协议"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="采购订单号">
-                  <a-input-search v-model="form.subForm.purchaseId" placeholder="请选择采购订单"/>
+                  <a-input-search :disabled="disabled" v-model="form.purchaseId" placeholder="请选择采购订单"/>
                 </a-form-model-item>
               </a-col>
             </a-row>
@@ -145,7 +145,7 @@
               <a-col :span="10">
                 <a-row>
                   <a-form-model-item label="签署方数">
-                    <a-select v-model="form.memberUse">
+                    <a-select :disabled="disabled" v-model="form.memberUse">
                       <a-select-option value="0">双方签署</a-select-option>
                       <a-select-option value="1">三方签署</a-select-option>
                     </a-select>
@@ -153,19 +153,19 @@
                 </a-row>
                 <a-row>
                   <a-form-model-item label="我 方">
-                    <CompanySelectTag v-model="form.firstMember"
+                    <CompanySelectTag :disabled="disabled" v-model="form.firstMember"
                                       @select="(item)=>handleCompanySelect(item,'0')"></CompanySelectTag>
                   </a-form-model-item>
                 </a-row>
                 <a-row>
                   <a-form-model-item label="乙 方">
-                    <CompanySelectTag v-model="form.secondMember"
+                    <CompanySelectTag :disabled="disabled" v-model="form.secondMember"
                                       @select="(item)=>handleCompanySelect(item,'1')"></CompanySelectTag>
                   </a-form-model-item>
                 </a-row>
                 <a-row v-if="form.memberUse=='1'">
                   <a-form-model-item label="丙 方">
-                    <CompanySelectTag v-model="form.thirdMember"
+                    <CompanySelectTag :disabled="disabled" v-model="form.thirdMember"
                                       @select="(item)=>handleCompanySelect(item,'2')"></CompanySelectTag>
                   </a-form-model-item>
                 </a-row>
@@ -192,30 +192,31 @@
             <a-row>
               <a-col :span="12">
                 <a-form-model-item label="是否使用模板">
-                  <a-radio-group v-model="form.useModel">
+                  <a-radio-group :disabled="disabled" v-model="form.useModel">
                     <a-radio value="0">否</a-radio>
                     <a-radio value="1">是</a-radio>
                   </a-radio-group>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
-                <a-form-model-item v-show="form.useModel==='1'" label="选择模板文件">
-                  <model-select v-model="form.subForm.fileModel" @change="modelSelectChange"></model-select>
+                <a-form-model-item v-show="form.useModel==='1'" label="模板文件">
+                  <model-select :disabled="disabled" v-model="form.sourceModel"
+                                @change="modelSelectChange"></model-select>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="合同影像文件">
-                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.subForm.filePdf"/>
+                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.filePdf"/>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="附件">
-                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.subForm.fileAttach"/>
+                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.fileAttach"/>
                 </a-form-model-item>
               </a-col>
               <!--              <a-col :span="12">-->
               <!--                <a-form-model-item label="合同文件">-->
-              <!--                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.subForm.fileContract"/>-->
+              <!--                  <j-upload :disabled="disabled" :buttonVisible="!disabled" v-model="form.fileContract"/>-->
               <!--                </a-form-model-item>-->
               <!--              </a-col>-->
             </a-row>
@@ -235,7 +236,7 @@
         </a-form-model>
       </a-tab-pane>
       <a-tab-pane key="2" tab="正文" :forceRender="true">
-        <wps-view-tag ref="wpsView" @fileOpen="fileOpenCallback"
+        <wps-view-tag ref="wpsView" @fileOpen="fileOpenCallback" :is-model="isModel"
                       :show-open-doc-btn="form.useModel==='0'"></wps-view-tag>
       </a-tab-pane>
     </a-tabs>
@@ -282,24 +283,23 @@
         contractTypeData: [],
         // 表单
         form: {
+          sourceModel: '',
+          fileContract: '',
+          fileModel: '',
           useModel: '0',
           typeCode: undefined,
           memberUse: '0',
-          subForm: {
-            amount: 0,
-            amountLarge: '零元整',
-            relateProject: '0',
-            isSub: '0',
-            budget: '0',
-            isSecret: '0',
-            purchaseType: '0',
-            startTime: moment().format('YYYY-MM-DD'),
-            endTime: moment().subtract(-1, 'years').format('YYYY-MM-DD'),
-            fileModel: '',
-            filePdf: '',
-            fileAttach: '',
-            fileContract: ''
-          },
+          amount: 0,
+          amountLarge: '零元整',
+          relateProject: '0',
+          isSub: '0',
+          budget: '0',
+          isSecret: '0',
+          purchaseType: '0',
+          startTime: moment().format('YYYY-MM-DD'),
+          endTime: moment().subtract(-1, 'years').format('YYYY-MM-DD'),
+          filePdf: '',
+          fileAttach: '',
           firstMemberObj: { type: '0', coin: 'CNY' },
           secondMemberObj: { type: '1', coin: 'CNY' },
           thirdMemberObj: { type: '2', coin: 'CNY' },
@@ -319,14 +319,15 @@
         confirmLoading: false,
         validatorRules: {},
         url: {
-          add: '/contract/contractGeneral/add',
-          edit: '/contract/contractGeneral/edit',
-          queryById: '/contract/contractGeneral/queryById',
+          add: '/contract/contractPurchase/add',
+          edit: '/contract/contractPurchase/edit',
+          queryById: '/contract/contractPurchase/queryById',
           treeList: '/contract/contractType/tree',
           bankList: '/contract/companyBank/list'
         },
         docType: 'word',
-        activeKey: '1'
+        activeKey: '1',
+        isModel: false //是否模板
       }
     },
     computed: {},
@@ -341,6 +342,7 @@
         this.form.typeCode = this.lcModa.typeCode
         this.form.processData.procDefId = this.processData.id
         this.form.processData.tableName = this.processData.businessTable
+
       }
       this.getContractType()
     },
@@ -348,26 +350,32 @@
       /*模板选择回调*/
       modelSelectChange() {
         if (this.form.useModel === '1' &&
-          this.form.subForm.fileModel &&
-          this.form.subForm.fileModel.length > 0) {
-          copyByModelFile(this.form.subForm.fileModel).then(res => {
-            this.form.subForm.fileContract = res.result.fileId
+          this.form.sourceModel &&
+          this.form.sourceModel.length > 0) {
+          copyByModelFile(this.form.sourceModel).then(res => {
+            this.form.fileModel = res.result.fileId
           })
         }
       },
       /*文件打开回调*/
       fileOpenCallback(file) {
         if (file) {
-          this.form.subForm.fileContract = file.id.split('-')[1]
+          this.form.fileContract = file.id.split('-')[1]
         }
-        console.log(this.form.subForm.fileContract)
+        console.log(this.form.fileContract)
       },
       tabChange(key) {
         this.activeKey = key
         if (key === '1') {
           this.$refs.wpsView.destroyIframe()
-        } else {
-          this.$refs.wpsView.init(this.form.subForm.fileContract)
+        } else if (this.form.useModel === '0' || this.task) {
+          this.isModel = false
+          this.$refs.wpsView.init(this.form.fileContract)
+        } else if (this.form.useModel === '1' &&
+          this.form.sourceModel &&
+          this.form.sourceModel.length > 0) {
+          this.isModel = true
+          this.$refs.wpsView.init(this.form.fileModel)
         }
       },
 
@@ -401,7 +409,7 @@
       },
       /*金额变动*/
       amountChange(value) {
-        this.form.subForm.amountLarge = digitUppercase(value)
+        this.form.amountLarge = digitUppercase(value)
       },
       /*获取合同类型树*/
       getContractType() {
@@ -422,7 +430,6 @@
             this.$message.error(res.message)
           }
         })
-        let str = ''
       },
 
       /*重写提交*/
@@ -430,7 +437,7 @@
         return new Promise((resolve, reject) => {
           this.$refs.ruleForm.validate(valid => {
             if (valid) {
-              this.$refs.wpsView.save()
+              // this.$refs.wpsView.save()
               this.form.processData.procDeTitle = this.title
               this.form.processData.dept = this.dept
               this.confirmLoading = true

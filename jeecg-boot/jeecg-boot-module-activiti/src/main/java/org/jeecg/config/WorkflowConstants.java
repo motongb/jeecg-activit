@@ -1,6 +1,8 @@
 package org.jeecg.config;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class WorkflowConstants {
     /**
@@ -25,15 +27,34 @@ public final class WorkflowConstants {
     public static final String EVENT_END = "end";
 
     /**
-     * 驳回
+     * 提交申请，启动流程
      */
-    public static final String FAIL = "-1";
+    public static final String EVENT_APPLY = "apply";
+
     /**
-     * 审批中
+     * 撤回申请
      */
-    public static final String SIGNING = "2";
+    public static final String EVENT_CANCEL = "cancel";
+
+    /**
+     * 驳回至发起人
+     */
+    public static final String EVENT_BACK = "back";
+
+    /**
+     * 审批通过
+     */
+    public static final String EVENT_PASS = "pass";
+
     /**
      * 审批结束
      */
-    public static final String FINALIZED = "3";
+    public static final String EVENT_FINALIZED = "finalized";
+
+    /**
+     * 流程监听器实现类映射
+     */
+    public static final Map<String, String> ActivitiListenerInstanceMap = new HashMap<String, String>() {{
+        put("contract_purchase", "purchaseActivitiEventListenerHandle");
+    }};
 }

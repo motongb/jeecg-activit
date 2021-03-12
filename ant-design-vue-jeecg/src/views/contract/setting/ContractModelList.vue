@@ -83,6 +83,9 @@
                 <a @click="handleDetail(record)">详情</a>
               </a-menu-item>
               <a-menu-item>
+                <a @click="setParams(record)">配置</a>
+              </a-menu-item>
+              <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
                   <a>删除</a>
                 </a-popconfirm>
@@ -95,6 +98,18 @@
     </div>
 
     <contract-model-modal ref="modalForm" @ok="modalFormOk"></contract-model-modal>
+    <!--配置区域-->
+    <a-drawer
+      title="配置参数"
+      :width="width"
+      placement="right"
+      :closable="false"
+      @close="handleCancel"
+      :visible="visible">
+      <div class="drawer-footer">
+        <a-button @click="handleCancel" style="margin-bottom: 0;">关闭</a-button>
+      </div>
+    </a-drawer>
   </a-card>
 </template>
 
@@ -158,6 +173,8 @@
           importExcelUrl: 'contract/contractModel/importExcel'
 
         },
+        visible:false,
+        width:800,
         dictOptions: {},
         superFieldList: []
       }
@@ -171,6 +188,12 @@
       }
     },
     methods: {
+      handleOk(){
+
+      },
+      handleCancel(){
+        this.visible = false
+      },
       handleEditDoc(record) {
         this.$router.push({ path: '/contract/setting/modelPage', query: { id: record.id, fileId: record.fileId } })
       },
@@ -182,10 +205,29 @@
         fieldList.push({ type: 'string', value: 'fileId', text: '模板文件id', dictCode: '' })
         fieldList.push({ type: 'string', value: 'modelKey', text: '编码', dictCode: '' })
         this.superFieldList = fieldList
+      },
+      setParams(record) {
+        this.visible = true
       }
     }
   }
 </script>
 <style scoped>
   @import '~@assets/less/common.less';
+  .ant-btn {
+    margin-left: 30px;
+    margin-bottom: 30px;
+    float: right;
+  }
+  .drawer-footer{
+    position: absolute;
+    bottom: -8px;
+    width: 100%;
+    border-top: 1px solid #e8e8e8;
+    padding: 10px 16px;
+    text-align: right;
+    left: 0;
+    background: #fff;
+    border-radius: 0 0 2px 2px;
+  }
 </style>

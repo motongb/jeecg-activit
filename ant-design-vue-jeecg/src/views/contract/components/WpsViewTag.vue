@@ -10,7 +10,7 @@
         @change="handleChange">
         <a v-show="showOpenDocBtn" href="javascript:void(0);" class="open-doc">打开本地文件</a>
       </a-upload>
-      <a v-show="showSaveBtn" href="javascript:void(0);" class="open-doc" @click="save">保存并关闭</a>
+      <a v-show="showSaveBtn" href="javascript:void(0);" class="open-doc" @click="closed">保存并关闭</a>
       <div id="viewFile"></div>
     </div>
   </a-spin>
@@ -26,6 +26,10 @@
   export default {
     name: 'WpsViewTag',
     props: {
+      isModel: {
+        type: Boolean,
+        default: false
+      },
       showOpenDocBtn: {
         type: Boolean,
         default: true
@@ -97,6 +101,9 @@
         })
         this.wps.setToken({ token: this.token })
         this.wps.on('fileOpen', data => {
+          if (this.isModel) {
+            return
+          }
           this.$emit('fileOpen', data.fileInfo)
         })
         const iframe = this.wps.iframe
@@ -129,6 +136,9 @@
       },
       urlChange(url) {
         this.$emit('change', url)
+      },
+      closed() {
+        this.$emit('closed')
       },
       /*手动保存文档*/
       async save() {
