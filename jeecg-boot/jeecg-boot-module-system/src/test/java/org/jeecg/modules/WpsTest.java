@@ -40,7 +40,7 @@ public class WpsTest {
         params.put("table0", tableData);
         Map<Integer, String> indexMap = new HashMap<>();
         indexMap.put(0, "table0");
-        wpsUtil.replaceContent("temp/3_工程合同会签人员名单_1615193793207.docx",
-                "temp/3_工程合同会签人员名单_1615251312381.docx", params, indexMap);
+        wpsUtil.replaceContent("new/3_工程合同会签人员名单_1615886291812.docx",
+                "new/3_工程合同会签人员名单_1615941072338.docx", params, indexMap);
     }
 }

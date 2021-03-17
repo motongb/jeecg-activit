@@ -2,13 +2,12 @@ package org.jeecg.common.util;
 
 import cn.hutool.core.map.MapUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.config.WpsProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,9 +19,6 @@ import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static org.apache.tomcat.util.codec.binary.Base64.encodeBase64String;
 
@@ -206,7 +202,7 @@ public class WpsUtil {
             file.mkdirs();// 创建文件根目录
         }
         long currentTime = System.currentTimeMillis();
-        String fileName = oldFile.getName().replace("_(.*?)\\.", String.valueOf(currentTime));
+        String fileName = oldFile.getName().replaceAll("(?<=_)(.*?)(?=\\.)", String.valueOf(currentTime));
         String savePath = file.getPath() + File.separator + fileName;
         File saveFile = new File(savePath);
         try {
@@ -230,7 +226,7 @@ public class WpsUtil {
         }
         XWPFDocument xwpfDocument = getDocument(sourcesPath);
         // 替换文本
-        Word.ParagraphSearchAndReplace(xwpfDocument.getParagraphs(), params, "", true);
+        Word.paragraphReplace(xwpfDocument.getParagraphs(), params);
         // 替换表格
         Word.replaceTable(xwpfDocument, indexMap, params);
         try (FileOutputStream outputStream = new FileOutputStream(getLocalFile(targetPath))) {
@@ -240,7 +236,6 @@ public class WpsUtil {
             e.printStackTrace();
         }
     }
-
 
 
     /**

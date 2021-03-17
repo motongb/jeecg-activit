@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * @Description: 合同模板
  * @Author: jeecg-boot
- * @Date: 2021-03-05
+ * @Date: 2021-03-15
  * @Version: V1.0
  */
 @Data
@@ -82,4 +82,13 @@ public class ContractModel implements Serializable {
     @Excel(name = "编码", width = 15)
     @ApiModelProperty(value = "编码")
     private String modelKey;
+    /**
+     * 参数id
+     */
+    @Excel(name = "参数id", width = 15)
+    @ApiModelProperty(value = "参数id")
+    private String fieldId;
+
+    @ApiModelProperty(value = "合同字段参数")
+    private String paramsFields;
 }

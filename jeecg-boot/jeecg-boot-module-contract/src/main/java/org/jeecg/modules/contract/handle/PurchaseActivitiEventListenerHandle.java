@@ -1,6 +1,6 @@
 package org.jeecg.modules.contract.handle;
 
-import cn.hutool.core.bean.BeanUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -9,16 +9,20 @@ import org.jeecg.common.system.api.WebOfficeAPI;
 import org.jeecg.common.util.WpsUtil;
 import org.jeecg.listener.IActivitiEventListener;
 import org.jeecg.modules.activiti.entity.ActBusiness;
-import org.jeecg.modules.contract.entity.ContractMember;
+import org.jeecg.modules.contract.entity.ContractFieldParams;
+import org.jeecg.modules.contract.entity.ContractModel;
 import org.jeecg.modules.contract.entity.ContractPurchase;
 import org.jeecg.modules.contract.entity.vo.ContractPurchaseVo;
+import org.jeecg.modules.contract.service.IContractModelService;
 import org.jeecg.modules.contract.service.IContractPurchaseService;
 import org.jeecg.modules.contract.utils.ContractConst;
+import org.jeecg.modules.contract.utils.TransferParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -28,10 +32,13 @@ import java.util.Objects;
  * @description //TODO GeneralActivitiListenerServiceImpl
  **/
 @Service
-public class PurchaseActivitiEventListenerHandle implements IActivitiEventListener {
+public class PurchaseActivitiEventListenerHandle implements IActivitiEventListener, TransferParams {
 
     @Autowired
     private IContractPurchaseService contractPurchaseService;
+
+    @Autowired
+    private IContractModelService contractModelService;
 
     @Autowired
     private WebOfficeAPI webOfficeAPI;
@@ -41,9 +48,11 @@ public class PurchaseActivitiEventListenerHandle implements IActivitiEventListen
 
     @Override
     public void apply(ActBusiness actBusiness) {
-        ContractPurchase contractPurchase = contractPurchaseService.getById(actBusiness.getTableId());
-        this.copyToStanderWord(contractPurchase);
+        String fileContract = this.copyToStanderWord(contractPurchaseService.getById(actBusiness.getTableId()));
+        ContractPurchase contractPurchase = new ContractPurchase();
         contractPurchase.setStatus(ContractConst.STATUS_SIGNING);
+        contractPurchase.setFileContract(fileContract);
+        contractPurchase.setId(actBusiness.getTableId());
         contractPurchaseService.updateById(contractPurchase);
     }
 
@@ -71,10 +80,10 @@ public class PurchaseActivitiEventListenerHandle implements IActivitiEventListen
      *
      * @param contractPurchase
      */
-    private void copyToStanderWord(ContractPurchase contractPurchase) {
+    private String copyToStanderWord(ContractPurchase contractPurchase) {
         ContractPurchaseVo contractPurchaseVo = contractPurchaseService.getContractVoById(contractPurchase.getId(), true);
         if (Objects.isNull(contractPurchaseVo)) {
-            return;
+            return null;
         }
         // 是否使用模板
         if (ContractConst.IS_USE_MODEL.equals(contractPurchaseVo.getUseModel()) &&
@@ -83,37 +92,24 @@ public class PurchaseActivitiEventListenerHandle implements IActivitiEventListen
             // 从模板复制新文件
             OaWpsModel oaWpsModel = webOfficeAPI.copyByModelFile(contractPurchaseVo.getFileModel());
             IService<OaWpsModel> oaWpsModelIService = webOfficeAPI.getOaWpsModelService();
-            // 模板对象
+            // 查询模板对象
             OaWpsModel model = oaWpsModelIService.getOne(new LambdaQueryWrapper<OaWpsModel>()
                     .eq(OaWpsModel::getFileId, contractPurchaseVo.getFileModel()).orderByDesc(OaWpsModel::getVersion).last("limit 1"));
-            // 设置新文件id
-            contractPurchase.setFileContract(oaWpsModel.getFileId());
+            ContractModel contractModel = contractModelService.getOne(new LambdaQueryWrapper<ContractModel>().eq(ContractModel::getFileId, contractPurchaseVo.getSourceModel()));
             // 表格参数索引
             Map<Integer, String> indexMap = new HashMap<>();
+            List<ContractFieldParams> contractFieldParams = JSON.parseArray(contractModel.getParamsFields(), ContractFieldParams.class);
+            contractFieldParams.forEach(item -> {
+                if ("3".equals(item.getType()) && item.getTableIndex() != null) {
+                    indexMap.put(item.getTableIndex(), item.getFieldKey());
+                }
+            });
             // 转换参数
             Map<String, Object> params = transferObjParams(contractPurchaseVo);
             // 替换文本
             wpsUtil.replaceContent(model.getDownloadUrl(), oaWpsModel.getDownloadUrl(), params, indexMap);
+            return oaWpsModel.getFileId();
         }
-    }
-
-    private Map<String, Object> transferObjParams(ContractPurchaseVo contractPurchaseVo) {
-        Map<String, Object> params = BeanUtil.beanToMap(contractPurchaseVo);
-        ContractMember firstMemberObj = contractPurchaseVo.getFirstMemberObj();
-        ContractMember secondMemberObj = contractPurchaseVo.getSecondMemberObj();
-        ContractMember thirdMemberObj = contractPurchaseVo.getThirdMemberObj();
-        if (firstMemberObj != null) {
-            Map<String, Object> firstMemberObjMap = BeanUtil.beanToMap(firstMemberObj);
-            firstMemberObjMap.forEach((k, v) -> params.put("firstMember_" + k, v));
-        }
-        if (secondMemberObj != null) {
-            Map<String, Object> secondMemberObjMap = BeanUtil.beanToMap(secondMemberObj);
-            secondMemberObjMap.forEach((k, v) -> params.put("secondMember_" + k, v));
-        }
-        if (thirdMemberObj != null) {
-            Map<String, Object> thirdMemberObjMap = BeanUtil.beanToMap(thirdMemberObj);
-            thirdMemberObjMap.forEach((k, v) -> params.put("thirdMember_" + k, v));
-        }
-        return params;
+        return null;
     }
 }

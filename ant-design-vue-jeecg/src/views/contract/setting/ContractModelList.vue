@@ -106,7 +106,22 @@
       :closable="false"
       @close="handleCancel"
       :visible="visible">
+      <div>
+        <a-select v-model="currentSelected" style="width: 100%" @change="handleChange">
+          <a-select-option value="-1">请选择</a-select-option>
+          <template v-for="item in paramsFieldList">
+            <a-select-option :value="item.id">{{item.name}}</a-select-option>
+          </template>
+        </a-select>
+        <p style="margin-top: 10px;font-size: 10px;color: grey">提示：模板中有表格，需要设置列表行的列表索引，即表格的序号，序号从0开始</p>
+        <a-table rowKey="id" :columns="paramsColumns" :data-source="paramsData">
+          <template slot="tableIndex" slot-scope="text, record">
+            <editable-cell :text="record.tableIndex" @change="onCellChange(record,$event)"/>
+          </template>
+        </a-table>
+      </div>
       <div class="drawer-footer">
+        <a-button type="primary" @click="handleOk" style="margin-bottom: 0;margin-right: 20px">保存</a-button>
         <a-button @click="handleCancel" style="margin-bottom: 0;">关闭</a-button>
       </div>
     </a-drawer>
@@ -119,16 +134,45 @@
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import ContractModelModal from './modules/ContractModelModal'
+  import { getAction, putAction } from '@/api/manage'
+  import { filterDictTextByDictCode } from '@comp/dict/JDictSelectUtil'
+  import EditableCell from '../components/EditableCell'
 
   export default {
     name: 'ContractModelList',
     mixins: [JeecgListMixin, mixinDevice],
     components: {
-      ContractModelModal
+      ContractModelModal,
+      EditableCell
     },
     data() {
       return {
         description: '合同模板管理页面',
+        paramsColumns: [
+          {
+            title: '字段名称',
+            align: 'left',
+            dataIndex: 'name'
+          },
+          {
+            title: '字段key',
+            align: 'left',
+            dataIndex: 'fieldKey'
+          },
+          {
+            title: '类型',
+            align: 'left',
+            dataIndex: 'type',
+            customRender: function(t, r, index) {
+              return filterDictTextByDictCode('contract_field_type', t)
+            }
+          },
+          {
+            title: '列表索引',
+            align: 'left',
+            scopedSlots: { customRender: 'tableIndex' }
+          }
+        ],
         // 表头
         columns: [
           {
@@ -167,20 +211,26 @@
         ],
         url: {
           list: '/contract/contractModel/list',
+          edit: '/contract/contractModel/edit',
           delete: '/contract/contractModel/delete',
           deleteBatch: '/contract/contractModel/deleteBatch',
           exportXlsUrl: '/contract/contractModel/exportXls',
-          importExcelUrl: 'contract/contractModel/importExcel'
-
+          importExcelUrl: 'contract/contractModel/importExcel',
+          paramsFieldTree: '/contract/contractFieldParams/tree'
         },
-        visible:false,
-        width:800,
+        visible: false,
+        width: 800,
         dictOptions: {},
-        superFieldList: []
+        superFieldList: [],
+        paramsFieldList: [],
+        editRecord: {},
+        currentSelected: '',
+        paramsData: []
       }
     },
     created() {
       this.getSuperFieldList()
+      this.getParamsFieldList()
     },
     computed: {
       importExcelUrl: function() {
@@ -188,10 +238,34 @@
       }
     },
     methods: {
-      handleOk(){
-
+      onCellChange(record, value) {
+        record.tableIndex = value
+        console.log(this.paramsData)
       },
-      handleCancel(){
+      getParamsFieldList() {
+        getAction(this.url.paramsFieldTree).then(res => {
+          this.paramsFieldList = res.result
+        })
+      },
+      handleChange(value) {
+        const item = this.paramsFieldList.find(m => m.id === value)
+        if (item) {
+          this.paramsData = item.children
+        } else {
+          this.paramsData = []
+        }
+      },
+      handleOk() {
+        putAction(this.url.edit, {
+          id: this.editRecord.id,
+          fieldId: this.currentSelected,
+          paramsFields: JSON.stringify(this.paramsData)
+        }).then(res => {
+          this.$message.success(res.message)
+          this.handleCancel()
+        })
+      },
+      handleCancel() {
         this.visible = false
       },
       handleEditDoc(record) {
@@ -208,18 +282,20 @@
       },
       setParams(record) {
         this.visible = true
+        this.currentSelected = record.fieldId
+        this.editRecord = record
+        if (record.paramsFields) {
+          this.paramsData = JSON.parse(record.paramsFields)
+          console.log(this.paramsData)
+        }
       }
     }
   }
 </script>
 <style scoped>
   @import '~@assets/less/common.less';
-  .ant-btn {
-    margin-left: 30px;
-    margin-bottom: 30px;
-    float: right;
-  }
-  .drawer-footer{
+
+  .drawer-footer {
     position: absolute;
     bottom: -8px;
     width: 100%;

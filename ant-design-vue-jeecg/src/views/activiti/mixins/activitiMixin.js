@@ -10,8 +10,7 @@ export const activitiMixin = {
     JEllipsis
   },
   data() {
-    return {
-    }
+    return {}
   },
   computed: {
     /*todo 所有的流程表单，组件化注册，在此维护*/

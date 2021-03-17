@@ -10,12 +10,17 @@
           </a-col>
           <a-col :span="24">
             <a-form-item label="模板文件id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input disabled v-decorator="['fileId']" placeholder="请输入模板文件id"  ></a-input>
+              <a-input v-decorator="['fileId']" placeholder="请输入模板文件id"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="24">
             <a-form-item label="编码" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input v-decorator="['modelKey']" placeholder="请输入编码"  ></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-item label="参数id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['fieldId']" placeholder="请输入参数id"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
@@ -111,7 +116,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'name','fileId','modelKey'))
+          this.form.setFieldsValue(pick(this.model,'name','fileId','modelKey','fieldId'))
         })
       },
       //渲染流程表单数据
@@ -157,7 +162,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'name','fileId','modelKey'))
+        this.form.setFieldsValue(pick(row,'name','fileId','modelKey','fieldId'))
       },
     }
   }

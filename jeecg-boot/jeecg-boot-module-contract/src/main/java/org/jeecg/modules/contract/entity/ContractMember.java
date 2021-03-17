@@ -26,7 +26,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "contract_member对象", description = "合同签订对象")
-public class ContractMember implements Serializable {
+public class ContractMember implements Serializable, Contract {
     private static final long serialVersionUID = 1L;
 
     /**

@@ -47,6 +47,7 @@ import '@/assets/less/JAreaLinkage.less'
 import VueAreaLinkage from 'vue-area-linkage'
 import '@/components/jeecg/JVxeTable/install'
 import '@/components/JVxeCells/install'
+import '@/utils/directive/dragging'
 
 Vue.config.productionTip = false
 Vue.use(Storage, config.storageOptions)

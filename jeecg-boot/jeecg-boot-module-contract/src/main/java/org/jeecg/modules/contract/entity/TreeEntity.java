@@ -72,5 +72,5 @@ public class TreeEntity {
 
     @TableField(exist = false)
     @ApiModelProperty(value = "子节点")
-    private List<TreeEntity> children = new ArrayList<>();
+    private List<TreeEntity> children;
 }

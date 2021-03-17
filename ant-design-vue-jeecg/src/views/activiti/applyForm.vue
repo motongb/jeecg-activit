@@ -1,7 +1,10 @@
 <template>
   <div>
+    <comment-modal v-show="showCommentVisible" @closed="showCommentVisible=false"></comment-modal>
     <a-card class="apply-card" title="申请信息">
       <div slot="extra">
+        <a-button v-show="!lcModa.isNew" style="margin-right: 8px" type="primary" ghost @click="showComment">查看评论
+        </a-button>
         <template v-if="lcModa.isTask">
           <a-button type="primary" @click="passTask">通 过</a-button>
           <a-button style="margin-left: 8px" @click="backTask">驳 回</a-button>
@@ -53,6 +56,7 @@
                 :assignee-list="assigneeList" :user-loading="userLoading" @cancel="modalTaskVisible = false"
                 @afterSub="closed"
                 :show-assign="showAssign" :back-loading="backLoading" :back-list="backList"></sign-modal>
+
   </div>
 </template>
 
@@ -64,10 +68,11 @@
   import activitiSetting from './mixins/activitiSetting'
   import JFormContainer from '@/components/jeecg/JFormContainer'
   import { getAction, postFormAction } from '@/api/manage'
+  import CommentModal from './components/CommentModal'
 
   export default {
     name: 'applyForm',
-    components: { SignModal, JFormContainer },
+    components: { CommentModal, SignModal, JFormContainer },
     mixins: [activitiMixin],
     data() {
       return {
@@ -101,6 +106,7 @@
           sendSms: false,
           sendEmail: false
         },
+        showCommentVisible: false,
         modalTaskVisible: false,
         userLoading: false,
         assigneeList: [],
@@ -147,6 +153,9 @@
             this.lcModa.title += '-' + this.lcModa.dept + '-' + this.userInfo.realname
           }
         })
+      },
+      showComment() {
+        this.showCommentVisible = true
       },
       handleSubmit(e) {
         this.$refs.ruleForm.validate(valid => {
@@ -250,4 +259,4 @@
   .apply-card {
     /*margin-bottom: 24px;*/
   }
-</style>
+</style>                                                                                                                                                                                   
