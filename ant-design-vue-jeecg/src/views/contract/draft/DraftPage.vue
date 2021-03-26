@@ -60,7 +60,7 @@
             lcModa.from = activitiSetting.draftPagePath
             lcModa.processData = res.result[0]
             lcModa.isNew = true
-            lcModa.title = moment().format('YYYYMMDD') + child.name
+            lcModa.title = moment().format('YYYY-MM-DD HH:mm:ss') + child.name
             lcModa.typeCode = child.code
             lcModa.typeName = child.name
             setStore('lcModa', lcModa)

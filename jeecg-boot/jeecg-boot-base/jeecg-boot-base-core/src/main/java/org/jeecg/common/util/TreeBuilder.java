@@ -1,6 +1,6 @@
-package org.jeecg.modules.contract.utils;
+package org.jeecg.common.util;
 
-import org.jeecg.modules.contract.entity.TreeEntity;
+import org.jeecg.modules.base.entity.TreeEntity;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;

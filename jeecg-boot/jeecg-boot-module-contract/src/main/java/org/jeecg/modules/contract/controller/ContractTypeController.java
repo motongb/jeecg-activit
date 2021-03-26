@@ -18,7 +18,7 @@ import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.contract.entity.ContractType;
 import org.jeecg.modules.contract.service.IContractTypeService;
-import org.jeecg.modules.contract.utils.TreeBuilder;
+import org.jeecg.common.util.TreeBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;

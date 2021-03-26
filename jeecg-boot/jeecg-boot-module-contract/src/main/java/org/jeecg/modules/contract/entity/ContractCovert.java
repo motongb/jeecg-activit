@@ -5,5 +5,5 @@ package org.jeecg.modules.contract.entity;
  * @date 2021/3/16 11:25
  * @description //TODO Contract
  **/
-public interface Contract {
+public interface ContractCovert {
 }

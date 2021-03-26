@@ -86,13 +86,13 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
         if (param.getResult() != null) {
             queryWrapper.eq(ActBusiness::getResult, param.getResult());
         }
-        String createTime_begin = request.getParameter("createTime_begin");
-        if (StrUtil.isNotBlank(createTime_begin)) {
-            queryWrapper.ge(ActBusiness::getCreateTime, createTime_begin);
+        String createTimeBegin = request.getParameter("createTime_begin");
+        if (StrUtil.isNotBlank(createTimeBegin)) {
+            queryWrapper.ge(ActBusiness::getCreateTime, createTimeBegin);
         }
-        String createTime_end = request.getParameter("createTime_end");
-        if (StrUtil.isNotBlank(createTime_end)) {
-            queryWrapper.le(ActBusiness::getCreateTime, createTime_end);
+        String createTimeEnd = request.getParameter("createTime_end");
+        if (StrUtil.isNotBlank(createTimeEnd)) {
+            queryWrapper.le(ActBusiness::getCreateTime, createTimeEnd);
         }
 
         LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
@@ -102,7 +102,7 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
         String type = request.getParameter("type");
         if (StrUtil.isNotBlank(type)) {
             List<String> actBusinessIdsByType = this.listByTypeApp(type);
-            if (actBusinessIdsByType.size() == 0) { // 没有符合的 目的是上下面的查询条件也查不到
+            if (actBusinessIdsByType.isEmpty()) { // 没有符合的 目的是上下面的查询条件也查不到
                 queryWrapper.in(ActBusiness::getId, Lists.newArrayList(""));
             } else {
                 queryWrapper.in(ActBusiness::getId, actBusinessIdsByType);
@@ -139,10 +139,10 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
                 }
                 // 查询审批历史，如果有的话，禁止撤回操作
                 List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery().processInstanceId(e.getProcInstId()).finished().list();
-                if (list.size() > 0) {
-                    e.setProcInstStatus(ActivitiConstant.PROC_INST_APPROVE);
-                } else {
+                if (list.isEmpty()) {
                     e.setProcInstStatus(ActivitiConstant.PROC_INST_NOT_APPROVE);
+                } else {
+                    e.setProcInstStatus(ActivitiConstant.PROC_INST_APPROVE);
                 }
             }
             if (StrUtil.equals(needData, "true")) { // 需要业务数据
@@ -414,7 +414,7 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
     public ActBusiness saveBusiness(boolean isNew, Map<String, Object> processData, Map<String, Object> params) {
         ActBusiness actBusiness = new ActBusiness();
         String procDefId = (String) processData.get("procDefId");
-        String procDeTitle = (String) processData.get("procDeTitle");
+        String procDeTitle = (String) processData.get("title");
         String tableName = (String) processData.get("tableName");
         String tableId = (String) processData.get("tableId");
         String dept = (String) processData.get("dept");

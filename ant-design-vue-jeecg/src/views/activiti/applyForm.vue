@@ -1,15 +1,19 @@
 <template>
   <div>
-    <comment-modal v-show="showCommentVisible" @closed="showCommentVisible=false"></comment-modal>
+    <comment-modal v-if="showCommentVisible" @closed="showCommentVisible=false" :bindId="lcModa.processData.tableId"
+                   :title="lcModa.title" :bind-user="lcModa.processData.createBy"></comment-modal>
+    <notice-message :bindId="lcModa.processData.tableId" :title="lcModa.title" ref="noticeMessage"
+                    :bind-user="lcModa.processData.createBy" :business-key="lcModa.processData.businessKey"></notice-message>
     <a-card class="apply-card" title="申请信息">
       <div slot="extra">
-        <a-button v-show="!lcModa.isNew" style="margin-right: 8px" type="primary" ghost @click="showComment">查看评论
+        <a-button v-show="!lcModa.isNew" type="primary" ghost @click="showComment">查看评论
         </a-button>
         <template v-if="lcModa.isTask">
-          <a-button type="primary" @click="passTask">通 过</a-button>
+          <a-button style="margin-left: 8px" type="primary" ghost @click="needEdit">需要修改</a-button>
+          <a-button style="margin-left: 8px" type="primary" @click="passTask">通 过</a-button>
           <a-button style="margin-left: 8px" @click="backTask">驳 回</a-button>
         </template>
-        <a-button v-show="!lcModa.disabled&&!btndisabled" type="primary" @click="handleSubmit">
+        <a-button v-show="!lcModa.disabled&&!btndisabled" style="margin-left: 8px" type="primary" @click="handleSubmit">
           保存
         </a-button>
         <a-button style="margin-left: 8px" type="primary" ghost @click="closed">返 回</a-button>
@@ -48,15 +52,12 @@
     </a-card>
 
     <!--流程表单-->
-    <component :disabled="lcModa.disabled" :is="lcModa.formComponent" ref="processForm"
-               :processData="lcModa.processData" :isNew="lcModa.isNew" :title="lcModa.title"
-               :task="lcModa.isTask" :dept="lcModa.dept" :tableId="tableId"></component>
+    <component :is="lcModa.formComponent" ref="processForm" :lcModa="lcModa"></component>
 
     <sign-modal :form="form" :modal-task-title="modalTaskTitle" :modal-task-visible="modalTaskVisible"
                 :assignee-list="assigneeList" :user-loading="userLoading" @cancel="modalTaskVisible = false"
-                @afterSub="closed"
-                :show-assign="showAssign" :back-loading="backLoading" :back-list="backList"></sign-modal>
-
+                @afterSub="closed" :show-assign="showAssign" :back-loading="backLoading"
+                :back-list="backList"></sign-modal>
   </div>
 </template>
 
@@ -69,10 +70,11 @@
   import JFormContainer from '@/components/jeecg/JFormContainer'
   import { getAction, postFormAction } from '@/api/manage'
   import CommentModal from './components/CommentModal'
+  import NoticeMessage from './components/NoticeMessage'
 
   export default {
     name: 'applyForm',
-    components: { CommentModal, SignModal, JFormContainer },
+    components: { NoticeMessage, CommentModal, SignModal, JFormContainer },
     mixins: [activitiMixin],
     data() {
       return {
@@ -81,7 +83,8 @@
         url: {
           getNextNode: '/activiti_process/getNextNode',
           getBackList: '/actTask/getBackList/',
-          userWithDepart: '/sys/user/userDepartList'
+          userWithDepart: '/sys/user/userDepartList',
+          updateFix: '/actBusiness/updateFix',
         },
         backList: [
           {
@@ -113,8 +116,7 @@
         showAssign: true,
         backLoading: false,
         btndisabled: false,
-        userInfo: {},
-        tableId: ''
+        userInfo: {}
       }
     },
     watch: {
@@ -130,6 +132,9 @@
       this.initValue()
     },
     methods: {
+      needEdit(){
+        this.$refs.noticeMessage.show()
+      },
       initValue() {
         let params = getStore('lcModa')
         this.lcModa = params || {}
@@ -138,7 +143,6 @@
           this.userInfo = this.$store.getters.userInfo
           this.lcModa.userName = this.userInfo.realname
           this.lcModa.applyTime = formatDate(new Date().getTime(), 'yyyy-MM-dd hh:mm:ss')
-          this.tableId = this.lcModa.processData.tableId
           if (!params.processData.dept) {
             this.getUserDepart()
           } else {
@@ -150,7 +154,7 @@
         getAction(this.url.userWithDepart, { userId: this.userInfo.id }).then(res => {
           if (res.success) {
             this.lcModa.dept = res.result.map(m => m.title).join('-')
-            this.lcModa.title += '-' + this.lcModa.dept + '-' + this.userInfo.realname
+            this.lcModa.title += '-' + this.lcModa.dept
           }
         })
       },
@@ -164,6 +168,10 @@
             this.$refs.processForm.handleSubmit(e).then(res => {
               this.afterSub(res)
               this.btndisabled = false
+              // 是否修订
+              if (this.lcModa.isFix){
+                getAction(this.url.updateFix, { id: this.lcModa.processData.id, status: 2 })
+              }
             }).catch(_ => {
               this.btndisabled = false
             })
@@ -234,15 +242,15 @@
         })
       },
       afterSub(formData) {
+        this.closedCurrentPage()
         this.$router.push(activitiSetting.applyListPath)
         clearStore('lcModa')
-        this.closedCurrentPage()
       },
       closed() {
+        this.closedCurrentPage()
         this.$router.push(this.lcModa.from)
         clearStore('lcModa')
         this.modalTaskVisible = false
-        this.closedCurrentPage()
       },
       closedCurrentPage() {
         this.$bus.$emit('closed-current-tabs')

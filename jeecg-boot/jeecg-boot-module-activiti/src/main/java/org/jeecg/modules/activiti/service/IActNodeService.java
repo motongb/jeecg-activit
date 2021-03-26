@@ -1,14 +1,17 @@
 package org.jeecg.modules.activiti.service;
 
-import org.jeecg.modules.activiti.entity.ActNode;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jeecg.modules.activiti.entity.ActNode;
 
 /**
  * @Description: 流程节点扩展表
  * @Author: jeecg-boot
- * @Date:   2020-03-30
+ * @Date: 2020-03-30
  * @Version: V1.0
  */
 public interface IActNodeService extends IService<ActNode> {
 
+    int getNodeAssigneeNumber(String nodeId, String procDefId);
+
+    ActNode getSomeCommonActNode(String nodeId, String procDefId);
 }

@@ -1,6 +1,5 @@
 package org.jeecg.modules.activiti.web;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
@@ -28,11 +27,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.exception.JeecgBootException;
 import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.config.WorkflowConstants;
 import org.jeecg.event.ActivitiEvent;
 import org.jeecg.modules.activiti.entity.*;
+import org.jeecg.modules.activiti.service.IActNodeService;
 import org.jeecg.modules.activiti.service.Impl.ActBusinessServiceImpl;
 import org.jeecg.modules.activiti.service.Impl.ActZprocessServiceImpl;
 import org.jeecgframework.core.util.ApplicationContextUtil;
@@ -75,8 +76,12 @@ public class ActTaskController {
 
     @Autowired
     private ActBusinessServiceImpl actBusinessService;
+
     @Autowired
-    ISysBaseAPI sysBaseAPI;
+    private IActNodeService actNodeService;
+
+    @Autowired
+    private ISysBaseAPI sysBaseAPI;
 
     /*代办列表*/
     @AutoLog(value = "流程-代办列表")
@@ -164,6 +169,7 @@ public class ActTaskController {
                 // 关联发起人
                 if ("starter".equals(ik.getType()) && StrUtil.isNotBlank(ik.getUserId())) {
                     tv.setApplyer(sysBaseAPI.getUserByName(ik.getUserId()).getRealname());
+                    tv.setCreateBy(ik.getUserId());
                 }
             }
             // 关联流程信息
@@ -181,7 +187,13 @@ public class ActTaskController {
                 tv.setTableName(actBusiness.getTableName());
                 tv.setTitle(actBusiness.getTitle());
                 tv.setStatus(actBusiness.getStatus());
-                tv.setResult(actBusiness.getResult());
+                // 判断此任务是否已审过
+                List<String> userIdP = actBusinessService.findUserIdByTypeAndTaskId(ActivitiConstant.EXECUTOR_TYPE_p, e.getId());
+                if (userIdP.contains(userId)) {
+                    tv.setResult(ActivitiConstant.RESULT_PASS);
+                } else {
+                    tv.setResult(actBusiness.getResult());
+                }
                 if (StrUtil.equals(needData, "true")) { // 需要业务数据
                     Map<String, Object> applyForm = actBusinessService.getApplyForm(actBusiness.getTableId(), actBusiness.getTableName());
                     tv.setDataMap(applyForm);
@@ -189,7 +201,7 @@ public class ActTaskController {
             }
             list.add(tv);
         });
-        return Result.ok(list);
+        return Result.OK(list);
     }
 
     /*查询当前登陆人的待办数量*/
@@ -207,23 +219,23 @@ public class ActTaskController {
             for (Task task : list) {
                 Integer count = todoCounts.get(task.getProcessDefinitionId());
                 if (count == null) {
-                    todoCounts.put(task.getProcessDefinitionId(), Integer.valueOf(1));
+                    todoCounts.put(task.getProcessDefinitionId(), 1);
                 } else {
                     todoCounts.put(task.getProcessDefinitionId(), ++count);
                 }
             }
         } else {
-            String array[] = procDefIds.split(",");
+            String[] array = procDefIds.split(",");
             for (String procDefId : array) {
                 List<Task> list = query.processDefinitionId(procDefId).list();
-                todoCounts.put(procDefId, Integer.valueOf(0));
-                if (list.size() > 0) {
-                    todoCounts.put(procDefId, Integer.valueOf(list.size()));
+                todoCounts.put(procDefId, 0);
+                if (!CollectionUtils.isEmpty(list)) {
+                    todoCounts.put(procDefId, list.size());
                 }
             }
         }
 
-        return Result.ok(todoCounts);
+        return Result.OK(todoCounts);
     }
 
     /*获取可返回的节点*/
@@ -310,15 +322,15 @@ public class ActTaskController {
             }
             List<HistoricIdentityLink> identityLinks = historyService.getHistoricIdentityLinksForTask(e.getId());
             // 获取实际审批用户id
-            List<String> userIds_b = actBusinessService.findUserIdByTypeAndTaskId(ActivitiConstant.EXECUTOR_TYPE_b, e.getId());
-            List<String> userIds_p = actBusinessService.findUserIdByTypeAndTaskId(ActivitiConstant.EXECUTOR_TYPE_p, e.getId());
+            List<String> userIdsB = actBusinessService.findUserIdByTypeAndTaskId(ActivitiConstant.EXECUTOR_TYPE_b, e.getId());
+            List<String> userIdsP = actBusinessService.findUserIdByTypeAndTaskId(ActivitiConstant.EXECUTOR_TYPE_p, e.getId());
             for (HistoricIdentityLink hik : identityLinks) {
                 // 关联候选用户（分配的候选用户审批人）
                 if (ActivitiConstant.EXECUTOR_candidate.equals(hik.getType()) && StrUtil.isNotBlank(hik.getUserId())) {
                     String username = sysBaseAPI.getUserByName(hik.getUserId()).getRealname();
                     Assignee assignee = new Assignee(username, false);
                     /*审批过的标记一下，前端标颜色用*/
-                    if (CollectionUtil.contains(userIds_b, hik.getUserId()) || CollectionUtil.contains(userIds_p, hik.getUserId())) {
+                    if (userIdsB.contains(hik.getUserId()) || userIdsP.contains(hik.getUserId())) {
                         assignee.setIsExecutor(true);
                     }
                     assignees.add(assignee);
@@ -327,12 +339,12 @@ public class ActTaskController {
             htv.setAssignees(assignees);
             // 关联审批意见
             List<Comment> comments = taskService.getTaskComments(htv.getId(), "comment");
-            if (comments != null && comments.size() > 0) {
+            if (!CollectionUtils.isEmpty(comments)) {
                 htv.setComment(comments.get(0).getFullMessage());
             }
             list.add(htv);
         });
-        return Result.ok(list);
+        return Result.OK(list);
     }
 
     @RequestMapping(value = "/pass", method = RequestMethod.POST)
@@ -388,12 +400,19 @@ public class ActTaskController {
             其他问题，待暴露
           */
         /*完成任务*/
-        taskService.complete(id);
         ActBusiness actBusiness = actBusinessService.getById(pi.getBusinessKey());
-        // 发布审批通过事件
-        ApplicationContextUtil.getContext().publishEvent(new ActivitiEvent<>(WorkflowConstants.EVENT_PASS, actBusiness));
-
         LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        if (actZprocessService.canComplete(id, task.getTaskDefinitionKey(), actBusiness.getProcDefId(), procInstId)) {
+            taskService.complete(id);
+            // 发布审批通过事件
+            ApplicationContextUtil.getContext().publishEvent(new ActivitiEvent<>(WorkflowConstants.EVENT_PASS, actBusiness));
+        } else {
+            // 只保存已审批状态
+            // 异步发消息
+            LoginUser user = sysBaseAPI.getUserByName(actBusiness.getUserId());
+            actZprocessService.sendMessage(actBusiness.getId(), loginUser, user, ActivitiConstant.MESSAGE_AGREE_CONTENT,
+                    String.format("您的 【%s】 申请已同意！", actBusiness.getTitle()), sendMessage, sendSms, sendEmail);
+        }
         List<Task> tasks = taskService.createTaskQuery().processInstanceId(procInstId).list();
         // 判断下一个节点
         if (!CollectionUtils.isEmpty(tasks)) {
@@ -405,6 +424,10 @@ public class ActTaskController {
                         cancelTask(procInstId, task, actBusiness);
                         break;
                     } else {
+                        // 下一节点任务指定人数不能小于节点设定人数
+                        if (users.size() < actNodeService.getNodeAssigneeNumber(t.getTaskDefinitionKey(), actBusiness.getProcDefId())) {
+                            throw new JeecgBootException("指定人数不能小于节点审批人数");
+                        }
                         // 避免重复添加
                         List<String> list = actBusinessService.selectIRunIdentity(t.getId(), ActivitiConstant.EXECUTOR_candidate);
                         if (CollectionUtils.isEmpty(list)) {
@@ -412,7 +435,7 @@ public class ActTaskController {
                             for (LoginUser user : users) {
                                 taskService.addCandidateUser(t.getId(), user.getUsername());
                                 // 异步发消息
-                                actZprocessService.sendActMessage(loginUser, user, actBusiness, task.getName(), sendMessage, sendSms, sendEmail);
+                                actZprocessService.sendActMessage(loginUser, user, actBusiness, t.getName(), sendMessage, sendSms, sendEmail);
                             }
                             taskService.setPriority(t.getId(), task.getPriority());
                         }
@@ -421,14 +444,18 @@ public class ActTaskController {
                     // 避免重复添加
                     List<String> list = actBusinessService.selectIRunIdentity(t.getId(), ActivitiConstant.EXECUTOR_candidate);
                     if (CollectionUtils.isEmpty(list)) {
-
                         List<Map<String, String>> maps = assigneesList.stream().filter(a -> t.getTaskDefinitionKey().equals(a.get("id"))).collect(Collectors.toList());
                         if (CollectionUtils.isEmpty(maps)) {
                             cancelTask(procInstId, task, actBusiness);
                             break;
                         }
+                        // 下一节点任务指定人数不能小于节点设定人数
                         String assignees = maps.get(0).get("assignees");
-                        for (String assignee : assignees.split(",")) {
+                        String[] assStr = assignees.split(",");
+                        if (assStr.length < actNodeService.getNodeAssigneeNumber(t.getTaskDefinitionKey(), actBusiness.getProcDefId())) {
+                            throw new JeecgBootException("指定人数不能小于节点审批人数");
+                        }
+                        for (String assignee : assStr) {
                             taskService.addCandidateUser(t.getId(), assignee);
                             // 异步发消息
                             LoginUser user = sysBaseAPI.getUserByName(assignee);
@@ -450,9 +477,8 @@ public class ActTaskController {
             ApplicationContextUtil.getContext().publishEvent(new ActivitiEvent<>(WorkflowConstants.EVENT_FINALIZED, actBusiness));
         }
         // 记录实际审批人员
-        actBusinessService.insertHI_IDENTITYLINK(IdUtil.simpleUUID(),
-                ActivitiConstant.EXECUTOR_TYPE_p, loginUser.getUsername(), id, procInstId);
-        return Result.ok("操作成功");
+        actBusinessService.insertHI_IDENTITYLINK(IdUtil.simpleUUID(), ActivitiConstant.EXECUTOR_TYPE_p, loginUser.getUsername(), id, procInstId);
+        return Result.OK("操作成功");
     }
 
     @RequestMapping(value = "/delegate", method = RequestMethod.POST)
@@ -523,8 +549,7 @@ public class ActTaskController {
             });
         }
         // 记录实际审批人员
-        actBusinessService.insertHI_IDENTITYLINK(IdUtil.simpleUUID(),
-                ActivitiConstant.EXECUTOR_TYPE_b, loginUser.getUsername(), id, procInstId);
+        actBusinessService.insertHI_IDENTITYLINK(IdUtil.simpleUUID(), ActivitiConstant.EXECUTOR_TYPE_b, loginUser.getUsername(), id, procInstId);
         return Result.ok("操作成功");
     }
 

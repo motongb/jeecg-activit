@@ -13,6 +13,7 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.shiro.SecurityUtils;
+import org.jeecg.common.api.dto.message.MessageDTO;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.api.ISysBaseAPI;
@@ -62,12 +63,7 @@ public class ActBusinessController {
     @AutoLog(value = "流程-添加申请草稿状态")
     @ApiOperation(value = "流程-添加申请草稿状态", notes = "业务表单参数数据一并传过来！")
     @PostMapping(value = "/add")
-    public Result add(@RequestBody Map<String, Object> paramsData
-//            @ApiParam(value = "流程定义Id" ,required = true) String procDefId,
-//                      @ApiParam(value = "申请标题" ,required = true) String procDeTitle,
-//                      @ApiParam(value = "数据表名" ,required = true) String tableName,
-//                       HttpServletRequest request
-    ) {
+    public Result add(@RequestBody Map<String, Object> paramsData) {
         String procDefId = (String) paramsData.get("procDefId");
         String procDeTitle = (String) paramsData.get("procDeTitle");
         String tableName = (String) paramsData.get("tableName");
@@ -121,10 +117,7 @@ public class ActBusinessController {
     @AutoLog(value = "流程-修改业务表单信息")
     @ApiOperation(value = "流程-修改业务表单信息", notes = "业务表单参数数据一并传过来!")
     @RequestMapping(value = "/editForm", method = RequestMethod.POST)
-    public Result editForm(@RequestBody Map<String, Object> paramsData
-//            @ApiParam(value = "业务表数据id" ,required = true)String id,
-//                           HttpServletRequest request
-    ) {
+    public Result editForm(@RequestBody Map<String, Object> paramsData) {
         String id = (String) paramsData.get("id");
         Assert.notNull(id, "require id");
         /*保存业务表单数据到数据库表*/
@@ -138,7 +131,7 @@ public class ActBusinessController {
         Map<String, String> map = new HashMap<>();
         map.put("id", actBusiness.getId());
 
-        return Result.ok(map);
+        return Result.OK(map);
     }
 
     /*通过id删除草稿状态申请*/
@@ -157,7 +150,7 @@ public class ActBusinessController {
             actBusinessService.removeById(id);
             actZParamsService.remove(new LambdaQueryWrapper<ActZParams>().eq(ActZParams::getPid, actBusiness.getTableId()));
         }
-        return Result.ok("删除成功");
+        return Result.OK("删除成功");
     }
 
     /*提交申请 启动流程*/
@@ -185,7 +178,7 @@ public class ActBusinessController {
         actBusiness.setApplyTime(new Date());
         actBusinessService.updateById(actBusiness);
         ApplicationContextUtil.getContext().publishEvent(new ActivitiEvent<>(WorkflowConstants.EVENT_APPLY, actBusiness));
-        return Result.ok("操作成功");
+        return Result.OK("操作成功");
     }
 
     /*撤回申请*/
@@ -206,7 +199,7 @@ public class ActBusinessController {
         actBusinessService.updateById(actBusiness);
         //发布撤回申请事件
         ApplicationContextUtil.getContext().publishEvent(new ActivitiEvent<>(WorkflowConstants.EVENT_CANCEL, actBusiness));
-        return Result.ok("操作成功");
+        return Result.OK("操作成功");
     }
 
     /**/
@@ -214,7 +207,7 @@ public class ActBusinessController {
     @ApiOperation(value = "流程-流程列表", notes = "流程列表，登录用户的流程列表")
     @RequestMapping(value = "/listData", method = RequestMethod.GET)
     public Result listData(ActBusiness param, HttpServletRequest request) {
-        return Result.ok(actBusinessService.approveList(request, param));
+        return Result.OK(actBusinessService.approveList(request, param));
     }
 
     @AutoLog(value = "流程-查询流程类型")
@@ -222,7 +215,7 @@ public class ActBusinessController {
     @RequestMapping(value = "/actZProcess", method = RequestMethod.GET)
     public Result listData(HttpServletRequest request) {
         List<ActZprocess> list = actZprocessService.list();
-        return Result.ok(list);
+        return Result.OK(list);
     }
 
     @AutoLog(value = "流程-查询申请列表 与 已办列表的合集")
@@ -279,5 +272,27 @@ public class ActBusinessController {
 
 
         return Result.ok(list);
+    }
+
+    @ApiOperation("修订状态")
+    @GetMapping("/updateFix")
+    public Result<?> updateFix(String id, Integer status) {
+        ActBusiness actBusiness = actBusinessService.getById(id);
+        Assert.notNull(actBusiness, "记录不存在");
+        // 修改状态
+        actBusiness.setNeedEdit(status);
+        actBusinessService.updateById(actBusiness);
+        // 已修订，通知当前节点审批人
+        if (ActivitiConstant.FIX_STATUS_2.equals(status)) {
+            List<Task> taskList = taskService.createTaskQuery().processInstanceId(actBusiness.getProcInstId()).list();
+            for (Task task : taskList) {
+                List<String> candidates = actBusinessService.findUserIdByTypeAndTaskId(ActivitiConstant.EXECUTOR_candidate, task.getId());
+                candidates.forEach(item -> {
+                    MessageDTO messageDTO = new MessageDTO(actBusiness.getUserId(), item, actBusiness.getTitle(), "已修订");
+                    sysBaseAPI.sendSysAnnouncement(messageDTO);
+                });
+            }
+        }
+        return Result.OK();
     }
 }

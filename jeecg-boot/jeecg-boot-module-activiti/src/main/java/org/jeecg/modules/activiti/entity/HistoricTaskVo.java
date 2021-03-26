@@ -59,7 +59,7 @@ public class HistoricTaskVo {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date dueTime;
 
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date applyTime;
 
     private String processName;
@@ -77,7 +77,7 @@ public class HistoricTaskVo {
     private Integer result;
     private Map dataMap;
 
-    public HistoricTaskVo(HistoricTaskInstance task){
+    public HistoricTaskVo(HistoricTaskInstance task) {
         this.id = task.getId();
         this.name = task.getName();
         this.key = task.getTaskDefinitionKey();
@@ -98,33 +98,33 @@ public class HistoricTaskVo {
         this.dueTime = task.getDueDate();
     }
 
-    public String getMyDeleteReason(String deleteReason){
+    public String getMyDeleteReason(String deleteReason) {
 
-        if(StrUtil.isBlank(deleteReason)){
+        if (StrUtil.isBlank(deleteReason)) {
             return "";
         }
-        if(ActivitiConstant.PASSED_FLAG.equals(deleteReason)){
+        if (ActivitiConstant.PASSED_FLAG.equals(deleteReason)) {
             deleteReason = "审批通过";
-        }else if(ActivitiConstant.BACKED_FLAG.equals(deleteReason)){
+        } else if (ActivitiConstant.BACKED_FLAG.equals(deleteReason)) {
             deleteReason = "审批驳回";
-        }else if(deleteReason.contains(ActivitiConstant.DELETE_PRE)){
+        } else if (deleteReason.contains(ActivitiConstant.DELETE_PRE)) {
             String reason = "";
-            if(ActivitiConstant.DELETE_PRE.equals(deleteReason)){
+            if (ActivitiConstant.DELETE_PRE.equals(deleteReason)) {
                 reason = "未填写";
-            }else if(deleteReason.length()>8){
+            } else if (deleteReason.length() > 8) {
                 reason = deleteReason.substring(8);
             }
-            deleteReason = "删除撤回-原因"+reason;
-        }else if(deleteReason.contains(ActivitiConstant.CANCEL_PRE)){
+            deleteReason = "删除撤回-原因" + reason;
+        } else if (deleteReason.contains(ActivitiConstant.CANCEL_PRE)) {
             String reason = "";
-            if(ActivitiConstant.CANCEL_PRE.equals(deleteReason)){
+            if (ActivitiConstant.CANCEL_PRE.equals(deleteReason)) {
                 reason = "未填写";
-            }else if(deleteReason.length()>9){
+            } else if (deleteReason.length() > 9) {
                 reason = deleteReason.substring(9);
             }
-            deleteReason = "发起人撤回-原因"+reason;
-        }else{
-            deleteReason="已删除-原因"+deleteReason;
+            deleteReason = "发起人撤回-原因" + reason;
+        } else {
+            deleteReason = "已删除-原因" + deleteReason;
         }
         return deleteReason;
     }

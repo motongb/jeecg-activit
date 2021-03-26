@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.jeecg.modules.base.entity.TreeEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 import java.io.Serializable;

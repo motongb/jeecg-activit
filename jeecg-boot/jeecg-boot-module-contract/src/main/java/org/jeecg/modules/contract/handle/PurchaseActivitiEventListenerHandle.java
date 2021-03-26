@@ -9,6 +9,7 @@ import org.jeecg.common.system.api.WebOfficeAPI;
 import org.jeecg.common.util.WpsUtil;
 import org.jeecg.listener.IActivitiEventListener;
 import org.jeecg.modules.activiti.entity.ActBusiness;
+import org.jeecg.modules.contract.entity.ContractCovert;
 import org.jeecg.modules.contract.entity.ContractFieldParams;
 import org.jeecg.modules.contract.entity.ContractModel;
 import org.jeecg.modules.contract.entity.ContractPurchase;
@@ -16,7 +17,7 @@ import org.jeecg.modules.contract.entity.vo.ContractPurchaseVo;
 import org.jeecg.modules.contract.service.IContractModelService;
 import org.jeecg.modules.contract.service.IContractPurchaseService;
 import org.jeecg.modules.contract.utils.ContractConst;
-import org.jeecg.modules.contract.utils.TransferParams;
+import org.jeecg.modules.contract.utils.ModelTransferInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -32,7 +33,7 @@ import java.util.Objects;
  * @description //TODO GeneralActivitiListenerServiceImpl
  **/
 @Service
-public class PurchaseActivitiEventListenerHandle implements IActivitiEventListener, TransferParams {
+public class PurchaseActivitiEventListenerHandle implements IActivitiEventListener, ModelTransferInterface {
 
     @Autowired
     private IContractPurchaseService contractPurchaseService;
@@ -78,9 +79,11 @@ public class PurchaseActivitiEventListenerHandle implements IActivitiEventListen
     /**
      * 从模板复制到正文
      *
-     * @param contractPurchase
+     * @param contractCovert
      */
-    private String copyToStanderWord(ContractPurchase contractPurchase) {
+    @Override
+    public String copyToStanderWord(ContractCovert contractCovert) {
+        ContractPurchase contractPurchase = (ContractPurchase) contractCovert;
         ContractPurchaseVo contractPurchaseVo = contractPurchaseService.getContractVoById(contractPurchase.getId(), true);
         if (Objects.isNull(contractPurchaseVo)) {
             return null;
@@ -100,6 +103,7 @@ public class PurchaseActivitiEventListenerHandle implements IActivitiEventListen
             Map<Integer, String> indexMap = new HashMap<>();
             List<ContractFieldParams> contractFieldParams = JSON.parseArray(contractModel.getParamsFields(), ContractFieldParams.class);
             contractFieldParams.forEach(item -> {
+                // 列表数据
                 if ("3".equals(item.getType()) && item.getTableIndex() != null) {
                     indexMap.put(item.getTableIndex(), item.getFieldKey());
                 }

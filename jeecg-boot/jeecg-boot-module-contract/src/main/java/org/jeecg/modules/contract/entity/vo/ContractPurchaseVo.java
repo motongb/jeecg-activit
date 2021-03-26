@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.jeecg.modules.contract.entity.ContractItem;
-import org.jeecg.modules.contract.entity.ContractMember;
+import org.jeecg.modules.contract.entity.ContractCovertMember;
 import org.jeecg.modules.contract.entity.ContractPayment;
 import org.jeecg.modules.contract.entity.ContractPurchase;
 
@@ -23,17 +23,17 @@ public class ContractPurchaseVo extends ContractPurchase {
      * 我方信息
      */
     @ApiModelProperty(value = "我方信息")
-    private ContractMember firstMemberObj = new ContractMember();
+    private ContractCovertMember firstMemberObj = new ContractCovertMember();
     /**
      * 乙方信息
      */
     @ApiModelProperty(value = "乙方信息")
-    private ContractMember secondMemberObj = new ContractMember();
+    private ContractCovertMember secondMemberObj = new ContractCovertMember();
     /**
      * 丙方信息
      */
     @ApiModelProperty(value = "丙方信息")
-    private ContractMember thirdMemberObj = new ContractMember();
+    private ContractCovertMember thirdMemberObj = new ContractCovertMember();
 
     /**
      * 流程数据

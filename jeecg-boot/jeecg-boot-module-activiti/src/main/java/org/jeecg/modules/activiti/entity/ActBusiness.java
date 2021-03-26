@@ -35,6 +35,7 @@ public class ActBusiness {
      */
     @TableField(exist = false)
     private String routeName;
+
     @TableField(exist = false)
     private Map dataMap;
     /**
@@ -144,6 +145,7 @@ public class ActBusiness {
     @TableField(exist = false)
     @ApiModelProperty(value = "审批人（用户名），多个,号相连")
     private String assignees;
+
     /*任务优先级 默认0   0普通1重要2紧急*/
     @TableField(exist = false)
     @ApiModelProperty(value = "任务优先级 默认0 0普通1重要2紧急")
@@ -190,4 +192,7 @@ public class ActBusiness {
      */
     @TableField(exist = false)
     private Integer procInstStatus;
+
+    @ApiModelProperty(value = "需要修定0-否 1-是 2-已修改")
+    private Integer needEdit = 0;
 }

@@ -89,18 +89,23 @@
           <span> {{t}} </span>
         </template>
       </a-table-column>
-      <a-table-column title="状态" dataIndex="status" :width="150" align="center"
-                      key="s" :sorter="(a,b)=>a.status - b.status"
-      >
+      <a-table-column title="状态" dataIndex="status" :width="100" align="center"
+                      key="s" :sorter="(a,b)=>a.status - b.status">
         <template slot-scope="t,r,i">
           <span :style="{color:getStatus(t).color}"> {{getStatus(t).text}} </span>
         </template>
       </a-table-column>
-      <a-table-column title="结果" dataIndex="result" :width="150" align="center"
-                      key="result" :sorter="(a,b)=>a.result - b.result"
-      >
+      <a-table-column title="结果" dataIndex="result" :width="100" align="center"
+                      key="result" :sorter="(a,b)=>a.result - b.result">
         <template slot-scope="t,r,i">
           <span :style="{color:getResult(t).color}"> {{getResult(t).text}} </span>
+        </template>
+      </a-table-column>
+      <a-table-column title="修订" dataIndex="needEdit" :width="100" align="center">
+        <template slot-scope="t">
+          <span v-if="t===0" style="color: green;"> 无修订 </span>
+          <span v-if="t===1" style="color: orange;"> 待修订 </span>
+          <span v-if="t===2" style="color: green;"> 已修订 </span>
         </template>
       </a-table-column>
       <a-table-column title="创建时间" dataIndex="createTime" :width="150" align="center">
@@ -128,12 +133,12 @@
             <a-popconfirm title="确定删除吗?" @confirm="() => remove(r)">
               <a href="javascript:void(0);" style="color: red">删除</a>
             </a-popconfirm>
-
           </template>
           <template v-else-if="r.status == 1">
-
             <a href="javascript:void(0);" v-if="r.procInstStatus == 1" @click="cancel(r)" style="color:#8000ff;">撤回</a>
             <a-divider type="vertical" v-if="r.procInstStatus == 1"/>
+            <a href="javascript:void(0);" v-if="r.needEdit==1" @click="updateFix(r)" style="color:orange;">修订</a>
+            <a-divider type="vertical" v-if="r.needEdit==1"/>
             <a href="javascript:void(0);" @click="history(r)" style="color:blue;">查看进度</a>
             <a-divider type="vertical"/>
             <a href="javascript:void(0);" @click="detail(r)" style="color:#999;">表单数据</a>
@@ -151,8 +156,9 @@
             <a href="javascript:void(0);" @click="detail(r)" style="color:#999;">表单数据</a>
             <a-divider type="vertical"/>
             <a href="javascript:void(0);" @click="history(r)" style="color:blue;">审批历史</a>
+            <a-divider type="vertical"/>
+            <a href="javascript:void(0);" @click="copyHistory(r)" style="color:blue;">复制</a>
           </template>
-
         </template>
       </a-table-column>
     </a-table>
@@ -196,13 +202,12 @@
     <!--提交申请表单-->
     <a-modal title="提交申请" v-model="modalVisible" :mask-closable="false" :width="500" :footer="null">
       <div v-if="modalVisible">
-        <a-form-item label="选择审批人" v-show="showAssign">
+        <a-form-item :label="firstNode.title" v-show="showAssign">
           <a-select style="width: 100%"
                     v-model="form.assignees"
                     placeholder="请选择"
                     mode="multiple"
-                    :allowClear="true"
-          >
+                    :allowClear="true">
             <a-select-option v-for="(item, i) in assigneeList" :key="i" :value="item.username">{{item.realname}}
             </a-select-option>
           </a-select>
@@ -332,11 +337,23 @@
           current: 1,
           pageSize: 10,
           total: 0  // 表数据总数
-        }
+        },
+        firstNode: {}
       }
     },
     computed: {},
     methods: {
+      updateFix(r) {
+        this.lcModa.disabled = false
+        this.lcModa.title = r.title
+        this.lcModa.from = activitiSetting.applyListPath
+        this.lcModa.processData = r
+        this.lcModa.isNew = false
+        this.lcModa.reload = true
+        this.lcModa.isFix = true
+        setStore('lcModa', this.lcModa)
+        this.$router.push(activitiSetting.applyFormPath)
+      },
       initDictConfig() {
         //初始化字典 - 流程分类
         initDictOptions('bpm_process_type').then((res) => {
@@ -399,7 +416,6 @@
         delete param.createTimeRange // 时间参数不传递后台
         return filterObj(param)
       },
-
       // 重置
       searchReset() {
         var that = this
@@ -416,7 +432,6 @@
       onDateOk(value) {
         console.log(value)
       },
-
       getStatus(status) {
         let text = '未知', color = ''
         if (status == 0) {
@@ -475,6 +490,7 @@
               this.error = ''
               return
             }
+            this.firstNode = res.result
             this.form.firstGateway = false
             this.isGateway = false
             if (res.result.users && res.result.users.length > 0) {
@@ -591,6 +607,11 @@
         this.searchProcessKey = value
         this.getProcessList()
       },
+      /*复制历史申请*/
+      copyHistory(v) {
+        this.lcModa.isCopy = true
+        this.chooseProcess(v)
+      },
       chooseProcess(v) {
         if (!v.routeName) {
           this.$message.warning(
@@ -598,7 +619,7 @@
           )
           return
         }
-        this.lcModa.title = moment().format('YYYYMMDD') + v.name
+        this.lcModa.title = moment().format('YYYY-MM-DD HH:mm:ss') + v.processName
         this.lcModa.isNew = true
         this.lcModa.processData = v
         this.lcModa.reload = true

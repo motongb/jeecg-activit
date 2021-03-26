@@ -189,8 +189,7 @@
       :confirmLoading="confirmLoading"
       :visible="showProcessNodeEdit"
       :footer="null"
-      @cancel="closeNode"
-    >
+      @cancel="closeNode">
       <a-row>
         <a-col :md="4" :sm="4" style="border-right: 1px solid #999">
           <!--          选择流程节点-->
@@ -211,6 +210,15 @@
             </a-form-item>
             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="节点类型">
               <span class="nodespan">{{dictNodeType[editNode.type]}}</span>
+            </a-form-item>
+            <a-form-item v-show="editNode.type==1" :label-col="labelCol" :wrapper-col="wrapperCol" label="需要人数">
+              <a-input v-model="spry.assigneeNum"></a-input>
+            </a-form-item>
+            <a-form-item v-show="editNode.type==1" :label-col="labelCol" :wrapper-col="wrapperCol" label="审批人可编辑">
+              <a-radio-group v-model="spry.editable">
+                <a-radio-button value="0">否</a-radio-button>
+                <a-radio-button value="1">是</a-radio-button>
+              </a-radio-group>
             </a-form-item>
             <a-alert type="info" message="每个节点设置，如有修改都请保存一次，跳转节点后数据不会自动保存！" banner/>
             <br/>
@@ -240,7 +248,6 @@
                     <a-icon type="exclamation-circle"/>
                   </a-tooltip>
                 </a-checkbox>
-
               </a-checkbox-group>
             </a-form-item>
             <!--            0角色 1用户 2部门 3发起人 4发起人的部门负责人-->
@@ -268,10 +275,7 @@
                         :disabled="editNode.type==0||editNode.type==2||confirmLoading">
                 提交并保存
               </a-button>
-
-              <a-button @click="closeNode" style="margin-left: 10px">
-                关闭
-              </a-button>
+              <a-button @click="closeNode" style="margin-left: 10px">关闭</a-button>
             </a-form-item>
           </a-form>
         </a-col>
@@ -281,8 +285,7 @@
     <a-modal
       :title="viewTitle" width="90%"
       :visible="viewImage" :footer="null"
-      @cancel="viewImage = false"
-    >
+      @cancel="viewImage = false">
       <div style="min-height: 400px">
         <img :src="diagramUrl" :alt="viewTitle">
       </div>
@@ -312,8 +315,12 @@
     name: 'ProcessModelList',
     mixins: [activitiMixin, JeecgListMixin],
     components: {
-      JEllipsis, JSelectUserByDep, JSelectRole, JSelectDepart
-      , JTreeSelect, JTreeDict
+      JEllipsis,
+      JSelectUserByDep,
+      JSelectRole,
+      JSelectDepart,
+      JTreeSelect,
+      JTreeDict
     },
     created() {
       // this.initReportList();
@@ -378,7 +385,9 @@
           departmentManageIds: '',
           formVariables: '',
           chooseSponsor: false,
-          chooseDepHeader: false
+          chooseDepHeader: false,
+          assigneeNum: 1,
+          editable: '0'
         },
         lcModa: {
           title: '流程表单预览',
@@ -431,9 +440,10 @@
 
       change_steps(node, index) {
         this.spryTypes = []
-        console.log('onChange:', node)
         this.current = index
         this.editNode = node
+        this.spry.assigneeNum = node.assigneeNumber
+        this.spry.editable = node.editable
         /* 0角色 1用户 2部门 3发起人 4发起人的部门负责人 5部门的部门负责人*/
         this.spry.chooseDepHeader = node.chooseDepHeader || false
         if (this.spry.chooseDepHeader) this.spryTypes.push('4')
@@ -463,7 +473,6 @@
         }
         this.spry.departmentManageIds = departmentManageIds.join(',')
         if (departmentManageIds.length > 0) this.spryTypes.push('5')
-        console.log('回显this.spry', this.spry)
 
         this.spry.formVariables = node.formVariables || ''
         if (this.spry.formVariables) this.spryTypes.push('6')
@@ -481,7 +490,6 @@
         //是否选中发起人的部门领导
         this.spry.chooseDepHeader = this.spryTypes.indexOf('4') > -1
 
-        console.log('this.spry', this.spry)
       },
       sprySubmit() {
         var _this = this

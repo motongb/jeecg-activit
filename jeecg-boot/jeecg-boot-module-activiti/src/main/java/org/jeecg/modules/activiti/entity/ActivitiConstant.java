@@ -97,7 +97,8 @@ public interface ActivitiConstant {
      */
     Integer NODE_TYPE_PG = 4;
 
-    /**E
+    /**
+     * E
      * 节点关联类型 角色
      */
     Integer NODE_ROLE = 0;
@@ -148,6 +149,11 @@ public interface ActivitiConstant {
     String MESSAGE_PASS_CONTENT = "申请流程已通过";
 
     /**
+     * 同意消息
+     */
+    String MESSAGE_AGREE_CONTENT = "申请流程同意";
+
+    /**
      * 驳回消息
      */
     String MESSAGE_BACK_CONTENT = "申请流程已驳回";
@@ -189,7 +195,9 @@ public interface ActivitiConstant {
      * 通过标记
      */
     String PASSED_FLAG = "completed";
-    /**标题关键字*/
+    /**
+     * 标题关键字
+     */
     String titleKey = "title";
 
     /**
@@ -199,5 +207,8 @@ public interface ActivitiConstant {
 
     Integer PROC_INST_NOT_APPROVE = 1;
 
-
+    /**
+     * 修订状态，已修订
+     */
+    Integer FIX_STATUS_2 = 2;
 }

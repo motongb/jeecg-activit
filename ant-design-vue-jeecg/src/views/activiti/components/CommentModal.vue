@@ -3,18 +3,16 @@
     <a-affix :style="{ position: 'absolute','z-index':10,left:'10px',width:'25%'}">
       <a-card>
         <a-list style="height: 600px;overflow-y: scroll"
-          :data-source="comments"
-          :header="`${comments.length} ${comments.length > 0 ? '评论' : '无评论'}`"
-          item-layout="horizontal">
+                :data-source="comments"
+                :header="`${comments.length} ${comments.length > 0 ? '评论' : '无评论'}`"
+                item-layout="horizontal">
           <a-list-item slot="renderItem" slot-scope="item, index">
-            <comment-item :comment="item"></comment-item>
+            <comment-item :comment="item" @delete="handleDelete"></comment-item>
           </a-list-item>
         </a-list>
         <a-comment>
-          <a-avatar
-            slot="avatar"
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            alt="Han Solo"/>
+          <a-avatar slot="avatar" :src="userInfo.avatar"
+                    alt="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
           <div slot="content">
             <a-form-item>
               <a-textarea :rows="4" :value="value" @change="handleChange"/>
@@ -33,21 +31,54 @@
 <script>
   import moment from 'moment'
   import CommentItem from './CommentItem'
+  import { postAction, getAction, deleteAction } from '@/api/manage'
 
   export default {
     name: 'CommentModal',
     components: { CommentItem },
-    props: {},
+    props: {
+      bindId: {
+        type: String,
+        default: ''
+      },
+      bindUser: {
+        type: String,
+        default: ''
+      },
+      title: {
+        type: String,
+        default: ''
+      }
+    },
     data() {
       return {
         comments: [],
         submitting: false,
         value: '',
-        moment
+        moment,
+        url: {
+          add: '/base/cmsComment/add',
+          tree: '/base/cmsComment/tree',
+          delete: '/base/cmsComment/delete'
+        },
+        userInfo: {}
       }
     },
+    created() {
+      this.getValue()
+      this.userInfo = this.$store.getters.userInfo
+    },
     methods: {
-      closed(){
+      handleDelete(item) {
+        let index = this.comments.findIndex(m => m.id === item.id)
+        this.comments.splice(index, 1)
+      },
+      getValue() {
+        getAction(this.url.tree, { bindId: this.bindId }).then(res => {
+          this.comments = res.result
+        })
+      },
+      closed() {
         this.$emit('closed')
       },
       handleSubmit() {
@@ -55,20 +86,24 @@
           return
         }
         this.submitting = true
-        setTimeout(() => {
+        let item = {
+          author: this.userInfo.realname,
+          avatar: this.userInfo.avatar,
+          content: this.value,
+          createTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+          children: [],
+          bindId: this.bindId,
+          receive: this.bindUser,
+          title: this.title
+        }
+        postAction(this.url.add, item).then(res => {
+          if (res.success) {
+            this.comments.unshift(item)
+            this.value = ''
+            this.$message.success('评论成功')
+          }
           this.submitting = false
-          this.comments = [
-            {
-              author: 'Han Solo',
-              avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-              content: this.value,
-              datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
-              children:[]
-            },
-            ...this.comments
-          ]
-          this.value = ''
-        }, 1000)
+        }).catch(_ => this.submitting = false)
       },
       handleChange(e) {
         this.value = e.target.value

@@ -10,7 +10,7 @@ import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.activiti.service.IActBusinessService;
 import org.jeecg.modules.contract.entity.ContractItem;
-import org.jeecg.modules.contract.entity.ContractMember;
+import org.jeecg.modules.contract.entity.ContractCovertMember;
 import org.jeecg.modules.contract.entity.ContractPayment;
 import org.jeecg.modules.contract.entity.ContractPurchase;
 import org.jeecg.modules.contract.entity.vo.ContractPurchaseVo;
@@ -73,19 +73,19 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
             actBusinessService.saveBusiness(false, processData, contractPurchaseVo.getParams());
         }
         // 我方
-        ContractMember firstMember = contractPurchaseVo.getFirstMemberObj();
+        ContractCovertMember firstMember = contractPurchaseVo.getFirstMemberObj();
         if (Objects.nonNull(firstMember)) {
             firstMember.setContractId(contractPurchaseVo.getId());
             contractMemberService.saveOrUpdate(firstMember);
         }
         // 乙方
-        ContractMember secondMember = contractPurchaseVo.getSecondMemberObj();
+        ContractCovertMember secondMember = contractPurchaseVo.getSecondMemberObj();
         if (Objects.nonNull(secondMember)) {
             secondMember.setContractId(contractPurchaseVo.getId());
             contractMemberService.saveOrUpdate(secondMember);
         }
         // 丙方
-        ContractMember thirdMember = contractPurchaseVo.getThirdMemberObj();
+        ContractCovertMember thirdMember = contractPurchaseVo.getThirdMemberObj();
         if ("1".equals(contractPurchaseVo.getMemberUse()) && Objects.nonNull(thirdMember)) {
             thirdMember.setContractId(contractPurchaseVo.getId());
             contractMemberService.saveOrUpdate(thirdMember);
@@ -94,9 +94,9 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
 
     @Override
     public void setMember(ContractPurchaseVo contractPurchaseVo, boolean translateDict) {
-        List<ContractMember> contractMembers = contractMemberService.list(new LambdaQueryWrapper<ContractMember>()
-                .eq(ContractMember::getContractId, contractPurchaseVo.getId()));
-        for (ContractMember contractMember : contractMembers) {
+        List<ContractCovertMember> contractMembers = contractMemberService.list(new LambdaQueryWrapper<ContractCovertMember>()
+                .eq(ContractCovertMember::getContractId, contractPurchaseVo.getId()));
+        for (ContractCovertMember contractMember : contractMembers) {
             if (translateDict) {
                 contractMemberService.translateDict(contractMember);
             }

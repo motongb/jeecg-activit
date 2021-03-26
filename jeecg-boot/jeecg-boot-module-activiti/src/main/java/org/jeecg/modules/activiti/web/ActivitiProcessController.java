@@ -29,6 +29,8 @@ import org.jeecg.modules.activiti.service.Impl.ActNodeServiceImpl;
 import org.jeecg.modules.activiti.service.Impl.ActZprocessServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,8 +53,6 @@ public class ActivitiProcessController {
     @Autowired
     private RepositoryService repositoryService;
     @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
     private ActZprocessServiceImpl actZprocessService;
     @Autowired
     private ActNodeServiceImpl actNodeService;
@@ -69,7 +69,7 @@ public class ActivitiProcessController {
                            @ApiParam(value = "如果此项不为空，则会过滤当前用户的角色权限") Boolean roles,
                            HttpServletRequest request) {
         log.info("-------------流程列表-------------");
-        LambdaQueryWrapper<ActZprocess> wrapper = new LambdaQueryWrapper<ActZprocess>();
+        LambdaQueryWrapper<ActZprocess> wrapper = new LambdaQueryWrapper<>();
         wrapper.orderByAsc(ActZprocess::getSort).orderByDesc(ActZprocess::getVersion);
         if (StrUtil.isNotBlank(lcmc)) {
             wrapper.like(ActZprocess::getName, lcmc);
@@ -118,7 +118,7 @@ public class ActivitiProcessController {
         if (status == 1) {
             //启动前检查一下 路由等信息是否齐全
             String routeName = actProcess.getRouteName();
-            String businessTable = actProcess.getBusinessTable();
+            String businessTable = actProcess.getTableName();
             if (StrUtil.isBlank(routeName) || StrUtil.isBlank(businessTable)) {
                 return Result.error("未设置关联表单，点击编辑设置。");
             }
@@ -223,15 +223,15 @@ public class ActivitiProcessController {
 
     /*通过流程定义id获取流程节点*/
     @RequestMapping(value = "/getProcessNode")
-    public Result getProcessNode(String id) {
+    public Result<?> getProcessNode(String id) {
 
         BpmnModel bpmnModel = repositoryService.getBpmnModel(id);
 
         List<ProcessNodeVo> list = new ArrayList<>();
 
         List<Process> processes = bpmnModel.getProcesses();
-        if (processes == null || processes.size() == 0) {
-            return Result.ok();
+        if (CollectionUtils.isEmpty(processes)) {
+            return Result.OK();
         }
         for (Process process : processes) {
             Collection<FlowElement> elements = process.getFlowElements();
@@ -258,14 +258,15 @@ public class ActivitiProcessController {
                     node.setChooseDepHeader(actNodeService.hasChooseDepHeader(element.getId(), id));
                     // 是否设置发起人
                     node.setChooseSponsor(actNodeService.hasChooseSponsor(element.getId(), id));
-
                     // 设置表单变量
-                    String variable = "";
                     List<String> formVariables = actNodeService.findFormVariableByNodeId(element.getId(), id);
-                    for (String formVariable : formVariables) {
-                        variable = variable + formVariable + ",";
-                    }
+                    String variable = String.join(",", formVariables);
                     node.setFormVariables(variable.length() > 0 ? variable.substring(0, variable.length() - 1) : variable);
+                    // 设置需要人数
+                    ActNode actNode = actNodeService.getSomeCommonActNode(element.getId(), id);
+                    node.setAssigneeNumber(actNode.getNumber());
+                    // 设置节点是否可编辑
+                    node.setEditable(actNode.getEditable());
                 } else if (element instanceof EndEvent) {
                     // 结束
                     node.setType(2);
@@ -277,7 +278,7 @@ public class ActivitiProcessController {
             }
         }
         list.sort(Comparator.comparing(ProcessNodeVo::getType));
-        return Result.ok(list);
+        return Result.OK(list);
     }
 
     /**
@@ -291,54 +292,99 @@ public class ActivitiProcessController {
      * @return
      */
     @RequestMapping(value = "/editNodeUser", method = RequestMethod.POST)
-    public Result editNodeUser(String nodeId, String procDefId, String userIds, String roleIds, String departmentIds, String departmentManageIds, String formVariables, Boolean chooseDepHeader, Boolean chooseSponsor) {
+    public Result editNodeUser(String nodeId,
+                               String procDefId,
+                               String userIds,
+                               String roleIds,
+                               String departmentIds,
+                               String departmentManageIds,
+                               String formVariables,
+                               Boolean chooseDepHeader,
+                               Boolean chooseSponsor,
+                               Integer assigneeNum,
+                               String editable) {
 
         // 删除其关联权限
         actNodeService.deleteByNodeId(nodeId, procDefId);
         // 分配新用户
         for (String userId : userIds.split(",")) {
+            if (StringUtils.isEmpty(userId)) {
+                continue;
+            }
             ActNode actNode = new ActNode();
             actNode.setProcDefId(procDefId);
             actNode.setNodeId(nodeId);
             actNode.setRelateId(userId);
             actNode.setType(1);
+            actNode.setEditable(editable);
+            if (assigneeNum > 1) {
+                actNode.setNumber(assigneeNum);
+            }
             actNodeService.save(actNode);
         }
         // 分配新角色
         for (String roleId : roleIds.split(",")) {
+            if (StringUtils.isEmpty(roleId)) {
+                continue;
+            }
             ActNode actNode = new ActNode();
             actNode.setProcDefId(procDefId);
             actNode.setNodeId(nodeId);
             actNode.setRelateId(roleId);
             actNode.setType(0);
+            actNode.setEditable(editable);
+            if (assigneeNum > 1) {
+                actNode.setNumber(assigneeNum);
+            }
             actNodeService.save(actNode);
         }
         // 分配新部门
         for (String departmentId : departmentIds.split(",")) {
+            if (StringUtils.isEmpty(departmentId)) {
+                continue;
+            }
             ActNode actNode = new ActNode();
             actNode.setProcDefId(procDefId);
             actNode.setNodeId(nodeId);
             actNode.setRelateId(departmentId);
             actNode.setType(2);
+            actNode.setEditable(editable);
+            if (assigneeNum > 1) {
+                actNode.setNumber(assigneeNum);
+            }
             actNodeService.save(actNode);
         }
         // 分配新部门负责人
         for (String departmentId : departmentManageIds.split(",")) {
+            if (StringUtils.isEmpty(departmentId)) {
+                continue;
+            }
             ActNode actNode = new ActNode();
             actNode.setProcDefId(procDefId);
             actNode.setNodeId(nodeId);
             actNode.setRelateId(departmentId);
             actNode.setType(5);
+            actNode.setEditable(editable);
+            if (assigneeNum > 1) {
+                actNode.setNumber(assigneeNum);
+            }
             actNodeService.save(actNode);
         }
 
         // 表单变量
         for (String formVariable : formVariables.split(",")) {
+            if (StringUtils.isEmpty(formVariable)) {
+                continue;
+            }
             ActNode actNode = new ActNode();
             actNode.setProcDefId(procDefId);
             actNode.setNodeId(nodeId);
             actNode.setRelateId(formVariable);
             actNode.setType(6);
+            actNode.setEditable(editable);
+            if (assigneeNum > 1) {
+                actNode.setNumber(assigneeNum);
+            }
             actNodeService.save(actNode);
         }
         //发起人的部门负责人
@@ -347,6 +393,10 @@ public class ActivitiProcessController {
             actNode.setProcDefId(procDefId);
             actNode.setNodeId(nodeId);
             actNode.setType(4);
+            actNode.setEditable(editable);
+            if (assigneeNum > 1) {
+                actNode.setNumber(assigneeNum);
+            }
             actNodeService.save(actNode);
         }
         //发起人
@@ -355,9 +405,13 @@ public class ActivitiProcessController {
             actNode.setProcDefId(procDefId);
             actNode.setNodeId(nodeId);
             actNode.setType(3);
+            actNode.setEditable(editable);
+            if (assigneeNum > 1) {
+                actNode.setNumber(assigneeNum);
+            }
             actNodeService.save(actNode);
         }
-        return Result.ok("操作成功");
+        return Result.OK("操作成功");
     }
 
     @RequestMapping(value = "/getNextNode", method = RequestMethod.POST)

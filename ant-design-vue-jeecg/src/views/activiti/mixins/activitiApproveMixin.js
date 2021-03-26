@@ -2,43 +2,22 @@ import { getAction, postAction } from '@/api/manage'
 
 export const activitiApproveMixin = {
   props: {
-    dept: {
-      type: String,
-      default: ''
-    },
-    /*标题*/
-    title: {
-      type: String,
-      default: ''
-    },
-    /*全局禁用，可表示查看*/
-    disabled: {
-      type: Boolean,
-      default: false,
-      required: false
+    lcModa: {
+      type: Object,
+      default: () => ({
+        dept: '', //部门
+        title: '',//标题
+        disabled: false,// 全局禁用
+        processData: {},//流程数据
+        isNew: false,//是否新增
+        isTask: false//是否处理流程
+      })
     },
     /*展示条件*/
     showCondition: {
       type: Boolean,
       default: false
-    },
-    /*数据id*/
-    tableId: {
-      type: String,
-      default: ''
-    },
-    /*流程数据*/
-    processData: {
-      type: Object,
-      default: () => {
-        return {}
-      },
-      required: false
-    },
-    /*是否新增*/
-    isNew: { type: Boolean, default: false, required: false },
-    /*是否处理流程*/
-    task: { type: Boolean, default: false, required: false }
+    }
   },
   data() {
     return {
@@ -52,19 +31,16 @@ export const activitiApproveMixin = {
     }
   },
   created() {
-    console.log('流程数据', this.processData)
-    if (!this.isNew) {
+    console.log('流程数据', this.lcModa)
+    if (!this.lcModa.isNew) {
       this.init()
     }
   },
   methods: {
     /*回显数据*/
     init() {
-      var r = this.processData
-      getAction(this.url.getForm, {
-        tableId: r.tableId,
-        tableName: r.tableName
-      }).then((res) => {
+      let r = this.lcModa.processData
+      getAction(this.url.getForm, { tableId: r.tableId, tableName: r.tableName }).then((res) => {
         if (res.success) {
           this.form = res.result
           this.form.tableName = r.tableName
@@ -74,24 +50,23 @@ export const activitiApproveMixin = {
         }
       })
     },
-    // 需要具体实现,需要保存到表的字段“,”分割
     pickValue() {
+
     },
     // handler
     handleSubmit() {
       return new Promise((resolve, reject) => {
         this.$refs.ruleForm.validate(valid => {
           if (valid) {
-            this.form.title = this.title
-            this.form.procDefId = this.processData.id
-            this.form.procDeTitle = this.processData.name
+            this.form.title = this.lcModa.title
+            this.form.procDefId = this.lcModa.processData.id
+            this.form.procDeTitle = this.lcModa.processData.name
             if (!this.form.tableName) {
-              console.log(this.processData)
-              this.form.tableName = this.processData.businessTable
+              this.form.tableName = this.lcModa.processData.businessTable
             }
             this.pickValue()
             console.log('formData', this.form)
-            var url = this.url.addApply
+            let url = this.url.addApply
             if (!this.isNew) {
               url = this.url.editForm
             }

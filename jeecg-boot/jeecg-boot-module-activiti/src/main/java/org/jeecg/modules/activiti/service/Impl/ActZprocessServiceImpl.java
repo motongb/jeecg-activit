@@ -29,6 +29,7 @@ import org.jeecg.common.util.DateUtils;
 import org.jeecg.common.util.SpringContextUtils;
 import org.jeecg.modules.activiti.entity.*;
 import org.jeecg.modules.activiti.mapper.ActZprocessMapper;
+import org.jeecg.modules.activiti.mapper.HistoricIdentityLinkMapper;
 import org.jeecg.modules.activiti.service.IActZParamsService;
 import org.jeecg.modules.activiti.service.IActZprocessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,16 +62,24 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
 
     @Autowired
     private TaskService taskService;
+
     @Autowired
     private ActNodeServiceImpl actNodeService;
+
     @Autowired
     private ActBusinessServiceImpl actBusinessService;
+
     @PersistenceContext
     private EntityManager entityManager;
+
     @Autowired
     private ISysBaseAPI sysBaseAPI;
+
     @Autowired
     private IActZParamsService actZParamsService;
+
+    @Autowired
+    private HistoricIdentityLinkMapper historicIdentityLinkMapper;
 
     /**
      * 通过key设置所有版本为旧
@@ -144,9 +153,13 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
                 // 网关类型
                 List<LoginUser> users = getNode(task.getTaskDefinitionKey(), tableName, tableId).getUsers();
                 // 如果下个节点未分配审批人为空 取消结束流程
-                if (users == null || users.size() == 0) {
-                    throw new RuntimeException("任务节点未分配任何候选审批人，发起流程失败");
+                if (CollectionUtils.isEmpty(users)) {
+                    throw new JeecgBootException("任务节点未分配任何候选审批人，发起流程失败");
                 } else {
+                    // 下一节点任务指定人数不能小于节点设定人数
+                    if (users.size() < actNodeService.getNodeAssigneeNumber(task.getTaskDefinitionKey(), act.getProcDefId())) {
+                        throw new JeecgBootException("指定人数不能小于节点审批人数");
+                    }
                     // 分配了节点负责人分发给全部
                     for (LoginUser user : users) {
                         taskService.addCandidateUser(task.getId(), user.getUsername());
@@ -158,12 +171,15 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
             } else {
                 // 分配第一个任务用户
                 String assignees = actBusiness.getAssignees();
-                for (String assignee : assignees.split(",")) {
+                String[] assStr = assignees.split(",");
+                if (assStr.length < actNodeService.getNodeAssigneeNumber(task.getTaskDefinitionKey(), act.getProcDefId())) {
+                    throw new JeecgBootException("指定人数不能小于节点审批人数");
+                }
+                for (String assignee : assStr) {
                     taskService.addCandidateUser(task.getId(), assignee);
                     // 异步发消息
                     LoginUser user = sysBaseAPI.getUserByName(assignee);
-                    sendActMessage(loginUser, user, actBusiness, task.getName(), actBusiness.getSendMessage(),
-                            actBusiness.getSendSms(), actBusiness.getSendEmail());
+                    sendActMessage(loginUser, user, actBusiness, task.getName(), actBusiness.getSendMessage(), actBusiness.getSendSms(), actBusiness.getSendEmail());
                 }
             }
             // 设置任务优先级
@@ -324,10 +340,7 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
                                 users.addAll(depManageUsers);
                             }
                         }
-
                     }
-
-
                 }
             }
         }
@@ -502,6 +515,22 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
         return baseMapper.selectNewestProcess(processKey);
     }
 
+    @Override
+    public boolean canComplete(String taskId, String nodeId, String procDefId, String proInstId) {
+        List<HistoricIdentityLinkDo> historicIdentityLinkDos = historicIdentityLinkMapper.selectList(new LambdaQueryWrapper<HistoricIdentityLinkDo>()
+                .eq(HistoricIdentityLinkDo::getTaskId, taskId)
+                .eq(HistoricIdentityLinkDo::getType, ActivitiConstant.EXECUTOR_TYPE_p)
+                .eq(HistoricIdentityLinkDo::getProcessInstanceId, proInstId));
+        int number = actNodeService.getNodeAssigneeNumber(nodeId, procDefId);
+        // 设定人数<=已签人数,能完成任务
+        return number <= historicIdentityLinkDos.size() + 1;
+    }
+
+    @Override
+    public void addHistoryIdentityLink(HistoricIdentityLinkDo historicIdentityLinkDo) {
+        historicIdentityLinkMapper.insert(historicIdentityLinkDo);
+    }
+
     private Map<String, Object> getParams(String procInsId) {
         LambdaQueryWrapper<ActBusiness> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ActBusiness::getProcInstId, procInsId);
@@ -514,4 +543,6 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
         }
         return vals;
     }
+
+
 }

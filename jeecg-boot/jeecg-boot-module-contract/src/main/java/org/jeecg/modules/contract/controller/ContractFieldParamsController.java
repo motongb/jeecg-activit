@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -14,7 +13,7 @@ import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.contract.entity.ContractFieldParams;
 import org.jeecg.modules.contract.service.IContractFieldParamsService;
-import org.jeecg.modules.contract.utils.TreeBuilder;
+import org.jeecg.common.util.TreeBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,10 +42,10 @@ public class ContractFieldParamsController extends JeecgController<ContractField
      *
      * @return
      */
-    @AutoLog(value = "合同类型-树结构")
-    @ApiOperation(value = "合同类型-树结构", notes = "合同类型-树结构")
+    @AutoLog(value = "合同字段参数-树结构")
+    @ApiOperation(value = "合同字段参数-树结构", notes = "合同字段参数-树结构")
     @GetMapping(value = "/tree")
-    public Result<?> tree(@ApiParam("过滤角色") @RequestParam(required = false, defaultValue = "false") Boolean roles) {
+    public Result<?> tree() {
         List<ContractFieldParams> contractFieldParamsList = contractFieldParamsService.list();
         return Result.OK(TreeBuilder.build(contractFieldParamsList, "0"));
     }

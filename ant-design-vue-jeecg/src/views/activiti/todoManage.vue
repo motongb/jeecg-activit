@@ -77,12 +77,17 @@
               <span v-else style="color: #999;"> 无 </span>
             </template>
           </a-table-column>
-          <a-table-column title="状态" dataIndex="isSuspended" :width="100" align="center"
-                          key="z" :sorter="(a,b)=>Boolean(a.isSuspended)?0:1 - Boolean(b.isSuspended)?0:1"
-          >
+          <a-table-column title="激活" dataIndex="isSuspended" :width="100" align="center"
+                          key="z" :sorter="(a,b)=>Boolean(a.isSuspended)?0:1 - Boolean(b.isSuspended)?0:1">
             <template slot-scope="t">
               <span v-if="!Boolean(t)" style="color: green;"> 已激活 </span>
               <span v-if="Boolean(t)" style="color: orange;"> 已挂起 </span>
+            </template>
+          </a-table-column>
+          <a-table-column title="结果" dataIndex="result" :width="100" align="center">
+            <template slot-scope="t">
+              <span v-if="t===1" style="color: orange;"> 待处理 </span>
+              <span v-if="t===2" style="color: green;"> 已处理 </span>
             </template>
           </a-table-column>
           <a-table-column title="创建时间" dataIndex="createTime" :width="200" align="center">
@@ -92,13 +97,14 @@
           </a-table-column>
           <a-table-column title="操作" dataIndex="" align="center">
             <template slot-scope="t,r,i">
-              <a href="javascript:void(0);" @click="detail(r)" style="color: blue">查看并处理</a>
-              <a-divider type="vertical"/>
-              <span v-if="Boolean(r.isSuspended)" style="cursor: no-drop;color: #999999;" title="流程已被挂起，无法操作！">
+              <div v-if="r.result!==2">
+                <a href="javascript:void(0);" @click="detail(r)" style="color: blue">查看并处理</a>
+                <a-divider type="vertical"/>
+                <span v-if="Boolean(r.isSuspended)" style="cursor: no-drop;color: #999999;" title="流程已被挂起，无法操作！">
                 查看并处理 <a-divider type="vertical"/>
                 委托他人代办 <a-divider type="vertical"/>
-              </span>
-              <span v-else>
+                </span>
+                <span v-else>
                 <!--<a href="javascript:void(0);" @click="passTask(r)" style="color: green">通过</a>
                 <a-divider type="vertical" />
                 <a href="javascript:void(0);" @click="backTask(r)" style="color: orange">驳回</a>
@@ -106,6 +112,7 @@
                 <a href="javascript:void(0);" @click="delegateTask(r)" style="color: #00A0E9">委托他人代办</a>
                 <a-divider type="vertical"/>
               </span>
+              </div>
               <a href="javascript:void(0);" @click="history(r)" style="color: #217dbb">历史</a>
             </template>
           </a-table-column>

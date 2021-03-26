@@ -10,7 +10,7 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.contract.entity.ContractMember;
+import org.jeecg.modules.contract.entity.ContractCovertMember;
 import org.jeecg.modules.contract.service.IContractMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ import java.util.Arrays;
 @RestController
 @RequestMapping("/contract/contractMember")
 @Slf4j
-public class ContractMemberController extends JeecgController<ContractMember, IContractMemberService> {
+public class ContractMemberController extends JeecgController<ContractCovertMember, IContractMemberService> {
     @Autowired
     private IContractMemberService contractMemberService;
 
@@ -46,13 +46,13 @@ public class ContractMemberController extends JeecgController<ContractMember, IC
     @AutoLog(value = "合同签订对象-分页列表查询")
     @ApiOperation(value = "合同签订对象-分页列表查询", notes = "合同签订对象-分页列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(ContractMember contractMember,
+    public Result<?> queryPageList(ContractCovertMember contractMember,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<ContractMember> queryWrapper = QueryGenerator.initQueryWrapper(contractMember, req.getParameterMap());
-        Page<ContractMember> page = new Page<ContractMember>(pageNo, pageSize);
-        IPage<ContractMember> pageList = contractMemberService.page(page, queryWrapper);
+        QueryWrapper<ContractCovertMember> queryWrapper = QueryGenerator.initQueryWrapper(contractMember, req.getParameterMap());
+        Page<ContractCovertMember> page = new Page<ContractCovertMember>(pageNo, pageSize);
+        IPage<ContractCovertMember> pageList = contractMemberService.page(page, queryWrapper);
         return Result.OK(pageList);
     }
 
@@ -65,7 +65,7 @@ public class ContractMemberController extends JeecgController<ContractMember, IC
     @AutoLog(value = "合同签订对象-添加")
     @ApiOperation(value = "合同签订对象-添加", notes = "合同签订对象-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody ContractMember contractMember) {
+    public Result<?> add(@RequestBody ContractCovertMember contractMember) {
         contractMemberService.save(contractMember);
         return Result.OK("添加成功！");
     }
@@ -79,7 +79,7 @@ public class ContractMemberController extends JeecgController<ContractMember, IC
     @AutoLog(value = "合同签订对象-编辑")
     @ApiOperation(value = "合同签订对象-编辑", notes = "合同签订对象-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody ContractMember contractMember) {
+    public Result<?> edit(@RequestBody ContractCovertMember contractMember) {
         contractMemberService.updateById(contractMember);
         return Result.OK("编辑成功!");
     }
@@ -122,7 +122,7 @@ public class ContractMemberController extends JeecgController<ContractMember, IC
     @ApiOperation(value = "合同签订对象-通过id查询", notes = "合同签订对象-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id", required = true) String id) {
-        ContractMember contractMember = contractMemberService.getById(id);
+        ContractCovertMember contractMember = contractMemberService.getById(id);
         if (contractMember == null) {
             return Result.error("未找到对应数据");
         }
@@ -136,8 +136,8 @@ public class ContractMemberController extends JeecgController<ContractMember, IC
      * @param contractMember
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, ContractMember contractMember) {
-        return super.exportXls(request, contractMember, ContractMember.class, "合同签订对象");
+    public ModelAndView exportXls(HttpServletRequest request, ContractCovertMember contractMember) {
+        return super.exportXls(request, contractMember, ContractCovertMember.class, "合同签订对象");
     }
 
     /**
@@ -149,7 +149,7 @@ public class ContractMemberController extends JeecgController<ContractMember, IC
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, ContractMember.class);
+        return super.importExcel(request, response, ContractCovertMember.class);
     }
 
 }

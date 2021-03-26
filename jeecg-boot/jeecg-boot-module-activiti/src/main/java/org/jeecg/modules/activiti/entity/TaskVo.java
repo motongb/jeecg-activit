@@ -42,7 +42,10 @@ public class TaskVo {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
+    private String createBy;
+
     private String processName;
+
     private String title;
 
     private String routeName;
@@ -50,11 +53,16 @@ public class TaskVo {
     private String businessKey;
 
     private String tableId;
+
     private String tableName;
+
     private Integer status;
+
     private Integer result;
+
     private Map dataMap;
-    public TaskVo(Task task){
+
+    public TaskVo(Task task) {
         this.id = task.getId();
         this.name = task.getName();
         this.key = task.getTaskDefinitionKey();

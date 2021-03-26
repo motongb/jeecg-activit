@@ -3,9 +3,6 @@ package org.jeecg.modules.activiti.service.Impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
 import org.activiti.engine.impl.pvm.PvmActivity;
 import org.activiti.engine.impl.pvm.PvmTransition;
@@ -17,7 +14,6 @@ import org.jeecg.modules.activiti.entity.Department;
 import org.jeecg.modules.activiti.entity.Role;
 import org.jeecg.modules.activiti.mapper.ActNodeMapper;
 import org.jeecg.modules.activiti.service.IActNodeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -38,12 +34,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ActNodeServiceImpl extends ServiceImpl<ActNodeMapper, ActNode> implements IActNodeService {
-    @Autowired
-    private TaskService taskService;
-    @Autowired
-    private RuntimeService runtimeService;
-    @Autowired
-    private RepositoryService repositoryService;
 
     public List<String> getRoleByUserName(String username) {
         return this.baseMapper.getRoleByUserName(username);
@@ -274,5 +264,27 @@ public class ActNodeServiceImpl extends ServiceImpl<ActNodeMapper, ActNode> impl
 
     public List<ActNode> findByNodeId(String nodeId) {
         return this.baseMapper.findByNodeId(nodeId);
+    }
+
+    @Override
+    public int getNodeAssigneeNumber(String nodeId, String procDefId) {
+        List<ActNode> actNodes = baseMapper.selectList(new LambdaQueryWrapper<ActNode>()
+                .eq(ActNode::getNodeId, nodeId)
+                .eq(ActNode::getProcDefId, procDefId));
+        if (CollectionUtils.isEmpty(actNodes)) {
+            return 1;
+        }
+        return actNodes.get(0).getNumber();
+    }
+
+    @Override
+    public ActNode getSomeCommonActNode(String nodeId, String procDefId) {
+        List<ActNode> actNodes = baseMapper.selectList(new LambdaQueryWrapper<ActNode>()
+                .eq(ActNode::getNodeId, nodeId)
+                .eq(ActNode::getProcDefId, procDefId));
+        if (CollectionUtils.isEmpty(actNodes)) {
+            return new ActNode();
+        }
+        return actNodes.get(0);
     }
 }
