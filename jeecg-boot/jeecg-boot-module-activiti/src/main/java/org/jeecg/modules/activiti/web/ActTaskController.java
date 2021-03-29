@@ -123,33 +123,33 @@ public class ActTaskController {
         if (StringUtils.isNotEmpty(proDefId)) {
             query.processDefinitionId(proDefId);
         } else if (StrUtil.isNotBlank(type)) {
-            List<String> deployment_idList = actBusinessService.getBaseMapper().deployment_idListByType(type);
-            if (deployment_idList.size() == 0) {
+            List<String> deploymentIdList = actBusinessService.getBaseMapper().deployment_idListByType(type);
+            if (CollectionUtils.isEmpty(deploymentIdList)) {
                 query.deploymentIdIn(Lists.newArrayList(""));
             } else {
-                query.deploymentIdIn(deployment_idList);
+                query.deploymentIdIn(deploymentIdList);
             }
         }
         String searchVal = request.getParameter("searchVal");
         if (StrUtil.isNotBlank(searchVal)) {
             //搜索标题、申请人
             List<LoginUser> usersByName = actBusinessService.getBaseMapper().getUsersByName(searchVal);
-            List<String> uNames = null;
-            if (usersByName.size() == 0) {
+            List<String> uNames;
+            if (CollectionUtils.isEmpty(usersByName)) {
                 uNames = Lists.newArrayList("");
             } else {
-                uNames = usersByName.stream().map(u -> u.getUsername()).collect(Collectors.toList());
+                uNames = usersByName.stream().map(LoginUser::getUsername).collect(Collectors.toList());
             }
             List<ActBusiness> businessList = actBusinessService.list(new LambdaQueryWrapper<ActBusiness>()
                     .like(ActBusiness::getTitle, searchVal) //标题查询
                     .or().in(ActBusiness::getUserId, uNames)
             );
-            if (businessList.size() > 0) {
-                // 定义id
-                List<String> pids = businessList.stream().filter(act -> act.getProcInstId() != null).map(act -> act.getProcInstId()).collect(Collectors.toList());
-                query.processInstanceIdIn(pids);
-            } else {
+            if (CollectionUtils.isEmpty(businessList)) {
                 query.processInstanceIdIn(Lists.newArrayList(""));
+            } else {
+                // 定义id
+                List<String> pids = businessList.stream().filter(act -> act.getProcInstId() != null).map(ActBusiness::getProcInstId).collect(Collectors.toList());
+                query.processInstanceIdIn(pids);
             }
         }
         List<Task> taskList = query.list();
@@ -158,7 +158,9 @@ public class ActTaskController {
         // 转换vo
         taskList.forEach(e -> {
             TaskVo tv = new TaskVo(e);
-
+            // 是否可编辑
+            ActNode actNode = actNodeService.getSomeCommonActNode(e.getTaskDefinitionKey(), e.getProcessDefinitionId());
+            tv.setEditable(ActivitiConstant.EDITABLE_STATUS_Y.equals(actNode.getEditable()));
             // 关联委托人
             if (StrUtil.isNotBlank(tv.getOwner())) {
                 String realname = sysBaseAPI.getUserByName(tv.getOwner()).getRealname();

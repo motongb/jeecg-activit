@@ -48,10 +48,11 @@ public class WebOfficeService implements WebOfficeAPI {
     @Value("${jeecg.host}")
     private String domain;
 
-    public String getViewUrl(String fileId, String fileType, String userId, boolean checkToken) {
+    public String getViewUrl(String fileId, String fileType, String userId, boolean checkToken, String permission) {
         Map<String, String> params = new HashMap<>();
         params.put("_w_fileid", fileId);
         params.put("_w_userid", userId);
+        params.put("_w_permission", permission);
         return wpsUtil.getWpsUrl(params, fileType, fileId, checkToken);
     }
 
@@ -75,7 +76,7 @@ public class WebOfficeService implements WebOfficeAPI {
         oaWpsModel.setUpdateTime(new Date());
         oaWpsModelService.save(oaWpsModel);
         result.put("model", oaWpsModel);
-        result.put("preViewUrl", this.getViewUrl(fileId, oaWpsModel.getFileType(), oaWpsModel.getCreateBy(), true));
+        result.put("preViewUrl", this.getViewUrl(fileId, oaWpsModel.getFileType(), oaWpsModel.getCreateBy(), true, "write"));
         return result;
     }
 
@@ -137,7 +138,7 @@ public class WebOfficeService implements WebOfficeAPI {
             oaWpsModel.setUpdateBy(userId);
             oaWpsModel.setUpdateTime(new Date());
             oaWpsModelService.save(oaWpsModel);
-            result.put("redirect_url", this.getViewUrl(fileId, fileType, userId, false));
+            result.put("redirect_url", this.getViewUrl(fileId, fileType, userId, false, "write"));
             result.put("user_id", userId);
         }
         return result;
@@ -170,7 +171,7 @@ public class WebOfficeService implements WebOfficeAPI {
         return result;
     }
 
-    public Map<String, Object> fileInfo(String fileId, String userId) {
+    public Map<String, Object> fileInfo(String fileId, String userId, String permission) {
         Map<String, Object> result = new HashMap<>();
         OaWpsModel oaWpsModel = oaWpsModelService.getOne(new LambdaQueryWrapper<OaWpsModel>()
                 .eq(OaWpsModel::getFileId, fileId).orderByDesc(OaWpsModel::getVersion).last("limit 1"));
@@ -181,6 +182,9 @@ public class WebOfficeService implements WebOfficeAPI {
             userDTO.setId(userId);
             userDTO.setName(loginUser.getRealname());
             userDTO.setAvatar_url(loginUser.getAvatar());
+            if (StringUtils.hasText(permission)) {
+                userDTO.setPermission(permission);
+            }
             result.put("user", userDTO);
         }
         return result;

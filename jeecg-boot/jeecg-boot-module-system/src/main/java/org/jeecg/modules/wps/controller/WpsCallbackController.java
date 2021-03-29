@@ -41,9 +41,10 @@ public class WpsCallbackController {
 
     @GetMapping("/v1/3rd/file/info")
     public Map<String, Object> fileInfo(@RequestParam String _w_fileid,
-                                        @RequestParam String _w_userid) {
+                                        @RequestParam String _w_userid,
+                                        @RequestParam String _w_permission) {
         log.info("获取文件信息：_w_fileid={},_w_userid={}", _w_fileid, _w_userid);
-        return WpsResponse.OK(webOfficeService.fileInfo(_w_fileid, _w_userid));
+        return WpsResponse.OK(webOfficeService.fileInfo(_w_fileid, _w_userid, _w_permission));
     }
 
     @PostMapping("/v1/3rd/user/info")

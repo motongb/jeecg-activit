@@ -4,6 +4,7 @@ import cn.hutool.core.map.MapUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.jeecg.common.constant.CommonConstant;
+import org.jeecg.common.exception.JeecgBootException;
 import org.jeecg.config.WpsProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -98,7 +99,7 @@ public class WpsUtil {
                 continue;
             }
             contents.append(key + "=").append(params.get(key));
-            System.out.println("key:" + key + ",value:" + params.get(key));
+            log.info("key:" + key + ",value:" + params.get(key));
         }
         contents.append("_w_secretkey=").append(appSecret);
 
@@ -111,7 +112,7 @@ public class WpsUtil {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        System.out.println(sign);
+        log.info(sign);
         return sign;
     }
 
@@ -121,12 +122,10 @@ public class WpsUtil {
             Mac mac = Mac.getInstance(signingKey.getAlgorithm());
             mac.init(signingKey);
             return mac.doFinal(data);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
+        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
             e.printStackTrace();
         }
-        return null;
+        return new byte[]{};
     }
 
     public String getTypeCode(String fileType) {
@@ -195,7 +194,7 @@ public class WpsUtil {
     private String copyLocal(String oldFilePath, String bizPath) {
         File oldFile = getLocalFile(oldFilePath);
         if (!oldFile.exists()) {
-            throw new RuntimeException("文件不存在..");
+            throw new JeecgBootException("文件不存在..");
         }
         File file = new File(uploadpath + File.separator + bizPath + File.separator);
         if (!file.exists()) {
@@ -256,7 +255,7 @@ public class WpsUtil {
                 e.printStackTrace();
             }
         }
-        throw new RuntimeException("文件不存在");
+        throw new JeecgBootException("文件不存在");
     }
 
     /**

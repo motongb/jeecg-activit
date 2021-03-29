@@ -211,4 +211,9 @@ public interface ActivitiConstant {
      * 修订状态，已修订
      */
     Integer FIX_STATUS_2 = 2;
+
+    /**
+     * 编辑状态，不可编辑
+     */
+    String EDITABLE_STATUS_Y = "1";
 }

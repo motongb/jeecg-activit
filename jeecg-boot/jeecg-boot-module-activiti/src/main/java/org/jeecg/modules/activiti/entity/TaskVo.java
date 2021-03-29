@@ -62,6 +62,8 @@ public class TaskVo {
 
     private Map dataMap;
 
+    private boolean editable;
+
     public TaskVo(Task task) {
         this.id = task.getId();
         this.name = task.getName();

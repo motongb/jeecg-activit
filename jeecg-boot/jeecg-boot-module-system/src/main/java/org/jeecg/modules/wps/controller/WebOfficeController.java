@@ -29,9 +29,10 @@ public class WebOfficeController {
     @ApiOperation("获取预览地址")
     @GetMapping("/getViewUrl")
     public Result<Object> getViewUrl(@RequestParam @ApiParam("文档id") String fileId,
-                                     @RequestParam @ApiParam("文档类型：word,excel,ppt,pdf") String fileType) {
+                                     @RequestParam @ApiParam("文档类型：word,excel,ppt,pdf") String fileType,
+                                     @RequestParam @ApiParam("操作权限：write-写,read-读") String permission) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-        return Result.OK(webOfficeService.getViewUrl(fileId, fileType, sysUser.getUsername(), true));
+        return Result.OK(webOfficeService.getViewUrl(fileId, fileType, sysUser.getUsername(), true, permission));
     }
 
     @ApiOperation("创建新文档")
