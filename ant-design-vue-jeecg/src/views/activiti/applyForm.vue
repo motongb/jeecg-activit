@@ -3,7 +3,8 @@
     <comment-modal v-if="showCommentVisible" @closed="showCommentVisible=false" :bindId="lcModa.processData.tableId"
                    :title="lcModa.title" :bind-user="lcModa.processData.createBy"></comment-modal>
     <notice-message :bindId="lcModa.processData.tableId" :title="lcModa.title" ref="noticeMessage"
-                    :bind-user="lcModa.processData.createBy" :business-key="lcModa.processData.businessKey"></notice-message>
+                    :bind-user="lcModa.processData.createBy"
+                    :business-key="lcModa.processData.businessKey"></notice-message>
     <a-card class="apply-card" title="申请信息">
       <div slot="extra">
         <a-button v-show="!lcModa.isNew" type="primary" ghost @click="showComment">查看评论
@@ -84,7 +85,7 @@
           getNextNode: '/activiti_process/getNextNode',
           getBackList: '/actTask/getBackList/',
           userWithDepart: '/sys/user/userDepartList',
-          updateFix: '/actBusiness/updateFix',
+          updateFix: '/actBusiness/updateFix'
         },
         backList: [
           {
@@ -132,7 +133,7 @@
       this.initValue()
     },
     methods: {
-      needEdit(){
+      needEdit() {
         this.$refs.noticeMessage.show()
       },
       initValue() {
@@ -166,10 +167,12 @@
           if (valid) {
             this.btndisabled = true
             this.$refs.processForm.handleSubmit(e).then(res => {
-              this.afterSub(res)
+              if (!this.lcModa.isTask) {
+                this.afterSub(res)
+              }
               this.btndisabled = false
               // 是否修订
-              if (this.lcModa.isFix){
+              if (this.lcModa.isFix) {
                 getAction(this.url.updateFix, { id: this.lcModa.processData.id, status: 2 })
               }
             }).catch(_ => {

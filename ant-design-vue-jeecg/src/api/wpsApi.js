@@ -14,11 +14,11 @@ export const createNewFile = (fileType) => {
   return getAction(api.createNewFileUrl, { fileType })
 }
 
-export const getPreViewUrl = (fileId, fileType) => {
+export const getPreViewUrl = (fileId, fileType, permission) => {
   if (!fileType) {
     fileType = 'word'
   }
-  return getAction(api.preViewUrl, { fileId, fileType })
+  return getAction(api.preViewUrl, { fileId, fileType, permission })
 }
 
 export const saveWpsModel = (data) => {

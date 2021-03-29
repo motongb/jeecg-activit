@@ -212,7 +212,7 @@
               <span class="nodespan">{{dictNodeType[editNode.type]}}</span>
             </a-form-item>
             <a-form-item v-show="editNode.type==1" :label-col="labelCol" :wrapper-col="wrapperCol" label="需要人数">
-              <a-input v-model="spry.assigneeNum"></a-input>
+              <a-input-number v-model="spry.assigneeNum"></a-input-number>
             </a-form-item>
             <a-form-item v-show="editNode.type==1" :label-col="labelCol" :wrapper-col="wrapperCol" label="审批人可编辑">
               <a-radio-group v-model="spry.editable">
@@ -431,13 +431,11 @@
         return text
       },
       closeNode() {
-        this.showProcessNodeEdit = false,
-          this.current = 0,
-          this.spryTypes = [],
-          this.spry = {}
+        this.showProcessNodeEdit = false
+        this.current = 0
+        this.spryTypes = []
       },
       /*编辑流程节点*/
-
       change_steps(node, index) {
         this.spryTypes = []
         this.current = index

@@ -45,6 +45,10 @@
       simpleMode: {
         type: Boolean,
         default: false
+      },
+      permission: {
+        type: String,
+        default: 'write'
       }
     },
     data() {
@@ -116,7 +120,7 @@
       async init(fileId) {
         console.log(fileId)
         if (fileId && fileId.length > 0) {
-          await getPreViewUrl(fileId, this.docType).then(res => {
+          await getPreViewUrl(fileId, this.docType, this.permission).then(res => {
             if (res.success) {
               this.docUrl = res.result
             }

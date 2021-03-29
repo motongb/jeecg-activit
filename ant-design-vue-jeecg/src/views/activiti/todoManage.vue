@@ -253,7 +253,7 @@
           )
           return
         }
-        this.lcModa.disabled = true
+        this.lcModa.disabled = !r.editable
         this.lcModa.title = r.title
         this.lcModa.processData = r
         this.lcModa.isNew = false
