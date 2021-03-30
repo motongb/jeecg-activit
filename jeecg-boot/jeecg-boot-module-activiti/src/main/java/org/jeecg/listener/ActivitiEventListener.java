@@ -29,7 +29,7 @@ public class ActivitiEventListener implements ApplicationListener<ActivitiEvent<
         log.info("{}流程驳回", actBusiness.getTitle());
         IActivitiEventListener activitiEventListener = ActivitiEventFactory.create(actBusiness.getTableName());
         switch (event) {
-            //发起申请
+            // 发起申请
             case WorkflowConstants.EVENT_APPLY:
                 activitiEventListener.apply(actBusiness);
                 break;
@@ -37,17 +37,21 @@ public class ActivitiEventListener implements ApplicationListener<ActivitiEvent<
             case WorkflowConstants.EVENT_CANCEL:
                 activitiEventListener.cancel(actBusiness);
                 break;
-            //驳回至发起人
+            // 驳回至发起人
             case WorkflowConstants.EVENT_BACK:
                 activitiEventListener.back(actBusiness);
                 break;
-            //审批通过
+            // 审批通过
             case WorkflowConstants.EVENT_PASS:
                 activitiEventListener.pass(actBusiness);
                 break;
             // 审批完成
             case WorkflowConstants.EVENT_FINALIZED:
                 activitiEventListener.finalized(actBusiness);
+                break;
+            // 删除草稿
+            case WorkflowConstants.EVENT_DELETE:
+                activitiEventListener.delete(actBusiness);
                 break;
             default:
                 break;

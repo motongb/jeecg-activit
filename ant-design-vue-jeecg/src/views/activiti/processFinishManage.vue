@@ -1,6 +1,5 @@
 <style lang="less">
   @import '~@assets/less/common.less';
-
 </style>
 <template>
   <div class="search">
@@ -10,32 +9,18 @@
           <a-row :gutter="24">
             <a-col :md="6" :sm="8">
               <a-form-item label="流程名称" prop="name">
-                <a-input
-                  type="text"
-                  v-model="searchForm.name"
-                  placeholder="请输入"
-                  clearable
-                />
+                <a-input type="text" v-model="searchForm.name" placeholder="请输入" clearable/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="标识Key" prop="name">
-                <a-input
-                  type="text"
-                  v-model="searchForm.key"
-                  placeholder="请输入"
-                  clearable
-                />
+                <a-input type="text" v-model="searchForm.key" placeholder="请输入" clearable/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="结束时间">
-                <a-range-picker
-                  v-model="selectDate"
-                  format="YYYY-MM-DD"
-                  clearable
-                  @change="selectDateRange"
-                ></a-range-picker>
+                <a-range-picker v-model="selectDate" format="YYYY-MM-DD" clearable
+                                @change="selectDateRange"></a-range-picker>
               </a-form-item>
             </a-col>
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
@@ -54,8 +39,7 @@
                  :dataSource="data"
                  :pagination="ipagination"
                  @change="handleTableChange"
-                 ref="table"
-        >
+                 ref="table">
           <a-table-column title="#" :width="50" fixed="left">
             <template slot-scope="t,r,i">
               <span> {{i+1}} </span>
@@ -87,8 +71,7 @@
             </template>
           </a-table-column>
           <a-table-column title="审批结果" dataIndex="result" :width="150"
-                          key="result" :sorter="(a,b)=>a.result - b.result"
-          >
+                          key="result" :sorter="(a,b)=>a.result - b.result">
             <template slot-scope="t,r,i">
               <span v-if="t==4" style="color: #999999"> 发起人撤回 </span>
               <span v-else-if="t==5" style="color: orange"> 已删除 </span>
@@ -103,8 +86,7 @@
             </template>
           </a-table-column>
           <a-table-column title="总耗时" dataIndex="duration" :width="100"
-                          key="duration" :sorter="(a,b)=>a.duration - b.duration"
-          >
+                          key="duration" :sorter="(a,b)=>a.duration - b.duration">
             <template slot-scope="t,r,i">
               <span> {{millsToTime(t)}} </span>
             </template>
@@ -139,12 +121,6 @@
         <component :is="historicDetail" :procInstId="procInstId"></component>
       </div>
     </a-modal>
-    <!--流程表单-->
-    <a-modal :title="lcModa.title" v-model="lcModa.visible" :footer="null" :maskClosable="false" width="80%">
-      <component :disabled="lcModa.disabled" v-if="lcModa.visible" :is="lcModa.formComponent"
-                 :processData="lcModa.processData" :isNew="lcModa.isNew"
-                 @close="lcModa.visible=false,lcModa.disabled = false"></component>
-    </a-modal>
   </div>
 </template>
 
@@ -153,6 +129,8 @@
   import { activitiMixin } from './mixins/activitiMixin'
   import { JeecgListMixin } from '../../mixins/JeecgListMixin'
   import { getAction, postFormAction } from '@/api/manage'
+  import activitiSetting from './mixins/activitiSetting'
+  import { setStore } from '@/utils/storage'
 
   export default {
     mixins: [JeecgListMixin, activitiMixin],
@@ -161,13 +139,6 @@
       return {
         modalLsVisible: false,
         procInstId: '',
-        lcModa: {
-          title: '',
-          disabled: false,
-          visible: false,
-          formComponent: null,
-          isNew: false
-        },
         openSearch: true,
         openTip: true,
         loading: true, // 表单加载状态
@@ -190,6 +161,10 @@
         }
       }
     },
+    mounted() {
+      this.init()
+    },
+    watch: {},
     methods: {
       loadData() {
       },
@@ -230,9 +205,6 @@
         // 重新加载数据
         this.getDataList()
       },
-      handelCancel() {
-        this.modalVisible = false
-      },
       detail(r) {
         if (!r.routeName) {
           this.$message.warning(
@@ -240,12 +212,16 @@
           )
           return
         }
-        this.lcModa.disabled = true
-        this.lcModa.title = '查看流程业务信息：' + r.name
-        this.lcModa.formComponent = this.getFormComponent(r.routeName).component
-        this.lcModa.processData = r
-        this.lcModa.isNew = false
-        this.lcModa.visible = true
+        let lcModa = {}
+        lcModa.disabled = true
+        lcModa.title = r.name
+        lcModa.from = activitiSetting.processInsManage
+        lcModa.processData = r
+        lcModa.isNew = false
+        lcModa.reload = true
+        lcModa.isHistory = true
+        setStore('lcModa', lcModa)
+        this.$router.push(activitiSetting.applyFormPath)
       },
       history(v) {
         if (!v.id) {
@@ -265,10 +241,6 @@
           }
         })
       }
-    },
-    mounted() {
-      this.init()
-    },
-    watch: {}
+    }
   }
 </script>

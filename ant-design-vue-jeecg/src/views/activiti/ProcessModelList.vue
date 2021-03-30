@@ -32,7 +32,6 @@
 <!--                <a-button type="primary"  style="left: 10px" @click="createObj.visible=true" icon="search">创建流程模型</a-button>-->
             </a-col>
           </span>
-
         </a-row>
       </a-form>
     </div>
@@ -131,8 +130,7 @@
              title="编辑流程"
              :visible="editObj.visible"
              @ok="editObjOk"
-             @cancel="editObj.visible = false"
-    >
+             @cancel="editObj.visible = false">
       <a-form :form="editForm" v-if="editObj.visible">
         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="流程分类">
           <component :is="LcDict" :trigger-change="true"
@@ -140,10 +138,8 @@
                      placeholder="请选择流程分类" dictCode="bpm_process_type"></component>
         </a-form-item>
         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="流程类目(app使用)">
-          <j-tree-dict placeholder="请选择流程类目" parentCode="A01"
-                       :trigger-change="true"
-                       v-decorator="[ 'typeId', {initialValue:editObj.typeId, rules: [{ required: true, message: '不能为空' }] },]"
-          >
+          <j-tree-dict placeholder="请选择流程类目" parentCode="A01" :trigger-change="true" field="code"
+                       v-decorator="[ 'typeId', {initialValue:editObj.typeId, rules: [{ required: true, message: '不能为空' }] },]">
           </j-tree-dict>
         </a-form-item>
         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="关联表单">
@@ -559,7 +555,7 @@
           let routeName = this.editForm.getFieldValue('routeName')
           console.log('routeName', routeName)
           var route = this.getFormComponent(routeName)
-          this.editObj.businessTable = route.businessTable
+          this.editObj.tableName = route.businessTable
           this.editObj.routeName = route.routeName
           console.log('this.editObj', this.editObj)
         })

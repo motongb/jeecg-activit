@@ -1,11 +1,28 @@
 <template>
   <a-card :bordered="false">
-    <!--流程申请选择-->
-    <a-input-search style="margin-bottom: 10px;margin-right:10px;width: 200px" v-model="searchProcessKey"
-                    placeholder="输入流程名称" @search="onSearchProcess"/>
-    <a-button @click="onSearchProcess(searchProcessKey)" type="primary">查询</a-button>
-    <a-button @click="onSearchProcess('')">重置</a-button>
-    <a-button @click="handleToApplyList" type="primary" style="float: right;">前往我的申请列表</a-button>
+    <!-- 查询区域 -->
+    <div class="table-page-search-wrapper">
+      <a-form layout="inline">
+        <a-row :gutter="24">
+          <a-col :md="4" :sm="4">
+            <a-form-item label="流程名称">
+              <a-input-search style="margin-bottom: 10px;margin-right:10px;width: 200px" v-model="queryParam.searchProcessKey" allowClear @search="onSearchProcess"/>
+            </a-form-item>
+          </a-col>
+          <a-col :md="4" :sm="4">
+            <a-form-item label="是否最新">
+              <a-switch checkedChildren="是" unCheckedChildren="否" defaultChecked v-model="queryParam.zx"/>
+            </a-form-item>
+          </a-col>
+          <a-col :md="16" :sm="4">
+            <a-button @click="onSearchProcess(queryParam.searchProcessKey)" type="primary">查询</a-button>
+            <a-button @click="onSearchProcess('')" style="margin-left: 8px">重置</a-button>
+            <a-button @click="handleToApplyList" type="primary" style="float: right">前往我的申请列表</a-button>
+          </a-col>
+        </a-row>
+      </a-form>
+    </div>
+
     <a-empty description="无流程可供选择" v-if="activeKeyAll.length==0"/>
     <div v-else>
       <a-collapse v-model="activeKey">
@@ -31,13 +48,6 @@
         </a-collapse-panel>
       </a-collapse>
     </div>
-    <!--流程表单-->
-    <a-modal :destroyOnClose="true" :title="lcModa.title" v-model="lcModa.visible" :footer="null" :maskClosable="false"
-             width="80%">
-      <component :disabled="lcModa.disabled" v-if="lcModa.visible" :is="lcModa.formComponent"
-                 :processData="lcModa.processData" :isNew="lcModa.isNew"
-                 @afterSubmit="afterSub" @close="lcModa.visible=false,lcModa.disabled = false"></component>
-    </a-modal>
   </a-card>
 
 </template>
@@ -72,8 +82,8 @@
         },
         // 查询条件
         queryParam: {
-          createTimeRange: [],
-          keyWord: ''
+          zx: true, // 是否最新
+          searchProcessKey: '' // 名称
         },
         // 表头
         labelCol: {
@@ -88,15 +98,7 @@
         activeKeyAll: [],
         activeKey: [],
         processDataMap: {},
-        searchProcessKey: null,
-        addApplyLoading: false,
-        lcModa: {
-          title: '',
-          disabled: false,
-          visible: false,
-          formComponent: null,
-          isNew: false
-        }
+        addApplyLoading: false
       }
     },
     computed: {},
@@ -105,7 +107,6 @@
       this.getProcessList()
     },
     methods: {
-
       initDictConfig() {
         //初始化字典 - 流程分类
         initDictOptions('bpm_process_type').then((res) => {
@@ -127,12 +128,12 @@
       /*加载流程列表*/
       getProcessList() {
         this.addApplyLoading = true
-        getAction(this.url.getProcessDataList, { status: 1, roles: true }).then(res => {
+        getAction(this.url.getProcessDataList, { status: 1, roles: true, zx: this.queryParam.zx }).then(res => {
           this.activeKeyAll = []
           if (res.success) {
-            var result = res.result || []
+            let result = res.result || []
             if (result.length > 0) {
-              let searchProcessKey = this.searchProcessKey
+              let searchProcessKey = this.queryParam.searchProcessKey
               if (searchProcessKey) { //过滤条件
                 result = _.filter(result, function(o) {
                   return o.name.indexOf(searchProcessKey) > -1
@@ -151,7 +152,7 @@
         }).finally(() => this.addApplyLoading = false)
       },
       onSearchProcess(value) {
-        this.searchProcessKey = value
+        this.queryParam.searchProcessKey = value
         this.getProcessList()
       },
       chooseProcess(v) {
@@ -161,18 +162,15 @@
           )
           return
         }
-        this.lcModa.title = moment().format('YYYYMMDD') + v.name
-        this.lcModa.isNew = true
-        this.lcModa.processData = v
-        this.lcModa.from = activitiSetting.applyHomePath
-        setStore('lcModa', this.lcModa)
+        let lcModa = {}
+        lcModa.title = moment().format('YYYY-MM-DD HH:mm:ss') + v.name
+        lcModa.isNew = true
+        lcModa.processData = v
+        lcModa.from = activitiSetting.applyHomePath
+        lcModa.reload =true
+        setStore('lcModa', lcModa)
         this.$router.push(activitiSetting.applyFormPath)
         console.log('发起', v)
-      },
-      /*提交成功申请后*/
-      afterSub(formData) {
-        this.lcModa.visible = false
-        this.$message('请前往我的申请列表提交审批！')
       },
       /*前往我的申请页面*/
       handleToApplyList() {

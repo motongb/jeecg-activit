@@ -329,21 +329,20 @@
     },
     computed: {},
     watch: {
-      tableId() {
-        this.init()
-      }
     },
     async created() {
+      //是否新建
       if (this.lcModa.isNew) {
+        //是否复制
         if (this.lcModa.isCopy) {
           this.tableId = this.lcModa.processData.tableId
           await this.init()
           this.form = this.clearField(this.form)
           this.form.processData.procDefId = this.lcModa.processData.procDefId
-          // 文档不复制
-          this.form.sourceModel = undefined
+          //文档复制
           this.form.fileContract = undefined
           this.form.fileModel = undefined
+          this.modelSelectChange()
         } else {
           this.form.processData.procDefId = this.lcModa.processData.id
           this.form.typeCode = this.lcModa.typeCode
@@ -382,7 +381,7 @@
         this.activeKey = key
         if (key === '1') {
           this.$refs.wpsView.destroyIframe()
-        } else if (this.form.useModel === '0' || this.lcModa.isTask) {//打开正文
+        } else if (this.form.useModel === '0' || this.lcModa.isTask || this.lcModa.isHistory) {//打开正文
           this.isModel = false
           this.$refs.wpsView.init(this.form.fileContract)
         } else if (this.form.useModel === '1' &&
@@ -456,7 +455,7 @@
         return item
       },
       /*重写提交*/
-      handleSubmit() {
+      submitForm() {
         return new Promise((resolve, reject) => {
           this.$refs.ruleForm.validate(valid => {
             if (valid) {

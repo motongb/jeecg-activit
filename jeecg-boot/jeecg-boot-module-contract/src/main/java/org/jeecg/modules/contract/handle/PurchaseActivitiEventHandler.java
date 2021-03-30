@@ -13,13 +13,13 @@ import org.jeecg.modules.contract.entity.ContractCovert;
 import org.jeecg.modules.contract.entity.ContractFieldParams;
 import org.jeecg.modules.contract.entity.ContractModel;
 import org.jeecg.modules.contract.entity.ContractPurchase;
-import org.jeecg.modules.contract.entity.vo.ContractPurchaseVo;
 import org.jeecg.modules.contract.service.IContractModelService;
 import org.jeecg.modules.contract.service.IContractPurchaseService;
 import org.jeecg.modules.contract.utils.ContractConst;
 import org.jeecg.modules.contract.utils.ModelTransferInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
@@ -32,8 +32,9 @@ import java.util.Objects;
  * @date 2021/3/12 8:39
  * @description //TODO GeneralActivitiListenerServiceImpl
  **/
-@Service
-public class PurchaseActivitiEventListenerHandle implements IActivitiEventListener, ModelTransferInterface {
+@Component
+@Transactional
+public class PurchaseActivitiEventHandler implements IActivitiEventListener, ModelTransferInterface {
 
     @Autowired
     private IContractPurchaseService contractPurchaseService;
@@ -76,6 +77,11 @@ public class PurchaseActivitiEventListenerHandle implements IActivitiEventListen
         contractPurchaseService.update(new UpdateWrapper<ContractPurchase>().set("status", ContractConst.STATUS_FINALIZED).eq("id", actBusiness.getTableId()));
     }
 
+    @Override
+    public void delete(ActBusiness actBusiness) {
+
+    }
+
     /**
      * 从模板复制到正文
      *
@@ -84,7 +90,7 @@ public class PurchaseActivitiEventListenerHandle implements IActivitiEventListen
     @Override
     public String copyToStanderWord(ContractCovert contractCovert) {
         ContractPurchase contractPurchase = (ContractPurchase) contractCovert;
-        ContractPurchaseVo contractPurchaseVo = contractPurchaseService.getContractVoById(contractPurchase.getId(), true);
+        ContractPurchase contractPurchaseVo = contractPurchaseService.getContractVoById(contractPurchase.getId(), true);
         if (Objects.isNull(contractPurchaseVo)) {
             return null;
         }

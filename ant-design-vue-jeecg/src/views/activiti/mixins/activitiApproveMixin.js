@@ -54,7 +54,7 @@ export const activitiApproveMixin = {
 
     },
     // handler
-    handleSubmit() {
+    submitForm() {
       return new Promise((resolve, reject) => {
         this.$refs.ruleForm.validate(valid => {
           if (valid) {

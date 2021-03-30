@@ -52,9 +52,15 @@ public final class WorkflowConstants {
     public static final String EVENT_FINALIZED = "finalized";
 
     /**
+     * 删除草稿
+     */
+    public static final String EVENT_DELETE = "delete";
+
+    /**
      * 流程监听器实现类映射
      */
     public static final Map<String, String> ActivitiListenerInstanceMap = new HashMap<String, String>() {{
-        put("contract_purchase", "purchaseActivitiEventListenerHandle");
+        put("contract_purchase", "purchaseActivitiEventHandler");
+        put("contract_stamp", "contractStampActivitiEventHandler");
     }};
 }

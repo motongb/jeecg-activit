@@ -79,6 +79,11 @@ public class ActBusiness {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
     /**
+     * 所属部门
+     */
+    @ApiModelProperty(value = "所属部门")
+    private String sysOrgCode;
+    /**
      * 流程定义id
      */
     @Excel(name = "流程定义id", width = 15)

@@ -226,6 +226,7 @@
         this.lcModa.from = activitiSetting.doneManage
         this.lcModa.processData = r
         this.lcModa.isNew = false
+        this.lcModa.isHistory = true
         setStore('lcModa', this.lcModa)
         this.$router.push(activitiSetting.applyFormPath)
       },

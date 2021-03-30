@@ -72,6 +72,11 @@ public class ActNode {
     @ApiModelProperty(value = "updateTime")
     private Date updateTime;
     /**
+     * 所属部门
+     */
+    @ApiModelProperty(value = "所属部门")
+    private String sysOrgCode;
+    /**
      * 节点id
      */
     @Excel(name = "节点id", width = 15)

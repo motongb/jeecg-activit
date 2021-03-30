@@ -43,8 +43,7 @@
                  :dataSource="data"
                  :pagination="ipagination"
                  @change="handleTableChange"
-                 ref="table"
-        >
+                 ref="table">
           <a-table-column title="#" :width="50">
             <template slot-scope="t,r,i">
               <span> {{i+1}} </span>
@@ -81,8 +80,7 @@
             </template>
           </a-table-column>
           <a-table-column title="状态" dataIndex="isSuspended" :width="110"
-                          key="isSuspended" :sorter="(a,b)=>Boolean(a.isSuspended)?0:1 - Boolean(b.isSuspended)?0:1"
-          >
+                          key="isSuspended" :sorter="(a,b)=>Boolean(a.isSuspended)?0:1 - Boolean(b.isSuspended)?0:1">
             <template slot-scope="t,r,i">
               <span v-if="t" style="color: red"> 已挂起 </span>
               <span v-else style="color: #2f54eb"> 已激活 </span>
@@ -116,8 +114,7 @@
       v-model="modalVisible"
       :mask-closable="false"
       :width="500"
-      :styles="{top: '30px'}"
-    >
+      :styles="{top: '30px'}">
       <a-form ref="form" :model="form" :label-width="70" :rules="formValidate">
         <a-form-item label="删除原因" prop="reason">
           <a-input type="textarea" v-model="form.reason" :rows="4"/>
@@ -134,12 +131,6 @@
         <component :is="historicDetail" :procInstId="procInstId"></component>
       </div>
     </a-modal>
-    <!--流程表单-->
-    <a-modal :title="lcModa.title" v-model="lcModa.visible" :footer="null" :maskClosable="false" width="80%">
-      <component :disabled="lcModa.disabled" v-if="lcModa.visible" :is="lcModa.formComponent"
-                 :processData="lcModa.processData" :isNew="lcModa.isNew"
-                 @close="lcModa.visible=false,lcModa.disabled = false"></component>
-    </a-modal>
   </div>
 </template>
 
@@ -147,6 +138,8 @@
   import { activitiMixin } from './mixins/activitiMixin'
   import { JeecgListMixin } from '../../mixins/JeecgListMixin'
   import { getAction, postFormAction } from '@/api/manage'
+  import activitiSetting from './mixins/activitiSetting'
+  import { setStore } from '@/utils/storage'
 
   export default {
     mixins: [activitiMixin, JeecgListMixin],
@@ -185,14 +178,7 @@
           updateInsStatus: '/actProcessIns/updateInsStatus/'
         },
         modalLsVisible: false,
-        procInstId: '',
-        lcModa: {
-          title: '',
-          disabled: false,
-          visible: false,
-          formComponent: null,
-          isNew: false
-        }
+        procInstId: ''
       }
     },
     methods: {
@@ -274,12 +260,16 @@
           )
           return
         }
-        this.lcModa.disabled = true
-        this.lcModa.title = '查看流程业务信息：' + r.name
-        this.lcModa.formComponent = this.getFormComponent(r.routeName).component
-        this.lcModa.processData = r
-        this.lcModa.isNew = false
-        this.lcModa.visible = true
+        let lcModa = {}
+        lcModa.disabled = true
+        lcModa.title = r.name
+        lcModa.from = activitiSetting.processInsManage
+        lcModa.processData = r
+        lcModa.isNew = false
+        lcModa.reload = true
+        lcModa.isHistory = true
+        setStore('lcModa', lcModa)
+        this.$router.push(activitiSetting.applyFormPath)
       },
       history(v) {
         if (!v.procInstId) {

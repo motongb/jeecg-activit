@@ -1,6 +1,5 @@
 package org.jeecg.modules.contract.service.impl;
 
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -9,11 +8,10 @@ import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.activiti.service.IActBusinessService;
-import org.jeecg.modules.contract.entity.ContractItem;
 import org.jeecg.modules.contract.entity.ContractCovertMember;
+import org.jeecg.modules.contract.entity.ContractItem;
 import org.jeecg.modules.contract.entity.ContractPayment;
 import org.jeecg.modules.contract.entity.ContractPurchase;
-import org.jeecg.modules.contract.entity.vo.ContractPurchaseVo;
 import org.jeecg.modules.contract.mapper.ContractPurchaseMapper;
 import org.jeecg.modules.contract.service.IContractItemService;
 import org.jeecg.modules.contract.service.IContractMemberService;
@@ -22,6 +20,7 @@ import org.jeecg.modules.contract.service.IContractPurchaseService;
 import org.jeecg.modules.contract.utils.ContractConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -36,6 +35,7 @@ import java.util.Objects;
  * @Version: V1.0
  */
 @Service
+@Transactional
 public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMapper, ContractPurchase> implements IContractPurchaseService {
 
     @Autowired
@@ -54,61 +54,59 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
     private ISysBaseAPI sysBaseAPI;
 
     @Override
-    public void saveWithProcess(ContractPurchaseVo contractPurchaseVo) {
-        ContractPurchase contractPurchase = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchaseVo), ContractPurchase.class);
+    public void saveWithProcess(ContractPurchase contractPurchase) {
         // 新增
-        if (StringUtils.isEmpty(contractPurchaseVo.getId())) {
+        if (StringUtils.isEmpty(contractPurchase.getId())) {
             LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
             contractPurchase.setUserId(sysUser.getUsername());
             contractPurchase.setStatus(ContractConst.STATUS_START);
             save(contractPurchase);
-            contractPurchaseVo.setId(contractPurchase.getId());
-            Map<String, Object> processData = contractPurchaseVo.getProcessData();
-            processData.put("tableId", contractPurchaseVo.getId());
-            actBusinessService.saveBusiness(true, processData, contractPurchaseVo.getParams());
+            Map<String, Object> processData = contractPurchase.getProcessData();
+            processData.put("tableId", contractPurchase.getId());
+            actBusinessService.saveBusiness(true, processData, contractPurchase.getParams());
         } else { //编辑
             updateById(contractPurchase);
-            Map<String, Object> processData = contractPurchaseVo.getProcessData();
-            processData.put("tableId", contractPurchaseVo.getId());
-            actBusinessService.saveBusiness(false, processData, contractPurchaseVo.getParams());
+            Map<String, Object> processData = contractPurchase.getProcessData();
+            processData.put("tableId", contractPurchase.getId());
+            actBusinessService.saveBusiness(false, processData, contractPurchase.getParams());
         }
         // 我方
-        ContractCovertMember firstMember = contractPurchaseVo.getFirstMemberObj();
+        ContractCovertMember firstMember = contractPurchase.getFirstMemberObj();
         if (Objects.nonNull(firstMember)) {
-            firstMember.setContractId(contractPurchaseVo.getId());
+            firstMember.setContractId(contractPurchase.getId());
             contractMemberService.saveOrUpdate(firstMember);
         }
         // 乙方
-        ContractCovertMember secondMember = contractPurchaseVo.getSecondMemberObj();
+        ContractCovertMember secondMember = contractPurchase.getSecondMemberObj();
         if (Objects.nonNull(secondMember)) {
-            secondMember.setContractId(contractPurchaseVo.getId());
+            secondMember.setContractId(contractPurchase.getId());
             contractMemberService.saveOrUpdate(secondMember);
         }
         // 丙方
-        ContractCovertMember thirdMember = contractPurchaseVo.getThirdMemberObj();
-        if ("1".equals(contractPurchaseVo.getMemberUse()) && Objects.nonNull(thirdMember)) {
-            thirdMember.setContractId(contractPurchaseVo.getId());
+        ContractCovertMember thirdMember = contractPurchase.getThirdMemberObj();
+        if (ContractConst.MEMBER_USE_1.equals(contractPurchase.getMemberUse()) && Objects.nonNull(thirdMember)) {
+            thirdMember.setContractId(contractPurchase.getId());
             contractMemberService.saveOrUpdate(thirdMember);
         }
     }
 
     @Override
-    public void setMember(ContractPurchaseVo contractPurchaseVo, boolean translateDict) {
+    public void setMember(ContractPurchase contractPurchase, boolean translateDict) {
         List<ContractCovertMember> contractMembers = contractMemberService.list(new LambdaQueryWrapper<ContractCovertMember>()
-                .eq(ContractCovertMember::getContractId, contractPurchaseVo.getId()));
+                .eq(ContractCovertMember::getContractId, contractPurchase.getId()));
         for (ContractCovertMember contractMember : contractMembers) {
             if (translateDict) {
                 contractMemberService.translateDict(contractMember);
             }
             if (ContractConst.FIRST_MEMBER.equals(contractMember.getType())) {
-                contractPurchaseVo.setFirstMemberObj(contractMember);
-                contractPurchaseVo.setFirstMemberName(contractMember.getNameCn());
+                contractPurchase.setFirstMemberObj(contractMember);
+                contractPurchase.setFirstMemberName(contractMember.getNameCn());
             } else if (ContractConst.SECOND_MEMBER.equals(contractMember.getType())) {
-                contractPurchaseVo.setSecondMemberObj(contractMember);
-                contractPurchaseVo.setSecondMemberName(contractMember.getNameCn());
+                contractPurchase.setSecondMemberObj(contractMember);
+                contractPurchase.setSecondMemberName(contractMember.getNameCn());
             } else if (ContractConst.THIRD_MEMBER.equals(contractMember.getType())) {
-                contractPurchaseVo.setThirdMemberObj(contractMember);
-                contractPurchaseVo.setThirdMemberName(contractMember.getNameCn());
+                contractPurchase.setThirdMemberObj(contractMember);
+                contractPurchase.setThirdMemberName(contractMember.getNameCn());
             }
         }
 
@@ -120,37 +118,37 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
     }
 
     @Override
-    public void saveMoreItem(ContractPurchaseVo contractPurchaseVo) {
+    public void saveMoreItem(ContractPurchase contractPurchase) {
         // 合同明细项
-        List<ContractItem> contractItems = contractPurchaseVo.getContractItems();
+        List<ContractItem> contractItems = contractPurchase.getContractItems();
         if (!CollectionUtils.isEmpty(contractItems)) {
-            contractItemService.remove(new LambdaQueryWrapper<ContractItem>().eq(ContractItem::getContractId, contractPurchaseVo.getId()));
-            contractItems.forEach(item -> item.setContractId(contractPurchaseVo.getId()));
+            contractItemService.remove(new LambdaQueryWrapper<ContractItem>().eq(ContractItem::getContractId, contractPurchase.getId()));
+            contractItems.forEach(item -> item.setContractId(contractPurchase.getId()));
             contractItemService.saveBatch(contractItems);
         }
         // 合同付款约定
-        List<ContractPayment> contractPayments = contractPurchaseVo.getContractPayments();
+        List<ContractPayment> contractPayments = contractPurchase.getContractPayments();
         if (!CollectionUtils.isEmpty(contractPayments)) {
-            contractPaymentService.remove(new LambdaQueryWrapper<ContractPayment>().eq(ContractPayment::getContractId, contractPurchaseVo.getId()));
-            contractPayments.forEach(item -> item.setContractId(contractPurchaseVo.getId()));
+            contractPaymentService.remove(new LambdaQueryWrapper<ContractPayment>().eq(ContractPayment::getContractId, contractPurchase.getId()));
+            contractPayments.forEach(item -> item.setContractId(contractPurchase.getId()));
             contractPaymentService.saveBatch(contractPayments);
         }
     }
 
     @Override
-    public void setMoreItem(ContractPurchaseVo contractPurchaseVo, boolean translateDict) {
+    public void setMoreItem(ContractPurchase contractPurchase, boolean translateDict) {
         // 合同明细项
-        List<ContractItem> contractItems = contractItemService.list(new LambdaQueryWrapper<ContractItem>().eq(ContractItem::getContractId, contractPurchaseVo.getId()));
+        List<ContractItem> contractItems = contractItemService.list(new LambdaQueryWrapper<ContractItem>().eq(ContractItem::getContractId, contractPurchase.getId()));
         if (translateDict) {
             contractItems.forEach(contractItem -> contractItemService.translateDict(contractItem));
         }
-        contractPurchaseVo.setContractItems(contractItems);
+        contractPurchase.setContractItems(contractItems);
         // 合同付款约定
-        List<ContractPayment> contractPayments = contractPaymentService.list(new LambdaQueryWrapper<ContractPayment>().eq(ContractPayment::getContractId, contractPurchaseVo.getId()));
+        List<ContractPayment> contractPayments = contractPaymentService.list(new LambdaQueryWrapper<ContractPayment>().eq(ContractPayment::getContractId, contractPurchase.getId()));
         if (translateDict) {
             contractPayments.forEach(contractPayment -> contractPaymentService.translateDict(contractPayment));
         }
-        contractPurchaseVo.setContractPayments(contractPayments);
+        contractPurchase.setContractPayments(contractPayments);
     }
 
     @Override
@@ -160,15 +158,14 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
     }
 
     @Override
-    public ContractPurchaseVo getContractVoById(String contractId, boolean translateDict) {
+    public ContractPurchase getContractVoById(String contractId, boolean translateDict) {
         ContractPurchase contractPurchase = getById(contractId);
         if (translateDict) {
             translateDict(contractPurchase);
         }
-        ContractPurchaseVo contractPurchaseVo = JSONUtil.toBean(JSONUtil.toJsonStr(contractPurchase), ContractPurchaseVo.class);
-        setMember(contractPurchaseVo, translateDict);
-        setMoreItem(contractPurchaseVo, translateDict);
-        return contractPurchaseVo;
+        setMember(contractPurchase, translateDict);
+        setMoreItem(contractPurchase, translateDict);
+        return contractPurchase;
     }
 
     @Override

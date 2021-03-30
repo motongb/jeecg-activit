@@ -33,4 +33,9 @@ public class DefaultActivitiEventListenerImpl implements IActivitiEventListener 
     public void finalized(ActBusiness actBusiness) {
 
     }
+
+    @Override
+    public void delete(ActBusiness actBusiness) {
+
+    }
 }

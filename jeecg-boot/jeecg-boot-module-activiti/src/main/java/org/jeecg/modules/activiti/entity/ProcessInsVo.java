@@ -22,6 +22,7 @@ public class ProcessInsVo {
     private String businessKey;
 
     private String tableId;
+
     private String tableName;
 
     private String parentId;
@@ -44,7 +45,9 @@ public class ProcessInsVo {
 
     private String applyer;
 
-    public ProcessInsVo(ProcessInstance pi){
+    private String dept;
+
+    public ProcessInsVo(ProcessInstance pi) {
         this.id = pi.getId();
         this.name = pi.getName();
         this.key = pi.getProcessDefinitionKey();

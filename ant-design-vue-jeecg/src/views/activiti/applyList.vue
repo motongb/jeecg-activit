@@ -586,6 +586,7 @@
         this.modalLsVisible = true
       },
       detail(v) {
+        this.lcModa.isHistory = true
         this.edit(v, true)
       },
       handleTableChange(pagination, filters, sorter) {

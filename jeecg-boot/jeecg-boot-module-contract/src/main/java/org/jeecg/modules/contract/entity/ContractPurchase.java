@@ -15,6 +15,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: 采购合同基础表
@@ -27,7 +29,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "contract_purchase对象", description = "采购合同基础表")
-public class ContractPurchase implements Serializable,ContractCovert {
+public class ContractPurchase implements Serializable, ContractCovert {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -84,9 +86,6 @@ public class ContractPurchase implements Serializable,ContractCovert {
     @ApiModelProperty(value = "类型编码")
     private String typeCode;
 
-    @TableField(exist = false)
-    @ApiModelProperty(value = "类型名称")
-    private String typeName;
     /**
      * 我方
      */
@@ -94,9 +93,6 @@ public class ContractPurchase implements Serializable,ContractCovert {
     @ApiModelProperty(value = "我方")
     private String firstMember;
 
-    @TableField(exist = false)
-    @ApiModelProperty(value = "我方名称")
-    private String firstMemberName;
     /**
      * 乙方
      */
@@ -104,9 +100,7 @@ public class ContractPurchase implements Serializable,ContractCovert {
     @ApiModelProperty(value = "乙方")
     private String secondMember;
 
-    @TableField(exist = false)
-    @ApiModelProperty(value = "乙方名称")
-    private String secondMemberName;
+
     /**
      * 丙方
      */
@@ -114,9 +108,7 @@ public class ContractPurchase implements Serializable,ContractCovert {
     @ApiModelProperty(value = "丙方")
     private String thirdMember;
 
-    @TableField(exist = false)
-    @ApiModelProperty(value = "丙方名称")
-    private String thirdMemberName;
+
     /**
      * 用户id
      */
@@ -124,9 +116,7 @@ public class ContractPurchase implements Serializable,ContractCovert {
     @ApiModelProperty(value = "用户id")
     private String userId;
 
-    @TableField(exist = false)
-    @ApiModelProperty(value = "创建人名称")
-    private String userName;
+
     /**
      * 状态
      */
@@ -259,13 +249,13 @@ public class ContractPurchase implements Serializable,ContractCovert {
      */
     @Excel(name = "合同金额", width = 15)
     @ApiModelProperty(value = "合同金额")
-    private String amount;
+    private String amount = "0";
     /**
      * 合同金额大写
      */
     @Excel(name = "合同金额大写", width = 15)
     @ApiModelProperty(value = "合同金额大写")
-    private String amountLarge;
+    private String amountLarge = "零元整";
 
     /**
      * 合同影像文件
@@ -282,6 +272,77 @@ public class ContractPurchase implements Serializable,ContractCovert {
 
 
     @TableField(exist = false)
+    @ApiModelProperty(value = "类型名称")
+    private String typeName;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "我方名称")
+    private String firstMemberName;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "乙方名称")
+    private String secondMemberName;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "丙方名称")
+    private String thirdMemberName;
+
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "创建人名称")
+    private String userName;
+
+
+    @TableField(exist = false)
     @ApiModelProperty(value = "流程定义")
     private String processDef;
+
+    /**
+     * 我方信息
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "我方信息")
+    private ContractCovertMember firstMemberObj = new ContractCovertMember();
+    /**
+     * 乙方信息
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "乙方信息")
+    private ContractCovertMember secondMemberObj = new ContractCovertMember();
+    /**
+     * 丙方信息
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "丙方信息")
+    private ContractCovertMember thirdMemberObj = new ContractCovertMember();
+
+    /**
+     * 流程数据
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "流程数据")
+    private Map<String, Object> processData;
+
+    /**
+     * 流程参数
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "流程参数")
+    private Map<String, Object> params;
+
+
+    /**
+     * 合同明细项
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "合同明细项")
+    private List<ContractItem> contractItems;
+
+    /**
+     * 合同付款约定
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "合同付款约定")
+    private List<ContractPayment> contractPayments;
+
 }

@@ -43,4 +43,11 @@ public interface IActivitiEventListener {
      * @param actBusiness
      */
     void finalized(ActBusiness actBusiness);
+
+    /**
+     * 删除草稿
+     *
+     * @param actBusiness
+     */
+    void delete(ActBusiness actBusiness);
 }

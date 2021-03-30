@@ -68,6 +68,11 @@ public class ActZprocess {
     @ApiModelProperty(value = "updateTime")
     private Date updateTime;
     /**
+     * 所属部门
+     */
+    @ApiModelProperty(value = "所属部门")
+    private String sysOrgCode;
+    /**
      * 所属分类
      */
     @Excel(name = "所属分类", width = 15)

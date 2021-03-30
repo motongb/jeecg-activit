@@ -146,9 +146,11 @@ public class ActBusinessController {
                 return Result.error("删除失败, 仅能删除草稿状态的申请");
             }
             // 删除关联业务表
-            actBusinessService.deleteBusiness(actBusiness.getTableName(), actBusiness.getTableId());
             actBusinessService.removeById(id);
             actZParamsService.remove(new LambdaQueryWrapper<ActZParams>().eq(ActZParams::getPid, actBusiness.getTableId()));
+            // 发布删除事件
+            ApplicationContextUtil.getContext().publishEvent(new ActivitiEvent<>(WorkflowConstants.EVENT_DELETE, actBusiness));
+            actBusinessService.deleteBusiness(actBusiness.getTableName(), actBusiness.getTableId());
         }
         return Result.OK("删除成功");
     }

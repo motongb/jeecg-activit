@@ -5,5 +5,6 @@ export default {
   applyListPath: '/activiti/applyList',
   todoManage: '/activiti/todoManage',
   doneManage: '/activiti/doneManage',
-  contractPurchaseList: '/contract/manage/list'
+  processInsManage: '/activiti/processInsManage',
+  contractPurchaseList: '/contract/manage/list',
 }

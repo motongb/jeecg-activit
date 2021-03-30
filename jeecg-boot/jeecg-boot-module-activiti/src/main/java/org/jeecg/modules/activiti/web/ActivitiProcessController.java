@@ -68,7 +68,6 @@ public class ActivitiProcessController {
                            @ApiParam(value = "流程状态 部署后默认1激活") String status,
                            @ApiParam(value = "如果此项不为空，则会过滤当前用户的角色权限") Boolean roles,
                            HttpServletRequest request) {
-        log.info("-------------流程列表-------------");
         LambdaQueryWrapper<ActZprocess> wrapper = new LambdaQueryWrapper<>();
         wrapper.orderByAsc(ActZprocess::getSort).orderByDesc(ActZprocess::getVersion);
         if (StrUtil.isNotBlank(lcmc)) {
@@ -86,6 +85,10 @@ public class ActivitiProcessController {
         String statuss = request.getParameter("statuss");
         if (StrUtil.isNotBlank(statuss)) {
             wrapper.in(ActZprocess::getStatus, statuss);
+        }
+        String typeId = request.getParameter("typeId");
+        if (StrUtil.isNotBlank(typeId)) {
+            wrapper.eq(ActZprocess::getTypeId, typeId);
         }
         List<ActZprocess> list = actZprocessService.list(wrapper);
         if (roles != null && roles) { //过滤角色
@@ -107,7 +110,7 @@ public class ActivitiProcessController {
             }).collect(Collectors.toList());
 
         }
-        return Result.ok(list);
+        return Result.OK(list);
     }
 
     /*激活或挂起流程定义*/

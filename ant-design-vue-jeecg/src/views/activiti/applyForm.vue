@@ -1,10 +1,10 @@
 <template>
   <div>
-    <comment-modal v-if="showCommentVisible" @closed="showCommentVisible=false" :bindId="lcModa.processData.tableId"
-                   :title="lcModa.title" :bind-user="lcModa.processData.createBy"></comment-modal>
-    <notice-message :bindId="lcModa.processData.tableId" :title="lcModa.title" ref="noticeMessage"
-                    :bind-user="lcModa.processData.createBy"
-                    :business-key="lcModa.processData.businessKey"></notice-message>
+    <comment-modal v-if="showCommentVisible" @closed="showCommentVisible=false" :bindId="lcModa.processData?lcModa.processData.tableId:''"
+                   :title="lcModa.title" :bind-user="lcModa.processData?lcModa.processData.createBy:''"></comment-modal>
+    <notice-message :bindId="lcModa.processData?lcModa.processData.tableId:''" :title="lcModa.title" ref="noticeMessage"
+                    :bind-user="lcModa.processData?lcModa.processData.createBy:''"
+                    :business-key="lcModa.processData?lcModa.processData.businessKey:''"></notice-message>
     <a-card class="apply-card" title="申请信息">
       <div slot="extra">
         <a-button v-show="!lcModa.isNew" type="primary" ghost @click="showComment">查看评论
@@ -139,6 +139,7 @@
       initValue() {
         let params = getStore('lcModa')
         this.lcModa = params || {}
+        console.log(params)
         if (params) {
           this.lcModa.formComponent = this.getFormComponent(params.processData.routeName).component
           this.userInfo = this.$store.getters.userInfo
@@ -166,7 +167,7 @@
         this.$refs.ruleForm.validate(valid => {
           if (valid) {
             this.btndisabled = true
-            this.$refs.processForm.handleSubmit(e).then(res => {
+            this.$refs.processForm.submitForm(e).then(res => {
               if (!this.lcModa.isTask) {
                 this.afterSub(res)
               }
@@ -245,15 +246,15 @@
         })
       },
       afterSub(formData) {
-        this.closedCurrentPage()
         this.$router.push(activitiSetting.applyListPath)
         clearStore('lcModa')
+        this.closedCurrentPage()
       },
       closed() {
         this.closedCurrentPage()
         this.$router.push(this.lcModa.from)
-        clearStore('lcModa')
         this.modalTaskVisible = false
+        clearStore('lcModa')
       },
       closedCurrentPage() {
         this.$bus.$emit('closed-current-tabs')

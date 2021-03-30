@@ -9,10 +9,7 @@
     :okButtonProps="{ class:{'jee-hidden': disableSubmit} }"
     @cancel="handleCancel"
     cancelText="关闭">
-    <!--    <contract-purchase-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit"></contract-purchase-form>-->
-    <component :disabled="lcModa.disabled" :is="lcModa.formComponent" ref="processForm"
-               :processData="lcModa.processData" :isNew="lcModa.isNew" :title="lcModa.title"
-               :task="lcModa.isTask" :dept="lcModa.dept" :tableId="lcModa.processData.tableId"></component>
+    <component  :is="lcModa.formComponent" ref="processForm" :lcModa="lcModa"></component>
 
   </j-modal>
 </template>
@@ -44,9 +41,7 @@
     methods: {
       add() {
         this.visible = true
-        this.$nextTick(() => {
-          this.$refs.realForm.add()
-        })
+        this.$nextTick(() => {this.$refs.realForm.add()})
       },
       edit(record) {
         getAction(this.url.queryNewestProcess, { processKey: record.processDef }).then(res => {
@@ -54,23 +49,20 @@
             this.visible = true
             let processData = res.result[0]
             this.lcModa.formComponent = this.getFormComponent(processData.routeName).component
-            this.lcModa.disabled = false
+            this.lcModa.disabled = true
             this.lcModa.title = processData.title
             this.lcModa.processData = processData
             this.lcModa.processData.tableId = record.id
             this.lcModa.isNew = false
+            this.lcModa.isHistory = true
           }
         })
-        // this.$nextTick(()=>{
-        //   this.$refs.realForm.edit(record);
-        // })
       },
       close() {
         this.$emit('close')
         this.visible = false
       },
       handleOk() {
-        // this.$refs.realForm.submitForm()
         if (this.disableSubmit){
           return
         }

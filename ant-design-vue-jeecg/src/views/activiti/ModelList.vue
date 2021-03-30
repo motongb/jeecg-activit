@@ -269,7 +269,7 @@
               }else {
                 _this.$message.error(res.message);
               }
-              this.loadData();
+              _this.loadData();
             });
           },
           onCancel() {},

@@ -26,7 +26,6 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('采购合同基础表')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
                 @change="handleImportExcel">
@@ -48,8 +47,7 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{
-        selectedRowKeys.length }}</a>项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{selectedRowKeys.length }}</a>项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -72,8 +70,7 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt=""
-               style="max-width:80px;font-size: 12px;font-style: italic;"/>
+          <img v-else :src="getImgView(text)" height="25px" alt="" style="max-width:80px;font-size: 12px;font-style: italic;"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
@@ -89,14 +86,13 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
-
+          <a @click="handleDetail(record)">详情</a>
           <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
-              <a-menu-item>
-                <a @click="handleDetail(record)">详情</a>
+              <a-menu-item v-if="record.status==='3'">
+                <a @click="applyYinz(record)">用印申请</a>
               </a-menu-item>
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -109,8 +105,8 @@
 
       </a-table>
     </div>
-
     <contract-purchase-modal ref="modalForm" @ok="modalFormOk"></contract-purchase-modal>
+    <apply-yinz ref="applyYinz" type-code="A01A01A01"></apply-yinz>
   </a-card>
 </template>
 
@@ -122,10 +118,13 @@
   import ContractPurchaseModal from './modules/ContractPurchaseModal'
   import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
   import { filterDictTextByDictCode } from '@/components/dict/JDictSelectUtil'
+  import ApplyYinz from '../components/ApplyYinz'
+
   export default {
     name: 'ContractPurchaseList',
     mixins: [JeecgListMixin, mixinDevice],
     components: {
+      ApplyYinz,
       ContractPurchaseModal,
       JSuperQuery
     },
@@ -214,10 +213,10 @@
           delete: '/contract/contractPurchase/delete',
           deleteBatch: '/contract/contractPurchase/deleteBatch',
           exportXlsUrl: '/contract/contractPurchase/exportXls',
-          importExcelUrl: 'contract/contractPurchase/importExcel',
+          importExcelUrl: 'contract/contractPurchase/importExcel'
         },
         dictOptions: {},
-        superFieldList: []
+        superFieldList: [],
       }
     },
     created() {
@@ -229,6 +228,10 @@
       }
     },
     methods: {
+      applyYinz(r){
+        r.tableName = 'contract_purchase'
+        this.$refs.applyYinz.show(r)
+      },
       initDictConfig() {
       },
       getSuperFieldList() {
