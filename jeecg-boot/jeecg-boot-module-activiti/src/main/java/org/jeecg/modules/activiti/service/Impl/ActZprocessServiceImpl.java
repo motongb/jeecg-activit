@@ -253,7 +253,7 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
 
         ProcessNodeVo node = new ProcessNodeVo();
         // 设置关联用户
-        List<LoginUser> users = getNodetUsers(nodeId, tableName, tableId);
+        List<LoginUser> users = getNodeUsers(nodeId, tableName, tableId);
         node.setUsers(removeDuplicate(users));
         return node;
     }
@@ -263,47 +263,53 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
      *
      * @param nodeId
      */
-    public List<LoginUser> getNodetUsers(String nodeId, String tableName, String tableId) {
+    public List<LoginUser> getNodeUsers(String nodeId, String tableName, String tableId) {
         ActBusiness business = actBusinessService.getOne(new LambdaQueryWrapper<ActBusiness>().eq(ActBusiness::getTableId, tableId).eq(ActBusiness::getTableName, tableName));
         String procDefId = business.getProcDefId();
         // 直接选择人员
         List<LoginUser> users = actNodeService.findUserByNodeId(nodeId, procDefId);
+
         // 根据角色选择
         List<Role> roles = actNodeService.findRoleByNodeId(nodeId, procDefId);
-        for (Role r : roles) {
-            List<LoginUser> userList = actNodeService.findUserByRoleId(r.getId());
+        if (!CollectionUtils.isEmpty(roles)) {
+            List<LoginUser> userList = actNodeService.findUserByRoleIds(roles.stream().map(Role::getId).collect(Collectors.toList()));
             users.addAll(userList);
         }
+
         // 部门
         List<Department> departments = actNodeService.findDepartmentByNodeId(nodeId, procDefId);
-        for (Department d : departments) {
-            List<LoginUser> userList = actNodeService.findUserDepartmentId(d.getId());
+        if (!CollectionUtils.isEmpty(departments)) {
+            List<LoginUser> userList = actNodeService.findUserDepartmentIds(departments.stream()
+                    .map(Department::getId)
+                    .collect(Collectors.toList()), "");
             users.addAll(userList);
         }
+
         // 部门负责人
         List<Department> departmentManages = actNodeService.findDepartmentManageByNodeId(nodeId, procDefId);
         for (Department d : departmentManages) {
             List<LoginUser> userList = actNodeService.findUserDepartmentManageId(d.getId());
             users.addAll(userList);
         }
+
         // 发起人部门负责人
         if (actNodeService.hasChooseDepHeader(nodeId, procDefId)) {
-            List<LoginUser> allUser = actNodeService.queryAllUser();
             //申请人的部门负责人
             String createBy = getCreateBy(tableName, tableId);
             List<String> departIds = sysBaseAPI.getDepartIdsByUsername(createBy);
-
             for (String departId : departIds) {
-                List<LoginUser> collect = allUser.stream().filter(u -> u.getDepartIds() != null && u.getDepartIds().indexOf(departId) > -1).collect(Collectors.toList());
+                List<LoginUser> collect = actNodeService.findUserDepartmentManageId(departId);
                 users.addAll(collect);
             }
         }
+
         // 发起人
         if (actNodeService.hasChooseSponsor(nodeId, procDefId)) {
             String createBy = getCreateBy(tableName, tableId);
             LoginUser userByName = sysBaseAPI.getUserByName(createBy);
             users.add(userByName);
         }
+
         // 表单变量
         if (actNodeService.hasFormVariable(nodeId, procDefId)) {
             List<String> variableNames = actNodeService.findFormVariableByNodeId(nodeId, procDefId);
@@ -347,6 +353,7 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
 
         // 过滤掉删除用户
         users = users.stream().filter(u -> StrUtil.equals("0", u.getDelFlag() + "")).collect(Collectors.toList());
+
         return users;
     }
 
@@ -437,7 +444,7 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
         }
         node.setTitle(e.getName());
         // 设置关联用户
-        List<LoginUser> users = getNodetUsers(e.getId(), tableName, tableId);
+        List<LoginUser> users = getNodeUsers(e.getId(), tableName, tableId);
         node.setUsers(removeDuplicate(users));
         return node;
     }
@@ -471,7 +478,7 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
                     TaskDefinition taskDefinition = actNodeService.nextTaskDefinition(pvmActivity1, pvmActivity1.getId(), getParams(procInsId), procInsId);
                     node.setType(ActivitiConstant.NODE_TYPE_TASK);
                     node.setTitle(taskDefinition.getNameExpression().getExpressionText());
-                    List<LoginUser> users = getNodetUsers(taskDefinition.getKey(), actBusiness.getTableName(), actBusiness.getTableId());
+                    List<LoginUser> users = getNodeUsers(taskDefinition.getKey(), actBusiness.getTableName(), actBusiness.getTableId());
                     node.setUsers(removeDuplicate(users));
                     node.setId(taskDefinition.getKey());
                     nodeVos.add(node);
@@ -504,7 +511,7 @@ public class ActZprocessServiceImpl extends ServiceImpl<ActZprocessMapper, ActZp
         node.setType(ActivitiConstant.NODE_TYPE_TASK);
         node.setTitle(pvmActivity.getProperty("name").toString());
         // 设置关联用户
-        List<LoginUser> users = getNodetUsers(pvmActivity.getId(), actBusiness.getTableName(), actBusiness.getTableId());
+        List<LoginUser> users = getNodeUsers(pvmActivity.getId(), actBusiness.getTableName(), actBusiness.getTableId());
         node.setUsers(removeDuplicate(users));
         node.setId(pvmActivity.getId());
         return node;

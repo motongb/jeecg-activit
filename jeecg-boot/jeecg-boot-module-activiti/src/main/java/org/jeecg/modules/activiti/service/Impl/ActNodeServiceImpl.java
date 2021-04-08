@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @Description: 流程节点扩展表
@@ -67,51 +66,37 @@ public class ActNodeServiceImpl extends ServiceImpl<ActNodeMapper, ActNode> impl
 
     public Boolean hasChooseDepHeader(String nodeId, String procDefId) {
         List<ActNode> listNode = findByNodeIdAndType(nodeId, procDefId, 4);
-        if (listNode != null && listNode.size() > 0) {
-            return true;
-        }
-        return false;
+        return !CollectionUtils.isEmpty(listNode);
     }
 
     public Boolean hasChooseSponsor(String nodeId, String procDefId) {
         List<ActNode> listNode = findByNodeIdAndType(nodeId, procDefId, 3);
-        if (listNode != null && listNode.size() > 0) {
-            return true;
-        }
-        return false;
+        return !CollectionUtils.isEmpty(listNode);
     }
 
     public Boolean hasFormVariable(String nodeId, String procDefId) {
         List<ActNode> listNode = findByNodeIdAndType(nodeId, procDefId, 6);
-        if (listNode != null && listNode.size() > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    public List<ActNode> findByNodeIdAndType(String nodeId, int type) {
-        return list(new LambdaQueryWrapper<ActNode>().eq(ActNode::getNodeId, nodeId).eq(ActNode::getType, type));
+        return !CollectionUtils.isEmpty(listNode);
     }
 
     public List<ActNode> findByNodeIdAndType(String nodeId, String procDefId, int type) {
         return list(new LambdaQueryWrapper<ActNode>().eq(ActNode::getNodeId, nodeId).eq(ActNode::getProcDefId, procDefId).eq(ActNode::getType, type));
     }
 
-    public List<String> findDepartmentIdsByNodeId(String nodeId, String procDefId) {
-        List<Department> departmentByNodeId = this.findDepartmentByNodeId(nodeId, procDefId);
-        return departmentByNodeId.stream().map(Department::getId).distinct().collect(Collectors.toList());
-    }
-
-    public List<LoginUser> queryAllUser() {
-        return this.baseMapper.queryAllUser();
-    }
-
     public List<LoginUser> findUserByRoleId(String id) {
         return this.baseMapper.findUserByRoleId(id);
     }
 
+    public List<LoginUser> findUserByRoleIds(List<String> roleIds) {
+        return this.baseMapper.findUserByRoleIds(roleIds);
+    }
+
     public List<LoginUser> findUserDepartmentId(String id) {
         return this.baseMapper.findUserDepartmentId(id);
+    }
+
+    public List<LoginUser> findUserDepartmentIds(List<String> deptIds, String username) {
+        return this.baseMapper.findUserByDepIds(deptIds, username);
     }
 
     public List<LoginUser> findUserDepartmentManageId(String id) {
@@ -260,10 +245,6 @@ public class ActNodeServiceImpl extends ServiceImpl<ActNodeMapper, ActNode> impl
         Object result = engine.eval(str);
         return Boolean.parseBoolean(String.valueOf(result));
 
-    }
-
-    public List<ActNode> findByNodeId(String nodeId) {
-        return this.baseMapper.findByNodeId(nodeId);
     }
 
     @Override
