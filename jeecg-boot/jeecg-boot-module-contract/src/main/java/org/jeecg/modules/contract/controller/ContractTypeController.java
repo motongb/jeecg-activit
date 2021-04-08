@@ -15,10 +15,10 @@ import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
+import org.jeecg.common.util.TreeBuilder;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.contract.entity.ContractType;
 import org.jeecg.modules.contract.service.IContractTypeService;
-import org.jeecg.common.util.TreeBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -112,7 +112,7 @@ public class ContractTypeController extends JeecgController<ContractType, IContr
             QueryWrapper<ContractType> queryWrapper = QueryGenerator.initQueryWrapper(contractType, req.getParameterMap());
             // 使用 eq 防止模糊查询
             queryWrapper.eq("pid", parentId).orderByAsc("sort");
-            Page<ContractType> page = new Page<ContractType>(pageNo, pageSize);
+            Page<ContractType> page = new Page<>(pageNo, pageSize);
             IPage<ContractType> pageList = contractTypeService.page(page, queryWrapper);
             return Result.OK(pageList);
 

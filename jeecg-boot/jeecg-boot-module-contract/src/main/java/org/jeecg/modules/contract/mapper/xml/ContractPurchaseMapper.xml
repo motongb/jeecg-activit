@@ -3,22 +3,25 @@
 <mapper namespace="org.jeecg.modules.contract.mapper.ContractPurchaseMapper">
 
     <sql id="column">
-        a.id,a.create_by,a.create_time,a.update_by,a.update_time,a.sys_org_code,a.name,
-        a.code,a.type_code,a.first_member,a.second_member,a.third_member,a.user_id,a.status,a.remark,a.member_use
+        a.id,a.create_by,a.create_time,a.update_by,a.update_time,a.sys_org_code,a.name, a.code,a.type_code,a.first_member,
+        a.second_member,a.third_member,a.user_id,a.status,a.remark,a.member_use,a.use_model,a.source_model,a.file_model,
+        a.file_contract,a.relate_project,a.project,a.is_sub,a.parent_id,a.budget,a.cost_center,a.is_secret,a.start_time,
+        a.end_time,a.purchase_type,a.bidding_id,a.protocol,a.purchase_id,a.amount,a.amount_large,a.file_pdf,a.file_attach,a.act_business
     </sql>
 
     <select id="pageVo" resultType="org.jeecg.modules.contract.entity.ContractPurchase">
-        select<include refid="column"/>,b.name as typeName,b.process_def,c.realname as userName,
-        d.name_cn as firstMemberName,e.name_cn as secondMemberName, f.name_cn as thirdMemberName
+        select<include refid="column"/>,b.name as typeName,e.process_key as process_def,c.realname as userName
         from contract_purchase a
         left join contract_type b on b.code = a.type_code
         left join sys_user c on c.username = a.user_id
-        left join company d on d.id = a.first_member
-        left join company e on e.id = a.second_member
-        left join company f on f.id = a.third_member
+        left join act_z_business d on d.id = a.act_business
+        left join act_z_process e on e.id = d.proc_def_id
         <where>
             <if test="query.name !=null and query.name !=''">
                 a.name like concat('%',#{query.name},'%')
+            </if>
+            <if test="sql !=null and sql !=''">
+                ${sql}
             </if>
         </where>
         order by a.create_time desc

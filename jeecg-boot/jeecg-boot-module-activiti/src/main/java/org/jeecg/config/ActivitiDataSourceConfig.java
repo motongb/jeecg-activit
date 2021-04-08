@@ -40,7 +40,10 @@ public class ActivitiDataSourceConfig extends AbstractProcessEngineAutoConfigura
         SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
         configuration.setDataSource(activitiDataSource());
         configuration.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
-        configuration.setJobExecutorActivate(true);
+        // 开启定时任务
+//        configuration.setJobExecutorActivate(true);
+//        configuration.setAsyncExecutorEnabled(true);
+//        configuration.setAsyncExecutorActivate(true);
         configuration.setTransactionManager(transactionManager());
         configuration.setActivityFontName("宋体");
         configuration.setLabelFontName("宋体");

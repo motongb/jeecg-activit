@@ -65,7 +65,8 @@
 <script>
   import JSelectUserByDep from '@/components/jeecgbiz/JSelectUserByDep'
   import { getStore, clearStore } from '@/utils/storage'
-  import { getAction, postAction, postFormAction } from '@/api/manage'
+  import { getAction, postAction } from '@/api/manage'
+  import { postFormAction } from '@/api/localRequest'
 
   export default {
     name: 'signModal',

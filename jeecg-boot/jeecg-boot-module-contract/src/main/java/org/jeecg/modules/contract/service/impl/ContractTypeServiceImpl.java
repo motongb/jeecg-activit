@@ -1,11 +1,14 @@
 package org.jeecg.modules.contract.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.common.exception.JeecgBootException;
+import org.jeecg.common.util.FillRuleUtil;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.contract.entity.ContractType;
 import org.jeecg.modules.contract.mapper.ContractTypeMapper;
+import org.jeecg.modules.contract.rule.ContractRuleConst;
 import org.jeecg.modules.contract.service.IContractTypeService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +38,9 @@ public class ContractTypeServiceImpl extends ServiceImpl<ContractTypeMapper, Con
                 baseMapper.updateById(parent);
             }
         }
+        JSONObject formData = new JSONObject();
+        formData.put("pid", contractType.getPid());
+        contractType.setCode(FillRuleUtil.executeRule(ContractRuleConst.CONTRACT_TYPE_RULE, formData).toString());
         baseMapper.insert(contractType);
     }
 

@@ -2,8 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.contract.mapper.ContractStampMapper">
 
+    <sql id="column">
+        a.id,a.create_by,a.create_time,a.update_by,a.update_time,a.sys_org_code,a.table_id,a.table_name,a.status,
+        a.type_code,a.remark,a.stamp_type,a.stamp_num,a.file_ids,a.contract_name,a.contract_code
+    </sql>
+
+    <select id="pageVo" resultType="org.jeecg.modules.contract.entity.ContractStamp">
+        select <include refid="column"/>,b.realname as user_name
+        from contract_stamp a
+        left join sys_user b on b.username = a.create_by
+        <where>
+            <if test="query.contractName !=null and query.contractName !=''">
+                a.contract_name like concat('%',#{query.contractName},'%')
+            </if>
+            <if test="query.contractCode !=null and query.contractCode !=''">
+                a.contract_code like concat('%',#{query.contractCode},'%')
+            </if>
+            <if test="sql !=null and sql !=''">
+                ${sql}
+            </if>
+        </where>
+        order by a.create_time desc
+    </select>
+
     <select id="getContract" resultType="map">
-       select * from ${tableName} where id = #{tableId}
+       select a.*,b.name as type_name,e.process_key as process_def,c.realname as user_name
+       from ${tableName} a
+       left join contract_type b on b.code = a.type_code
+       left join sys_user c on c.username = a.user_id
+       left join act_z_business d on d.id = a.act_business
+       left join act_z_process e on e.id = d.proc_def_id
+       where a.id = #{tableId}
     </select>
 
     <update id="updateContractStatus" parameterType="string">

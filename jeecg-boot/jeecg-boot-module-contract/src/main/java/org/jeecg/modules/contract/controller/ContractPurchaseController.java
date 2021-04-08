@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.modules.contract.entity.ContractPurchase;
 import org.jeecg.modules.contract.service.IContractPurchaseService;
@@ -44,6 +45,7 @@ public class ContractPurchaseController extends JeecgController<ContractPurchase
     @AutoLog(value = "采购合同基础表-分页列表查询")
     @ApiOperation(value = "采购合同基础表-分页列表查询", notes = "采购合同基础表-分页列表查询")
     @GetMapping(value = "/list")
+    @PermissionData(pageComponent = "contract/manage/ContractBaseList")
     public Result<?> queryPageList(ContractPurchase contractPurchase,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,

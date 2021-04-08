@@ -5,14 +5,22 @@
         <a-form-model ref="ruleForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
           <a-card class="apply-card" title="合同信息">
             <a-row>
-              <a-col :span="12">
-                <a-form-model-item label="合同名称">
+              <a-col :span="24">
+                <a-form-model-item label="合同名称" :label-col="{ span: 2 }" :wrapper-col="{ span: 20 }">
                   <a-input :disabled="lcModa.disabled" v-model="form.name" placeholder="请输入合同名称"></a-input>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="合同编号">
-                  <a-input :disabled="lcModa.disabled" v-model="form.code" placeholder="请输入合同编号"></a-input>
+                  <a-input :disabled="lcModa.disabled||form.isAutoCode==='1'" v-model="form.code" placeholder="请输入合同编号"></a-input>
+                </a-form-model-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-model-item label="自动编号">
+                  <a-radio-group :disabled="lcModa.disabled" v-model="form.isAutoCode">
+                    <a-radio value="0">否</a-radio>
+                    <a-radio value="1">是</a-radio>
+                  </a-radio-group>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
@@ -244,7 +252,7 @@
 <script>
 
   import { httpAction, getAction } from '@/api/manage'
-  import { digitUppercase } from '@/utils/util'
+  import { digitUppercase } from '@/utils/localUtil'
   import { getStore } from '@/utils/storage'
   import JFormContainer from '@/components/jeecg/JFormContainer'
   import JDate from '@/components/jeecg/JDate'
@@ -281,6 +289,7 @@
         contractTypeData: [],
         // 表单
         form: {
+          isAutoCode:'1',
           sourceModel: '',
           fileContract: '',
           fileModel: '',

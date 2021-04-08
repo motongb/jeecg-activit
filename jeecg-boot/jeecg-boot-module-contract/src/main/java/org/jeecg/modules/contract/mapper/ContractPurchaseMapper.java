@@ -14,5 +14,5 @@ import org.jeecg.modules.contract.entity.ContractPurchase;
  */
 public interface ContractPurchaseMapper extends BaseMapper<ContractPurchase> {
 
-    IPage<ContractPurchase> pageVo(Page<ContractPurchase> page, @Param("query") ContractPurchase contractPurchase);
+    IPage<ContractPurchase> pageVo(Page<ContractPurchase> page, @Param("query") ContractPurchase contractPurchase, @Param("sql") String sql);
 }

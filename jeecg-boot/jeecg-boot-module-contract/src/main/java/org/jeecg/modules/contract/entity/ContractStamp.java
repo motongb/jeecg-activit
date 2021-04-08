@@ -10,11 +10,13 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.jeecg.modules.contract.entity.vo.ContractSealVo;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -147,4 +149,12 @@ public class ContractStamp implements Serializable {
     @TableField(exist = false)
     @ApiModelProperty(value = "合同数据")
     private Map<String, Object> record;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "印章列表")
+    private List<ContractSealVo> sealVos;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "创建人名")
+    private String userName;
 }

@@ -65,24 +65,14 @@
         class="j-table-force-nowrap"
         @change="handleTableChange">
 
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
+        <template slot="firstMember" slot-scope="text,record">
+          <div>{{record.firstMemberObj.nameCn}}</div>
         </template>
-        <template slot="imgSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="" style="max-width:80px;font-size: 12px;font-style: italic;"/>
+        <template slot="secondMember" slot-scope="text,record">
+          <div>{{record.secondMemberObj.nameCn}}</div>
         </template>
-        <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
-          <a-button
-            v-else
-            :ghost="true"
-            type="primary"
-            icon="download"
-            size="small"
-            @click="downloadFile(text)">
-            下载
-          </a-button>
+        <template slot="thirdMember" slot-scope="text,record">
+          <div>{{record.thirdMemberObj.nameCn}}</div>
         </template>
 
         <span slot="action" slot-scope="text, record">
@@ -94,11 +84,11 @@
               <a-menu-item v-if="record.status==='3'">
                 <a @click="applyYinz(record)">用印申请</a>
               </a-menu-item>
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
+<!--              <a-menu-item>-->
+<!--                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
+<!--                  <a>删除</a>-->
+<!--                </a-popconfirm>-->
+<!--              </a-menu-item>-->
             </a-menu>
           </a-dropdown>
         </span>
@@ -161,17 +151,20 @@
           {
             title: '我方',
             align: 'center',
-            dataIndex: 'firstMemberName'
+            dataIndex: 'firstMember',
+            scopedSlots: { customRender: 'firstMember' }
           },
           {
             title: '乙方',
             align: 'center',
-            dataIndex: 'secondMemberName'
+            dataIndex: 'secondMember',
+            scopedSlots: { customRender: 'secondMember' }
           },
           {
             title: '丙方',
             align: 'center',
-            dataIndex: 'thirdMemberName'
+            dataIndex: 'thirdMember',
+            scopedSlots: { customRender: 'thirdMember' }
           },
           {
             title: '创建人',

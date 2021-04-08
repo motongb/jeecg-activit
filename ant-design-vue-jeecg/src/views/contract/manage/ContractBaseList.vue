@@ -1,10 +1,10 @@
 <template>
   <a-card :bordered="false">
     <a-tabs default-active-key="1" @change="handleTabsChange">
-      <a-tab-pane v-if="showPanel('T0')" key="T0" tab="采购类">
+      <a-tab-pane v-if="showPanel('T01')" key="T0" tab="采购类">
         <contract-purchase-list></contract-purchase-list>
       </a-tab-pane>
-      <a-tab-pane v-if="showPanel('T1')" key="T1" tab="销售类" force-render>
+      <a-tab-pane v-if="showPanel('T02')" key="T1" tab="销售类" force-render>
         Content of Tab Pane 2
       </a-tab-pane>
     </a-tabs>

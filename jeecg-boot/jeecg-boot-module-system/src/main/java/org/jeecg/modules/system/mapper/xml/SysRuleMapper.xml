@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.system.mapper.SysRuleMapper">
+
+    <sql id="column">
+        a.id,a.create_by,a.create_time,a.update_by,a.update_time,a.sys_org_code,a.`name`,a.rule_field,a.rule_table
+    </sql>
+
+    <select id="pageVo" resultType="org.jeecg.modules.system.entity.SysRule">
+        select <include refid="column"/>,b.depart_name,c.table_txt as `table_name` ,d.db_field_txt as field_name
+        from sys_rule a
+        left join sys_depart b on b.org_code = a.sys_org_code
+        left join onl_cgform_head c on c.table_name = a.rule_table
+        left join onl_cgform_field d on d.cgform_head_id = c.id and d.db_field_name = a.rule_field
+        <where>
+            <if test="query.name !=null and query.name !=''">
+                a.name like concat('%',#{query.name},'%')
+            </if>
+            <if test="sql !=null and sql !=''">
+                ${sql}
+            </if>
+        </where>
+        order by a.create_time desc
+    </select>
+
+    <select id="getLastCode" parameterType="map" resultType="string">
+        select ${field} from ${tableName}
+        <where>
+            <if test="type!=null and type=='1'">
+                and YEAR(create_time)=YEAR(NOW())
+            </if>
+            <if test="type!=null and type=='2'">
+                and DATE_FORMAT(create_time,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+            </if>
+            <if test="type!=null and type=='3'">
+                and TO_DAYS(create_time) = TO_DAYS(now())
+            </if>
+            <if test="orgCode!=null and orgCode!=''">
+                and sys_org_code = #{orgCode}
+            </if>
+        </where>
+        order by ${field} desc limit 1
+    </select>
+</mapper>

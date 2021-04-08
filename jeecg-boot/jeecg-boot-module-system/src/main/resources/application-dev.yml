@@ -167,7 +167,7 @@ mybatis-plus:
       table-underline: true
   configuration:
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
-    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     # 返回类型为Map,显示null对应的字段
     call-setters-on-nulls: true
 #jeecg专用配置
@@ -181,7 +181,7 @@ jeecg :
     #webapp文件路径
     webapp: D://opt//webapp
   shiro:
-    excludeUrls: /test/jeecgDemo/demo3,/test/jeecgDemo/redisDemo/**,/category/**,/visual/**,/map/**,/jmreport/bigscreen2/**,/base/wps/**
+    excludeUrls: /test/jeecgDemo/demo3,/test/jeecgDemo/redisDemo/**,/category/**,/visual/**,/map/**,/jmreport/bigscreen2/**,/base/wps/**,/diagram-viewer/**,/editor-app/**,/activiti/**
   #阿里云oss存储配置
   oss:
     endpoint: oss-cn-beijing.aliyuncs.com
@@ -211,7 +211,7 @@ jeecg :
   #大屏报表参数设置
   jmreport:
     mode: dev
-    #数据字典是否可以全局看到
+    #数据字典是否进行saas数据隔离，自己看自己的字典
     saas: false
     #是否需要校验token
     is_verify_token: false
@@ -264,17 +264,17 @@ justauth:
   enabled: true
   type:
     GITHUB:
-      client-id: true
-      client-secret: true
+      client-id: ??
+      client-secret: ??
       redirect-uri: http://sso.test.com:8080/jeecg-boot/sys/thirdLogin/github/callback
     WECHAT_ENTERPRISE:
-      client-id: true
-      client-secret: true
+      client-id: ??
+      client-secret: ??
       redirect-uri: http://sso.test.com:8080/jeecg-boot/sys/thirdLogin/wechat_enterprise/callback
       agent-id: 1000002
     DINGTALK:
-      client-id: true
-      client-secret: true
+      client-id: ??
+      client-secret: ??
       redirect-uri: http://sso.test.com:8080/jeecg-boot/sys/thirdLogin/dingtalk/callback
     WECHAT_OPEN:
       client-id: ??

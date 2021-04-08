@@ -19,30 +19,17 @@
             dict="contract_type,name,id"
             pidField="pid"
             pidValue="0"
-            hasChildField="has_child"
-          >
+            hasChildField="has_child">
           </j-tree-select>
         </a-form-item>
         <a-form-item label="名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入名称"></a-input>
         </a-form-item>
         <a-form-item label="编码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['code', validatorRules.code]" placeholder="请输入编码"></a-input>
+          <a-input disabled v-decorator="['code']" placeholder="自动生成"></a-input>
         </a-form-item>
         <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['sort']" placeholder="请输入排序"></a-input>
-        </a-form-item>
-        <a-form-item label="流程定义" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-tree-select
-            v-decorator="['processDef',{initialValue:form.processDef}]"
-            allow-clear
-            treeNodeFilterProp="title"
-            show-search
-            style="width: 100%"
-            :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-            :tree-data="options"
-            placeholder="Please select">
-          </a-tree-select>
+          <a-input-number v-decorator="['sort']" :min="1" :max="10"/>
         </a-form-item>
         <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['description']" placeholder="请输入描述"></a-input>
@@ -90,11 +77,6 @@
             rules: [
               { required: true, message: '请输入名称!' }
             ]
-          },
-          code: {
-            rules: [
-              { required: true, message: '请输入编码!' }
-            ]
           }
         },
         url: {
@@ -103,41 +85,12 @@
           getProcessDataList: '/activiti_process/listData'
         },
         expandedRowKeys: [],
-        pidField: 'pid',
-        options: []
+        pidField: 'pid'
       }
     },
     created() {
-      initDictOptions('bpm_process_type').then(res => {
-        if (res.success) {
-          this.options = res.result.map(item => ({
-            title: item.title,
-            value: item.value,
-            key: item.value,
-            children: []
-          }))
-          this.getProcess()
-        }
-      })
     },
     methods: {
-      getProcess() {
-        getAction(this.url.getProcessDataList, { status: 1, roles: true, zx: true }).then(res => {
-          if (res.success) {
-            this.options.forEach(option => {
-              let temp = res.result.filter(c => c.categoryId === option.value)
-              if (temp) {
-                option.children = temp.map(m => ({ title: m.name, value: m.processKey, key: m.processKey }))
-              }
-            })
-            console.log(this.options)
-          }
-        })
-      },
-      onChange(value, selectedOptions) {
-        console.log(value, selectedOptions)
-        this.form.setFieldsValue({ processDef: selectedOptions })
-      },
       add(obj) {
         this.edit(obj)
       },

@@ -138,7 +138,8 @@
   import { setStore } from '@/utils/storage'
   import SignModal from './signModal'
   import activitiSetting from './mixins/activitiSetting'
-  import { getAction, postFormAction } from '@/api/manage'
+  import { getAction } from '@/api/manage'
+  import {postFormAction} from '@/api/localRequest'
 
   export default {
     name: 'todo-manage',

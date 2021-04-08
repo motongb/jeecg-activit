@@ -1,6 +1,7 @@
 <template>
   <div>
-    <comment-modal v-if="showCommentVisible" @closed="showCommentVisible=false" :bindId="lcModa.processData?lcModa.processData.tableId:''"
+    <comment-modal v-if="showCommentVisible" @closed="showCommentVisible=false"
+                   :bindId="lcModa.processData?lcModa.processData.tableId:''"
                    :title="lcModa.title" :bind-user="lcModa.processData?lcModa.processData.createBy:''"></comment-modal>
     <notice-message :bindId="lcModa.processData?lcModa.processData.tableId:''" :title="lcModa.title" ref="noticeMessage"
                     :bind-user="lcModa.processData?lcModa.processData.createBy:''"
@@ -69,7 +70,8 @@
   import { formatDate } from '@/utils/util'
   import activitiSetting from './mixins/activitiSetting'
   import JFormContainer from '@/components/jeecg/JFormContainer'
-  import { getAction, postFormAction } from '@/api/manage'
+  import { getAction } from '@/api/manage'
+  import { postFormAction } from '@/api/localRequest'
   import CommentModal from './components/CommentModal'
   import NoticeMessage from './components/NoticeMessage'
 

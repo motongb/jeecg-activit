@@ -5,11 +5,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.SecurityUtils;
+import org.jeecg.common.system.api.IMyBaseAPI;
 import org.jeecg.common.system.api.ISysBaseAPI;
+import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
+import org.jeecg.modules.activiti.entity.ActBusiness;
 import org.jeecg.modules.activiti.service.IActBusinessService;
-import org.jeecg.modules.contract.entity.ContractCovertMember;
 import org.jeecg.modules.contract.entity.ContractItem;
+import org.jeecg.modules.contract.entity.ContractMember;
 import org.jeecg.modules.contract.entity.ContractPayment;
 import org.jeecg.modules.contract.entity.ContractPurchase;
 import org.jeecg.modules.contract.mapper.ContractPurchaseMapper;
@@ -53,6 +56,11 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
     @Autowired
     private ISysBaseAPI sysBaseAPI;
 
+    @Autowired
+    private IMyBaseAPI myBaseAPI;
+
+    private static final String AUTO_CODE_1 = "1";
+
     @Override
     public void saveWithProcess(ContractPurchase contractPurchase) {
         // 新增
@@ -60,10 +68,16 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
             LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
             contractPurchase.setUserId(sysUser.getUsername());
             contractPurchase.setStatus(ContractConst.STATUS_START);
+            // 自动编号
+            if (AUTO_CODE_1.equals(contractPurchase.getIsAutoCode())) {
+                contractPurchase.setCode(myBaseAPI.getAutoRuleCode("code", "contract_purchase"));
+            }
             save(contractPurchase);
             Map<String, Object> processData = contractPurchase.getProcessData();
             processData.put("tableId", contractPurchase.getId());
-            actBusinessService.saveBusiness(true, processData, contractPurchase.getParams());
+            ActBusiness actBusiness = actBusinessService.saveBusiness(true, processData, contractPurchase.getParams());
+            contractPurchase.setActBusiness(actBusiness.getId());
+            updateById(contractPurchase);
         } else { //编辑
             updateById(contractPurchase);
             Map<String, Object> processData = contractPurchase.getProcessData();
@@ -71,19 +85,19 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
             actBusinessService.saveBusiness(false, processData, contractPurchase.getParams());
         }
         // 我方
-        ContractCovertMember firstMember = contractPurchase.getFirstMemberObj();
+        ContractMember firstMember = contractPurchase.getFirstMemberObj();
         if (Objects.nonNull(firstMember)) {
             firstMember.setContractId(contractPurchase.getId());
             contractMemberService.saveOrUpdate(firstMember);
         }
         // 乙方
-        ContractCovertMember secondMember = contractPurchase.getSecondMemberObj();
+        ContractMember secondMember = contractPurchase.getSecondMemberObj();
         if (Objects.nonNull(secondMember)) {
             secondMember.setContractId(contractPurchase.getId());
             contractMemberService.saveOrUpdate(secondMember);
         }
         // 丙方
-        ContractCovertMember thirdMember = contractPurchase.getThirdMemberObj();
+        ContractMember thirdMember = contractPurchase.getThirdMemberObj();
         if (ContractConst.MEMBER_USE_1.equals(contractPurchase.getMemberUse()) && Objects.nonNull(thirdMember)) {
             thirdMember.setContractId(contractPurchase.getId());
             contractMemberService.saveOrUpdate(thirdMember);
@@ -92,21 +106,18 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
 
     @Override
     public void setMember(ContractPurchase contractPurchase, boolean translateDict) {
-        List<ContractCovertMember> contractMembers = contractMemberService.list(new LambdaQueryWrapper<ContractCovertMember>()
-                .eq(ContractCovertMember::getContractId, contractPurchase.getId()));
-        for (ContractCovertMember contractMember : contractMembers) {
+        List<ContractMember> contractMembers = contractMemberService.list(new LambdaQueryWrapper<ContractMember>()
+                .eq(ContractMember::getContractId, contractPurchase.getId()));
+        for (ContractMember contractMember : contractMembers) {
             if (translateDict) {
                 contractMemberService.translateDict(contractMember);
             }
             if (ContractConst.FIRST_MEMBER.equals(contractMember.getType())) {
                 contractPurchase.setFirstMemberObj(contractMember);
-                contractPurchase.setFirstMemberName(contractMember.getNameCn());
             } else if (ContractConst.SECOND_MEMBER.equals(contractMember.getType())) {
                 contractPurchase.setSecondMemberObj(contractMember);
-                contractPurchase.setSecondMemberName(contractMember.getNameCn());
             } else if (ContractConst.THIRD_MEMBER.equals(contractMember.getType())) {
                 contractPurchase.setThirdMemberObj(contractMember);
-                contractPurchase.setThirdMemberName(contractMember.getNameCn());
             }
         }
 
@@ -114,7 +125,12 @@ public class ContractPurchaseServiceImpl extends ServiceImpl<ContractPurchaseMap
 
     @Override
     public IPage<ContractPurchase> pageVo(Page<ContractPurchase> page, ContractPurchase contractPurchase) {
-        return this.baseMapper.pageVo(page, contractPurchase);
+        String sql = QueryGenerator.installAuthJdbc(ContractPurchase.class);
+        IPage<ContractPurchase> page1 = this.baseMapper.pageVo(page, contractPurchase, sql);
+        List<ContractPurchase> contractPurchases = page1.getRecords();
+        contractPurchases.forEach(item -> setMember(item, false));
+        page1.setRecords(contractPurchases);
+        return page1;
     }
 
     @Override

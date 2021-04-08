@@ -16,6 +16,7 @@
   import WpsViewTag from './WpsViewTag'
   import { putAction, getAction } from '@/api/manage'
   import { filterDictTextByDictCode } from '@comp/dict/JDictSelectUtil'
+  import '@/utils/directive/dragging'
 
   export default {
     name: 'ModelEditPage',

@@ -9,7 +9,7 @@ import org.jeecg.common.system.api.WebOfficeAPI;
 import org.jeecg.common.util.WpsUtil;
 import org.jeecg.listener.IActivitiEventListener;
 import org.jeecg.modules.activiti.entity.ActBusiness;
-import org.jeecg.modules.contract.entity.ContractCovert;
+import org.jeecg.modules.contract.entity.BaseContract;
 import org.jeecg.modules.contract.entity.ContractFieldParams;
 import org.jeecg.modules.contract.entity.ContractModel;
 import org.jeecg.modules.contract.entity.ContractPurchase;
@@ -85,11 +85,11 @@ public class PurchaseActivitiEventHandler implements IActivitiEventListener, Mod
     /**
      * 从模板复制到正文
      *
-     * @param contractCovert
+     * @param baseContract
      */
     @Override
-    public String copyToStanderWord(ContractCovert contractCovert) {
-        ContractPurchase contractPurchase = (ContractPurchase) contractCovert;
+    public String copyToStanderWord(BaseContract baseContract) {
+        ContractPurchase contractPurchase = (ContractPurchase) baseContract;
         ContractPurchase contractPurchaseVo = contractPurchaseService.getContractVoById(contractPurchase.getId(), true);
         if (Objects.isNull(contractPurchaseVo)) {
             return null;

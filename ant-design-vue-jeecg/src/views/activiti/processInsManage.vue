@@ -137,7 +137,8 @@
 <script>
   import { activitiMixin } from './mixins/activitiMixin'
   import { JeecgListMixin } from '../../mixins/JeecgListMixin'
-  import { getAction, postFormAction } from '@/api/manage'
+  import { getAction } from '@/api/manage'
+  import { postFormAction } from '@/api/localRequest'
   import activitiSetting from './mixins/activitiSetting'
   import { setStore } from '@/utils/storage'
 

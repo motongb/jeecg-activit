@@ -2,6 +2,7 @@ package org.jeecg.modules.contract.utils;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import org.jeecg.modules.contract.entity.BaseContract;
 import org.jeecg.modules.contract.entity.ContractCovert;
 
 import java.lang.reflect.Field;
@@ -14,11 +15,12 @@ import java.util.Map;
  **/
 public interface ModelTransferInterface {
 
-    String copyToStanderWord(ContractCovert contractCovert);
+    String copyToStanderWord(BaseContract contract);
 
     default Map<String, Object> transferObjParams(Object obj) {
         Map<String, Object> map = JSONUtil.parseObj(obj);
         Class<?> clazz = obj.getClass();
+        clazz = clazz.getSuperclass();
         try {
             for (Field field : clazz.getDeclaredFields()) {
                 field.setAccessible(true);
