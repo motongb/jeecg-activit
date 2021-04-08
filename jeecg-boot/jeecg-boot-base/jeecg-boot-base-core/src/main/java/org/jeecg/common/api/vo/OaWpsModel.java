@@ -30,7 +30,7 @@ public class OaWpsModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 唯一键id
+     * id
      */
     @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty(value = "id")

@@ -70,11 +70,6 @@ public class ShiroConfig {
             }
         }
         // 配置不会被拦截的链接 顺序判断
-        //activiti
-        filterChainDefinitionMap.put("/activiti/**", "anon");
-        filterChainDefinitionMap.put("/diagram-viewer/**", "anon");
-        filterChainDefinitionMap.put("/editor-app/**", "anon");
-
         filterChainDefinitionMap.put("/sys/cas/client/validateLogin", "anon"); //cas验证登录
         filterChainDefinitionMap.put("/sys/randomImage/**", "anon"); //登录验证码接口排除
         filterChainDefinitionMap.put("/sys/checkCaptcha", "anon"); //登录验证码接口排除
@@ -235,13 +230,14 @@ public class ShiroConfig {
             RedisManager redisManager = new RedisManager();
             redisManager.setHost(lettuceConnectionFactory.getHostName());
             redisManager.setPort(lettuceConnectionFactory.getPort());
+            redisManager.setDatabase(lettuceConnectionFactory.getDatabase());
             redisManager.setTimeout(0);
             if (!StringUtils.isEmpty(lettuceConnectionFactory.getPassword())) {
                 redisManager.setPassword(lettuceConnectionFactory.getPassword());
             }
             manager = redisManager;
         }else{
-            // redis 集群支持，优先使用集群配置	add by jzyadmin@163.com
+            // redis集群支持，优先使用集群配置
             RedisClusterManager redisManager = new RedisClusterManager();
             Set<HostAndPort> portSet = new HashSet<>();
             lettuceConnectionFactory.getClusterConfiguration().getClusterNodes().forEach(node -> portSet.add(new HostAndPort(node.getHost() , node.getPort())));
