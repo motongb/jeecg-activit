@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
+import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.contract.entity.Company;
 import org.jeecg.modules.contract.entity.CompanyBank;
 import org.jeecg.modules.contract.service.ICompanyBankService;
@@ -56,7 +57,7 @@ public class CompanyController extends JeecgController<Company, ICompanyService>
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<Company> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<Company> queryWrapper = QueryGenerator.initQueryWrapper(company, req.getParameterMap());
         Page<Company> page = new Page<>(pageNo, pageSize);
         if (StringUtils.hasText(company.getNameCn())) {
             queryWrapper.like("name_cn", company.getNameCn());

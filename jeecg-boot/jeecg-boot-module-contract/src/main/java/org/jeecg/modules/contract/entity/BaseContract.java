@@ -122,7 +122,11 @@ public class BaseContract {
 
     @ApiModelProperty(value = "是否自动编号,1-是,0-否")
     private String isAutoCode = "1";
-
+    /**
+     * 流程记录id
+     */
+    @ApiModelProperty(value = "流程记录id")
+    private String actBusiness;
 
 
     @TableField(exist = false)

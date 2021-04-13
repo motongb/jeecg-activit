@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @Description: 企业信息/合作方信息
  * @Author: jeecg-boot
- * @Date: 2021-02-08
+ * @Date: 2021-04-09
  * @Version: V1.0
  */
 @Data
@@ -67,16 +67,16 @@ public class Company implements Serializable {
     @ApiModelProperty(value = "所属部门")
     private String sysOrgCode;
     /**
-     * 中文名称
+     * 名称1
      */
-    @Excel(name = "中文名称", width = 15)
-    @ApiModelProperty(value = "中文名称")
+    @Excel(name = "名称1", width = 15)
+    @ApiModelProperty(value = "名称1")
     private String nameCn;
     /**
-     * 英文名称
+     * 名称2
      */
-    @Excel(name = "英文名称", width = 15)
-    @ApiModelProperty(value = "英文名称")
+    @Excel(name = "名称2", width = 15)
+    @ApiModelProperty(value = "名称2")
     private String nameEn;
     /**
      * 编码
@@ -91,23 +91,23 @@ public class Company implements Serializable {
     @ApiModelProperty(value = "级别")
     private String level;
     /**
-     * 类型
+     * 业务类型
      */
-    @Excel(name = "类型", width = 15)
-    @ApiModelProperty(value = "类型")
+    @Excel(name = "业务类型", width = 15)
+    @ApiModelProperty(value = "业务类型")
     private String type;
     /**
      * 状态
      */
     @Excel(name = "状态", width = 15)
     @ApiModelProperty(value = "状态")
-    private String status;
+    private Integer status;
     /**
      * 黑名单
      */
     @Excel(name = "黑名单", width = 15)
     @ApiModelProperty(value = "黑名单")
-    private String black;
+    private Integer black;
     /**
      * 服务范围
      */
@@ -181,7 +181,7 @@ public class Company implements Serializable {
      */
     @Excel(name = "存续状态", width = 15)
     @ApiModelProperty(value = "存续状态")
-    private String liveStatus;
+    private Integer liveStatus;
     /**
      * 单位电话
      */
@@ -230,8 +230,25 @@ public class Company implements Serializable {
     @Excel(name = "联系电话", width = 15)
     @ApiModelProperty(value = "联系电话")
     private String contactPhone;
+    /**
+     * 业务属性
+     */
+    @Excel(name = "业务属性", width = 15)
+    @ApiModelProperty(value = "业务属性")
+    private String attr;
+    /**
+     * 分组
+     */
+    @Excel(name = "分组", width = 15)
+    @ApiModelProperty(value = "分组")
+    private String groups;
+    /**
+     * 邮编
+     */
+    @Excel(name = "邮编", width = 15)
+    @ApiModelProperty(value = "邮编")
+    private String postCode;
 
     @TableField(exist = false)
-    @ApiModelProperty(value = "银行信息")
     private List<CompanyBank> companyBanks;
 }

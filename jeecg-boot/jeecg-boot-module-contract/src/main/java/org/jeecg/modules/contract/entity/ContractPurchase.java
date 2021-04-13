@@ -1,8 +1,6 @@
 package org.jeecg.modules.contract.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
@@ -16,7 +14,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Description: 采购合同基础表
@@ -166,12 +163,6 @@ public class ContractPurchase extends BaseContract implements Serializable {
     @Excel(name = "附件", width = 15)
     @ApiModelProperty(value = "附件")
     private String fileAttach;
-
-    /**
-     * 流程记录id
-     */
-    @ApiModelProperty(value = "流程记录id")
-    private String actBusiness;
 
     /********vo 字段******/
 

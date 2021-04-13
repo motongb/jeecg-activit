@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * @Description: 合同签订对象
  * @Author: jeecg-boot
- * @Date: 2021-02-07
+ * @Date: 2021-04-12
  * @Version: V1.0
  */
 @Data
@@ -26,7 +26,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "contract_member对象", description = "合同签订对象")
-public class ContractMember implements Serializable, ContractCovert {
+public class ContractMember implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -71,22 +71,22 @@ public class ContractMember implements Serializable, ContractCovert {
     @ApiModelProperty(value = "合同id")
     private String contractId;
     /**
-     * 类型
+     * 类型0-甲,1-乙,2-丙
      */
-    @Excel(name = "类型", width = 15)
-    @ApiModelProperty(value = "类型")
-    private String type;
+    @Excel(name = "类型0-甲,1-乙,2-丙", width = 15)
+    @ApiModelProperty(value = "类型0-甲,1-乙,2-丙")
+    private Integer type;
     /**
-     * 中文名称
+     * 名称1
      */
-    @Excel(name = "中文名称", width = 15)
-    @ApiModelProperty(value = "中文名称")
+    @Excel(name = "名称1", width = 15)
+    @ApiModelProperty(value = "名称1")
     private String nameCn;
     /**
-     * 英文名称
+     * 名称2
      */
-    @Excel(name = "英文名称", width = 15)
-    @ApiModelProperty(value = "英文名称")
+    @Excel(name = "名称2", width = 15)
+    @ApiModelProperty(value = "名称2")
     private String nameEn;
     /**
      * 注册地址
@@ -155,10 +155,10 @@ public class ContractMember implements Serializable, ContractCovert {
     @ApiModelProperty(value = "已付金额")
     private String payAmount;
     /**
-     * 预付比例
+     * 锁定金额
      */
-    @Excel(name = "预付比例", width = 15)
-    @ApiModelProperty(value = "预付比例")
+    @Excel(name = "锁定金额", width = 15)
+    @ApiModelProperty(value = "锁定金额")
     private String lockAmount;
     /**
      * 剩余金额
@@ -166,4 +166,10 @@ public class ContractMember implements Serializable, ContractCovert {
     @Excel(name = "剩余金额", width = 15)
     @ApiModelProperty(value = "剩余金额")
     private String restAmount;
+    /**
+     * 公司代码
+     */
+    @Excel(name = "公司代码", width = 15)
+    @ApiModelProperty(value = "公司代码")
+    private String companyCode;
 }
