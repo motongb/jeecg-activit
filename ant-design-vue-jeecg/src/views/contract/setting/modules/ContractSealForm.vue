@@ -16,7 +16,6 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="使用人" :labelCol="labelCol" :wrapperCol="wrapperCol">
-<!--              <a-input v-decorator="['users']" placeholder="请输入使用人"></a-input>-->
               <j-select-multi-user v-decorator="['users']" ></j-select-multi-user>
             </a-form-item>
           </a-col>
@@ -122,7 +121,6 @@
       },
       belongSearch() {
         let belongType = this.form.getFieldValue('belongType')
-        console.log(belongType)
         if (belongType == '1') {
           this.$refs.companySelect.show()
         }

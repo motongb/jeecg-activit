@@ -97,7 +97,7 @@
         if(this.departId){
           let currDepartId = this.departId
           for(let item of this.dataList){
-            if(currDepartId.indexOf(item.key)>=0){
+            if(currDepartId===item.key){
               names+=","+item.title
             }
           }

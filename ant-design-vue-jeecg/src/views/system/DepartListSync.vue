@@ -100,23 +100,24 @@
                 :labelCol="labelCol"
                 :wrapperCol="wrapperCol"
                 label="机构类型">
-                <template v-if="orgCategoryDisabled">
-                  <a-radio-group v-decorator="['orgCategory',validatorRules.orgCategory]" placeholder="请选择机构类型">
-                    <a-radio value="1">
-                      公司
-                    </a-radio>
-                  </a-radio-group>
-                </template>
-                <template v-else>
-                  <a-radio-group v-decorator="['orgCategory',validatorRules.orgCategory]" placeholder="请选择机构类型">
-                    <a-radio value="2">
-                      部门
-                    </a-radio>
-                    <a-radio value="3">
-                      岗位
-                    </a-radio>
-                  </a-radio-group>
-                </template>
+<!--                <template v-if="orgCategoryDisabled">-->
+<!--                  <a-radio-group v-decorator="['orgCategory',validatorRules.orgCategory]" placeholder="请选择机构类型">-->
+<!--                    <a-radio value="1">-->
+<!--                      公司-->
+<!--                    </a-radio>-->
+<!--                  </a-radio-group>-->
+<!--                </template>-->
+<!--                <template v-else>-->
+<!--                  <a-radio-group v-decorator="['orgCategory',validatorRules.orgCategory]" placeholder="请选择机构类型">-->
+<!--                    <a-radio value="2">-->
+<!--                      部门-->
+<!--                    </a-radio>-->
+<!--                    <a-radio value="3">-->
+<!--                      岗位-->
+<!--                    </a-radio>-->
+<!--                  </a-radio-group>-->
+<!--                </template>-->
+                <j-dict-select-tag type="radio" v-decorator="['orgCategory',validatorRules.orgCategory]" dictCode="org_category"/>
               </a-form-item>
               <a-form-item
                 :labelCol="labelCol"
@@ -447,11 +448,11 @@
       },
       // 触发onSelect事件时,为部门树右侧的form表单赋值
       setValuesToForm(record) {
-        if(record.orgCategory == '1'){
-          this.orgCategoryDisabled = true;
-        }else{
-          this.orgCategoryDisabled = false;
-        }
+        // if(record.orgCategory == '1'){
+        //   this.orgCategoryDisabled = true;
+        // }else{
+        //   this.orgCategoryDisabled = false;
+        // }
         this.$nextTick(() => {
           this.form.getFieldDecorator('fax', {initialValue: ''})
           this.form.setFieldsValue(pick(record, 'departName','orgCategory', 'orgCode', 'departOrder', 'mobile', 'fax', 'address', 'memo'))

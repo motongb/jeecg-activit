@@ -3,24 +3,25 @@
     <j-form-container :disabled="disabled">
       <a-form-model slot="detail" ref="ruleForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
         <a-row>
+          <a-col :span="24">
+            <a-form-model-item label="名称" :labelCol="{  xs: { span: 24 }, sm: { span: 2 } }"
+                               :wrapperCol="{ xs: { span: 24 }, sm: { span: 21 }}">
+              <a-input v-model="form.nameCn" placeholder="请输入名称" @change="onChange"></a-input>
+            </a-form-model-item>
+          </a-col>
+<!--          <a-col :span="12">-->
+<!--            <a-form-model-item label="英文名称" :labelCol="labelCol" :wrapperCol="wrapperCol">-->
+<!--              <a-input v-model="form.nameEn" placeholder="请输入英文名称" @change="onChange"></a-input>-->
+<!--            </a-form-model-item>-->
+<!--          </a-col>-->
           <a-col :span="12">
-            <a-form-model-item label="中文名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-model="form.nameCn" placeholder="请输入中文名称" @change="onChange"></a-input>
+            <a-form-model-item label="受托人" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-model="form.contactPerson" placeholder="请输入受托人" @change="onChange"></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="12">
-            <a-form-model-item label="英文名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-model="form.nameEn" placeholder="请输入英文名称" @change="onChange"></a-input>
-            </a-form-model-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-model-item label="联系人" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-model="form.contactPerson" placeholder="请输入联系人" @change="onChange"></a-input>
-            </a-form-model-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-model-item label="联系人电话" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-model="form.contactPhone" placeholder="请输入联系人电话"
+            <a-form-model-item label="受托人电话" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-model="form.contactPhone" placeholder="请输入受托人电话"
                        @change="onChange"></a-input>
             </a-form-model-item>
           </a-col>

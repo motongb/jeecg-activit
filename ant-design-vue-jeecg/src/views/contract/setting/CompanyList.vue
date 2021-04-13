@@ -5,8 +5,8 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="中文名称">
-              <a-input placeholder="请输入中文名称" v-model="queryParam.nameCn"></a-input>
+            <a-form-item label="名称1">
+              <a-input placeholder="请输入名称1" v-model="queryParam.nameCn"></a-input>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
@@ -16,18 +16,23 @@
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :xl="6" :lg="7" :md="8" :sm="24">
-              <a-form-item label="级别">
-                <a-input placeholder="请输入级别" v-model="queryParam.level"></a-input>
+              <a-form-item label="组别">
+                <j-dict-select-tag v-model="queryParam.groups" dictCode="company_groups"/>
+              </a-form-item>
+            </a-col>
+            <a-col :xl="6" :lg="7" :md="8" :sm="24">
+              <a-form-item label="属性">
+                <j-dict-select-tag v-model="queryParam.attr" dictCode="company_attr"/>
               </a-form-item>
             </a-col>
             <a-col :xl="6" :lg="7" :md="8" :sm="24">
               <a-form-item label="类型">
-                <a-input placeholder="请输入类型" v-model="queryParam.type"></a-input>
+                <j-dict-select-tag v-model="queryParam.type" dictCode="company_type"/>
               </a-form-item>
             </a-col>
             <a-col :xl="6" :lg="7" :md="8" :sm="24">
               <a-form-item label="状态">
-                <a-input placeholder="请输入状态" v-model="queryParam.status"></a-input>
+                <j-dict-select-tag v-model="queryParam.status" placeholder="请输入状态" dictCode="company_status"/>
               </a-form-item>
             </a-col>
             <a-col :xl="6" :lg="7" :md="8" :sm="24">
@@ -47,7 +52,8 @@
             </a-col>
             <a-col :xl="6" :lg="7" :md="8" :sm="24">
               <a-form-item label="存续状态">
-                <a-input placeholder="请输入存续状态" v-model="queryParam.liveStatus"></a-input>
+                <j-dict-select-tag placeholder="请输入存续状态" v-model="queryParam.liveStatus"
+                                   dictCode="company_live_status"/>
               </a-form-item>
             </a-col>
           </template>
@@ -74,6 +80,9 @@
                 @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
+      <!-- 高级查询区域 -->
+      <j-super-query :fieldList="superFieldList" ref="superQueryModal"
+                     @handleSuperQuery="handleSuperQuery"></j-super-query>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
@@ -162,7 +171,7 @@
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import CompanyModal from './modules/CompanyModal'
-  import {filterDictTextByDictCode} from '@comp/dict/JDictSelectUtil'
+  import { filterDictTextByDictCode } from '@comp/dict/JDictSelectUtil'
 
   export default {
     name: 'CompanyList',
@@ -186,12 +195,12 @@
             }
           },
           {
-            title: '中文名称',
+            title: '名称1',
             align: 'center',
             dataIndex: 'nameCn'
           },
           {
-            title: '英文名称',
+            title: '名称2',
             align: 'center',
             dataIndex: 'nameEn'
           },
@@ -353,10 +362,12 @@
           importExcelUrl: 'contract/company/importExcel'
 
         },
-        dictOptions: {}
+        dictOptions: {},
+        superFieldList: []
       }
     },
     created() {
+      this.getSuperFieldList()
     },
     computed: {
       importExcelUrl: function() {
@@ -365,6 +376,40 @@
     },
     methods: {
       initDictConfig() {
+      },
+      getSuperFieldList() {
+        let fieldList = []
+        fieldList.push({ type: 'string', value: 'nameCn', text: '名称1', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'nameEn', text: '名称2', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'code', text: '编码', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'level', text: '级别', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'type', text: '业务类型', dictCode: '' })
+        fieldList.push({ type: 'int', value: 'status', text: '状态', dictCode: '' })
+        fieldList.push({ type: 'int', value: 'black', text: '黑名单', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'serviceRange', text: '服务范围', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'business', text: '行业', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'country', text: '国家', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'region', text: '区域', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'address', text: '地址', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'context', text: '简介', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'legal', text: '法人', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'register', text: '经营范围', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'creditCode', text: '信用代码', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'capital', text: '注册资本', dictCode: '' })
+        fieldList.push({ type: 'date', value: 'registerTime', text: '注册时间' })
+        fieldList.push({ type: 'int', value: 'liveStatus', text: '存续状态', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'link', text: '单位电话', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'email', text: '邮箱', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'fax', text: '传真', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'province', text: '省', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'city', text: '市', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'area', text: '区(县)', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'contactPerson', text: '联系人', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'contactPhone', text: '联系电话', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'attr', text: '业务属性', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'groups', text: '分组', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'postCode', text: '邮编', dictCode: '' })
+        this.superFieldList = fieldList
       }
     }
   }

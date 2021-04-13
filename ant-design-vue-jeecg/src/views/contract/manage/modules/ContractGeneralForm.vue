@@ -12,7 +12,8 @@
               </a-col>
               <a-col :span="12">
                 <a-form-model-item label="合同编号">
-                  <a-input :disabled="lcModa.disabled||form.isAutoCode==='1'" v-model="form.code" placeholder="请输入合同编号"></a-input>
+                  <a-input :disabled="lcModa.disabled||form.isAutoCode==='1'" v-model="form.code"
+                           placeholder="请输入合同编号"></a-input>
                 </a-form-model-item>
               </a-col>
               <a-col :span="12">
@@ -289,7 +290,7 @@
         contractTypeData: [],
         // 表单
         form: {
-          isAutoCode:'1',
+          isAutoCode: '1',
           sourceModel: '',
           fileContract: '',
           fileModel: '',
@@ -337,8 +338,7 @@
       }
     },
     computed: {},
-    watch: {
-    },
+    watch: {},
     async created() {
       //是否新建
       if (this.lcModa.isNew) {
@@ -411,7 +411,8 @@
           amount: 0,
           payAmount: 0,
           lockAmount: 0,
-          restAmount: 0
+          restAmount: 0,
+          companyCode: item.code
         }, memberObj)
         getAction(this.url.bankList, { companyId: item.id }).then(res => {
           if (res.success && res.result.records.length > 0) {

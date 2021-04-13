@@ -261,7 +261,7 @@
   import { setStore } from '@/utils/storage'
   import JEllipsis from '@/components/jeecg/JEllipsis'
   import { getAction } from '@/api/manage'
-  import {postFormAction} from '@/api/localRequest'
+  import { postFormAction } from '@/api/localRequest'
   import JTreeSelect from '@/components/jeecg/JTreeSelect'
   import { initDictOptions, filterDictText } from '@/components/dict/JDictSelectUtil'
   import historicDetail from '@/views/activiti/historicDetail'
@@ -496,11 +496,13 @@
             if (res.result.users && res.result.users.length > 0) {
               this.error = ''
               this.assigneeList = res.result.users
-              // 默认勾选
+              // 小于5条,含5条,默认勾选
               let ids = []
-              res.result.users.forEach(e => {
-                ids.push(e.username)
-              })
+              if (this.assigneeList.length < 6) {
+                res.result.users.forEach(e => {
+                  ids.push(e.username)
+                })
+              }
               this.form.assignees = ids
               this.showAssign = true
             } else {

@@ -5,24 +5,18 @@
         <a-row>
           <a-card class="apply-card" title="基本信息">
             <a-col :span="8">
-              <a-form-item label="中文名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-form-item label="名称1" :labelCol="labelCol" :wrapperCol="wrapperCol">
                 <a-input v-decorator="['nameCn']" placeholder="请输入中文名称"></a-input>
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item label="英文名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-form-item label="名称2" :labelCol="labelCol" :wrapperCol="wrapperCol">
                 <a-input v-decorator="['nameEn']" placeholder="请输入英文名称"></a-input>
               </a-form-item>
             </a-col>
             <a-col :span="8">
               <a-form-item label="编码" :labelCol="labelCol" :wrapperCol="wrapperCol">
                 <a-input v-decorator="['code']" placeholder="请输入编码"></a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :span="8">
-              <a-form-item label="级别" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                <j-dict-select-tag v-decorator="['level',{initialValue:'A'}]" :triggerChange="true" placeholder="请输入级别"
-                                   dictCode="company_level"/>
               </a-form-item>
             </a-col>
             <a-col :span="8">
@@ -38,17 +32,29 @@
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item label="黑名单" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                <a-radio-group v-decorator="['black',{initialValue:'0'}]">
-                  <a-radio value="0">否</a-radio>
-                  <a-radio value="1">是</a-radio>
-                </a-radio-group>
-              </a-form-item>
-            </a-col>
-            <a-col :span="8">
               <a-form-item label="存续状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
                 <j-dict-select-tag v-decorator="['liveStatus',{initialValue:'1'}]" :triggerChange="true"
                                    dictCode="company_live_status"/>
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item label="组别" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <j-dict-select-tag v-decorator="['groups',{initialValue:'1000'}]" :triggerChange="true"
+                                   dictCode="company_groups"/>
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item label="属性" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <j-dict-select-tag v-decorator="['attr',{initialValue:'0003'}]" :triggerChange="true"
+                                   dictCode="company_attr"/>
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item label="黑名单" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-radio-group v-decorator="['black',{initialValue:'0'}]">
+                  <a-radio :value="0">否</a-radio>
+                  <a-radio :value="1">是</a-radio>
+                </a-radio-group>
               </a-form-item>
             </a-col>
           </a-card>
@@ -56,6 +62,11 @@
             <a-col :span="8">
               <a-form-item label="国家" :labelCol="labelCol" :wrapperCol="wrapperCol">
                 <j-search-select-tag v-decorator="['country',{initialValue:'1'}]" :dictOptions="countryDictOptions"/>
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item label="城市" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-input v-decorator="['city']" placeholder="请输入城市"></a-input>
               </a-form-item>
             </a-col>
             <a-col :span="8">
@@ -118,6 +129,11 @@
               </a-form-item>
             </a-col>
             <a-col :span="8">
+              <a-form-item label="邮编" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-input v-decorator="['postCode']" placeholder="请输入邮编"></a-input>
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
               <a-form-item label="信用代码" :labelCol="labelCol" :wrapperCol="wrapperCol">
                 <a-input v-decorator="['creditCode']" placeholder="请输入信用代码"></a-input>
               </a-form-item>
@@ -132,24 +148,12 @@
                 <j-date v-decorator="['registerTime',{}]" placeholder="请输入注册时间" style="width: 100%"/>
               </a-form-item>
             </a-col>
-
-            <a-col :span="24">
-              <a-form-item label="省市县" :labelCol="{ xs: { span: 24 },  sm: { span: 2}}"
+            <a-col :span="12">
+              <a-form-item label="省市县" :labelCol="{ xs: { span: 24 },  sm: { span: 4}}"
                            :wrapperCol="{ xs: { span: 24 }, sm: { span: 20 }}">
-                <!--                <a-input v-decorator="['province']" placeholder="请输入省"></a-input>-->
                 <j-area-linkage v-decorator="['province']" type="select"></j-area-linkage>
               </a-form-item>
             </a-col>
-            <!--            <a-col :span="8">-->
-            <!--              <a-form-item label="市" :labelCol="labelCol" :wrapperCol="wrapperCol">-->
-            <!--                <a-input v-decorator="['city']" placeholder="请输入市"></a-input>-->
-            <!--              </a-form-item>-->
-            <!--            </a-col>-->
-            <!--            <a-col :span="8">-->
-            <!--              <a-form-item label="区(县)" :labelCol="labelCol" :wrapperCol="wrapperCol">-->
-            <!--                <a-input v-decorator="['area']" placeholder="请输入区(县)"></a-input>-->
-            <!--              </a-form-item>-->
-            <!--            </a-col>-->
             <a-col :span="24">
               <a-form-item label="经营范围" :labelCol="{ xs: { span: 24 },  sm: { span: 2 }}"
                            :wrapperCol="{ xs: { span: 24 }, sm: { span: 21 }}">
@@ -267,7 +271,9 @@
         this.model = Object.assign({}, record)
         this.visible = true
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model, 'nameCn', 'nameEn', 'code', 'level', 'type', 'status', 'black', 'serviceRange', 'business', 'country', 'region', 'address', 'context', 'legal', 'register', 'creditCode', 'capital', 'registerTime', 'liveStatus', 'link', 'email', 'fax', 'province', 'city', 'area', 'contactPerson', 'contactPhone'))
+          this.form.setFieldsValue(pick(this.model, 'nameCn', 'nameEn', 'code', 'level', 'type', 'status', 'black', 'serviceRange', 'business',
+            'country', 'region', 'address', 'context', 'legal', 'register', 'creditCode', 'capital', 'registerTime', 'postCode',
+            'liveStatus', 'link', 'email', 'fax', 'province', 'city', 'area', 'contactPerson', 'contactPhone'))
         })
       },
       //渲染流程表单数据
