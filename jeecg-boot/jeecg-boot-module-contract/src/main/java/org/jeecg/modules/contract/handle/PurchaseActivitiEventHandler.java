@@ -50,10 +50,15 @@ public class PurchaseActivitiEventHandler implements IActivitiEventListener, Mod
 
     @Override
     public void apply(ActBusiness actBusiness) {
-        String fileContract = this.copyToStanderWord(contractPurchaseService.getById(actBusiness.getTableId()));
-        ContractPurchase contractPurchase = new ContractPurchase();
+        ContractPurchase contractPurchase = contractPurchaseService.getById(actBusiness.getTableId());
+        // 是否使用模板
+        if (ContractConst.IS_USE_MODEL.equals(contractPurchase.getUseModel()) &&
+                StringUtils.hasText(contractPurchase.getSourceModel()) &&
+                StringUtils.hasText(contractPurchase.getFileModel())) {
+            String fileContract = this.copyToStanderWord(contractPurchase);
+            contractPurchase.setFileContract(fileContract);
+        }
         contractPurchase.setStatus(ContractConst.STATUS_SIGNING);
-        contractPurchase.setFileContract(fileContract);
         contractPurchase.setId(actBusiness.getTableId());
         contractPurchaseService.updateById(contractPurchase);
     }
@@ -94,32 +99,26 @@ public class PurchaseActivitiEventHandler implements IActivitiEventListener, Mod
         if (Objects.isNull(contractPurchaseVo)) {
             return null;
         }
-        // 是否使用模板
-        if (ContractConst.IS_USE_MODEL.equals(contractPurchaseVo.getUseModel()) &&
-                StringUtils.hasText(contractPurchaseVo.getSourceModel()) &&
-                StringUtils.hasText(contractPurchaseVo.getFileModel())) {
-            // 从模板复制新文件
-            OaWpsModel oaWpsModel = webOfficeAPI.copyByModelFile(contractPurchaseVo.getFileModel());
-            IService<OaWpsModel> oaWpsModelIService = webOfficeAPI.getOaWpsModelService();
-            // 查询模板对象
-            OaWpsModel model = oaWpsModelIService.getOne(new LambdaQueryWrapper<OaWpsModel>()
-                    .eq(OaWpsModel::getFileId, contractPurchaseVo.getFileModel()).orderByDesc(OaWpsModel::getVersion).last("limit 1"));
-            ContractModel contractModel = contractModelService.getOne(new LambdaQueryWrapper<ContractModel>().eq(ContractModel::getFileId, contractPurchaseVo.getSourceModel()));
-            // 表格参数索引
-            Map<Integer, String> indexMap = new HashMap<>();
-            List<ContractFieldParams> contractFieldParams = JSON.parseArray(contractModel.getParamsFields(), ContractFieldParams.class);
-            contractFieldParams.forEach(item -> {
-                // 列表数据
-                if ("3".equals(item.getType()) && item.getTableIndex() != null) {
-                    indexMap.put(item.getTableIndex(), item.getFieldKey());
-                }
-            });
-            // 转换参数
-            Map<String, Object> params = transferObjParams(contractPurchaseVo);
-            // 替换文本
-            wpsUtil.replaceContent(model.getDownloadUrl(), oaWpsModel.getDownloadUrl(), params, indexMap);
-            return oaWpsModel.getFileId();
-        }
-        return null;
+        // 从模板复制新文件
+        OaWpsModel oaWpsModel = webOfficeAPI.copyByModelFile(contractPurchaseVo.getFileModel());
+        IService<OaWpsModel> oaWpsModelIService = webOfficeAPI.getOaWpsModelService();
+        // 查询模板对象
+        OaWpsModel model = oaWpsModelIService.getOne(new LambdaQueryWrapper<OaWpsModel>()
+                .eq(OaWpsModel::getFileId, contractPurchaseVo.getFileModel()).orderByDesc(OaWpsModel::getVersion).last("limit 1"));
+        ContractModel contractModel = contractModelService.getOne(new LambdaQueryWrapper<ContractModel>().eq(ContractModel::getFileId, contractPurchaseVo.getSourceModel()));
+        // 表格参数索引
+        Map<Integer, String> indexMap = new HashMap<>();
+        List<ContractFieldParams> contractFieldParams = JSON.parseArray(contractModel.getParamsFields(), ContractFieldParams.class);
+        contractFieldParams.forEach(item -> {
+            // 列表数据
+            if ("3".equals(item.getType()) && item.getTableIndex() != null) {
+                indexMap.put(item.getTableIndex(), item.getFieldKey());
+            }
+        });
+        // 转换参数
+        Map<String, Object> params = transferObjParams(contractPurchaseVo);
+        // 替换文本
+        wpsUtil.replaceContent(model.getDownloadUrl(), oaWpsModel.getDownloadUrl(), params, indexMap);
+        return oaWpsModel.getFileId();
     }
 }

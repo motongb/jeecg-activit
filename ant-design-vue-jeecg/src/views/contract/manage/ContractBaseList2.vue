@@ -1,10 +1,13 @@
 <template>
   <a-card :bordered="false">
-    <a-tabs default-active-key="1" @change="handleTabsChange">
-      <a-tab-pane v-if="showPanel('T01')" key="T0" tab="采购类">
-        <contract-purchase-list></contract-purchase-list>
+    <a-tabs default-active-key="T01" @change="handleTabsChange">
+      <a-tab-pane key="T01" tab="采购类">
+        <lg-contract-purchase-list></lg-contract-purchase-list>
       </a-tab-pane>
-      <a-tab-pane v-if="showPanel('T02')" key="T1" tab="销售类" force-render>
+      <a-tab-pane key="T02" tab="销售类" force-render>
+        Content of Tab Pane 2
+      </a-tab-pane>
+      <a-tab-pane key="T03" tab="工程类" force-render>
         Content of Tab Pane 2
       </a-tab-pane>
     </a-tabs>
@@ -13,11 +16,12 @@
 
 <script>
 
-  import ContractPurchaseList from './ContractPurchaseList'
   import { getAction } from '@/api/manage'
+  import LgContractPurchaseList from './LgContractPurchaseList'
+
   export default {
     name: 'ContractBaseList',
-    components: { ContractPurchaseList },
+    components: { LgContractPurchaseList },
     data() {
       return {
         url: {
@@ -29,13 +33,8 @@
     created() {
       this.getContractType()
     },
-    computed: {
-
-    },
+    computed: {},
     methods: {
-      showPanel(code){
-        return this.contractTypeList.map(m=>m.code).includes(code);
-      },
       getContractType() {
         getAction(this.url.treeList, { roles: true }).then(res => {
           if (res.success) {

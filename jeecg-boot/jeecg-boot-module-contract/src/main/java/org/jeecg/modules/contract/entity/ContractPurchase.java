@@ -29,7 +29,6 @@ import java.util.List;
 public class ContractPurchase extends BaseContract implements Serializable {
     private static final long serialVersionUID = 1L;
 
-
     /**
      * 是否使用模板
      */
