@@ -109,8 +109,9 @@ public class ActBusinessController {
         if (StrUtil.isBlank(tableName)) {
             return Result.error("参数缺省！");
         }
-        Map<String, Object> applyForm = actBusinessService.getApplyForm(tableId, tableName);
-        return Result.ok(applyForm);
+//        Map<String, Object> applyForm = actBusinessService.getApplyForm(tableId, tableName);
+        Map<String, Object> applyForm = actBusinessService.getBaseMapper().getBusiData(tableId, tableName);
+        return Result.OK(applyForm);
     }
 
     /*修改业务表单信息*/

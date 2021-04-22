@@ -78,9 +78,9 @@
           <span @click="showResource(r)" style="color: blue;cursor: pointer;">{{t}}</span>
         </template>
       </a-table-column>
-      <a-table-column title="表单路由" dataIndex="routeName" :width="200" align="center">
+      <a-table-column title="表单" dataIndex="formCode_dictText" :width="200" align="center">
         <template slot-scope="t,r,i">
-          <span @click="viewForm(t)" style="color: blue;cursor: pointer;"> {{getFormComponent(t).text}} </span>
+          <span @click="viewForm(r)" style="color: blue;cursor: pointer;"> {{t}} </span>
         </template>
       </a-table-column>
       <a-table-column title="状态" dataIndex="status" :width="200" align="center">
@@ -137,36 +137,17 @@
                      v-decorator="[ 'categoryId', {initialValue:editObj.categoryId, rules: [{ required: true, message: '不能为空' }] },]"
                      placeholder="请选择流程分类" dictCode="bpm_process_type"></component>
         </a-form-item>
-        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="流程类目(app使用)">
-          <j-tree-dict placeholder="请选择流程类目" parentCode="A01" :trigger-change="true" field="code"
-                       v-decorator="[ 'typeId', {initialValue:editObj.typeId, rules: [{ required: true, message: '不能为空' }] },]">
-          </j-tree-dict>
-        </a-form-item>
         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="关联表单">
-          <a-select @change="change_routeName" placeholder="请选择关联表单" :trigger-change="true"
-                    v-decorator="[ 'routeName', {initialValue:editObj.routeName, rules: [{ required: true, message: '不能为空' }] },]">
-            <a-select-option value="">请选择</a-select-option>
-            <a-select-option v-for="(item, i) in allFormComponent" :key="item.routeName" :value="item.routeName">
-              <span style="display: inline-block;width: 100%" :title=" item.text">
-                {{ item.text}}
-              </span>
-            </a-select-option>
-          </a-select>
-          <a href="javascrip:void(0)" @click="viewForm()">预览表单</a>
+          <j-search-select-tag placeholder="请做出你的选择" @change="change_routeName" ref="relForm"
+                               v-decorator="[ 'formCode', {initialValue:editObj.formCode, rules: [{ required: true, message: '不能为空' }] },]"
+                               dict="act_z_form,name,code"
+                               :async="true"></j-search-select-tag>
+          <a @click="viewForm()">预览表单</a>
         </a-form-item>
-
-        <!--        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="关联打印报表" >
-                  <a-select @change="change_routeName" placeholder="请选择关联报表" :trigger-change="true" v-decorator="[ 'reportModelId', {initialValue:editObj.reportModelId, rules: [{ required: true, message: '不能为空' }] },]">
-                    <a-select-option value="">请选择</a-select-option>
-                    <a-select-option v-for="(item, i) in reportList" :key="item.id" :value="item.id">
-                      <span style="display: inline-block;width: 100%" :title=" item.name">
-                        {{ item.name}}
-                      </span>
-                    </a-select-option>
-                  </a-select>
-                  &lt;!&ndash;<a href="javascrip:void(0)" @click="viewForm()">预览表单</a>&ndash;&gt;
-                </a-form-item>-->
-
+        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="表单类型">
+          <j-dict-select-tag v-decorator="['typeId',{initialValue:editObj.typeId}]" :trigger-change="true"
+                             dict-code="act_z_form_type"></j-dict-select-tag>
+        </a-form-item>
         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="角色授权">
           <j-select-role placeholder="不选择则所有人可用" v-decorator="[ 'roles', {initialValue:editObj.roles, rules: []}]"/>
         </a-form-item>
@@ -286,10 +267,16 @@
         <img :src="diagramUrl" :alt="viewTitle">
       </div>
     </a-modal>
-    <!--流程表单 预览-->
-    <a-modal :title="lcModa.title" v-model="lcModa.visible" :footer="null" :maskClosable="false" width="80%">
-      <component :is="lcModa.formComponent" :disabled="true"></component>
-    </a-modal>
+    <j-modal
+      :title="lcModa.title"
+      width="80%"
+      :visible="lcModa.visible"
+      switchFullscreen
+      :okButtonProps="{ class:{'jee-hidden': true} }"
+      @cancel="lcModa.visible=false"
+      cancelText="关闭">
+      <component :is="lcModa.formComponent" ref="processForm" :lcModa="lcModa"></component>
+    </j-modal>
   </a-card>
 
 </template>
@@ -307,6 +294,8 @@
   import JSelectUserByDep from '@/components/jeecgbiz/JSelectUserByDep'
   import JSelectRole from '@/components/jeecgbiz/JSelectRole'
   import JSelectDepart from '@/components/jeecgbiz/JSelectDepart'
+  import activitiSetting from './mixins/activitiSetting'
+  import { setStore } from '../../utils/storage'
 
   export default {
     name: 'ProcessModelList',
@@ -320,7 +309,6 @@
       JTreeDict
     },
     created() {
-      // this.initReportList();
     },
     data() {
       return {
@@ -333,7 +321,6 @@
           visible: false
         },
         editForm: this.$form.createForm(this),
-
         description: '已部署模型',
         // 查询条件
         queryParam: {
@@ -372,7 +359,8 @@
           convertToModel: '/activiti_process/convertToModel',
           updateInfo: '/activiti_process/updateInfo',
           getProcessNode: '/activiti_process/getProcessNode',
-          editNodeUser: '/activiti_process/editNodeUser'
+          editNodeUser: '/activiti_process/editNodeUser',
+          formList: '/activiti/actZForm/list'
         },
         spry: {
           //选中的用户
@@ -530,6 +518,7 @@
       edit(row) {
         this.editObj = Object.assign(this.editObj, row)
         this.editObj.visible = true
+        console.log(this.editObj)
       },
       editObjOk() {
         var _this = this
@@ -551,28 +540,35 @@
           }
         })
       },
-      change_routeName() {
-        this.$nextTick(() => {
-          let routeName = this.editForm.getFieldValue('routeName')
-          console.log('routeName', routeName)
-          var route = this.getFormComponent(routeName)
-          this.editObj.tableName = route.businessTable
-          this.editObj.routeName = route.routeName
-          console.log('this.editObj', this.editObj)
+      change_routeName(formCode) {
+        console.log('formCode', formCode)
+        this.getFormData(formCode)
+      },
+      getFormData(formCode) {
+        getAction(this.url.formList, { code: formCode }).then(res => {
+          let form = _.find(res.result.records, { code: formCode, status: 1 })
+          if (form) {
+            this.editObj.tableName = form.tableName
+            this.editObj.routeName = form.style
+            this.editObj.typeId = form.type
+            this.editForm.setFieldsValue({ typeId: form.type })
+          }
         })
       },
-      viewForm(routeName) {
-        if (!routeName) routeName = this.editObj.routeName
-        if (!routeName) {
-          this.$message.warning(
-            '请先选择表单！'
-          )
+      viewForm(r) {
+        if (!r) {
+          r = this.editObj
+        }
+        if (!r) {
+          this.$message.warning('请先选择表单！')
           return
         }
-        let formComponent = this.getFormComponent(routeName)
+        let formComponent = this.getFormComponent(r.routeName, r.typeId)
         console.log(formComponent)
-        this.lcModa.formComponent = formComponent.component
-        this.lcModa.title = '流程表单预览：' + formComponent.text
+        this.lcModa.formComponent = formComponent
+        this.lcModa.disabled = true
+        this.lcModa.isNew = true
+        this.lcModa.processData = {}
         this.lcModa.visible = true
       },
       convertToModel(row) {
@@ -692,7 +688,7 @@
         this.loading = true
         getAction(this.url.list, params).then((res) => {
           if (res.success) {
-            let records = res.result || []
+            let records = res.result.records || []
             this.dataSource = records
             this.dataList = records
             this.ipagination.total = records.length

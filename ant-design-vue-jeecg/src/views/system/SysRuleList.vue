@@ -160,6 +160,11 @@
             dataIndex: 'tableName'
           },
           {
+            title:'表类型',
+            align:"center",
+            dataIndex: 'tableType_dictText'
+          },
+          {
             title: '操作',
             dataIndex: 'action',
             align: 'center',

@@ -1,29 +1,28 @@
-import { filterObj } from '@/utils/util'
-import { deleteAction, downFile, getAction } from '@/api/manage'
-import Vue from 'vue'
-import { ACCESS_TOKEN } from '@/store/mutation-types'
 import JEllipsis from '@/components/jeecg/JEllipsis'
 import processFormComponent from './processFormComponent'
+import StyleForm from '../form'
+
 
 export const activitiMixin = {
   components: {
     JEllipsis
   },
   data() {
-    return {}
+    return {
+
+    }
   },
   computed: {
-    /*todo 所有的流程表单，组件化注册，在此维护*/
-    allFormComponent: function() {
-      return processFormComponent
-    },
-    historicDetail: function() {
+    historicDetail() {
       return () => import(`@/views/activiti/historicDetail`)
     }
   },
   methods: {
-    getFormComponent(routeName) {
-      return _.find(this.allFormComponent, { routeName: routeName }) || {}
+    getFormComponent(routeName, type) {
+      if (type == '1') {
+        return StyleForm[routeName]
+      }
+      return _.find(processFormComponent, { routeName: routeName }).component
     },
     millsToTime(mills) {
       if (!mills) {

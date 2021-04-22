@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -79,10 +80,6 @@ public class ActZprocess {
     @ApiModelProperty(value = "所属分类")
     private String categoryId;
     /**
-     * 流程类目
-     */
-    private String typeId;
-    /**
      * 排序
      */
     private Integer sort;
@@ -147,6 +144,10 @@ public class ActZprocess {
     @ApiModelProperty(value = "关联前端表单路由名")
     private String routeName;
     /**
+     * 表单类型
+     */
+    private String typeId;
+    /**
      * 授权的角色
      */
     @Excel(name = "授权的角色", width = 15)
@@ -156,4 +157,9 @@ public class ActZprocess {
     @Excel(name = "流程表单报表ID", width = 15)
     @ApiModelProperty(value = "流程表单报表ID")
     private String reportModelId;
+
+    @Excel(name = "表单编码", width = 15)
+    @Dict(dicCode = "code", dictTable = "act_z_form", dicText = "name")
+    @ApiModelProperty(value = "表单编码")
+    private String formCode;
 }

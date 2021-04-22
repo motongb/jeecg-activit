@@ -18,6 +18,12 @@
             </a-form-item>
           </a-col>
           <a-col :xs="24" :sm="12">
+            <a-form-model-item label="表类型" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="tableType">
+              <j-dict-select-tag type="list" v-decorator="['tableType', validatorRules.tableType]" :triggerChange="true"
+                                 @change="handleTableTypeSelected"  dictCode="ol_form_biz_type" placeholder="请选择表类型"/>
+            </a-form-model-item>
+          </a-col>
+          <a-col :xs="24" :sm="12">
             <a-form-item label="规则表" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-select placeholder="选择表" v-decorator="['ruleTable', validatorRules.ruleTable]" show-search
                         option-filter-prop="children" :filter-option="filterOption" @change="handleTableSelected">
@@ -162,6 +168,11 @@
             rules: [
               { required: true, message: '请输入规则表!' }
             ]
+          },
+          tableType: {
+            rules: [
+              { required: true, message: '请输入规则表!' }
+            ]
           }
         },
         refKeys: ['sysRuleItem'],
@@ -216,7 +227,6 @@
     },
     created() {
       this.initDictData()
-      this.getTableOptions()
     },
     methods: {
       filterOption(input, option) {
@@ -224,22 +234,27 @@
           option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
         )
       },
+      handleTableTypeSelected(value){
+        this.getTableOptions(value)
+      },
       /*选择表*/
       handleTableSelected(tableName) {
         let table = this.tableOptions.find(m => m.tableName === tableName)
-        console.log(table)
         getAction(this.url.fieldList, { headId: table.id }).then(res => {
           this.fieldOptions = res.result
         })
       },
-      getTableOptions() {
+      getTableOptions(value) {
         getAction(this.url.tableList, {
           pageNo: 1,
           pageSize: 99,
           copyType: 0,
-          formCategory: 'contract'
+          formCategory: value
         }).then(res => {
           this.tableOptions = res.result.records
+          if (this.model.id){
+            this.handleTableSelected(this.model.ruleTable)
+          }
         })
       },
       /*提交*/
@@ -279,7 +294,7 @@
       },
       /** 调用完edit()方法之后会自动调用此方法 */
       editAfter() {
-        let fieldval = pick(this.model, 'name', 'ruleField', 'ruleTable')
+        let fieldval = pick(this.model, 'name', 'ruleField', 'ruleTable', 'tableType')
         this.$nextTick(() => {
           this.form.setFieldsValue(fieldval)
         })
@@ -287,7 +302,7 @@
         if (this.model.id) {
           let params = { id: this.model.id }
           this.requestSubTableData(this.url.sysRuleItem.list, params, this.sysRuleItemTable)
-          this.handleTableSelected(this.model.ruleTable)
+          this.handleTableTypeSelected(this.model.tableType)
         }
       },
       /** 整理成formData */
@@ -302,7 +317,7 @@
         this.$message.error(msg)
       },
       popupCallback(row) {
-        this.form.setFieldsValue(pick(row, 'name', 'ruleField', 'ruleTable'))
+        this.form.setFieldsValue(pick(row, 'name', 'ruleField', 'ruleTable', 'tableType'))
       }
 
     }

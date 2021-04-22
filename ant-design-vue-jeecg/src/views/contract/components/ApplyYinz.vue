@@ -58,7 +58,7 @@
     methods: {
       initData() {
         getAction(this.url.getProcessDataList, this.queryParam).then(res => {
-          this.processList = res.result
+          this.processList = res.result.records
           console.log(this.processList)
         })
       },

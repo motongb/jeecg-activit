@@ -6,5 +6,6 @@ export default {
   todoManage: '/activiti/todoManage',
   doneManage: '/activiti/doneManage',
   processInsManage: '/activiti/processInsManage',
+  processModelList:'/activiti/ProcessModelList',
   contractPurchaseList: '/contract/manage/list',
 }

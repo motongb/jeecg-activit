@@ -16,14 +16,7 @@
         left join sys_user c on c.username = a.user_id
         left join act_z_business d on d.id = a.act_business
         left join act_z_process e on e.id = d.proc_def_id
-        <where>
-            <if test="query.name !=null and query.name !=''">
-                a.name like concat('%',#{query.name},'%')
-            </if>
-            <if test="sql !=null and sql !=''">
-                ${sql}
-            </if>
-        </where>
+        c
         order by a.create_time desc
     </select>
 </mapper>

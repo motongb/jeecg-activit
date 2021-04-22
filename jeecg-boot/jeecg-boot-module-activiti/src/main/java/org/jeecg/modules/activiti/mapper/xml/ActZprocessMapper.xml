@@ -2,14 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.activiti.mapper.ActZprocessMapper">
 
-    <select id="selectNewestProcess" parameterType="java.lang.String" resultType="org.jeecg.modules.activiti.entity.ActZprocess">
-        select azp.* from act_z_process azp inner join (
-            select process_key,max(version) as version from act_z_process actz where `status` = 1 group by process_key
-        ) newest
-        on azp.process_key = newest.process_key
-        and azp.version = newest.version
+    <sql id="column">
+        azp.id,azp.create_by,azp.create_time,azp.del_flag,azp.update_by,azp.update_time,azp.sys_org_code,azp.category_id,azp.deployment_id,
+        azp.description,azp.diagram_name,azp.latest,azp.name,azp.process_key,azp.status,azp.version,azp.roles,azp.sort,azp.report_model_id,azp.form_code
+    </sql>
+
+    <select id="selectNewestProcess" parameterType="java.lang.String"
+            resultType="org.jeecg.modules.activiti.entity.ActZprocess">
+        select<include refid="column"/>,f.type as type_id,f.table_name,f.route_name
+        from act_z_process azp
+        inner join (
+        select process_key,max(version) as version from act_z_process actz where `status` = 1 group by process_key
+        ) newest on azp.process_key = newest.process_key and azp.version = newest.version
+        left join act_z_form f on f.code = azp.form_code
         <if test="processKey!=null and processKey!=''">
             where azp.process_key = #{processKey}
         </if>
+    </select>
+
+    <select id="pageVo" parameterType="map" resultType="org.jeecg.modules.activiti.entity.ActZprocess">
+        select<include refid="column"/>,f.type as type_id,f.table_name,f.style as route_name
+        from act_z_process azp
+        left join act_z_form f on f.code = azp.form_code
+        <where>
+            <if test="params.name !=null and params.name !=''">
+                and azp.name like concat('%',#{params.name},'%')
+            </if>
+            <if test="params.processKey !=null and params.processKey !=''">
+                and azp.process_key like concat('%',#{params.processKey},'%')
+            </if>
+            <if test="params.latest !=null and params.latest !=''">
+                and azp.latest = #{params.latest}
+            </if>
+            <if test="params.status !=null and params.status !=''">
+                and azp.status = #{params.status}
+            </if>
+            <if test="params.statuss !=null and params.statuss !=''">
+                and FIND_IN_SET(azp.status ,#{params.status} )
+            </if>
+            <if test="params.typeId !=null and params.typeId !=''">
+                and f.type = #{params.typeId}
+            </if>
+        </where>
     </select>
 </mapper>

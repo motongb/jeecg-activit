@@ -82,7 +82,6 @@
         url: {
           add: '/contract/contractType/add',
           edit: '/contract/contractType/edit',
-          getProcessDataList: '/activiti_process/listData'
         },
         expandedRowKeys: [],
         pidField: 'pid'

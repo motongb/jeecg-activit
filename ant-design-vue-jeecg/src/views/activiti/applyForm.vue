@@ -143,7 +143,7 @@
         this.lcModa = params || {}
         console.log(params)
         if (params) {
-          this.lcModa.formComponent = this.getFormComponent(params.processData.routeName).component
+          this.lcModa.formComponent = this.getFormComponent(params.processData.routeName,params.processData.typeId)
           this.userInfo = this.$store.getters.userInfo
           this.lcModa.userName = this.userInfo.realname
           this.lcModa.applyTime = formatDate(new Date().getTime(), 'yyyy-MM-dd hh:mm:ss')

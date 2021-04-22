@@ -122,6 +122,7 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
                 ActZprocess actProcess = actZprocessService.getById(e.getProcDefId());
                 e.setRouteName(actProcess.getRouteName());
                 e.setProcessName(actProcess.getName());
+                e.setTypeId(actProcess.getTypeId());
             }
             // 流程正在处理中时
             if (ActivitiConstant.STATUS_DEALING.equals(e.getStatus())) {

@@ -2,7 +2,8 @@ package org.jeecg.modules.activiti.web;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.swagger.annotations.Api;
@@ -68,29 +69,39 @@ public class ActivitiProcessController {
                            @ApiParam(value = "流程状态 部署后默认1激活") String status,
                            @ApiParam(value = "如果此项不为空，则会过滤当前用户的角色权限") Boolean roles,
                            HttpServletRequest request) {
-        LambdaQueryWrapper<ActZprocess> wrapper = new LambdaQueryWrapper<>();
-        wrapper.orderByAsc(ActZprocess::getSort).orderByDesc(ActZprocess::getVersion);
-        if (StrUtil.isNotBlank(lcmc)) {
-            wrapper.like(ActZprocess::getName, lcmc);
-        }
-        if (StrUtil.isNotBlank(lckey)) {
-            wrapper.like(ActZprocess::getProcessKey, lckey);
-        }
-        if (zx != null && zx) {
-            wrapper.eq(ActZprocess::getLatest, 1);
-        }
-        if (StrUtil.isNotBlank(status)) {
-            wrapper.eq(ActZprocess::getStatus, status);
-        }
-        String statuss = request.getParameter("statuss");
-        if (StrUtil.isNotBlank(statuss)) {
-            wrapper.in(ActZprocess::getStatus, statuss);
-        }
-        String typeId = request.getParameter("typeId");
-        if (StrUtil.isNotBlank(typeId)) {
-            wrapper.eq(ActZprocess::getTypeId, typeId);
-        }
-        List<ActZprocess> list = actZprocessService.list(wrapper);
+//        LambdaQueryWrapper<ActZprocess> wrapper = new LambdaQueryWrapper<>();
+//        wrapper.orderByAsc(ActZprocess::getSort).orderByDesc(ActZprocess::getVersion);
+//        if (StrUtil.isNotBlank(lcmc)) {
+//            wrapper.like(ActZprocess::getName, lcmc);
+//        }
+//        if (StrUtil.isNotBlank(lckey)) {
+//            wrapper.like(ActZprocess::getProcessKey, lckey);
+//        }
+//        if (zx != null && zx) {
+//            wrapper.eq(ActZprocess::getLatest, 1);
+//        }
+//        if (StrUtil.isNotBlank(status)) {
+//            wrapper.eq(ActZprocess::getStatus, status);
+//        }
+//        String statuss = request.getParameter("statuss");
+//        if (StrUtil.isNotBlank(statuss)) {
+//            wrapper.in(ActZprocess::getStatus, statuss);
+//        }
+//        String typeId = request.getParameter("typeId");
+//        if (StrUtil.isNotBlank(typeId)) {
+//            wrapper.eq(ActZprocess::getTypeId, typeId);
+//        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", lcmc);
+        params.put("processKey", lckey);
+        params.put("latest", zx != null && zx ? 1 : null);
+        params.put("statuss", request.getParameter("statuss"));
+        params.put("typeId", request.getParameter("typeId"));
+        int pageNo = StringUtils.isEmpty(request.getParameter("pageNo")) ? 1 : Integer.parseInt(request.getParameter("pageNo"));
+        int pageSize = StringUtils.isEmpty(request.getParameter("pageSize")) ? 10 : Integer.parseInt(request.getParameter("pageSize"));
+        IPage<ActZprocess> page = new Page<>(pageNo, pageSize);
+//        List<ActZprocess> list = actZprocessService.page(page, wrapper).getRecords();
+        List<ActZprocess> list = actZprocessService.getBaseMapper().pageVo(page, params).getRecords();
         if (roles != null && roles) { //过滤角色
             LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
             List<String> roleByUserName = actNodeService.getRoleByUserName(sysUser.getUsername());
@@ -110,7 +121,8 @@ public class ActivitiProcessController {
             }).collect(Collectors.toList());
 
         }
-        return Result.OK(list);
+        page.setRecords(list);
+        return Result.OK(page);
     }
 
     /*激活或挂起流程定义*/
@@ -439,7 +451,7 @@ public class ActivitiProcessController {
     @ApiOperation(value = "获取最新部署的流程定义")
     public Result queryNewestProcess(@ApiParam("流程定义key") @RequestParam(value = "processKey", defaultValue = "") String processKey) {
         List<ActZprocess> actZprocesses = actZprocessService.queryNewestProcess(processKey);
-        return Result.ok(actZprocesses);
+        return Result.OK(actZprocesses);
     }
 
 }

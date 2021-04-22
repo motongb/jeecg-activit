@@ -228,18 +228,6 @@
               </a-col>
             </a-row>
           </a-card>
-          <!--            <a-card v-show="!task" class="apply-card" title="条件选择">-->
-          <!--              <a-row>-->
-          <!--                <a-col :span="24">-->
-          <!--                  <a-form-model-item label="线路选择">-->
-          <!--                    <a-radio-group v-model="form.params.condition">-->
-          <!--                      <a-radio value="路线一">路线一</a-radio>-->
-          <!--                      <a-radio value="路线二">路线二</a-radio>-->
-          <!--                    </a-radio-group>-->
-          <!--                  </a-form-model-item>-->
-          <!--                </a-col>-->
-          <!--              </a-row>-->
-          <!--            </a-card>-->
         </a-form-model>
       </a-tab-pane>
       <a-tab-pane key="2" tab="正文" :forceRender="true">
@@ -257,7 +245,7 @@
   import { getStore } from '@/utils/storage'
   import JFormContainer from '@/components/jeecg/JFormContainer'
   import JDate from '@/components/jeecg/JDate'
-  import { activitiApproveMixin } from '@views/activiti/mixins/activitiApproveMixin'
+  // import { activitiApproveMixin } from '@views/activiti/mixins/activitiApproveMixin'
   import ARow from 'ant-design-vue/es/grid/Row'
   import moment from 'moment'
   import pick from 'lodash.pick'
@@ -282,8 +270,20 @@
       JFormContainer,
       JDate
     },
-    mixins: [activitiApproveMixin],
-    props: {},
+    // mixins: [activitiApproveMixin],
+    props: {
+      lcModa: {
+        type: Object,
+        default: () => ({
+          dept: '', //部门
+          title: '',//标题
+          disabled: false,// 全局禁用
+          processData: {},//流程数据
+          isNew: false,//是否新增
+          isTask: false//是否处理流程
+        })
+      },
+    },
     data() {
       return {
         // 合同类型树

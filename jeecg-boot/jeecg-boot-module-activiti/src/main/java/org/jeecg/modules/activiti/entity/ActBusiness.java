@@ -144,6 +144,10 @@ public class ActBusiness {
     private String tableName;
 
 
+    @TableField(exist = false)
+    private String typeId;
+
+
     /**
      * 分配用户username
      */

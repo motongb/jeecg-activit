@@ -3,7 +3,7 @@
 <mapper namespace="org.jeecg.modules.system.mapper.SysRuleMapper">
 
     <sql id="column">
-        a.id,a.create_by,a.create_time,a.update_by,a.update_time,a.sys_org_code,a.`name`,a.rule_field,a.rule_table
+        a.id,a.create_by,a.create_time,a.update_by,a.update_time,a.sys_org_code,a.`name`,a.rule_field,a.rule_table,a.table_type
     </sql>
 
     <select id="pageVo" resultType="org.jeecg.modules.system.entity.SysRule">

@@ -377,7 +377,7 @@
         getAction(this.url.getProcessDataList, { status: 1, roles: true }).then(res => {
           this.activeKeyAll = []
           if (res.success) {
-            var result = res.result || []
+            var result = res.result.records || []
             if (result.length > 0) {
               let searchProcessKey = this.searchProcessKey
               if (searchProcessKey) { //过滤条件
@@ -593,7 +593,6 @@
       },
       handleTableChange(pagination, filters, sorter) {
         //分页、排序、筛选变化时触发
-        //TODO 筛选
         if (Object.keys(sorter).length > 0) {
           this.isorter.column = sorter.field
           this.isorter.order = 'ascend' == sorter.order ? 'asc' : 'desc'

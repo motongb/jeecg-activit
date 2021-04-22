@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecg.modules.system.entity.SysRuleItem;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.jeecgframework.poi.excel.annotation.ExcelCollection;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * @Description: 自定义编码表
  * @Author: jeecg-boot
- * @Date: 2021-04-02
+ * @Date: 2021-04-19
  * @Version: V1.0
  */
 @Data
@@ -74,23 +75,16 @@ public class SysRulePage {
     @Excel(name = "规则表", width = 15)
     @ApiModelProperty(value = "规则表")
     private String ruleTable;
+    /**
+     * 表类型
+     */
+    @Excel(name = "表类型", width = 15, dicCode = "ol_form_biz_type")
+    @Dict(dicCode = "ol_form_biz_type")
+    @ApiModelProperty(value = "表类型")
+    private String tableType;
 
     @ExcelCollection(name = "自定义规则项")
     @ApiModelProperty(value = "自定义规则项")
     private List<SysRuleItem> sysRuleItemList;
 
-    //    public SysRulePage(SysRule sysRule, List<SysRuleItem> sysRuleItemList) {
-//        this.id = sysRule.getId();
-//        this.createBy = sysRule.getCreateBy();
-//        this.createTime = sysRule.getCreateTime();
-//        this.updateBy = sysRule.getUpdateBy();
-//        this.updateTime = sysRule.getUpdateTime();
-//        this.sysOrgCode = sysRule.getSysOrgCode();
-//        this.name = sysRule.getName();
-//        this.ruleField = sysRule.getRuleField();
-//        this.ruleTable = sysRule.getRuleTable();
-//        this.sysRuleItemList = sysRuleItemList;
-//    }
-    public SysRulePage() {
-    }
 }

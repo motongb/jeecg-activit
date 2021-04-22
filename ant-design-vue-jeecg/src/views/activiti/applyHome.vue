@@ -6,7 +6,8 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="4">
             <a-form-item label="流程名称">
-              <a-input-search style="margin-bottom: 10px;margin-right:10px;width: 200px" v-model="queryParam.searchProcessKey" allowClear @search="onSearchProcess"/>
+              <a-input-search style="margin-bottom: 10px;margin-right:10px;width: 200px"
+                              v-model="queryParam.searchProcessKey" allowClear @search="onSearchProcess"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="4">
@@ -131,7 +132,7 @@
         getAction(this.url.getProcessDataList, { status: 1, roles: true, zx: this.queryParam.zx }).then(res => {
           this.activeKeyAll = []
           if (res.success) {
-            let result = res.result || []
+            let result = res.result.records || []
             if (result.length > 0) {
               let searchProcessKey = this.queryParam.searchProcessKey
               if (searchProcessKey) { //过滤条件
@@ -167,10 +168,9 @@
         lcModa.isNew = true
         lcModa.processData = v
         lcModa.from = activitiSetting.applyHomePath
-        lcModa.reload =true
+        lcModa.reload = true
         setStore('lcModa', lcModa)
         this.$router.push(activitiSetting.applyFormPath)
-        console.log('发起', v)
       },
       /*前往我的申请页面*/
       handleToApplyList() {
