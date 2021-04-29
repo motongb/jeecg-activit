@@ -43,6 +43,9 @@
             <if test="params.typeId !=null and params.typeId !=''">
                 and f.type = #{params.typeId}
             </if>
+            <if test="params.categoryId !=null and params.categoryId !=''">
+                and azp.category_id = #{params.categoryId}
+            </if>
         </where>
     </select>
 </mapper>

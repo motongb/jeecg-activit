@@ -69,38 +69,16 @@ public class ActivitiProcessController {
                            @ApiParam(value = "流程状态 部署后默认1激活") String status,
                            @ApiParam(value = "如果此项不为空，则会过滤当前用户的角色权限") Boolean roles,
                            HttpServletRequest request) {
-//        LambdaQueryWrapper<ActZprocess> wrapper = new LambdaQueryWrapper<>();
-//        wrapper.orderByAsc(ActZprocess::getSort).orderByDesc(ActZprocess::getVersion);
-//        if (StrUtil.isNotBlank(lcmc)) {
-//            wrapper.like(ActZprocess::getName, lcmc);
-//        }
-//        if (StrUtil.isNotBlank(lckey)) {
-//            wrapper.like(ActZprocess::getProcessKey, lckey);
-//        }
-//        if (zx != null && zx) {
-//            wrapper.eq(ActZprocess::getLatest, 1);
-//        }
-//        if (StrUtil.isNotBlank(status)) {
-//            wrapper.eq(ActZprocess::getStatus, status);
-//        }
-//        String statuss = request.getParameter("statuss");
-//        if (StrUtil.isNotBlank(statuss)) {
-//            wrapper.in(ActZprocess::getStatus, statuss);
-//        }
-//        String typeId = request.getParameter("typeId");
-//        if (StrUtil.isNotBlank(typeId)) {
-//            wrapper.eq(ActZprocess::getTypeId, typeId);
-//        }
         Map<String, Object> params = new HashMap<>();
         params.put("name", lcmc);
         params.put("processKey", lckey);
         params.put("latest", zx != null && zx ? 1 : null);
         params.put("statuss", request.getParameter("statuss"));
         params.put("typeId", request.getParameter("typeId"));
+        params.put("categoryId", request.getParameter("categoryId"));
         int pageNo = StringUtils.isEmpty(request.getParameter("pageNo")) ? 1 : Integer.parseInt(request.getParameter("pageNo"));
         int pageSize = StringUtils.isEmpty(request.getParameter("pageSize")) ? 10 : Integer.parseInt(request.getParameter("pageSize"));
         IPage<ActZprocess> page = new Page<>(pageNo, pageSize);
-//        List<ActZprocess> list = actZprocessService.page(page, wrapper).getRecords();
         List<ActZprocess> list = actZprocessService.getBaseMapper().pageVo(page, params).getRecords();
         if (roles != null && roles) { //过滤角色
             LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
