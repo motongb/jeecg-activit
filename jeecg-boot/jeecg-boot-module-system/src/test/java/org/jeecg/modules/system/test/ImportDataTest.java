@@ -46,21 +46,21 @@ import java.util.stream.Collectors;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = JeecgSystemApplication.class)
 public class ImportDataTest {
     // 组织机构excel文件路径
-    private static final String DEPART_FILE_PATH = "E:\\资料\\柳钢东信\\主数据20210329\\人资主数据\\组织 - 副本.XLSX";
+    private static final String DEPART_FILE_PATH = "E:\\资料\\主数据20210329\\人资主数据\\组织 - 副本.XLSX";
     // 岗位excel文件路径
-    private static final String POSITION_FILE_PATH = "E:\\资料\\柳钢东信\\主数据20210329\\人资主数据\\岗位EXPORT - 副本.XLSX";
+    private static final String POSITION_FILE_PATH = "E:\\资料\\主数据20210329\\人资主数据\\岗位EXPORT - 副本.XLSX";
     // 用户excel文件路径
-    private static final String USER_FILE_PATH = "E:\\资料\\柳钢东信\\主数据20210329\\人资主数据\\员工EXPORT - 副本.XLSX";
+    private static final String USER_FILE_PATH = "E:\\资料\\主数据20210329\\人资主数据\\员工EXPORT - 副本.XLSX";
     // 企业excel文件路径
-    private static final String COMPANY_FILE_PATH = "E:\\资料\\柳钢东信\\主数据20210329\\BP客商主数据202103291525\\企业主数据.xlsx";
+    private static final String COMPANY_FILE_PATH = "E:\\资料\\主数据20210329\\BP客商主数据202103291525\\企业主数据.xlsx";
     // 企业地址excel文件路径
-    private static final String COMPANY_ADDRESS_FILE_PATH = "E:\\资料\\柳钢东信\\主数据20210329\\BP客商主数据202103291525\\企业主数据 - 地址.xlsx";
+    private static final String COMPANY_ADDRESS_FILE_PATH = "E:\\资料\\主数据20210329\\BP客商主数据202103291525\\企业主数据 - 地址.xlsx";
     // 企业银行excel文件路径
-    private static final String COMPANY_BANK_FILE_PATH = "E:\\资料\\柳钢东信\\主数据20210329\\BP客商主数据202103291525\\企业主数据 - 银行.xlsx";
+    private static final String COMPANY_BANK_FILE_PATH = "E:\\资料\\主数据20210329\\BP客商主数据202103291525\\企业主数据 - 银行.xlsx";
     // 物料excel文件路径
-//    private static final String MATERIEL_FILE_PATH = "E:\\资料\\柳钢东信\\主数据20210329\\物料主数据202103291525\\备品备件物料主数据20210329153526.xlsx";
-//    private static final String MATERIEL_FILE_PATH = "E:\\资料\\柳钢东信\\主数据20210329\\物料主数据202103291525\\辅料物料主数据20210329153905.xlsx";
-    private static final String MATERIEL_FILE_PATH = "E:\\资料\\柳钢东信\\主数据20210329\\物料主数据202103291525\\六大类型物料主数据20210329152844.xlsx";
+//    private static final String MATERIEL_FILE_PATH = "E:\\资料\\主数据20210329\\物料主数据202103291525\\备品备件物料主数据20210329153526.xlsx";
+//    private static final String MATERIEL_FILE_PATH = "E:\\资料\\主数据20210329\\物料主数据202103291525\\辅料物料主数据20210329153905.xlsx";
+    private static final String MATERIEL_FILE_PATH = "E:\\资料\\主数据20210329\\物料主数据202103291525\\六大类型物料主数据20210329152844.xlsx";
 
 
     @Autowired
