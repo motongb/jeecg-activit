@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
@@ -27,6 +28,10 @@ import org.jeecg.modules.activiti.entity.*;
 import org.jeecg.modules.activiti.mapper.ActBusinessMapper;
 import org.jeecg.modules.activiti.service.IActBusinessService;
 import org.jeecg.modules.activiti.service.IActZParamsService;
+import org.jeecg.modules.online.cgform.entity.OnlCgformField;
+import org.jeecg.modules.online.cgform.entity.OnlCgformHead;
+import org.jeecg.modules.online.cgform.service.IOnlCgformFieldService;
+import org.jeecg.modules.online.cgform.service.IOnlCgformHeadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -59,6 +64,11 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
     @Autowired
     private IActZParamsService actZParamsService;
 
+    @Autowired
+    private IOnlCgformHeadService onlCgformHeadService;
+
+    @Autowired
+    private IOnlCgformFieldService onlCgformFieldService;
 
     /**
      * 查询我的流程列表
@@ -169,55 +179,80 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
      */
     public boolean saveApplyForm(String tableId, Map<String, Object> paramsData) {
         String tableName = (String) paramsData.get("tableName");
-        String filedNames = (String) paramsData.get("filedNames");
+        Set<String> mainFields = new LinkedHashSet<>((List<String>) paramsData.get("mainFields"));
         Map<String, Object> busiData = this.baseMapper.getBusiData(tableId, tableName);
-        String[] fileds = filedNames.split(",");
+        Map<String, Object> mainData = (Map<String, Object>) paramsData.get("model");
         if (MapUtil.isEmpty(busiData)) { //没有，新增逻辑
-            StringBuilder filedsB = new StringBuilder("id");
-            StringBuilder filedsVB = new StringBuilder("'" + tableId + "'");
-            for (String filed : fileds) {
-                String dbFiled = oConvertUtils.camelToUnderline(filed);
-                if (filed != null && !filed.equals("undefined")) {
-                    if (paramsData.get(filed) != null) {
-                        filedsB.append("," + dbFiled);
-                        filedsVB.append(",'" + paramsData.get(filed) + "'");
-                    } else {
-                        filedsB.append("," + dbFiled);
-                        filedsVB.append("," + paramsData.get(filed));
-                    }
-                }
-            }
-            LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-            String userName = sysUser.getUsername();
-            filedsB.append("," + "create_by");
-            filedsVB.append(",'" + userName + "'");
-            filedsB.append("," + "create_time");
-            filedsVB.append(",'" + DateUtils.formatDate(new Date(), "yyyy-MM-dd") + "'");
-            this.baseMapper.insertBusiData(String.format("INSERT INTO %s (%s) VALUES (%s)", tableName, filedsB.toString(), filedsVB.toString()));
+            insertVbObjData(tableId, tableName, mainFields, mainData);
         } else { //有，修改
-            StringBuilder setSql = new StringBuilder();
-            for (String filed : fileds) {
-                if (filed != null && !filed.equals("undefined")) {
-                    String parameter = (String) paramsData.get(filed);
-                    String dbFiled = oConvertUtils.camelToUnderline(filed);
-                    if (parameter == null) {
-                        setSql.append(String.format("%s = null,", dbFiled));
-                    } else {
-                        setSql.append(String.format("%s = '%s',", dbFiled, parameter));
+            updateVbObjData(tableId, tableName, mainFields, mainData);
+        }
+        // 子表
+        List<Map<String, Object>> subFormMeta = (List<Map<String, Object>>) paramsData.get("subFormMeta");
+        if (!CollectionUtils.isEmpty(subFormMeta)) {
+            for (Map<String, Object> subForm : subFormMeta) {
+                String subTableName = (String) subForm.get("tableName");
+                Set<String> fields = new LinkedHashSet<>((List<String>) subForm.get("fields"));
+                String type = (String) subForm.get("type");
+                String pField = (String) subForm.get("pField");
+                fields.add(pField);
+                Object subData = paramsData.get(subTableName);
+                if (Objects.isNull(subData) || CollectionUtils.isEmpty((Collection<?>) subData)) {
+                    continue;
+                }
+                LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+                // 先删后插
+                this.baseMapper.deleteSubData(tableId, subTableName, pField);
+                if ("object".equals(type)) {
+                    insertVbObjData(IdWorker.getIdStr(), subTableName, fields, (Map<String, Object>) subData);
+                }
+                if ("list".equals(type)) {
+                    String fieldVB = "(id,create_by,create_time,sys_org_code," + String.join(",", fields) + ")";
+                    List<List<Object>> valuesList = new ArrayList<>();
+                    List<Map<String, Object>> subList = (List<Map<String, Object>>) subData;
+                    for (Map<String, Object> data : subList) {
+                        List<Object> values = new ArrayList<>();
+                        values.add(IdWorker.getIdStr());
+                        values.add(sysUser.getUsername());
+                        values.add(DateUtils.formatDate());
+                        values.add(sysUser.getOrgCode());
+                        fields.forEach(f -> values.add(pField.equals(f) ? tableId : data.get(f)));
+                        valuesList.add(values);
                     }
+                    this.baseMapper.insertBatch(subTableName, fieldVB, valuesList);
                 }
             }
-            String substring = setSql.substring(0, setSql.length() - 1);//去掉最后一个,号
-            LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-            String userName = sysUser.getUsername();
-            substring += (",update_by = " + "'" + userName + "'");
-            substring += (",update_time = " + "'" + DateUtils.formatDate(new Date(), "yyyy-MM-dd") + "'");
-            this.baseMapper.updateBusiData(String.format("update %s set %s where id = '%s'", tableName, substring, tableId));
         }
         // 设置参数
         Map<String, Object> actZParams = (Map<String, Object>) paramsData.get("params");
         handleParams(actZParams, tableId);
         return MapUtil.isEmpty(busiData);
+    }
+
+    public void updateVbObjData(String tableId, String tableName, Set<String> fileds, Map<String, Object> paramsData) {
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        Map<String, Object> valueMap = new HashMap<>();
+        valueMap.put("update_by", sysUser.getUsername());
+        valueMap.put("update_time", DateUtils.formatDate());
+        fileds.forEach(f -> valueMap.put(f, paramsData.get(f)));
+        this.baseMapper.updateBusiData(tableName, tableId, valueMap);
+    }
+
+    public void insertVbObjData(String tableId, String tableName, Set<String> fields, Map<String, Object> paramsData) {
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        fields.add("id");
+        fields.add("create_by");
+        fields.add("create_time");
+        fields.add("sys_org_code");
+        paramsData.put("id", tableId);
+        paramsData.put("create_by", sysUser.getUsername());
+        paramsData.put("create_time", DateUtils.formatDate());
+        paramsData.put("sys_org_code", sysUser.getOrgCode());
+        String fieldVB = String.format("(%s)", String.join(",", fields));
+        List<Object> values = fields.stream().map(m -> paramsData.get(m)).collect(Collectors.toList());
+        this.baseMapper.insertBatch(tableName, fieldVB, new ArrayList<List<Object>>() {{
+            add(values);
+        }});
     }
 
     public Map<String, Object> getApplyForm(String tableId, String tableName) {
@@ -435,6 +470,27 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
         }
         handleParams(params, tableId);
         return actBusiness;
+    }
+
+    @Override
+    public Map<String, Object> getFormData(String formCode, String dataId) {
+        OnlCgformHead cgformHead = onlCgformHeadService.getById(formCode);
+        Map<String, Object> dataMap = this.baseMapper.getBusiData(dataId, cgformHead.getTableName());
+        if (StringUtils.hasText(cgformHead.getSubTableStr())) {
+            String[] subTables = cgformHead.getSubTableStr().split(",");
+            for (String subTable : subTables) {
+                OnlCgformHead subCgform = onlCgformHeadService.getOne(new LambdaQueryWrapper<OnlCgformHead>().eq(OnlCgformHead::getTableName, subTable));
+                OnlCgformField foreignField = onlCgformFieldService.getOne(new LambdaQueryWrapper<OnlCgformField>()
+                        .eq(OnlCgformField::getCgformHeadId, subCgform.getId())
+                        .eq(OnlCgformField::getMainTable, cgformHead.getTableName())
+                );
+                List<Map<String, Object>> itemList = this.baseMapper.getList(foreignField.getDbFieldName(),
+                        (String) dataMap.get(foreignField.getMainField()),
+                        subTable);
+                dataMap.put(subTable, itemList);
+            }
+        }
+        return dataMap;
     }
 
     private void handleParams(Map<String, Object> params, String tableId) {

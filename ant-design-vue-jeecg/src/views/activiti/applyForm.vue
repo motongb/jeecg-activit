@@ -54,7 +54,7 @@
     </a-card>
 
     <!--流程表单-->
-    <component :is="lcModa.formComponent" ref="processForm" :lcModa="lcModa"></component>
+    <component :is="lcModa.formComponent" ref="processForm" :lcModa="lcModa" :preView="false"></component>
 
     <sign-modal :form="form" :modal-task-title="modalTaskTitle" :modal-task-visible="modalTaskVisible"
                 :assignee-list="assigneeList" :user-loading="userLoading" @cancel="modalTaskVisible = false"
@@ -169,7 +169,7 @@
         this.$refs.ruleForm.validate(valid => {
           if (valid) {
             this.btndisabled = true
-            this.$refs.processForm.submitForm(e).then(res => {
+            this.$refs.processForm.submitForm().then(res => {
               if (!this.lcModa.isTask) {
                 this.afterSub(res)
               }

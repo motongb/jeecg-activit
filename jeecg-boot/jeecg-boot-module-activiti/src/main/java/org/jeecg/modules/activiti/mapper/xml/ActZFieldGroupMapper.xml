@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.activiti.mapper.ActZFieldGroupMapper">
+
+    <delete id="deleteByMainId" parameterType="java.lang.String">
+		DELETE 
+		FROM  act_z_field_group 
+		WHERE form_id = #{mainId}
+	</delete>
+
+    <select id="selectByMainId" parameterType="java.lang.String"
+            resultType="org.jeecg.modules.activiti.entity.ActZFieldGroup">
+		SELECT * 
+		FROM  act_z_field_group
+		WHERE form_id = #{mainId}
+		order by sort asc
+	</select>
+</mapper>

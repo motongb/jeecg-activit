@@ -1,5 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jeecg.modules.activiti.org.jeecg.modules.activiti.mapper.ActBusinessMapper">
+<mapper namespace="org.jeecg.modules.activiti.mapper.ActBusinessMapper">
 
+    <select id="getList" resultType="map">
+        select * from ${tableName} where ${field} = #{fieldValue}
+    </select>
+
+    <select id="getBusiData" parameterType="string" resultType="map">
+        select * from ${tableName} where id = #{tableId}
+    </select>
+
+    <insert id="insertBusiData" parameterType="string">
+        ${sql}
+    </insert>
+
+    <insert id="insertBatch">
+        insert into ${tableName} ${fields} values
+        <foreach item="item" index="index" collection="list" separator=",">
+            <foreach collection="item" item="value" open="(" separator="," close=")">
+                #{value}
+            </foreach>
+        </foreach>
+    </insert>
+
+    <update id="updateBusiData" parameterType="string">
+        update ${tableName} set
+        <foreach item="value" index="key" collection="values" separator=",">
+            <if test="value !=null">
+                ${key} = #{value}
+            </if>
+        </foreach>
+        where id = #{tableId}
+    </update>
+
+    <delete id="deleteBusiData" parameterType="string">
+        delete from ${tableName} where id = #{tableId}
+    </delete>
+
+    <delete id="deleteSubData" parameterType="string">
+        delete from ${tableName} where ${pField} = #{pid}
+    </delete>
+
+    <select id="findUserIdByTypeAndTaskId" parameterType="string" resultType="string">
+        SELECT USER_ID_ FROM ACT_HI_IDENTITYLINK WHERE TYPE_ = #{type} AND TASK_ID_ = #{taskId} GROUP BY USER_ID_
+    </select>
+
+    <insert id="insertHI_IDENTITYLINK" parameterType="string">
+        INSERT INTO ACT_HI_IDENTITYLINK (ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_) VALUES (#{id}, #{type}, #{userId}, #{taskId}, #{procInstId})
+    </insert>
+
+    <select id="selectIRunIdentity" parameterType="string" resultType="string">
+        SELECT ari.ID_ FROM ACT_RU_IDENTITYLINK ari  WHERE TYPE_ = #{type} AND TASK_ID_ = #{taskId}
+    </select>
+
+    <update id="updateBusinessStatus" parameterType="string">
+        update ${tableName} set status = #{actStatus} where id = #{tableId}
+    </update>
+
+    <select id="listByTypeApp" parameterType="string" resultType="string">
+        select id from act_z_business where proc_def_id in (select id from act_z_process where type_id in (select id from sys_category where code like '${type}%'))
+    </select>
+
+    <select id="deployment_idListByType" parameterType="string" resultType="string">
+        select deployment_id from act_z_process where type_id in (select id from sys_category where code like '${type}%')
+    </select>
+
+    <select id="getUsersByName" parameterType="string" resultType="org.jeecg.common.system.vo.LoginUser">
+        select * from  sys_user  where (realname like '%${searchVal}%' or username like '%${searchVal}%') and del_flag = 0
+    </select>
 </mapper>

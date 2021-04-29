@@ -47,9 +47,41 @@
               <j-dict-select-tag type="radio" v-model="model.status" dictCode="yn" placeholder="请选择启用"/>
             </a-form-model-item>
           </a-col>
+          <a-col :span="12" v-if="!!model.id">
+            <a-form-model-item :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-button type="primary" class="editable-add-btn" @click="jsAdd(model.id)">增强JS</a-button>
+            </a-form-model-item>
+          </a-col>
         </a-row>
       </a-form-model>
     </j-form-container>
+    <!--   列表-->
+    <template v-if="!!model.id">
+      <ActZFieldGroup ref="groupTable" :table-id="model.tableMetaId" :data-id="model.id"></ActZFieldGroup>
+      <h3 v-show="tableMeta.tableType===2" style="margin-top: 8px;margin-bottom: 8px">子表</h3>
+      <a-table ref="table"
+               size="middle"
+               bordered
+               rowKey="id"
+               :scroll="{x:true}"
+               v-show="tableMeta.tableType===2"
+               :columns="columns"
+               :pagination="false"
+               :data-source="subTableList">
+        <template slot="action" slot-scope="text, record">
+          <a @click="showModal(record.id)">字段组</a>
+          <a-divider type="vertical"/>
+          <a @click="jsAdd(model.id.slice(16)+record.id.slice(16))">增强JS</a>
+        </template>
+      </a-table>
+      <!--      字段组模态框-->
+      <a-modal :width="800" v-model="fieldGroupVisible" title="字段分组">
+        <ActZFieldGroup :table-id="subTableId" :data-id="model.id+subTableId"></ActZFieldGroup>
+      </a-modal>
+    </template>
+    <a-modal :width="800" :visible="editorVisible" title="JS增强" @ok="handleOk" @cancel="editorVisible=false">
+      <j-code-editor ref="jcodeEditor" language="javascript" v-model="editorValue" :fullScreen="true"/>
+    </a-modal>
   </a-spin>
 </template>
 
@@ -57,10 +89,11 @@
 
   import { httpAction, getAction } from '@/api/manage'
   import { validateDuplicateValue } from '@/utils/util'
+  import ActZFieldGroup from '../components/ActZFieldGroup'
 
   export default {
     name: 'ActZFormForm',
-    components: {},
+    components: { ActZFieldGroup },
     props: {
       //表单禁用
       disabled: {
@@ -88,15 +121,54 @@
         confirmLoading: false,
         validatorRules: {},
         url: {
-          add: '/activiti/actZForm/add',
-          edit: '/activiti/actZForm/edit',
-          queryById: '/activiti/actZForm/queryById',
+          add: '/process/actZForm/add',
+          edit: '/process/actZForm/edit',
+          queryById: '/process/actZForm/queryById',
           tableList: '/online/cgform/head/list',
-          list: '/activiti/actZForm/list',
-          ruleCode: '/sys/fillRule/executeRuleByCode/'
+          list: '/process/actZForm/list',
+          ruleCode: '/sys/fillRule/executeRuleByCode/',
+          subTable: '/process/actZForm/subTable',
+          enhanceJs: '/online/cgform/head/enhanceJs/'
         },
         tableOptions: [],
-        lastCode: ''
+        lastCode: '',
+        tableMeta: {},
+        columns: [
+          {
+            title: '#',
+            dataIndex: '',
+            key: 'rowIndex',
+            width: 60,
+            align: 'center',
+            customRender: function(t, r, index) {
+              return parseInt(index) + 1
+            }
+          },
+          {
+            title: '表名',
+            align: 'center',
+            dataIndex: 'tableName'
+          },
+          {
+            title: '表描述',
+            align: 'center',
+            dataIndex: 'tableTxt'
+          },
+          {
+            title: '操作',
+            dataIndex: 'action',
+            align: 'center',
+            fixed: 'right',
+            width: 147,
+            scopedSlots: { customRender: 'action' }
+          }
+        ],
+        subTableList: [],
+        subTableId: '',
+        fieldGroupVisible: false,
+        editorVisible: false,
+        editorValue: '',
+        enhanceJs: {}
       }
     },
     computed: {
@@ -109,8 +181,47 @@
       this.modelDefault = JSON.parse(JSON.stringify(this.model))
     },
     methods: {
+      showModal(id) {
+        this.fieldGroupVisible = true
+        this.subTableId = id
+      },
+      jsAdd(id) {
+        this.editorVisible = true
+        this.enhanceJs.cgformHeadId = id
+        this.enhanceJs.cgJsType = 'process'
+        getAction(this.url.enhanceJs + id, { type: 'process' }).then(res => {
+          if (res.success && res.result) {
+            this.enhanceJs = res.result
+            this.$refs.jcodeEditor.setCodeContent(res.result.cgJs)
+          } else {
+            this.$refs.jcodeEditor.setCodeContent('')
+          }
+        })
+      },
+      handleOk() {
+        let methods = ''
+        if (this.enhanceJs.id) {
+          methods = 'put'
+        } else {
+          methods = 'post'
+        }
+        this.enhanceJs.cgJs = this.editorValue
+        httpAction(this.url.enhanceJs + this.enhanceJs.cgformHeadId, this.enhanceJs, methods).then(res => {
+          if (res.success) {
+            this.$message.success('保存成功')
+            this.editorVisible = false
+            this.editorValue = ''
+          }
+        })
+      },
+      /*获取子表*/
+      getSubTable() {
+        getAction(this.url.subTable, { metaId: this.model.tableMetaId }).then(res => {
+          this.subTableList = res.result
+        })
+      },
+      /*获取最后一个编码*/
       getLastCode() {
-        // let url = '/online/cgform/api/getData/746a8e969df74571936b094b1590c4d3'
         let params = {
           column: 'code',
           order: 'desc',
@@ -125,6 +236,7 @@
           }
         })
       },
+      /*获取新编码*/
       getNewCode() {
         let ruleCode = 'flow_number'
         let formData = {
@@ -142,6 +254,8 @@
         let table = _.find(this.tableOptions, { tableName })
         if (table) {
           this.model.tableMetaId = table.id
+          this.tableMeta = table
+          this.getSubTable()
         }
       },
       getTableOptions(value) {
@@ -152,6 +266,9 @@
           formCategory: value
         }).then(res => {
           this.tableOptions = res.result.records
+          if (this.model.id) {
+            this.tableMeta = _.find(this.tableOptions, { id: this.model.tableMetaId })
+          }
         })
       },
       filterOption(input, option) {
@@ -165,11 +282,12 @@
       },
       edit(record) {
         this.model = Object.assign({}, record)
-        this.visible = true
         if (record) {
+          this.getSubTable()
           this.getTableOptions(record.tableType)
         }
       },
+      /*提交表单*/
       submitForm() {
         const that = this
         // 触发表单验证
@@ -201,3 +319,8 @@
     }
   }
 </script>
+<style scoped>
+  .full-screen-parent /deep/ .code-editor-cust {
+    height: 300px;
+  }
+</style>

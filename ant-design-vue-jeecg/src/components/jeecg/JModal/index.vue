@@ -4,6 +4,7 @@
     :class="getClass(modalClass)"
     :style="getStyle(modalStyle)"
     :visible="visible"
+    :forceRender="forceRender"
     v-bind="_attrs"
     v-on="$listeners"
     @ok="handleOk"
@@ -56,6 +57,11 @@
       title: String,
       // 可使用 .sync 修饰符
       visible: Boolean,
+      // 强制渲染
+      forceRender: {
+        type: Boolean,
+        default: false
+      },
       // 是否全屏弹窗，当全屏时无论如何都会禁止 body 滚动。可使用 .sync 修饰符
       fullscreen: {
         type: Boolean,

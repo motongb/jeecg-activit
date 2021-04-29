@@ -23,152 +23,74 @@ export const activitiApproveMixin = {
       default: true
     }
   },
+  computed: {
+    formDisabled() {
+      return this.lcModa.disabled
+    }
+  },
   data() {
     return {
-      FormItemType: {
-        text: 'text',
-        date: 'date',
-        textarea: 'textarea',
-        sel_depart: 'sel_depart',
-        pca: 'pca',
-        sel_tree: 'sel_tree',
-        sel_user: 'sel_user',
-        image: 'image',
-        password: 'password',
-        popup: 'popup',
-        umeditor: 'umeditor',
-        checkbox: 'checkbox',
-        file: 'file',
-        cat_tree: 'cat_tree',
-        list_multi: 'list_multi',
-        list: 'list',
-        markdown: 'markdown',
-        radio: 'radio',
-        switch: 'switch',
-        sel_search: 'sel_search',
-        time: 'time'
-      },
       url: {
-        getForm: '/actBusiness/getForm',
+        getForm: '/actBusiness/getFormData/',
+        // getForm: '/online/cgform/api/form/',
         addApply: '/actBusiness/add',
         editForm: '/actBusiness/editForm',
-        getFormItem: '/online/cgform/api/getFormItem/',
-        tableForm: '/activiti/actZForm/list'
+        tableForm: '/process/actZForm/queryByCode/',
+        getErpColumn: '/online/cgform/api/getErpColumns/'
       },
       confirmLoading: false,
       /*表单回显数据*/
       model: {},
-      formMeta: {
-        schema: {
-          $schema: 'http://json-schema.org/draft-07/schema#',
-          describe: '流程测试表单',
-          type: 'object',
-          title: '我是一个jsonschema title',
-          required: ['text'],
-          properties: {},
-          table: 'ces_process_form'
-        },
-        head: {
-          id: '',
-          tableName: 'ces_process_form',
-          tableType: 1,
-          tableVersion: 9,
-          tableTxt: '流程测试表单',
-          isCheckbox: 'Y',
-          isDbSynch: 'Y',
-          isPage: 'Y',
-          isTree: 'N',
-          idSequence: null,
-          idType: 'UUID',
-          queryMode: 'single',
-          relationType: null,
-          subTableStr: null,
-          tabOrderNum: null,
-          treeParentIdField: null,
-          treeIdField: null,
-          treeFieldname: null,
-          formCategory: 'temp',
-          formTemplate: '1',
-          themeTemplate: 'normal',
-          formTemplateMobile: null,
-          updateBy: 'admin',
-          updateTime: '2021-04-21 15:35:27',
-          createBy: 'admin',
-          createTime: '2021-04-21 09:43:52',
-          copyType: 0,
-          copyVersion: null,
-          physicId: null,
-          hascopy: null,
-          scroll: 1,
-          taskId: null,
-          isDesForm: 'N',
-          desFormCode: null
-        },
-        formTemplate: '1'
-      },
-      validatorRules: {},
+      modelDefault: {},
+      mainFormMeta: {},
+      subFormMeta: [],
+      processForm: {}, //流程表单
       fieldList: [],
-      properties: {}
+      properties: {},
+      enhanceJs: ''
     }
-  },
-  computed: {},
-  beforeCreate() {
-
   },
   created() {
     console.log('流程数据', this.lcModa)
-    if (!this.lcModa.isNew && !this.preView) {//编辑
-      this.getForm()
-    }
     this.getTableForm()
   },
   methods: {
+    onFormItemInitial({ fieldList, properties }) {
+      this.fieldList = fieldList
+      this.properties = properties
+      // 设置默认值
+      if (!this.model.id) {
+        this.$nextTick(() => {
+          for (let f of fieldList) {
+            if (properties[f].defVal) {
+              this.$set(this.model, f, properties[f].defVal)
+            }
+          }
+        })
+      }
+    },
     getTableForm() {
-      getAction(this.url.tableForm, {
-        code: this.lcModa.processData.formCode,
-        column: 'createTime',
-        order: 'desc'
-      }).then(res => {
-        if (res.result.records.length > 0) {
-          let tableForm = res.result.records[0]
-          this.getFormItem(tableForm.tableMetaId)
+      getAction(this.url.tableForm + this.lcModa.processData.formCode).then(res => {
+        if (res.result) {
+          this.processForm = res.result
+          this.getErpColumn(this.processForm.tableMetaId)
+          if (!this.lcModa.isNew && !this.preView) {//编辑
+            this.getForm()
+          }
         }
       })
     },
-    getFormItem(metaId) {
-      getAction(this.url.getFormItem + metaId, {}).then(res => {
-        this.formMeta = res.result
-        // 获取属性
-        this.properties = this.formMeta.schema ? this.formMeta.schema.properties : {}
-        // 获取字段
-        this.fieldList = Object.keys(this.properties)
-        // 设置默认值
-        if (this.lcModa.isNew) {
-          // this.$nextTick(() => {
-          //   for (let f of this.fieldList) {
-          //     if (this.properties[f].defVal) {
-          //       this.model[f] = this.properties[f].defVal
-          //     }
-          //   }
-          // })
-        }
-        // 设置校验字段
-        if (this.formMeta.schema.required){
-          this.formMeta.schema.required.forEach(f => this.validatorRules[f] = [{
-            required: true,
-            message: `请输入${this.properties[f].title}!`
-          }])
-        }
-        console.log(res.result, this.properties, this.fieldList)
+    getErpColumn(mainId) {
+      getAction(this.url.getErpColumn + mainId, {}).then(res => {
+        this.subFormMeta = res.result.subList
+        this.mainFormMeta = res.result.main
       })
     },
     /*回显数据*/
     getForm() {
-      let r = this.lcModa.processData
-      getAction(this.url.getForm, { tableId: r.tableId, tableName: r.tableName }).then((res) => {
+      getAction(this.url.getForm + this.processForm.tableMetaId + '/' + this.lcModa.processData.tableId, {}).then((res) => {
         if (res.success) {
           this.model = res.result
-          this.model.tableName = r.tableName
           console.log('表单回显数据', this.model)
         } else {
           this.$message.error(res.message)
@@ -177,29 +99,45 @@ export const activitiApproveMixin = {
     },
     // handler
     submitForm() {
+      const that = this
       return new Promise((resolve, reject) => {
-        this.$refs.form.validate(valid => {
+        this.$refs.mainForm.validate(valid => {
           if (valid) {
-            this.model.title = this.lcModa.title
-            this.model.procDefId = this.lcModa.processData.id
-            this.model.procDeTitle = this.lcModa.processData.name
-            this.model.filedNames = this.fieldList.join(',')
-            if (!this.model.tableName) {
-              this.model.tableName = this.lcModa.processData.tableName
+            let processFormData = {}
+            processFormData.id = this.model.id
+            processFormData.title = that.lcModa.title
+            processFormData.procDefId = that.lcModa.processData.id
+            processFormData.procDeTitle = that.lcModa.processData.name
+            processFormData.tableName = that.lcModa.processData.tableName
+            processFormData.mainFields = this.$refs.mainForm.getFieldList()
+            if (that.subFormMeta && that.subFormMeta.length > 0) {
+              let subFormMeta = []
+              that.subFormMeta.forEach(sub => {
+                processFormData[sub.currentTableName] = that.$refs[sub.currentTableName][0].getDataSource()
+                subFormMeta.push({
+                  tableName: sub.currentTableName,
+                  fields: that.$refs[sub.currentTableName][0].getFieldList(),
+                  type: 'list',
+                  pkey: sub.foreignKeys[0].key,
+                  pField: sub.foreignKeys[0].field
+                })
+              })
+              processFormData.subFormMeta = subFormMeta
             }
-            console.log('formData', this.model)
+            processFormData.model = that.model
+            console.log('formData', processFormData)
             let url = ''
-            if (this.lcModa.isNew) {
-              url = this.url.addApply
+            if (that.lcModa.isNew) {
+              url = that.url.addApply
             } else {
-              url = this.url.editForm
+              url = that.url.editForm
             }
-            postAction(url, this.model).then((res) => {
+            postAction(url, processFormData).then((res) => {
               if (res.success) {
-                this.$message.success('保存成功！')
-                resolve(this.model)
+                that.$message.success('保存成功！')
+                resolve(that.model)
               } else {
-                this.$message.error(res.message)
+                that.$message.error(res.message)
               }
             }).finally(() => {
               reject()

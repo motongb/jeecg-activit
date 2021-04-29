@@ -46,3 +46,10 @@ initDepartComponent(){
         this.$emit("initComp",names)
       },
 ```
+
+- JModal强制渲染
+
+```
+src/components/jeecg/JModal/index.vue
+forceRender: Boolean,
+```

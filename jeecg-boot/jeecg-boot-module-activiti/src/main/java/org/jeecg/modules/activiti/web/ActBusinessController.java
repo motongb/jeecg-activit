@@ -1,9 +1,9 @@
 package org.jeecg.modules.activiti.web;
 
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -69,7 +69,7 @@ public class ActBusinessController {
         String tableName = (String) paramsData.get("tableName");
         String dept = (String) paramsData.get("dept");
         /*保存业务表单数据到数据库表*/
-        String tableId = IdUtil.simpleUUID();
+        String tableId = IdWorker.getIdStr();
         //如果前端上传了id
         String id = (String) paramsData.get("id");
         if (id != null && !id.equals("")) {
@@ -112,6 +112,12 @@ public class ActBusinessController {
 //        Map<String, Object> applyForm = actBusinessService.getApplyForm(tableId, tableName);
         Map<String, Object> applyForm = actBusinessService.getBaseMapper().getBusiData(tableId, tableName);
         return Result.OK(applyForm);
+    }
+
+    @ApiOperation("获取表单数据")
+    @GetMapping("/getFormData/{code}/{id}")
+    public Result<Object> getFormData(@PathVariable("code") String code, @PathVariable("id") String id) {
+        return Result.OK(actBusinessService.getFormData(code, id));
     }
 
     /*修改业务表单信息*/

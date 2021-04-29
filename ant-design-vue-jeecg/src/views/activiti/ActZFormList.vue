@@ -135,8 +135,6 @@
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import ActZFormModal from './modules/ActZFormModal'
-  import { filterMultiDictText } from '@/components/dict/JDictSelectUtil'
-  import { getAction, postAction } from '../../api/manage'
 
   export default {
     name: 'ActZFormList',
@@ -207,11 +205,11 @@
           }
         ],
         url: {
-          list: '/activiti/actZForm/list',
-          delete: '/activiti/actZForm/delete',
-          deleteBatch: '/activiti/actZForm/deleteBatch',
-          exportXlsUrl: '/activiti/actZForm/exportXls',
-          importExcelUrl: 'activiti/actZForm/importExcel'
+          list: '/process/actZForm/list',
+          delete: '/process/actZForm/delete',
+          deleteBatch: '/process/actZForm/deleteBatch',
+          exportXlsUrl: '/process/actZForm/exportXls',
+          importExcelUrl: 'process/actZForm/importExcel'
 
         },
         dictOptions: {},

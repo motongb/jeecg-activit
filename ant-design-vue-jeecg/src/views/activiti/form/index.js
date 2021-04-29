@@ -1,2 +1,4 @@
 import DefaultStyleForm from './DefaultStyleForm'
-export default {DefaultStyleForm}
+import GroupStyleForm from './GroupStyleForm'
+
+export default { DefaultStyleForm, GroupStyleForm }
