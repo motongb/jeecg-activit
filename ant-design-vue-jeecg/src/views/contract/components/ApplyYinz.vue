@@ -43,7 +43,7 @@
           status: 1,
           roles: true,
           zx: true,
-          typeId: this.typeCode
+          categoryId: this.typeCode
         },
         url: {
           getProcessDataList: '/activiti_process/listData'

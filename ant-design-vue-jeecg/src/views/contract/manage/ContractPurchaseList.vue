@@ -96,7 +96,7 @@
       </a-table>
     </div>
     <contract-purchase-modal ref="modalForm" @ok="modalFormOk"></contract-purchase-modal>
-    <apply-yinz ref="applyYinz" type-code="A01A01A01"></apply-yinz>
+    <apply-yinz ref="applyYinz" type-code="stamp"></apply-yinz>
   </a-card>
 </template>
 
