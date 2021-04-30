@@ -5,6 +5,7 @@ export const activitiApproveMixin = {
     lcModa: {
       type: Object,
       default: () => ({
+        formCode: '',//表单编码
         dept: '', //部门
         title: '',//标题
         disabled: false,// 全局禁用
@@ -36,6 +37,7 @@ export const activitiApproveMixin = {
         addApply: '/actBusiness/add',
         editForm: '/actBusiness/editForm',
         tableForm: '/process/actZForm/queryByCode/',
+        formList: '/process/actZForm/list',
         getErpColumn: '/online/cgform/api/getErpColumns/'
       },
       confirmLoading: false,
@@ -77,6 +79,8 @@ export const activitiApproveMixin = {
           if (!this.lcModa.isNew && !this.preView) {//编辑
             this.getForm()
           }
+        } else {
+          this.$message.warning(`编码${this.lcModa.processData.formCode}没有配置表单`)
         }
       })
     },

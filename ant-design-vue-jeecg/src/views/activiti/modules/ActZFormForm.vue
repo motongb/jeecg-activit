@@ -47,7 +47,7 @@
               <j-dict-select-tag type="radio" v-model="model.status" dictCode="yn" placeholder="请选择启用"/>
             </a-form-model-item>
           </a-col>
-          <a-col :span="12" v-if="!!model.id">
+          <a-col :span="12" v-if="!!model.id&&model.type=='1'">
             <a-form-model-item :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-button type="primary" class="editable-add-btn" @click="jsAdd(model.id)">增强JS</a-button>
             </a-form-model-item>
@@ -56,7 +56,7 @@
       </a-form-model>
     </j-form-container>
     <!--   列表-->
-    <template v-if="!!model.id">
+    <template v-if="!!model.id&&model.type=='1'">
       <ActZFieldGroup ref="groupTable" :table-id="model.tableMetaId" :data-id="model.id"></ActZFieldGroup>
       <h3 v-show="tableMeta.tableType===2" style="margin-top: 8px;margin-bottom: 8px">子表</h3>
       <a-table ref="table"
@@ -69,7 +69,7 @@
                :pagination="false"
                :data-source="subTableList">
         <template slot="action" slot-scope="text, record">
-          <a @click="showModal(record.id)">字段组</a>
+          <!--          <a @click="showModal(record.id)">字段组</a>-->
           <a-divider type="vertical"/>
           <a @click="jsAdd(model.id.slice(16)+record.id.slice(16))">增强JS</a>
         </template>
@@ -267,7 +267,7 @@
         }).then(res => {
           this.tableOptions = res.result.records
           if (this.model.id) {
-            this.tableMeta = _.find(this.tableOptions, { id: this.model.tableMetaId })
+            this.tableMeta = this.tableOptions.find(m => m.id === this.model.tableMetaId) || {}
           }
         })
       },
