@@ -145,7 +145,7 @@
           <a @click="viewForm()">预览表单</a>
         </a-form-item>
         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="表单类型">
-          <j-dict-select-tag v-decorator="['typeId',{initialValue:editObj.typeId}]" :trigger-change="true"
+          <j-dict-select-tag v-decorator="['formType',{initialValue:editObj.formType}]" :trigger-change="true"
                              dict-code="act_z_form_type"></j-dict-select-tag>
         </a-form-item>
         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="角色授权">
@@ -550,8 +550,8 @@
           if (form) {
             this.editObj.tableName = form.tableName
             this.editObj.routeName = form.style
-            this.editObj.typeId = form.type
-            this.editForm.setFieldsValue({ typeId: form.type })
+            this.editObj.formType = form.type
+            this.editForm.setFieldsValue({ formType: form.type })
           }
         })
       },
@@ -563,12 +563,10 @@
           this.$message.warning('请先选择表单！')
           return
         }
-        let formComponent = this.getFormComponent(r.routeName, r.typeId)
-        console.log(formComponent)
-        this.lcModa.formComponent = formComponent
+        this.lcModa.formComponent = this.getFormComponent(r.routeName, r.formType)
         this.lcModa.disabled = true
         this.lcModa.isNew = true
-        this.lcModa.processData = {}
+        this.lcModa.processData = { routeName: r.routeName, formType: r.formType, formCode: r.formCode }
         this.lcModa.visible = true
       },
       convertToModel(row) {
@@ -667,13 +665,6 @@
         }
         this.ipagination = pagination
         console.log(pagination, filters, sorter)
-        /*if (Object.keys(filters).length>0&&this.dataList.length>0){
-          for (const filterField in filters) {
-            let fiterVals = filters[filterField]||[];
-
-          }
-        }*/
-        // this.loadData();
       },
       loadData(arg) {
         if (!this.url.list) {

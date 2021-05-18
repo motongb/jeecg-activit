@@ -2,11 +2,11 @@
   <div>
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <a-button v-if="!disabled" @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <!-- 高级查询区域 -->
       <j-super-query :fieldList="superFieldList" ref="superQueryModal"
                      @handleSuperQuery="handleSuperQuery"></j-super-query>
-      <a-dropdown v-if="selectedRowKeys.length > 0">
+      <a-dropdown v-if="selectedRowKeys.length > 0&&!disabled">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
             <a-icon type="delete"/>
@@ -35,25 +35,12 @@
         :scroll="{x:true}"
         :columns="columns"
         :dataSource="dataSource"
-        :pagination="ipagination"
+        :pagination="false"
         :loading="loading"
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
         @change="handleTableChange">
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
-        <template slot="imgSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt=""
-               style="max-width:80px;font-size: 12px;font-style: italic;"/>
-        </template>
-        <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small"
-                    @click="downloadFile(text)">下载
-          </a-button>
-        </template>
-        <span slot="action" slot-scope="text, record">
+
+        <span v-if="!disabled" slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
             <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -106,9 +93,9 @@
         type: Boolean,
         default: false
       },
-      dataList: {
-        type: Array,
-        default: () => ([])
+      disabled: {
+        type: Boolean,
+        default: false
       }
     },
     watch: {
@@ -118,7 +105,7 @@
           if (!this.mainData) {
             this.clearList()
           } else {
-            this.loadData(1)
+            this.loadData()
           }
         }
       }
@@ -146,7 +133,6 @@
     },
     created() {
       this.getSuperFieldList()
-      this.dataSource = this.dataList
     },
     computed: {
       importExcelUrl() {
@@ -159,14 +145,16 @@
           dataIndex: m.dataIndex,
           sorter: m.sorter
         }))
-        col.push({
-          title: '操作',
-          dataIndex: 'action',
-          align: 'center',
-          fixed: 'right',
-          width: 147,
-          scopedSlots: { customRender: 'action' }
-        })
+        if (!this.disabled) {
+          col.push({
+            title: '操作',
+            dataIndex: 'action',
+            align: 'center',
+            fixed: 'right',
+            width: 147,
+            scopedSlots: { customRender: 'action' }
+          })
+        }
         return col
       }
     },
@@ -176,18 +164,13 @@
           // 新表单
           return
         }
-        //加载数据 若传入参数1则加载第一页的内容
-        if (arg === 1) {
-          this.ipagination.current = 1
-        }
         //查询条件
         let params = this.getQueryParams()
         // 设置外键查询
         this.subForm.foreignKeys.forEach(f => params[f.field] = this.mainData[f.key])
         params.tableType = this.subForm.tableType
         this.loading = true
-        this.dataSource = this.dataList
-        this.ipagination.total = this.dataList.length
+        this.dataSource = this.mainData[this.subForm.currentTableName]
         this.loading = false
       },
       onFormItemInitial({ fieldList, properties }) {
@@ -197,7 +180,7 @@
           this.$nextTick(() => {
             for (let f of this.fieldList) {
               if (properties[f].defVal) {
-                this.$set(this.model,f,properties[f].defVal)
+                this.$set(this.model, f, properties[f].type === 'number' ? Number(properties[f].defVal) : properties[f].defVal)
               }
             }
           })
@@ -263,32 +246,7 @@
       },
       getSuperFieldList() {
         let fieldList = []
-        fieldList.push({
-          type: 'popup',
-          value: 'companyCode',
-          text: '需方代码',
-          popup: { code: 'lg_company', field: 'code', orgFields: 'code', destFields: 'company_code' }
-        })
-        fieldList.push({ type: 'string', value: 'companyName', text: '需方名称', dictCode: '' })
-        fieldList.push({
-          type: 'popup',
-          value: 'supplierCode',
-          text: '供方代码',
-          popup: { code: 'lg_company', field: 'code', orgFields: 'code', destFields: 'supplier_code' }
-        })
         fieldList.push({ type: 'string', value: 'supplierName', text: '供方名称', dictCode: '' })
-        fieldList.push({ type: 'sel_depart', value: 'applyDept', text: '采购部门' })
-        fieldList.push({ type: 'string', value: 'amount', text: '中标金额', dictCode: '' })
-        fieldList.push({ type: 'string', value: 'programCode', text: '项目编号', dictCode: '' })
-        fieldList.push({ type: 'string', value: 'programName', text: '项目名称', dictCode: '' })
-        fieldList.push({ type: 'sel_user', value: 'userId', text: '经办人' })
-        fieldList.push({ type: 'int', value: 'hasProtocol', text: '是否需要技术协议', dictCode: '' })
-        fieldList.push({ type: 'date', value: 'biddingTime', text: '中标时间' })
-        fieldList.push({ type: 'int', value: 'attract', text: '招标方式', dictCode: '' })
-        fieldList.push({ type: 'int', value: 'hasRate', text: '是否含税', dictCode: '' })
-        fieldList.push({ type: 'string', value: 'rate', text: '税率', dictCode: '' })
-        fieldList.push({ type: 'string', value: 'biddingCode', text: '招标编号', dictCode: '' })
-        fieldList.push({ type: 'int', value: 'type', text: '招标类型', dictCode: 'bidding_type' })
         this.superFieldList = fieldList
       }
     }

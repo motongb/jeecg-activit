@@ -32,7 +32,9 @@
                   <a-form-model-item :label="properties[field].title" :labelCol="labelCol" :wrapperCol="wrapperCol"
                                      :prop="field">
                     <a-radio-group v-model="model[field]">
-                      <a-radio v-for="item in properties[field].enum" :value="item.value">{{item.text}}</a-radio>
+                      <a-radio v-for="item in properties[field].enum"
+                               :value="properties[field].type==='number'?Number(item.value):item.value">{{item.text}}
+                      </a-radio>
                     </a-radio-group>
                   </a-form-model-item>
                 </a-col>

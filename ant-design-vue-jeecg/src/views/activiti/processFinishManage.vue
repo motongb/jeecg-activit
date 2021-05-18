@@ -40,22 +40,22 @@
                  :pagination="ipagination"
                  @change="handleTableChange"
                  ref="table">
-          <a-table-column title="#" :width="50" fixed="left">
+          <a-table-column title="#" :width="50">
             <template slot-scope="t,r,i">
               <span> {{i+1}} </span>
             </template>
           </a-table-column>
-          <a-table-column title="流程实例ID" dataIndex="id" :width="150" fixed="left">
+          <a-table-column title="流程实例ID" dataIndex="id" :width="150" >
             <template slot-scope="t,r,i">
               <span> {{t}} </span>
             </template>
           </a-table-column>
-          <a-table-column title="流程名称" dataIndex="name" :width="150" fixed="left">
+          <a-table-column title="流程名称" dataIndex="name" :width="150">
             <template slot-scope="t,r,i">
               <span> {{t}} </span>
             </template>
           </a-table-column>
-          <a-table-column title="申请人" dataIndex="applyer" :ellipsis="true" :width="150" fixed="left">
+          <a-table-column title="申请人" dataIndex="applyer" :width="150">
             <template slot-scope="t,r,i">
               <span> {{t}} </span>
             </template>
@@ -101,7 +101,7 @@
               <span> {{t}} </span>
             </template>
           </a-table-column>
-          <a-table-column title="操作" dataIndex="" :width="250" fixed="right">
+          <a-table-column title="操作" dataIndex="" :width="250">
             <template slot-scope="t,r,i">
               <a href="javascript:void(0);" style="color: green;" @click="history(r)">审批历史</a>
               <a-divider type="vertical"/>

@@ -65,7 +65,7 @@ export const activitiApproveMixin = {
         this.$nextTick(() => {
           for (let f of fieldList) {
             if (properties[f].defVal) {
-              this.$set(this.model, f, properties[f].defVal)
+              this.$set(this.model, f, properties[f].type === 'number' ? Number(properties[f].defVal) : properties[f].defVal)
             }
           }
         })

@@ -19,7 +19,7 @@ export const activitiMixin = {
   },
   methods: {
     getFormComponent(routeName, type) {
-      if (type == '1') {
+      if (type === '1') {
         return StyleForm[routeName]
       }
       return _.find(processFormComponent, { routeName: routeName }).component

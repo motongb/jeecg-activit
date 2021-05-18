@@ -542,8 +542,7 @@
           )
           return
         }
-        isView = isView || false
-        this.lcModa.disabled = isView
+        this.lcModa.disabled =  isView || false
         this.lcModa.title = r.title
         this.lcModa.from = activitiSetting.applyListPath
         this.lcModa.processData = r

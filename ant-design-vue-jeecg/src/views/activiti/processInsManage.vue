@@ -54,7 +54,7 @@
               <span> {{t}} </span>
             </template>
           </a-table-column>
-          <a-table-column title="流程名称" dataIndex="name" :width="150">
+          <a-table-column title="流程名称" dataIndex="name" :width="300">
             <template slot-scope="t,r,i">
               <span> {{t}} </span>
             </template>
