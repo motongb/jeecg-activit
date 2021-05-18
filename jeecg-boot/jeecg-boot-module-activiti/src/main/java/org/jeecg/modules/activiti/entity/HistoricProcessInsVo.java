@@ -49,6 +49,10 @@ public class HistoricProcessInsVo {
 
     private String deleteReason;
 
+    private String formCode;
+
+    private String formType;
+
     public HistoricProcessInsVo(HistoricProcessInstance pi){
         this.id = pi.getId();
         this.name = pi.getName();

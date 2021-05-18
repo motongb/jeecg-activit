@@ -175,10 +175,12 @@ public class ActTaskController {
                 }
             }
             // 关联流程信息
-            ActZprocess actProcess = actZprocessService.getById(tv.getProcDefId());
+            ActZprocess actProcess = actZprocessService.getBaseMapper().selectVoById(tv.getProcDefId());
             if (actProcess != null) {
                 tv.setProcessName(actProcess.getName());
                 tv.setRouteName(actProcess.getRouteName());
+                tv.setFormCode(actProcess.getFormCode());
+                tv.setFormType(actProcess.getFormType());
             }
             // 关联业务key
             ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(tv.getProcInstId()).singleResult();
@@ -588,7 +590,7 @@ public class ActTaskController {
                                    Integer priority,
                                    HttpServletRequest req) {
 
-        return Result.ok(actBusinessService.getHistoricTaskVos(req, name, categoryId, priority));
+        return Result.OK(actBusinessService.getHistoricTaskVos(req, name, categoryId, priority));
     }
 
     /*删除任务历史*/

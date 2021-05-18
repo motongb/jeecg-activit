@@ -69,13 +69,22 @@ public class HistoricTaskVo {
     private String businessKey;
 
     private String tableId;
+
     private String tableName;
 
     private List<Assignee> assignees;
+
     private String title;
+
     private Integer status;
+
     private Integer result;
+
     private Map dataMap;
+
+    private String formCode;
+
+    private String formType;
 
     public HistoricTaskVo(HistoricTaskInstance task) {
         this.id = task.getId();

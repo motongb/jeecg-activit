@@ -21,7 +21,7 @@
     </select>
 
     <select id="pageVo" parameterType="map" resultType="org.jeecg.modules.activiti.entity.ActZprocess">
-        select<include refid="column"/>,f.type as type_id,f.table_name,f.style as route_name
+        select<include refid="column"/>,f.type as form_type,f.table_name,f.style as route_name
         from act_z_process azp
         left join act_z_form f on f.code = azp.form_code
         <where>
@@ -47,5 +47,12 @@
                 and azp.category_id = #{params.categoryId}
             </if>
         </where>
+    </select>
+
+    <select id="selectVoById" resultType="org.jeecg.modules.activiti.entity.ActZprocess">
+        select<include refid="column"/>,f.type as form_type,f.table_name,f.style as route_name
+        from act_z_process azp
+        left join act_z_form f on f.code = azp.form_code
+        where azp.id = #{id}
     </select>
 </mapper>

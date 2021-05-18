@@ -7,23 +7,31 @@
     </template>
     <div v-else>
       <a-button style="margin-bottom: 15px" @click="showForm=false">返回</a-button>
-      <component :is="currentForm"></component>
+      <component :is="currentForm" :lcModa="lcModa"></component>
     </div>
   </a-row>
 </template>
 
 <script>
   import { getDictItemsFromCache } from '@/api/api'
-  import DefaultStyleForm from './form/DefaultStyleForm'
+  import StyleForm from './form'
 
   export default {
     name: 'FormStyleList',
-    components: { DefaultStyleForm },
+    components: StyleForm,
     data() {
       return {
         list: getDictItemsFromCache('act_z_form_style'),
         form: '',
-        showForm: false
+        showForm: false,
+        lcModa: {
+          dept: '', //部门
+          title: '',//标题
+          disabled: false,// 全局禁用
+          processData: {},//流程数据
+          isNew: false,//是否新增
+          isTask: false//是否处理流程
+        }
       }
     },
     computed: {
@@ -36,6 +44,18 @@
     methods: {
       handleClick(item) {
         console.log(item)
+        let formCode = ''
+        switch (item.value) {
+          case 'DefaultStyleForm':
+            formCode = 'C001'
+            break
+          case 'GroupStyleForm':
+            formCode = 'C002'
+            break
+          default:
+            break
+        }
+        this.lcModa.processData.formCode = formCode
         this.form = item.value
         this.showForm = true
       }

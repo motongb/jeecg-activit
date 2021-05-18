@@ -1,6 +1,7 @@
 package org.jeecg.modules.activiti.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -131,22 +132,7 @@ public class ActZprocess {
     @Excel(name = "版本", width = 15)
     @ApiModelProperty(value = "版本")
     private Integer version;
-    /**
-     * 关联业务表名
-     */
-    @Excel(name = "关联业务表名", width = 15)
-    @ApiModelProperty(value = "关联业务表名")
-    private String tableName;
-    /**
-     * 关联前端表单路由名
-     */
-    @Excel(name = "关联前端表单路由名", width = 15)
-    @ApiModelProperty(value = "关联前端表单路由名")
-    private String routeName;
-    /**
-     * 表单类型
-     */
-    private String typeId;
+
     /**
      * 授权的角色
      */
@@ -162,4 +148,26 @@ public class ActZprocess {
     @Dict(dicCode = "code", dictTable = "act_z_form", dicText = "name")
     @ApiModelProperty(value = "表单编码")
     private String formCode;
+
+    /**
+     * 关联业务表名
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "关联业务表名")
+    private String tableName;
+
+    /**
+     * 表单类型
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "类型")
+    private String formType;
+
+    /**
+     * 关联前端表单路由名
+     */
+    @TableField(exist = false)
+    @ApiModelProperty(value = "关联前端表单路由名")
+    private String routeName;
+
 }

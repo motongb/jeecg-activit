@@ -7,7 +7,6 @@
     :columns="columns"
     :dataSource="dataSource"
     :pagination="false">
-
   </a-table>
 </template>
 

@@ -129,10 +129,11 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
         actBusinessList.forEach(e -> {
             if (StrUtil.isNotBlank(e.getProcDefId())) {
                 // 获取流程定义表中 路由名称和流程名称
-                ActZprocess actProcess = actZprocessService.getById(e.getProcDefId());
+                ActZprocess actProcess = actZprocessService.getBaseMapper().selectVoById(e.getProcDefId());
                 e.setRouteName(actProcess.getRouteName());
                 e.setProcessName(actProcess.getName());
-                e.setTypeId(actProcess.getTypeId());
+                e.setFormType(actProcess.getFormType());
+                e.setFormCode(actProcess.getFormCode());
             }
             // 流程正在处理中时
             if (ActivitiConstant.STATUS_DEALING.equals(e.getStatus())) {
@@ -418,10 +419,12 @@ public class ActBusinessServiceImpl extends ServiceImpl<ActBusinessMapper, ActBu
                 htv.setComment(comments.get(0).getFullMessage());
             }
             // 关联流程信息
-            ActZprocess actProcess = actZprocessService.getById(htv.getProcDefId());
+            ActZprocess actProcess = actZprocessService.getBaseMapper().selectVoById(htv.getProcDefId());
             if (actProcess != null) {
                 htv.setProcessName(actProcess.getName());
                 htv.setRouteName(actProcess.getRouteName());
+                htv.setFormCode(actProcess.getFormCode());
+                htv.setFormType(actProcess.getFormType());
             }
             // 关联业务key
             HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery().processInstanceId(htv.getProcInstId()).singleResult();

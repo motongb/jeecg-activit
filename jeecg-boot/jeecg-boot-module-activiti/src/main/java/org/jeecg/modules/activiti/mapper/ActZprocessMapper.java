@@ -18,5 +18,7 @@ public interface ActZprocessMapper extends BaseMapper<ActZprocess> {
 
     List<ActZprocess> selectNewestProcess(@Param("processKey") String processKey);
 
-    IPage<ActZprocess> pageVo(IPage<ActZprocess> page,@Param("params") Map<String, Object> params);
+    IPage<ActZprocess> pageVo(IPage<ActZprocess> page, @Param("params") Map<String, Object> params);
+
+    ActZprocess selectVoById(String id);
 }

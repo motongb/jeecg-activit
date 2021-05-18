@@ -119,9 +119,11 @@ public class ActProcessInsController {
                 e.setCurrTaskName(sb.toString());
             }
             // 关联流程表单路由
-            ActZprocess actProcess = actZprocessService.getById(e.getProcDefId());
+            ActZprocess actProcess = actZprocessService.getBaseMapper().selectVoById(e.getProcDefId());
             if (actProcess != null) {
                 e.setRouteName(actProcess.getRouteName());
+                e.setFormCode(actProcess.getFormCode());
+                e.setFormType(actProcess.getFormType());
             }
             // 关联业务表id
             ActBusiness actBusiness = actBusinessService.getById(e.getBusinessKey());
@@ -214,9 +216,11 @@ public class ActProcessInsController {
                 }
             }
             // 关联流程表单路由
-            ActZprocess actProcess = actZprocessService.getById(e.getProcDefId());
+            ActZprocess actProcess = actZprocessService.getBaseMapper().selectVoById(e.getProcDefId());
             if (actProcess != null) {
                 e.setRouteName(actProcess.getRouteName());
+                e.setFormCode(actProcess.getFormCode());
+                e.setFormType(actProcess.getFormType());
             }
             // 关联业务表id和结果
             ActBusiness actBusiness = actBusinessService.getById(e.getBusinessKey());

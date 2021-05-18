@@ -144,10 +144,6 @@ public class ActBusiness {
     private String tableName;
 
 
-    @TableField(exist = false)
-    private String typeId;
-
-
     /**
      * 分配用户username
      */
@@ -204,4 +200,12 @@ public class ActBusiness {
 
     @ApiModelProperty(value = "需要修定0-否 1-是 2-已修改")
     private Integer needEdit = 0;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "表单编码")
+    private String formCode;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "表单类型")
+    private String formType;
 }

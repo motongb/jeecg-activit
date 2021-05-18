@@ -47,6 +47,10 @@ public class ProcessInsVo {
 
     private String dept;
 
+    private String formCode;
+
+    private String formType;
+
     public ProcessInsVo(ProcessInstance pi) {
         this.id = pi.getId();
         this.name = pi.getName();

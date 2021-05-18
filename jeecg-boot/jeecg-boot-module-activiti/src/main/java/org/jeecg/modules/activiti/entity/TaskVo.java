@@ -64,6 +64,10 @@ public class TaskVo {
 
     private boolean editable;
 
+    private String formCode;
+
+    private String formType;
+
     public TaskVo(Task task) {
         this.id = task.getId();
         this.name = task.getName();
